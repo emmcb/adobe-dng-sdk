@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dng_validate", "dng_validate\dng_validate.vcxproj", "{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Validate Debug|ARM64 = Validate Debug|ARM64
+		Validate Debug|x64 = Validate Debug|x64
+		Validate Release|ARM64 = Validate Release|ARM64
+		Validate Release|x64 = Validate Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Debug|ARM64.ActiveCfg = Validate Debug|ARM64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Debug|ARM64.Build.0 = Validate Debug|ARM64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Debug|x64.ActiveCfg = Validate Debug|x64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Debug|x64.Build.0 = Validate Debug|x64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Release|ARM64.ActiveCfg = Validate Release|ARM64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Release|ARM64.Build.0 = Validate Release|ARM64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Release|x64.ActiveCfg = Validate Release|x64
+		{5BBFC43E-3ED8-4D35-9083-53A103BE17FB}.Validate Release|x64.Build.0 = Validate Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9A7B270-D8F0-462F-A160-8EF57C82ACFC}
+	EndGlobalSection
+EndGlobal

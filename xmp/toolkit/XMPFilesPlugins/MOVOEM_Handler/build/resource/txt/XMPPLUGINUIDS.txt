@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PluginResource Architecture="x64">
+	<Handler
+		Name="adobe.coretech.xmp.MOVOEM"
+		Version="1.0.0"
+		HandlerType="OwningHandler"
+		Priority="true"
+		>
+		<Extensions>
+			<Extension Name="mov" />
+		</Extensions>
+		<FormatIDs>
+			<FormatID Name="MOV " />
+		</FormatIDs>
+		<HandlerFlags>
+			<HandlerFlag Name="kXMPFiles_CanInjectXMP" />
+			<HandlerFlag Name="kXMPFiles_CanExpand" />
+			<HandlerFlag Name="kXMPFiles_CanRewrite" />
+			<HandlerFlag Name="kXMPFiles_PrefersInPlace" />
+			<HandlerFlag Name="kXMPFiles_CanReconcile" />
+			<HandlerFlag Name="kXMPFiles_AllowsOnlyXMP" />
+			<HandlerFlag Name="kXMPFiles_ReturnsRawPacket" />
+			<HandlerFlag Name="kXMPFiles_AllowsSafeUpdate" />
+			<HandlerFlag Name="kXMPFiles_HandlerOwnsFile" />
+		</HandlerFlags>
+		<SerializeOptions>
+			<SerializeOption Name="kXMP_UseCompactFormat" />
+			<SerializeOption Name="kXMP_OmitPacketWrapper"/>
+		</SerializeOptions>
+	</Handler>
+</PluginResource>

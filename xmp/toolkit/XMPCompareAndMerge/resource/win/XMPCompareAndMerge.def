@@ -1,0 +1,11 @@
+; Declares the entry points for the DLL.
+; Highest index: 4 - XMPCM_GetObjectFactoryInstance
+
+LIBRARY   AdobeXMPCompareAndMerge
+
+EXPORTS
+
+	XMPCM_GetVersionInfo					@1
+	XMPCM_Initialize						@2
+	XMPCM_Terminate							@3
+	XMPCM_GetObjectFactoryInstance			@4

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>AdobeXMPCompareAndMerge</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.adobe.AdobeXMPCompareAndMerge</string>
+	<key>CFBundleName</key>
+	<string>AdobeXMPCompareAndMerge</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Adobe XMP Compare And Merge kShortVersion, kXMP_Copyright</string>
+	<key>CFBundleShortVersionString</key>
+	<string>kShortVersion</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleSignature</key>
+	<string>XMP </string>
+	<key>CFBundleVersion</key>
+	<string>kShortVersion</string>
+	<key>BuildDate</key>
+	<string>BUILDDATE</string>
+	<key>BuildVersion</key>
+	<string>BUILDVERSION_MAC</string>
+	<key>BuildID</key>
+	<string>BUILDID</string>
+	<key>Configuration</key>
+	<string>kConfig</string>
+	<key>FileVersion</key>
+	<string>kFileVersion</string>
+	<key>ProductName</key>
+	<string>AdobeXMPCompareAndMerge</string>
+	<key>ProductVersion</key>
+	<string>XMPCOMPAREANDMERGE_API_VERSION</string>
+</dict>
+</plist>

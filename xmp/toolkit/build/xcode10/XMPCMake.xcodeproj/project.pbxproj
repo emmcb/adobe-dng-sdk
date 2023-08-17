@@ -1,0 +1,462 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		46E5117F1670BDD000AC30EB /* XMPCMakeiOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 46E511811670BDD000AC30EB /* Build configuration list for PBXAggregateTarget "XMPCMakeiOS" */;
+			buildPhases = (
+				46E511801670BDD000AC30EB /* ShellScript */,
+				75E224791CD74548004A1070 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMakeiOS;
+			productName = XMPCMake;
+		};
+		752C912E1D0AB5DD0036F593 /* XMPCMakeiOSDynamic */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 752C91311D0AB5DD0036F593 /* Build configuration list for PBXAggregateTarget "XMPCMakeiOSDynamic" */;
+			buildPhases = (
+				752C912F1D0AB5DD0036F593 /* ShellScript */,
+				75F24D531D0FE0130052062C /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMakeiOSDynamic;
+			productName = XMPCMake;
+		};
+		75EE194F1C5F778800C7B497 /* XMPCMake64 */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 75EE19511C5F778800C7B497 /* Build configuration list for PBXAggregateTarget "XMPCMake64" */;
+			buildPhases = (
+				75EE19501C5F778800C7B497 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMake64;
+			productName = XMPCMake64;
+		};
+		C9E14EF415CF5A3500C98724 /* XMPCMake64_Static_libcpp */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C9E14EF615CF5A3500C98724 /* Build configuration list for PBXAggregateTarget "XMPCMake64_Static_libcpp" */;
+			buildPhases = (
+				C9E14EF515CF5A3500C98724 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMake64_Static_libcpp;
+			productName = XMPCMake64;
+		};
+		C9E14EF915CF5A3900C98724 /* XMPCMake_Static_libcpp */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C9E14EFB15CF5A3900C98724 /* Build configuration list for PBXAggregateTarget "XMPCMake_Static_libcpp" */;
+			buildPhases = (
+				C9E14EFA15CF5A3900C98724 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMake_Static_libcpp;
+			productName = XMPCMake;
+		};
+		D744DC481141B4F000CE28A1 /* XMPCMake64_libcpp */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D744DC4A1141B50F00CE28A1 /* Build configuration list for PBXAggregateTarget "XMPCMake64_libcpp" */;
+			buildPhases = (
+				D744DC471141B4F000CE28A1 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMake64_libcpp;
+			productName = XMPCMake64;
+		};
+		D744DC4C1141B51D00CE28A1 /* XMPCMake_libcpp */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D744DC531141B53200CE28A1 /* Build configuration list for PBXAggregateTarget "XMPCMake_libcpp" */;
+			buildPhases = (
+				D744DC4B1141B51D00CE28A1 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = XMPCMake_libcpp;
+			productName = XMPCMake;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* BreezeCGN */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = BreezeCGN;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+			};
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "XMPCMake" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* BreezeCGN */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D744DC481141B4F000CE28A1 /* XMPCMake64_libcpp */,
+				D744DC4C1141B51D00CE28A1 /* XMPCMake_libcpp */,
+				C9E14EF415CF5A3500C98724 /* XMPCMake64_Static_libcpp */,
+				C9E14EF915CF5A3900C98724 /* XMPCMake_Static_libcpp */,
+				46E5117F1670BDD000AC30EB /* XMPCMakeiOS */,
+				75EE194F1C5F778800C7B497 /* XMPCMake64 */,
+				752C912E1D0AB5DD0036F593 /* XMPCMakeiOSDynamic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46E511801670BDD000AC30EB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ".././cmake_all.command 32 Release Static Toolchain_ios.cmake";
+		};
+		752C912F1D0AB5DD0036F593 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ".././cmake_all.command 32 Release Toolchain_ios.cmake\n";
+		};
+		75E224791CD74548004A1070 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Copying schemes\"\ncp -Rf xcshareddata ../CMake_libcpp_ios/XMPToolkit.xcodeproj";
+		};
+		75EE19501C5F778800C7B497 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../cmake_all.command 64 Release stdc++ WarningAsError ToolchainLLVM_xcode9.cmake\n";
+		};
+		75F24D531D0FE0130052062C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
+		C9E14EF515CF5A3500C98724 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../cmake_all.command 64 Release Static WarningAsError ToolchainLLVM_xcode10.cmake\n";
+		};
+		C9E14EFA15CF5A3900C98724 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../cmake_all.command 32 Release Static WarningAsError ToolchainLLVM_xcode9.cmake\n";
+		};
+		D744DC471141B4F000CE28A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../cmake_all.command 64 Release WarningAsError ToolchainLLVM_xcode10.cmake\n";
+		};
+		D744DC4B1141B51D00CE28A1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../cmake_all.command 32 Release WarningAsError ToolchainLLVM_xcode9.cmake\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				SDKROOT = "";
+			};
+			name = Release;
+		};
+		46E511821670BDD000AC30EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = XMPCMakeiOS;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		752C91321D0AB5DD0036F593 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		75EE19521C5F778800C7B497 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C9E14EF715CF5A3500C98724 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = XMPCMake64_Static_libcpp;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C9E14EFC15CF5A3900C98724 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = XMPCMake_Static_libcpp;
+				SDKROOT = macosx;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		D744DC491141B4F000CE28A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = XMPCMake64_libcpp;
+				SDKROOT = macosx10.14;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		D744DC4D1141B51D00CE28A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = XMPCMake_libcpp;
+				SDKROOT = macosx10.14;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "XMPCMake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46E511811670BDD000AC30EB /* Build configuration list for PBXAggregateTarget "XMPCMakeiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46E511821670BDD000AC30EB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		752C91311D0AB5DD0036F593 /* Build configuration list for PBXAggregateTarget "XMPCMakeiOSDynamic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				752C91321D0AB5DD0036F593 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		75EE19511C5F778800C7B497 /* Build configuration list for PBXAggregateTarget "XMPCMake64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75EE19521C5F778800C7B497 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9E14EF615CF5A3500C98724 /* Build configuration list for PBXAggregateTarget "XMPCMake64_Static_libcpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9E14EF715CF5A3500C98724 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9E14EFB15CF5A3900C98724 /* Build configuration list for PBXAggregateTarget "XMPCMake_Static_libcpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9E14EFC15CF5A3900C98724 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D744DC4A1141B50F00CE28A1 /* Build configuration list for PBXAggregateTarget "XMPCMake64_libcpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D744DC491141B4F000CE28A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D744DC531141B53200CE28A1 /* Build configuration list for PBXAggregateTarget "XMPCMake_libcpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D744DC4D1141B51D00CE28A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

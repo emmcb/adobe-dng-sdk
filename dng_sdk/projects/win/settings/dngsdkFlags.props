@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <DNG_SDK_DNG_SDK_HEADERS>$(CAMERA_RAW_ROOT)/dng_sdk/source</DNG_SDK_DNG_SDK_HEADERS>
+    <DNG_SDK_XMP_HEADERS>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/include</DNG_SDK_XMP_HEADERS>
+    <DNG_SDK_ZLIB_HEADERS>$(CAMERA_RAW_ROOT)/xmp/toolkit/third-party/zlib</DNG_SDK_ZLIB_HEADERS>
+    <DNG_SDK_COMMON_HEADERS>$(DNG_SDK_DNG_SDK_HEADERS);$(DNG_SDK_XMP_HEADERS);$(DNG_SDK_ZLIB_HEADERS)</DNG_SDK_COMMON_HEADERS>
+    <!-- Not currently used but an example of how a semicolon-separated list can be converted -->
+    <!-- here to be useable in a command-line call as a space-separated list of /I"DIRPATH"   -->
+    <DNG_SDK_COMMON_HEADERS_I>/I&quot;$(DNG_SDK_DNG_SDK_HEADERS.Replace(';', '&quot; /I&quot;'))&quot;</DNG_SDK_COMMON_HEADERS_I>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(DNG_SDK_COMMON_HEADERS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CONSOLE;_CRT_SECURE_NO_DEPRECATE;WIN32;qWinOS=1;qMacOS=0;qVisualC=1;_WINDOWS=1;BIB_MULTI_THREAD=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Cpp0xSupport>true</Cpp0xSupport>
+      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <CCppSupport>Cpp17Support</CCppSupport>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="DNG_SDK_DNG_SDK_HEADERS">
+      <Value>$(DNG_SDK_DNG_SDK_HEADERS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="DNG_SDK_XMP_HEADERS">
+      <Value>$(DNG_SDK_XMP_HEADERS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="DNG_SDK_ZLIB_HEADERS">
+      <Value>$(DNG_SDK_ZLIB_HEADERS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="DNG_SDK_COMMON_HEADERS">
+      <Value>$(DNG_SDK_COMMON_HEADERS)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,162 @@
+
+
+# ==============================================================================
+# Add or overwite shared config variables
+# ==============================================================================
+# Windows specific
+if(WIN32)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_WINDOWS")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINDOWS")
+	SET(CMAKE_EXE_LINKER_FLAGS /NODEFAULTLIB:LIBCMT)
+endif()
+
+# all platform
+set(CXX_FLAGS_DEBUG "-D_DEBUG=1 -DDEBUG=1")
+set(CXX_FLAGS_RELEASE "-DNDEBUG=1")
+
+# ==============================================================================
+# Locations
+# ==============================================================================
+SetPluginOutputPath()
+
+# ==============================================================================
+# For convenience we define the sources as a variable. You can add 
+# header files and cpp/c files and CMake will sort them out
+# ==============================================================================
+
+AddPluginApiFiles("../../..")
+
+list (APPEND SOURCE_UTIL_FILES ${XMPROOT_DIR}/source/UnicodeConversions.cpp)
+if(UNIX)
+	list(APPEND SOURCE_UTIL_FILES ${XMPROOT_DIR}/source/Host_IO-POSIX.cpp)
+else()
+	list(APPEND SOURCE_UTIL_FILES ${XMPROOT_DIR}/source/Host_IO-Win.cpp)
+endif()
+source_group("Source Files\\Utilities" FILES ${SOURCE_UTIL_FILES})
+
+file (GLOB SOURCE_FILES ${PROJECT_ROOT}/../third-party/MiniPDFL/Source/*.*)
+list (APPEND SOURCE_FILES
+		${SOURCE_ROOT}/PDF_Handler.cpp
+		${SOURCE_ROOT}/PDFHandlerUtils.cpp
+	)
+source_group("Source Files" FILES ${SOURCE_FILES})
+
+# resources
+list(APPEND RESOURCE_FILES ${PROJECT_ROOT}/resource/txt/XMPPLUGINUIDS.txt)
+AddPluginResourceFiles()
+
+file (GLOB PUBLIC_XMPCOMMON_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPCommon/source/*.*)
+source_group("Source Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES})
+
+file (GLOB PUBLIC_XMPCORE_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPCore/source/*.*)
+source_group("Source Files\\Public\\XMPCore" FILES ${PUBLIC_XMPCORE_CLIENTGLUE_FILES})
+
+# merge list elements
+list(APPEND SOURCE_FILES 
+	${API_INCLUDE_FILES} 
+	${API_SOURCE_FILES} 
+	${RESOURCE_FILES} 
+	${SOURCE_UTIL_FILES} 
+	${SOURCE_FILES} 
+	${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES} 
+	${PUBLIC_XMPCORE_CLIENTGLUE_FILES}
+	)
+
+# include directories
+include_directories(
+	${XMPROOT_DIR}
+	${XMPROOT_DIR}/public/include
+	${XMPROOT_DIR}/public
+	${PROJECT_ROOT}/../third-party/MiniPDFL/Include
+)
+
+add_definitions(-DPRODUCT="HFTLibrary.h")
+
+#additional link directory
+#unix library folder structure differes with Mac and windows.
+if(WIN32 OR APPLE)
+    set(XMP_FOLDER ${XMP_PLATFORM_FOLDER})
+	if(CMAKE_LIBCPP)
+		string (REPLACE "_libcpp" "" XMP_FOLDER ${XMP_FOLDER})
+	endif()
+	
+	find_library(LIB_MINIPDFL NAMES MiniPDFL PATHS ${XMPROOT_DIR}/XMPFilesPlugins/PDF_Handler/third-party/MiniPDFL/libraries/${XMP_FOLDER}/release)	
+else()
+	#find_library(LIB_MINIPDFL NAMES MiniPDFL PATHS ${XMPROOT_DIR}/XMPFilesPlugins/PDF_Handler/third-party/MiniPDFL/libraries/unix/${XMP_PLATFORM_FOLDER}/${XMP_PLATFORM_VERSION}/release/dynamic)	
+	
+	set(XMP_FOLDER ${XMP_PLATFORM_FOLDER})
+	if(CENTOS)
+		string (REPLACE "_centos" "" XMP_FOLDER ${XMP_FOLDER})
+	endif()
+	
+	set(LIB_MINIPDFL MiniPDFL)
+	link_directories("${XMPROOT_DIR}/XMPFilesPlugins/PDF_Handler/third-party/MiniPDFL/libraries/unix/${XMP_FOLDER}/${XMP_PLATFORM_VERSION}/release/dynamic")
+	string(TOLOWER ${CMAKE_BUILD_TYPE} TEMP_DEBUG_STRING)
+	link_directories("${XMPROOT_DIR}/public/libraries/${XMP_PLATFORM_FOLDER}/${TEMP_DEBUG_STRING}")
+endif()
+AddLibraryAndDependencies(${TARGET_NAME} ${XMP_BUILD_STATIC} YES "SHARED" SOURCE_FILES DEPENDENCY_LIST)
+
+
+set(FRAMEWORK_LIST "Mac:CoreFoundation" "Mac:Foundation" "Mac:CoreServices")
+AddMacFramework(${TARGET_NAME} FRAMEWORK_LIST)
+
+
+if(APPLE)
+	set_target_properties(${TARGET_NAME} PROPERTIES BUILD_WITH_INSTALL_RPATH ON BUILD_WITH_INSTALL_NAME_DIR ON INSTALL_NAME_DIR "@executable_path/../Frameworks")
+endif()
+
+set(DEPEND_LIBS "")
+CreatePlugin(${TARGET_NAME} ${XMPPLUGIN_OUTPUT_DIR} "${PROJECT_ROOT}/resource/txt/*.txt" XMP_PLUGIN_DEPENDENCIES DEPEND_LIBS)
+
+# ==============================================================================
+# Post build
+# ==============================================================================
+
+if (UNIX)
+	if(APPLE)
+		if(NOT XMP_BUILD_STATIC)
+			add_custom_command (TARGET ${TARGET_NAME} POST_BUILD 
+				COMMAND cp -Rf ${XMPROOT_DIR}/XMPFilesPlugins/PDF_Handler/third-party/MiniPDFL/libraries/${XMP_FOLDER}/release/MiniPDFL.framework 
+				${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi/Versions/A/Resources/MiniPDFL.framework
+				COMMAND install_name_tool -change @executable_path/../Frameworks/MiniPDFL.framework/Versions/A/MiniPDFL 
+				@loader_path/Resources/MiniPDFL.framework/Versions/A/MiniPDFL  ${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi/PDF_Handler
+				COMMAND cp -f ${PROJECT_ROOT}/resource/txt/MODULE_IDENTIFIER.txt 
+				${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt
+				COMMAND cp -f ${PROJECT_ROOT}/resource/txt/XMPPLUGINUIDS-${BITS}.txt 
+				${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt
+				COMMENT "Copy resource")
+		endif()					
+	else()
+		if((${CMAKE_BUILD_TYPE} MATCHES "Debug") OR (${CMAKE_BUILD_TYPE} MATCHES "debug") )
+			add_custom_command (TARGET ${TARGET_NAME}
+				POST_BUILD
+				COMMAND ls -l ${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi
+			)
+		else()
+			add_custom_command (TARGET ${TARGET_NAME}
+				POST_BUILD
+				COMMAND strip ${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi
+				COMMAND ls -l ${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.xpi
+			)
+		endif()
+		add_custom_command (TARGET ${TARGET_NAME} POST_BUILD 
+			COMMAND cp -f ${XMPROOT_DIR}/XMPFilesPlugins/PDF_Handler/third-party/MiniPDFL/libraries/unix/${XMP_FOLDER}/${XMP_PLATFORM_VERSION}/release/dynamic/libMiniPDFL.so ${XMPPLUGIN_OUTPUT_DIR}/libMiniPDFL.so
+			COMMAND mkdir -p ${XMPPLUGIN_OUTPUT_DIR}/${TARGET_NAME}.resources
+			COMMAND cp -f ${PROJECT_ROOT}/resource/txt/MODULE_IDENTIFIER.txt ${XMPPLUGIN_OUTPUT_DIR}/PDF_Handler.resources/MODULE_IDENTIFIER.txt
+			COMMAND cp -f ${PROJECT_ROOT}/resource/txt/XMPPLUGINUIDS-${BITS}.txt ${XMPPLUGIN_OUTPUT_DIR}/PDF_Handler.resources/XMPPLUGINUIDS.txt
+			COMMENT "Copy resource")
+	endif()
+else()
+		add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
+							COMMAND ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/CopyPDFL.bat ${CMAKE_CFG_INTDIR} ${XMP_PLATFORM_FOLDER}
+							)
+endif()
+
+# ==============================================================================
+# configuration feedback
+# ==============================================================================
+
+message (STATUS "===========================================================================")
+message (STATUS " ${TARGET_NAME}		")
+message (STATUS "===========================================================================")
+

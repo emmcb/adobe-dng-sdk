@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>AdobeXMP</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.adobe.AdobeXMPCore</string>
+	<key>CFBundleName</key>
+	<string>AdobeXMPCore</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Adobe XMP Core kBasicVersion, kXMP_Copyright</string>
+	<key>CFBundleShortVersionString</key>
+	<string>Adobe XMP Core kBasicVersion</string>
+	<key>CFBundlePackageType</key>
+	<string>FMWK</string>
+	<key>CFBundleSignature</key>
+	<string>XMP </string>
+	<key>CFBundleVersion</key>
+	<string>BUILDVERSION_MAC</string>
+	<key>BuildDate</key>
+	<string>BUILDDATE</string>
+	<key>BuildVersion</key>
+	<string>BUILDVERSION_MAC</string>
+	<key>BuildID</key>
+	<string>BUILDID</string>
+	<key>Configuration</key>
+	<string>kConfig</string>
+	<key>FileVersion</key>
+	<string>kFileVersion</string>
+	<key>ProductName</key>
+	<string>Adobe XMP Core</string>
+	<key>ProductVersion</key>
+	<string>XMPCORE_API_VERSION</string>
+</dict>
+</plist>

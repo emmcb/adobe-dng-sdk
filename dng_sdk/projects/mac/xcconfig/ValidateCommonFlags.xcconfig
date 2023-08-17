@@ -1,0 +1,17 @@
+// Set the root.
+
+DNG_ROOT = ../../..
+
+// Set common build flags.
+
+#include "dngsdkValidateFlags.xcconfig"
+
+// Customize.
+
+MACH_O_TYPE = mh_execute
+
+PRODUCT_NAME = dng_validate
+
+MY_OUTPUT_BASE_DIR = ../../targets/mac
+
+EXECUTABLE_PREFIX =

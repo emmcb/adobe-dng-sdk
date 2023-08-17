@@ -1,0 +1,169 @@
+apply plugin: 'com.android.application'
+
+android {
+    ndkVersion '22.0.7026061'
+    compileSdkVersion 29
+    flavorDimensions "default"
+    defaultConfig {
+        applicationId "com.adobe.xmp"
+	minSdkVersion 17
+	targetSdkVersion 29
+        ndk {
+            debugSymbolLevel 'SYMBOL_TABLE'
+        }
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                arguments "-DXMP_BUILD_STATIC=OFF"
+                arguments "-DANDROID=true"
+                arguments "-DANDROID_TOOLCHAIN=clang"
+                arguments "-DANDROID_ARM_MODE=thumb"
+            }
+        }          
+    }
+    productFlavors {
+        armv7a {
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+        arm64 {
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+        intel32 {
+            ndk {
+                abiFilters 'x86'
+            }
+        }
+        intel64 {
+            ndk {
+                abiFilters 'x86_64'
+            }
+        }
+    }
+    buildTypes {
+        debug {
+		externalNativeBuild {
+		    cmake {
+			cppFlags "-frtti -fexceptions -DDEBUG -D_DEBUG"
+			arguments "-DANDROID_STL=c++_shared"
+		    }
+		}
+        }
+         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		externalNativeBuild {
+		    cmake {
+			cppFlags "-frtti -fexceptions"
+			arguments "-DANDROID_STL=c++_shared"
+		    }
+		}            
+        }   
+    }
+    externalNativeBuild {
+        cmake {
+            path "../../CMakeLists.txt"
+        }
+    }
+    sourceSets.main {
+        jni.srcDirs '${project.buildDir}/../../../../../'
+    }
+
+    task CopyArm64ReleaseSymbols() {
+        doLast{
+            println("calling CopyArm64ReleaseSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'arm64Release'
+            }
+        }
+    }
+
+    task CopyArm64DebugSymbols() {
+        doLast{
+            println("calling CopyArm64DebugSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'arm64Debug'
+            }
+        }
+    }
+
+    task CopyArmv7aReleaseSymbols() {
+        doLast{
+            println("calling CopyArmv7aReleaseSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'armv7aRelease'
+            }
+        }
+    }
+
+    task CopyArmv7aDebugSymbols() {
+        doLast{
+            println("calling CopyArmv7aDebugSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'armv7aDebug'
+            }
+        }
+    }
+
+    task CopyIntel32ReleaseSymbols() {
+        doLast{
+            println("calling CopyIntel32ReleaseSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'intel32Release'
+            }
+        }
+    }
+
+    task CopyIntel32DebugSymbols() {
+        doLast{
+            println("calling CopyIntel32DebugSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'intel32Debug'
+            }
+        }
+    }
+
+    task CopyIntel64ReleaseSymbols() {
+        doLast{
+            println("calling CopyIntel64ReleaseSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'intel64Release'
+            }
+        }
+    }
+
+    task CopyIntel64DebugSymbols() {
+        doLast{
+            println("calling CopyIntel64DebugSymbols")
+            exec{
+                commandLine 'python', 'CopyFrameworks.py' , 'intel64Debug'
+            }
+        }
+    }
+
+    afterEvaluate {
+        assembleArm64Release.finalizedBy { CopyArm64ReleaseSymbols }
+        assembleArm64Debug.finalizedBy { CopyArm64DebugSymbols }
+        assembleArmv7aRelease.finalizedBy { CopyArmv7aReleaseSymbols }
+        assembleArmv7aDebug.finalizedBy { CopyArmv7aDebugSymbols }
+        assembleIntel32Release.finalizedBy { CopyIntel32ReleaseSymbols }
+        assembleIntel32Debug.finalizedBy { CopyIntel32DebugSymbols }
+        assembleIntel64Release.finalizedBy { CopyIntel64ReleaseSymbols }
+        assembleIntel64Debug.finalizedBy { CopyIntel64DebugSymbols }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+}

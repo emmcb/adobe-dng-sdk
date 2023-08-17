@@ -1,0 +1,13 @@
+#Following are build steps to build on gcc 4.8.2 for 64-bit, do the same for 32-bit
+#version 1.0.3
+#uuid zip file location : 
+
+
+export CC=/user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/bin/gcc
+export CXX=/user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/bin/g++
+
+./configure --prefix=<XMPTOOLKIT path>/XMPCore/third-party/uuid/lib64
+make
+make install
+
+

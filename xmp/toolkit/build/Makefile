@@ -1,0 +1,77 @@
+#************************************************************************
+#
+# ADOBE CONFIDENTIAL
+# ___________________
+#
+#  Copyright 2008 Adobe Systems Incorporated
+#  All Rights Reserved.
+#
+# NOTICE:  All information contained herein is, and remains
+# the property of Adobe Systems Incorporated and its suppliers,
+# if any.  The intellectual and technical concepts contained
+# herein are proprietary to Adobe Systems Incorporated and its
+# suppliers and are protected by trade secret or copyright law.
+# Dissemination of this information or reproduction of this material
+# is strictly forbidden unless prior written permission is obtained
+# from Adobe Systems Incorporated.
+#**************************************************************************/
+
+# Default target executed when no arguments are given to make.
+default_target: all
+
+#******************************************************************************************************************/
+# you can specifie which toolchain file is used to genereate the cmake project for the specific branch
+# example $make toolchain=ToolchainRelEng.cmake  creates all cmakeTarget with the given toolchain file
+#******************************************************************************************************************/
+
+# Export for cmake binaries
+
+# target to generate make files using cmake
+RelEng :	
+	./cmake_all.command ${arch} ${stage} ${toolchain} Clean
+
+RelEngAll :
+	./cmake_all.command 32 Debug ${toolchain} Clean
+	./cmake_all.command 32 Release ${toolchain} Clean
+	./cmake_all.command 64 Debug ${toolchain} Clean
+	./cmake_all.command 64 Release ${toolchain} Clean
+	
+RelEng32:
+	./cmake_all.command 32 Debug ${toolchain} Clean
+	./cmake_all.command 32 Release ${toolchain} Clean
+
+RelEng64:
+	./cmake_all.command 64 Debug ${toolchain} Clean
+	./cmake_all.command 64 Release ${toolchain} Clean
+
+StaticRelEng64:
+	./cmake_all.command 64 Release Static ${toolchain} Clean
+
+StaticRelEng32:
+	./cmake_all.command 32 Release Static ${toolchain} Clean
+
+all :
+	./cmake_all.command 32 Debug  Clean
+	./cmake_all.command 32 Release  Clean
+	./cmake_all.command 64 Debug  Clean
+	./cmake_all.command 64 Release  Clean
+
+#invokes shell scrip to delete all cmake generated files
+clean:
+	./removeCMakeFiles.sh
+
+build32debug:
+	./build_xmp_linux.sh 32 Debug
+	
+build32release:
+	./build_xmp_linux.sh 32 Release
+
+build64release:
+	./build_xmp_linux.sh 64 Release
+	
+build64debug:
+	./build_xmp_linux.sh 64 Debug
+
+buildxmpall: build32debug build32release build64release build64debug
+
+	

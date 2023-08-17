@@ -1,0 +1,47 @@
+Dumping XMPMeta object "Test:APICoverage/kRDFCoverage"  (0x0)
+
+   my:  http://mynamespace  (0x80000000 : schema)
+      my:ArrayProp1  (0x200 : isArray)
+         [1] = "Item1.1 value"
+         [2] = "Item1.2 value"
+      my:ArrayProp2  (0x1E00 : isLangAlt isAlt isOrdered isArray)
+         [1] = "Item2.1 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-one"  (0x20 : isQual)
+         [2] = "Item2.2 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-two"  (0x20 : isQual)
+      my:ArrayProp3  (0xE00 : isAlt isOrdered isArray)
+         [1] = "Item3.1 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-one"  (0x20 : isQual)
+         [2] = "Item3.2 value"
+      my:ArrayProp4  (0xE00 : isAlt isOrdered isArray)
+         [1] = "Item4.1 value"
+         [2] = "Item4.2 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-two"  (0x20 : isQual)
+      my:ArrayProp5  (0x1E00 : isLangAlt isAlt isOrdered isArray)
+         [1] = "Item5.2 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-xxx"  (0x20 : isQual)
+         [2] = "Item5.1 value"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-xxx"  (0x20 : isQual)
+      my:NestedStructProp  (0x100 : isStruct)
+         my2:Outer  (0x100 : isStruct)
+            my2:Middle  (0x100 : isStruct)
+               my2:Inner  (0x100 : isStruct)
+                  my2:Field1 = "Field1 value"
+                  my2:Field2 = "Field2 value"
+               my2:Inner2  (0x100 : isStruct)
+                  my2:Field1 = "Field1 value"
+                  my2:Field2 = "Field2 value"
+      my:QualProp1 = "Prop value"  (0x10 : hasQual)
+            ? my2:Qual = "Qual value"  (0x20 : isQual)
+      my:QualProp2 = "Prop value"  (0x50 : hasLang hasQual)
+            ? xml:lang = "x-default"  (0x20 : isQual)
+            ? my2:Qual = "Qual value"  (0x20 : isQual)
+      my:QualProp3 = "Prop value"  (0x50 : hasLang hasQual)
+            ? xml:lang = "x-default"  (0x20 : isQual)
+            ? my2:Qual = "Qual value"  (0x20 : isQual)
+      my:SimpleProp1 = "Simple1 value"
+      my:SimpleProp2 = "Simple2 value"  (0x50 : hasLang hasQual)
+            ? xml:lang = "x-default"  (0x20 : isQual)
+      my:StructProp  (0x100 : isStruct)
+         my2:Field1 = "Field1 value"
+         my2:Field2 = "Field2 value"

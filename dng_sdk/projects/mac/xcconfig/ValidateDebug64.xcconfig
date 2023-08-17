@@ -1,0 +1,9 @@
+#include "ValidateCommonFlags.xcconfig"
+#include "dngsdkDebug.xcconfig"
+#include "xmp.xcconfig"
+
+CONFIGURATION_BUILD_DIR = $(MY_OUTPUT_BASE_DIR)/debug64
+
+LIBRARY_SEARCH_PATHS = $(XMP_LIB_PATH)
+
+OTHER_LDFLAGS = $(XMP_LIB_FLAGS)

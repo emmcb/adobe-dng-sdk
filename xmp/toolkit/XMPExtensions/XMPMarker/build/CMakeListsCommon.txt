@@ -1,0 +1,205 @@
+
+# ==============================================================================
+# For convenience we define the sources as a variable. You can add 
+# header files and cpp/c files and CMake will sort them out
+# ==============================================================================
+
+
+list (APPEND PRIVATE_COMMON_HEADERS
+	${XMPROOT_DIR}/source/SafeStringAPIs.h
+	${XMPROOT_DIR}/source/SafeTypes.h
+	${XMPROOT_DIR}/source/SuppressSAL.h
+	${XMPROOT_DIR}/build/XMP_BuildInfo.h
+	)
+source_group("Header Files\\Private\\Common" FILES ${PRIVATE_COMMON_HEADERS})
+
+file (GLOB_RECURSE PRIVATE_XMPCOMMON_HEADERS ${XMPROOT_DIR}/XMPCommon/*.h)
+source_group("Header Files\\Private\\XMPCommon" FILES ${PRIVATE_XMPCOMMON_HEADERS})
+
+list (APPEND XMPAM_CHANGELOG_HEADER ${SOURCE_ROOT}/XMPAssetManagement_ChangeLog.hpp)
+source_group("Header Files\\Private\\XMPAssetManagement" FILES ${XMPAM_CHANGELOG_HEADER})
+
+file (GLOB_RECURSE PRIVATE_XMPAM_HEADERS ${SOURCE_ROOT}/../*.h)
+source_group("Header Files\\Private\\XMPAssetManagement" FILES ${PRIVATE_XMPAM_HEADERS})
+
+list (APPEND PUBLIC_COMMON_HEADERS
+	${XMPROOT_DIR}/public/include/XMP.hpp
+	${XMPROOT_DIR}/public/include/XMP_Const.h
+	${XMPROOT_DIR}/public/include/XMP_Environment.h
+	${XMPROOT_DIR}/public/include/XMP_Version.h
+	)
+source_group("Header Files\\Public\\Common" FILES ${PUBLIC_COMMON_HEADERS})
+
+file (GLOB_RECURSE PUBLIC_XMPCOMMON_HEADERS ${XMPROOT_DIR}/public/include/XMPCommon/*.h )
+source_group("Header Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_HEADERS})
+
+file (GLOB_RECURSE PUBLIC_XMPCORE_HEADERS ${XMPROOT_DIR}/public/include/XMPCore/*.h)
+source_group("Header Files\\Public\\XMPCore" FILES ${PUBLIC_XMPCORE_HEADERS})
+
+
+file (GLOB_RECURSE PUBLIC_XMPAM_HEADERS ${XMPROOT_DIR}/public/include/XMPAssetManagement/*.h)
+source_group("Header Files\\Public\\XMPAssetManagement" FILES ${PUBLIC_XMPAM_HEADERS})
+
+#resource files
+file (GLOB RESOURCE_FILES ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.*)
+if(WIN32 AND ${XMP_BUILD_STATIC})
+	list (REMOVE_ITEM RESOURCE_FILES ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.rc)
+endif()
+source_group("Resource Files" FILES ${RESOURCE_FILES})
+
+#source files
+file (GLOB XMPAM_SOURCES ${SOURCE_ROOT}/*.cpp)
+source_group("Source Files\\Private\\XMPAssetManagement" FILES ${XMPAM_SOURCES})
+
+file (GLOB PUBLIC_XMPCOMMON_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPCommon/source/*.*)
+source_group("Source Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES})
+
+file (GLOB PUBLIC_XMPCORE_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPCore/source/*.*)
+source_group("Source Files\\Public\\XMPCore" FILES ${PUBLIC_XMPCORE_CLIENTGLUE_FILES})
+
+file (GLOB PUBLIC_XMPAM_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPAssetManagement/source/*.*)
+source_group("Source Files\\Public\\XMPAssetManagement" FILES ${PUBLIC_XMPAM_CLIENTGLUE_FILES})
+
+
+list(APPEND SOURCE_FILES
+	${PRIVATE_COMMON_HEADERS}
+	${PRIVATE_XMPCOMMON_HEADERS}
+	${XMPAM_CHANGELOG_HEADER}
+	${PRIVATE_XMPAM_HEADERS}
+	${PUBLIC_COMMON_HEADERS}
+	${PUBLIC_XMPCOMMON_HEADERS}
+	${PUBLIC_XMPCORE_HEADERS}
+	${PUBLIC_XMPAM_HEADERS}
+	${RESOURCE_FILES}
+	${XMPAM_SOURCES}
+	${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES}
+	${PUBLIC_XMPCORE_CLIENTGLUE_FILES}
+	${PUBLIC_XMPAM_CLIENTGLUE_FILES}
+	)
+
+# include directories
+include_directories(${XMPROOT_DIR})
+include_directories(${XMPROOT_DIR}/public/include)
+include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
+
+#additional link directory
+link_directories(${OUTPUT_DIR})
+
+# ==============================================================================
+# Define what to do, lib, exe, etc
+if (UNIX AND APPLE AND NOT ${XMP_BUILD_STATIC})
+	# preprocess Info.plist
+	add_custom_target(${TARGET_NAME}InfoPlist
+		COMMAND mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+		COMMAND if [ $(CONFIGURATION) != Debug ]; then
+			${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.plist
+			-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+			-DPRODUCT_NAME=${TARGET_NAME} -DMAC_ENV=1 -DNDEBUG=1
+			-include ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}PList.h
+			-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+			\; else
+			${GCCTOOL} -E -P -x c ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.plist
+			-F${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/
+			-DPRODUCT_NAME=${TARGET_NAME} -DMAC_ENV=1 -DDEBUG=1
+			-include ${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}PList.h
+			-o ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist
+			\; fi
+		COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+		COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/Info.plist ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/../CMakeFiles/${TARGET_NAME}.dir/Info.plist
+		COMMENT "Preprocessing Info-plist"
+	)
+	set(DEPENDENCY_LIST "ALL:${TARGET_NAME}InfoPlist" "DLL:XMPCore")
+else ()
+	set(DEPENDENCY_LIST  "DLL:XMPCore")
+endif()
+
+set(XMPCOMMON_LIB "XMPCommon")
+set(DEPENDENCY_LIST "${DEPENDENCY_LIST}" "DLL:${XMPCOMMON_LIB}")
+
+AddLibraryAndDependencies(${TARGET_NAME} ${XMP_BUILD_STATIC} YES "SHARED" SOURCE_FILES DEPENDENCY_LIST)
+
+# ==============================================================================
+# Link dependencies
+
+if(WIN32)
+	target_link_libraries(
+		${TARGET_NAME}
+		${XMPCOMMON_LIB}
+		${LIB_ADOBEXMP}
+		${XMP_PLATFORM_LINK}
+	)
+else(WIN32)
+	if(UNIX AND NOT APPLE)
+		target_link_libraries(
+			${TARGET_NAME}
+			${XMPCOMMON_LIB}
+			${LIB_ADOBEXMP}
+		)
+	else()
+		target_link_libraries(
+			${TARGET_NAME}
+			${XMPCOMMON_LIB}
+		)
+	endif()
+endif()
+
+set(FRAMEWORK_LIST "Mac:CoreFoundation" "Mac:CoreServices" "Mac:${LIB_ADOBEXMP}" "Mac:${XMP_PLATFORM_LINK}")
+AddMacFramework(${TARGET_NAME} FRAMEWORK_LIST)
+
+if(UNIX)
+	if (NOT APPLE)
+		SetPlatformLinkFlags(${TARGET_NAME} "-Xlinker --version-script -Xlinker \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.exp\"" "")
+	else()
+		set_target_properties(${TARGET_NAME} PROPERTIES BUILD_WITH_INSTALL_RPATH ON INSTALL_NAME_DIR "@executable_path/../Frameworks")
+		#SetWinLinkFlags(${TARGET_NAME} "-unexported_symbols_list \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/XMPAssetManagement.unexp\"" "${XMPASSETMANAGEMENT_LIB}")
+		set_target_properties(${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_GCC_SYMBOLS_PRIVATE_EXTERN "YES")
+	       SetPlatformLinkFlags(${TARGET_NAME} "" "${XMPASSETMANAGEMENT_LIB}")
+	endif()
+else()
+	SetPlatformLinkFlags(${TARGET_NAME} "" "${XMPASSETMANAGEMENT_LIB}")
+endif()
+
+set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${XMPASSETMANAGEMENT_LIB})
+
+# ==============================================================================
+# Define output for this project
+SetOutputPath(${OUTPUT_DIR} 0)
+
+# ==============================================================================
+# Post build
+# ==============================================================================
+
+if(UNIX)
+	#hack for unix to rename the output static library. cmake add lib and extenstion as .a, rename it
+	if (NOT APPLE)
+		if (${XMP_BUILD_STATIC})
+			add_custom_command (TARGET ${TARGET_NAME}
+				POST_BUILD
+				COMMAND  mv ${OUTPUT_DIR}/lib${XMPASSETMANAGEMENT_LIB}.a  ${OUTPUT_DIR}/${XMPASSETMANAGEMENT_LIB}.ar
+			)
+		else()
+			if((${CMAKE_BUILD_TYPE} MATCHES "Debug") OR (${CMAKE_BUILD_TYPE} MATCHES "debug") )
+				add_custom_command (TARGET ${TARGET_NAME}
+					POST_BUILD
+					COMMAND ls -l ${OUTPUT_DIR}/lib${XMPASSETMANAGEMENT_LIB}.so
+				)
+			else()
+				add_custom_command (TARGET ${TARGET_NAME}
+					POST_BUILD
+					COMMAND strip ${OUTPUT_DIR}/lib${XMPASSETMANAGEMENT_LIB}.so
+					COMMAND ls -l ${OUTPUT_DIR}/lib${XMPASSETMANAGEMENT_LIB}.so
+				)
+			endif()
+		endif()
+	endif()
+
+	
+else()
+	set_target_properties(${TARGET_NAME} PROPERTIES PROJECT_LABEL ${PROJECT_LABEL_STR})
+
+endif()
+
+message (STATUS "===========================================================================")
+message (STATUS " ${PROJECT_NAME} ")
+message (STATUS "===========================================================================")
+message (STATUS " OUTPUT_DIR = ${OUTPUT_DIR}")

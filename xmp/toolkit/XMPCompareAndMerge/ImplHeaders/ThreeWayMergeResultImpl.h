@@ -1,0 +1,70 @@
+#ifndef __ThreeWayMergeResultImpl_h__
+#define __ThreeWayMergeResultImpl_h__ 1
+
+// =================================================================================================
+// Copyright Adobe
+// Copyright 2014 Adobe
+// All Rights Reserved
+//
+// NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
+// =================================================================================================
+
+#if !(IMPLEMENTATION_HEADERS_CAN_BE_INCLUDED)
+	#error "Not adhering to design constraints"
+	// this file should only be included from its own cpp file
+#endif
+
+#include "XMPCompareAndMerge/Interfaces/IThreeWayMergeResult_I.h"
+#include "XMPCommon/BaseClasses/MemoryManagedObject.h"
+#include "XMPCommon/ImplHeaders/SharedObjectImpl.h"
+
+#if XMP_WinBuild
+	#pragma warning( push )
+	#pragma warning( disable : 4250 )
+#endif
+
+namespace AdobeXMPCompareAndMerge_Int {
+
+	class ThreeWayMergeResultImpl
+		: public virtual IThreeWayMergeResult_I
+		, public virtual SharedObjectImpl
+		, public virtual MemoryManagedObject
+	{
+	public:
+		ThreeWayMergeResultImpl( const spcIMetadata & latestVersionMetadata, const spcIMetadata & userVersionMetadata,
+			const spIThreeWayResolvedConflicts & resolvedConflicts, const spIThreeWayUnResolvedConflicts & unResolvedConflictList );
+
+		virtual sizet APICALL CountOfResolvedConflicts() const __NOTHROW__;
+		virtual sizet APICALL CountOfUnResolvedConflicts() const __NOTHROW__;
+		virtual spIMetadata APICALL GetMergedMetadata() const;
+		virtual eMergeStatus APICALL GetMergedStatus() const;
+		virtual spcIThreeWayResolvedConflict APICALL GetResolvedConflict( sizet index ) const;
+		virtual spIThreeWayResolvedConflicts APICALL GetResolvedConflicts();
+		virtual spcIThreeWayResolvedConflicts_const APICALL GetResolvedConflicts() const;
+		virtual spcIThreeWayUnResolvedConflict APICALL GetUnResolvedConflict( sizet index ) const;
+		virtual spIThreeWayUnResolvedConflicts APICALL GetUnResolvedConflicts();
+		virtual spcIThreeWayUnResolvedConflicts_const APICALL GetUnResolvedConflicts() const;
+
+	protected:
+		virtual ~ThreeWayMergeResultImpl() __NOTHROW__ {}
+
+		spIThreeWayResolvedConflicts				mResolvedConflicts;
+		spIThreeWayUnResolvedConflicts				mUnResolvedConflicts;
+		spcIMetadata								mLatestVersionMetadata;
+		spcIMetadata								mUserVersionMetadata;
+
+	#ifdef FRIEND_CLASS_DECLARATION
+		FRIEND_CLASS_DECLARATION();
+	#endif
+		REQ_FRIEND_CLASS_DECLARATION();
+	};
+}
+
+#if XMP_WinBuild
+	#pragma warning( pop )
+#endif
+
+#endif  // __ThreeWayMergeResultImpl_h__

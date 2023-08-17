@@ -1,0 +1,146 @@
+; Declares the entry points for the DLL.
+; Highest index: 129 WXMPMeta_GetIXMPMetadata_1
+
+LIBRARY   AdobeXMP
+
+EXPORTS
+
+	WXMPMeta_GetVersionInfo_1				@1
+	WXMPMeta_Initialize_1					@2
+	WXMPMeta_Terminate_1					@3
+
+	WXMPMeta_CTor_1							@4
+	WXMPMeta_IncrementRefCount_1			@5
+	WXMPMeta_DecrementRefCount_1			@6
+
+	WXMPMeta_GetGlobalOptions_1				@7
+	WXMPMeta_SetGlobalOptions_1				@8
+	WXMPMeta_GetMemProcs_1					@9
+	WXMPMeta_RegisterAssertNotify_1			@10
+	WXMPMeta_UnregisterAssertNotify_1		@11
+;	unused									@12
+	WXMPMeta_DumpNamespaces_1				@13
+	WXMPMeta_DumpPropertyTraits_1			@14
+	WXMPMeta_RegisterNamespace_1			@15
+	WXMPMeta_GetNamespacePrefix_1			@16
+	WXMPMeta_GetNamespaceURI_1				@17
+	WXMPMeta_DeleteNamespace_1				@18
+	WXMPMeta_RegisterPropertyTraits_1		@19
+
+	WXMPMeta_GetProperty_1					@20
+	WXMPMeta_GetArrayItem_1					@21
+	WXMPMeta_GetStructField_1				@22
+	WXMPMeta_GetQualifier_1					@23
+	WXMPMeta_SetProperty_1					@24
+	WXMPMeta_SetArrayItem_1					@25
+	WXMPMeta_AppendArrayItem_1				@26
+	WXMPMeta_SetStructField_1				@27
+	WXMPMeta_SetQualifier_1					@28
+	WXMPMeta_DeleteProperty_1				@29
+	WXMPMeta_DeleteArrayItem_1				@30
+	WXMPMeta_DeleteStructField_1			@31
+	WXMPMeta_DeleteQualifier_1				@32
+	WXMPMeta_DoesPropertyExist_1			@33
+	WXMPMeta_DoesArrayItemExist_1			@34
+	WXMPMeta_DoesStructFieldExist_1			@35
+	WXMPMeta_DoesQualifierExist_1			@36
+	WXMPMeta_GetLocalizedText_1				@37
+	WXMPMeta_SetLocalizedText_1				@38
+	WXMPMeta_DeleteLocalizedText_1			@39
+	WXMPMeta_GetProperty_Bool_1				@40
+	WXMPMeta_GetProperty_Int_1				@41
+	WXMPMeta_GetProperty_Int64_1			@42
+	WXMPMeta_GetProperty_Float_1			@43
+	WXMPMeta_GetProperty_Date_1				@44
+	WXMPMeta_SetProperty_Bool_1				@45
+	WXMPMeta_SetProperty_Int_1				@46
+	WXMPMeta_SetProperty_Int64_1			@47
+	WXMPMeta_SetProperty_Float_1			@48
+	WXMPMeta_SetProperty_Date_1				@49
+	WXMPMeta_GetObjectName_1				@50
+	WXMPMeta_SetObjectName_1				@51
+	WXMPMeta_GetObjectOptions_1				@52
+	WXMPMeta_SetObjectOptions_1				@53
+	WXMPMeta_Sort_1							@54
+	WXMPMeta_Erase_1						@55
+	WXMPMeta_Clone_1						@56
+	WXMPMeta_CountArrayItems_1				@57
+	WXMPMeta_MarkStaleProperties_1			@58
+	WXMPMeta_DumpObject_1					@59
+	WXMPMeta_ParseFromBuffer_1				@60
+	WXMPMeta_SerializeToBuffer_1			@61
+
+	WXMPMeta_SetDefaultErrorCallback_1		@124
+	WXMPMeta_SetErrorCallback_1				@125
+	WXMPMeta_ResetErrorCallbackLimit_1		@126
+	WXMPMeta_GetXMPDOMFactoryInstance_1		@127
+	WXMPMeta_Use_CPP_DOM_APIs_1				@128
+	WXMPMeta_GetIXMPMetadata_1				@129
+
+	WXMPIterator_PropCTor_1					@62
+	WXMPIterator_TableCTor_1				@63
+	WXMPIterator_IncrementRefCount_1		@64
+	WXMPIterator_DecrementRefCount_1		@65
+	WXMPIterator_Next_1						@66
+	WXMPIterator_Skip_1						@67
+
+	WXMPUtils_ComposeArrayItemPath_1		@68
+	WXMPUtils_ComposeStructFieldPath_1		@69
+	WXMPUtils_ComposeQualifierPath_1		@70
+	WXMPUtils_ComposeLangSelector_1			@71
+	WXMPUtils_ComposeFieldSelector_1		@72
+	WXMPUtils_ConvertFromBool_1				@73
+	WXMPUtils_ConvertFromInt_1				@74
+	WXMPUtils_ConvertFromInt64_1			@75
+	WXMPUtils_ConvertFromFloat_1			@76
+	WXMPUtils_ConvertFromDate_1				@77
+	WXMPUtils_ConvertToBool_1				@78
+	WXMPUtils_ConvertToInt_1				@79
+	WXMPUtils_ConvertToInt64_1				@80
+	WXMPUtils_ConvertToFloat_1				@81
+	WXMPUtils_ConvertToDate_1				@82
+	WXMPUtils_CurrentDateTime_1				@83
+	WXMPUtils_SetTimeZone_1					@84
+	WXMPUtils_ConvertToUTCTime_1			@85
+	WXMPUtils_ConvertToLocalTime_1			@86
+	WXMPUtils_CompareDateTime_1				@87
+	WXMPUtils_EncodeToBase64_1				@88
+	WXMPUtils_DecodeFromBase64_1			@89
+	WXMPUtils_PackageForJPEG_1				@90
+	WXMPUtils_MergeFromJPEG_1				@91
+
+	WXMPUtils_CatenateArrayItems_1			@92
+	WXMPUtils_SeparateArrayItems_1			@93
+	WXMPUtils_ApplyTemplate_1				@123
+	WXMPUtils_RemoveProperties_1			@94
+	WXMPUtils_AppendProperties_1			@95
+	WXMPUtils_DuplicateSubtree_1			@96
+	WXMPUtils_CollectMultiFileXMP_1			@97
+	WXMPUtils_DistributeMultiFileXMP_1		@98
+	WXMPUtils_IsPropertyMultiValued_1		@99
+	WXMPUtils_GetDateRange_1				@100
+	WXMPUtils_GetMergedListPath_1			@101
+	WXMPUtils_RemoveMultiValueInfo_1		@102
+
+	WXMPUtils_GetBulkMarkers_1				@103
+	WXMPUtils_SetBulkMarkers_1				@104
+	
+	WXMPDocOps_SetAppName_1					@105
+	WXMPDocOps_CreateID_1					@106
+	WXMPDocOps_CTor_1						@107
+	WXMPDocOps_IncrementRefCount_1			@108
+	WXMPDocOps_DecrementRefCount_1			@109
+	WXMPDocOps_NewXMP_1						@110
+	WXMPDocOps_OpenXMP_1					@111
+	WXMPDocOps_BranchXMP_1					@112
+	WXMPDocOps_PrepareForSave_1				@113
+	WXMPDocOps_NoteChange_1					@114
+	WXMPDocOps_HasPartChanged_1				@115
+	WXMPDocOps_GetPartChangeID_1			@116
+	WXMPDocOps_EnsureIDsExist_1				@117
+	WXMPDocOps_IsDirty_1					@118
+	WXMPDocOps_Clone_1						@119
+	WXMPDocOps_GetMetaRef_1					@120
+
+	XMP_NewExpatAdapter						@121
+	XMP_GetAssertNotify						@122

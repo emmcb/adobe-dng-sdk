@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(CAMERA_RAW_ROOT)/libjpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>qDNGUseLibJPEG=1;qDNGValidateTarget=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Debug' And '$(PLATFORM)'=='Win32'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticDebug.lib;XMPFilesStaticDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <OutputFile>..\..\..\targets\win\debug32\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Debug' And '$(PLATFORM)'=='x64'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows_x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticDebug.lib;XMPFilesStaticDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\targets\win\debug64_x64\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Debug' And '$(PLATFORM)'=='ARM64'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows_arm64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticDebug.lib;XMPFilesStaticDebug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\targets\win\debug64_arm64\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Release' And '$(PLATFORM)'=='Win32'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticRelease.lib;XMPFilesStaticRelease.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\targets\win\release32\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Release' And '$(PLATFORM)'=='x64'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows_x64/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticRelease.lib;XMPFilesStaticRelease.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\targets\win\release64_x64\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CONFIGURATION)'=='Validate Release' And '$(PLATFORM)'=='ARM64'">
+    <Link>
+      <AdditionalLibraryDirectories>$(CAMERA_RAW_ROOT)/xmp/toolkit/public/libraries/windows_arm64/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XMPCoreStaticRelease.lib;XMPFilesStaticRelease.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\..\..\targets\win\release64_arm64\dng_validate.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

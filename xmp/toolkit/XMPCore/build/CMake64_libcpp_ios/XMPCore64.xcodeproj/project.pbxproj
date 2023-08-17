@@ -1,0 +1,1705 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		4520958A23F8466598251C70 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = DBD5079EAE8F49A68BBC35C1 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				0F31A9A139FBD59C5BE84612 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				6264F108AD1A496CADDED0CA /* PBXTargetDependency */,
+				5B9372C6CA7E441D882EBB54 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		71C995A7C40D46CFADAEA27D /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 17E7F5C13E0843D0A99AC516 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				7FA0F896D1DCA4761E0FFCA3 /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		01D4853825474BD0BDE0BBCD /* ICompositeNode_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BD32A1106814E0FA72A2EAD /* ICompositeNode_I.cpp */; };
+		0752690B04E443E49A7DAA61 /* IMetadataConverterUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F54C4E7F29224653AC732192 /* IMetadataConverterUtils.cpp */; };
+		086F755137F34349BE85768B /* IMetadata_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01A537BC566D4B24BFF8E2C0 /* IMetadata_I.cpp */; };
+		0B50B699D0A74F4EB77F6823 /* CoreConfigurationManagerImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84473595427E4BDA9D3C0EA0 /* CoreConfigurationManagerImpl.cpp */; };
+		0B5890E30A5749FC94741620 /* INode_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71D6FDDD4444E14BB9E4DBA /* INode_I.cpp */; };
+		0C15D6DC716C43AE976262BB /* INameSpacePrefixMap_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4C8A7B494D54A73B9A7A079 /* INameSpacePrefixMap_I.cpp */; };
+		0F9458B65B774A4688DC59A8 /* SharedMutexImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E36E6145A3B40599F28F88C /* SharedMutexImpl.cpp */; };
+		117A81B9E9094A7AB13DE03F /* XMPMeta2-GetSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B7ED1B9390264227B8497C14 /* XMPMeta2-GetSet.cpp */; };
+		143E512551DA424998F4A2DA /* IUTF8String_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9458B252DA44142B2F29146 /* IUTF8String_I.cpp */; };
+		1548DDF99F7B4D8ABBE93C24 /* IPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF3EFA5C8EC147168C1EE027 /* IPath.cpp */; };
+		18D4FDA2B603468BA9CFF328 /* WXMPIterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B7FAED0270F493888747B10 /* WXMPIterator.cpp */; };
+		18E33400B9FD4DDEA15F9445 /* IError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C80051239FD4D47B36D9AEE /* IError.cpp */; };
+		1A80492DE28749D8BE6719B8 /* IStructureNode_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA0E00F05B934BCBA441F3AA /* IStructureNode_I.cpp */; };
+		1B31F8F8B499482DB9B1CB0C /* WXMPUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF86B84F898B4E6B9D7A3135 /* WXMPUtils.cpp */; };
+		1B6F575506BC488F81C350D2 /* XMPMeta-Parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5792DA92C36463CADAC0C37 /* XMPMeta-Parse.cpp */; };
+		1CD76BEDC7EC4486B4583F59 /* IPathSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E68293B86D924F26BDFF2A9E /* IPathSegment.cpp */; };
+		1F13385323234F589CC65DE0 /* ErrorNotifierWrapperImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 33B4D2D757524F88AC2851BE /* ErrorNotifierWrapperImpl.cpp */; };
+		1FC7EFD2885E4944851EA33D /* CompositeNodeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32425EC23A17487195804BBB /* CompositeNodeImpl.cpp */; };
+		201CDD79D6324FB998046282 /* SimpleNodeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BB4BAD44C064F879FE4A75F /* SimpleNodeImpl.cpp */; };
+		21441580390B455BB4B0333E /* IDOMSerializer_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8645A29D100A477C9037C692 /* IDOMSerializer_I.cpp */; };
+		22C7582AA2AC4288A28D32CA /* MetadataImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CF941DF94214F8089DCB94D /* MetadataImpl.cpp */; };
+		24CCE51A981247A1B0E238C8 /* IArrayNode_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CBF8A02DD99F4AACA342642E /* IArrayNode_I.cpp */; };
+		260A1E7F2DB1427ABD107493 /* IDOMImplementationRegistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94FAE0FA873A4E1D8197534F /* IDOMImplementationRegistry.cpp */; };
+		261D187E504F41AF9D8D2FDF /* UnicodeConversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59C042E8EF184630A3E7CF90 /* UnicodeConversions.cpp */; };
+		26FD22061E1243DEA1B2A958 /* PathImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4EE4024B76845EBA847B67B /* PathImpl.cpp */; };
+		2930566BE060435F90A6515E /* XMP_LibUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D088E58FB1D4C979B89AB6B /* XMP_LibUtils.cpp */; };
+		2F485B20B2A9409882AD084A /* MetadataConverterUtilsImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BF7A933B7214B3E98220722 /* MetadataConverterUtilsImpl.cpp */; };
+		36D74278A73349C9A8A35322 /* XMPIterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D82C6C20236D45D99C637CF6 /* XMPIterator.cpp */; };
+		3718501CE3E04AF6B462B6C6 /* ISimpleNode_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0258DF8BCA24F898C9E54AB /* ISimpleNode_I.cpp */; };
+		38409B38EFE44D03850C1A97 /* ConfigurationManagerImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F1B10792CF24789BB07990F /* ConfigurationManagerImpl.cpp */; };
+		39EECAA6965D476A926BBB0F /* IPath_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE0E792DF6A14926A4AAFDB4 /* IPath_I.cpp */; };
+		3A0C38B3741143CFAFB19235 /* IErrorNotifier_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE62808CDB6A448EBE773C6B /* IErrorNotifier_I.cpp */; };
+		3F8B1BB0F0064C08BC5734F9 /* INodeIterator_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D71D0B5344654DA9A9B7042D /* INodeIterator_I.cpp */; };
+		4452AF6930DF43CE970E347E /* ZUIDUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA7CF9ED8EA4161AFD66406 /* ZUIDUUID.cpp */; };
+		4828A22BE0A145C48CDCDD4C /* IConfigurationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5400D77CDDCC4FFCA3CAE9F8 /* IConfigurationManager.cpp */; };
+		484C71AA7D954001B8C45E47 /* ICoreObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FC05EDC65C9422D83665859 /* ICoreObjectFactory.cpp */; };
+		4CA8B04E41CE40F9AE3FA27F /* ErrorImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A28A40B4544E2286A89FCA /* ErrorImpl.cpp */; };
+		4DA9BC95CBD547F3BB49AF75 /* ParseRDF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 403D75A46A154D898B28275E /* ParseRDF.cpp */; };
+		4F5C0D797D9D40A3BFAF8B48 /* PathSegmentImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 664C601EDE854B8A9FD140A4 /* PathSegmentImpl.cpp */; };
+		5024EFABBEED4AF29C20E3E3 /* DOMSerializerImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05D069B01F4D40CE98AD521B /* DOMSerializerImpl.cpp */; };
+		50EDFDB1DCD44F7EACE1EAEB /* IUTF8String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4BCC740792B84143B690DCB8 /* IUTF8String.cpp */; };
+		51A56A38EFA54BA0AC32AADE /* XMPUtils2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BFBB1DB81F3C44B4BBC7530C /* XMPUtils2.cpp */; };
+		51FB7538993A4B1CA22FF07B /* MD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8CA9367B74F487E8BFFFE54 /* MD5.cpp */; };
+		532A1364D68149B3A9DA9D9E /* IDOMParser_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7E3FE10324C15B73F01BC /* IDOMParser_I.cpp */; };
+		57EBE5496DD4454DB4CC8CAD /* WXMPDocOps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62392B543E2A4F249863027B /* WXMPDocOps.cpp */; };
+		5821461065B64279878CF41A /* ConfigurableImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F85E06F4B7AA47B4BBC37CEE /* ConfigurableImpl.cpp */; };
+		5B1A16E54D304CB2826EF6EA /* RDFDOMSerializerImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC5595A5C4F4F38984AD3D1 /* RDFDOMSerializerImpl.cpp */; };
+		5D3E6BC50E5142E9B77447AB /* XMPIterator2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76DB50D38A4A415AA61FD03F /* XMPIterator2.cpp */; };
+		5E480A54E4E1462FA8B07C68 /* XMPDocOps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C78F97BBBB694A81857D81B5 /* XMPDocOps.cpp */; };
+		5F671AA7E55E4BBFA4DF15F3 /* MemoryAllocatorWrapperImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED589CB01DC3467298013015 /* MemoryAllocatorWrapperImpl.cpp */; };
+		6319CE8AD9BE4794B2CEC073 /* IConfigurationManager_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8F217999F5104E2CA477DA63 /* IConfigurationManager_I.cpp */; };
+		649B02CA3E1C471794EFE00A /* ExpatAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567350ED77644ADF99009F56 /* ExpatAdapter.cpp */; };
+		666C4FB0E83248AAB07D4AFF /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AD5DAFCEC4A498D56B67B /* xmlrole.c */; };
+		6BC3AEBCC7CB477787F40CDE /* XMPCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2DC1043E2734B7DB56C04B9 /* XMPCommon.cpp */; };
+		7642C6689D4942E49013EFA2 /* IDOMImplementationRegistry_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00D40CB0FF45406198D48506 /* IDOMImplementationRegistry_I.cpp */; };
+		78C169EBF3B748789946AD4E /* XMPDocOps-Utils2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 817C459538424D81B8FF60C7 /* XMPDocOps-Utils2.cpp */; };
+		7A34FB759CBB4A05805E302B /* CoreObjectFactoryImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 61B6C833F3B14339A12298A6 /* CoreObjectFactoryImpl.cpp */; };
+		7E12B3BCB73F43C6BB1E5EF0 /* DefaultErrorNotifierImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A428D7624CF7AE87BC91 /* DefaultErrorNotifierImpl.cpp */; };
+		818638F8659B4C67B9DEA83A /* IArrayNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7251A67481C34AB3B504BD7B /* IArrayNode.cpp */; };
+		819A60F89AB24906B8594257 /* IUTF8StringComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66853F5643A842CE8229F3C5 /* IUTF8StringComparator.cpp */; };
+		81DF63BF44C54E23BFC6EAA3 /* RDFDOMParserImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E6FE3F61DD948FA9046FD3C /* RDFDOMParserImpl.cpp */; };
+		825ADDB00164438E94AF30B8 /* ISimpleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6994A2F8F53A47B39C1B6177 /* ISimpleNode.cpp */; };
+		8374C8556ACC43B0A8A8B5F9 /* IDOMSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE18C772AB041FFB6CD1A89 /* IDOMSerializer.cpp */; };
+		86AA463AD0894D1B99040F5E /* ICoreConfigurationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3B3C40FE343455E80EC7CBE /* ICoreConfigurationManager.cpp */; };
+		8A8CAF92AB164490B471F367 /* IMetadata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE9D97FF2B0F460D8E5FBC9B /* IMetadata.cpp */; };
+		8B76B0DDC5BB4CD890F69EF0 /* IMemoryAllocator_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56E08706E75445D4A2F0519C /* IMemoryAllocator_I.cpp */; };
+		8B793F8AD0024BD4AA1256E9 /* IConfigurable_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B909F3ADA13459B8603AC37 /* IConfigurable_I.cpp */; };
+		8F26AC86F6EB45788DA03B04 /* IErrorNotifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 278CB128085741829C45B65B /* IErrorNotifier.cpp */; };
+		91CF60FA2A5A4864966E6748 /* StructureNodeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8A57C96E9414BEA852EA2EA /* StructureNodeImpl.cpp */; };
+		97A969EA003C4B0EB5B9A3EC /* NodeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5455F334144045D38131CE88 /* NodeImpl.cpp */; };
+		9A86BE0D97414E8AA688F59E /* IPathSegment_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EDBC8F2F4E14837AE25D2CA /* IPathSegment_I.cpp */; };
+		9ABC1385A99C4DA58601FC87 /* ClientDOMSerializerWrapperImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAE528743B38486FB01D00A0 /* ClientDOMSerializerWrapperImpl.cpp */; };
+		9DF7E858E5DA44619A6608A8 /* ArrayNodeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DF707B2E001497DADFE7504 /* ArrayNodeImpl.cpp */; };
+		A0D7F8DD17FB48F4B5EA6761 /* IClientDOMParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3BDD269CE80B4FCDA063BFA9 /* IClientDOMParser.cpp */; };
+		A4A41363550442B38540018A /* AutoSharedLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9AD13C0BE1848E1B24C77E5 /* AutoSharedLock.cpp */; };
+		A79F98AA87A04ED3B4B1CC83 /* XMPCore_Impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DDB67F5E1A764B1CBC7ABE31 /* XMPCore_Impl.cpp */; };
+		A7F77A27DF904BF2BEE81104 /* ICompositeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA97C20527743DA9E41FF0E /* ICompositeNode.cpp */; };
+		AAB6662B31514CC7949B363D /* DOMParserImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AD534C0336A4514B7A8E68E /* DOMParserImpl.cpp */; };
+		AEE165598F2A42F1B540BAC8 /* XMPMeta-GetSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBF633CB69274AC6B823B96A /* XMPMeta-GetSet.cpp */; };
+		B279AD01DECE4823B1C703CB /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D8CAC8E98714B5283BD36FE /* xmlparse.c */; };
+		B7F00625C7174266AFAE3022 /* XMPUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 24B9BDED617A4638803D650C /* XMPUtils.cpp */; };
+		BD8481E22E1D4491BB229E6E /* IDOMParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF8BA9722042578859D54E /* IDOMParser.cpp */; };
+		BF36258FDD0F4AD281735C4B /* WXMPMeta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1894497D3AEC4573BE106077 /* WXMPMeta.cpp */; };
+		C0316A052F474E058BC2D469 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 22680F025BDC45FD963C4FB8 /* xmltok.c */; };
+		C063AC6EDED0448AADB6CA54 /* NameSpacePrefixMapImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0268C97784E47798FB121CF /* NameSpacePrefixMapImpl.cpp */; };
+		C6379EBEBCFB43CF88928B3E /* XMPMeta-Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD9AAE92669B4489B0909882 /* XMPMeta-Serialize.cpp */; };
+		CAD00E3C6F4B48B7A0F82A2C /* INodeIterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9FA8B8A312448F1A8BC24EA /* INodeIterator.cpp */; };
+		D220BD5F00AD49FAB2D6DFC7 /* IStructureNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1572668887AF4252AEE60B0F /* IStructureNode.cpp */; };
+		D27E40B16F5440949D409C57 /* XMPDocOps-Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E6AFDB7017549ACAC41DD41 /* XMPDocOps-Utils.cpp */; };
+		D39A7927C64848C89DDC5247 /* UTF8StringImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92B4BA40E7E244BFB71056B7 /* UTF8StringImpl.cpp */; };
+		D54B71100F1D4D3FA02583FB /* ICoreObjectFactory_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36D5062579F84A02B4B5FADD /* ICoreObjectFactory_I.cpp */; };
+		DCC6A7CF754548D897CCE086 /* IError_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F382383A3C564DDEA15BB910 /* IError_I.cpp */; };
+		DF8BF17F37F94A3BBDDF6D4E /* IClientDOMSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 715899F1E78C4630B8A38EEA /* IClientDOMSerializer.cpp */; };
+		E4F17FE6EA574AD9908B0F8A /* INode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F3986959884D4AAFE005C2 /* INode.cpp */; };
+		E74B8E810C704586B2FE332D /* DOMImplementationRegistryImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE912DC3B2EA40A9935BC1A3 /* DOMImplementationRegistryImpl.cpp */; };
+		E74BBD58ECBA4550BE1520C2 /* INameSpacePrefixMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7540060BE12448689CD75353 /* INameSpacePrefixMap.cpp */; };
+		E89F1E5086734AE3B1BD069C /* ThreadSafeImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 33601F84117D4445AA3C4C9B /* ThreadSafeImpl.cpp */; };
+		E923C8FFFD3D4F91A68B4F29 /* SharedObjectImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 10F65A5EE14049CD892640C8 /* SharedObjectImpl.cpp */; };
+		EA9F67CEBA4248589DB1BD1E /* XMPMeta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECA0E5C40CBC4A02B220DE3F /* XMPMeta.cpp */; };
+		EB426B16DF7F4AD7ACD70F3B /* XMPDocOps2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B839B38AAC0F4BE3A9E3852A /* XMPDocOps2.cpp */; };
+		EC4E767D4F1F45F8850C43E1 /* IMetadataConverterUtils_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41FC308685CA4B7992F25C93 /* IMetadataConverterUtils_I.cpp */; };
+		F486562BDA7B45EF9CF11606 /* ICoreConfigurationManager_I.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A59843DB598E4782AD28D87A /* ICoreConfigurationManager_I.cpp */; };
+		F50A14368ED24AFC99E7ADE5 /* ZUIDSysDep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8E609E81404E4FFFBC24781B /* ZUIDSysDep.cpp */; };
+		F59F4C90A54442A793F5E0CE /* ClientDOMParserWrapperImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 474AC6D81EA94034B58DA57B /* ClientDOMParserWrapperImpl.cpp */; };
+		F606CA279D4940918448C4E1 /* XML_Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B313AE0B81AF4A569E31564B /* XML_Node.cpp */; };
+		F963C9CAEAF744D3BCCA0B9B /* XMPUtils-FileInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC6A773FA3DB45E9B806E776 /* XMPUtils-FileInfo.cpp */; };
+		FB4F5ACD57D54D6E882C1511 /* MemoryManagedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8D39D0DD8FF54665991091EE /* MemoryManagedObject.cpp */; };
+		FBD493E4213F4F0681038FAB /* IConfigurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D7ABD1C9A445AA624D741 /* IConfigurable.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01536F565F834891A40ED647 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F99A0345513D4AA1B5421B34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71C995A7C40D46CFADAEA27D;
+			remoteInfo = ZERO_CHECK;
+		};
+		7A943468F5E44E1BA601C1BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F99A0345513D4AA1B5421B34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9F9A4FFF65E442D85983BF2;
+			remoteInfo = XMPCoreStatic;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00D40CB0FF45406198D48506 /* IDOMImplementationRegistry_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMImplementationRegistry_I.cpp; path = ../source/IDOMImplementationRegistry_I.cpp; sourceTree = SOURCE_ROOT; };
+		01A537BC566D4B24BFF8E2C0 /* IMetadata_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IMetadata_I.cpp; path = ../source/IMetadata_I.cpp; sourceTree = SOURCE_ROOT; };
+		01C82E6580DB49EBBF710B01 /* XMPUtils.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPUtils.hpp; path = ../source/XMPUtils.hpp; sourceTree = SOURCE_ROOT; };
+		049FF7B698D547F1B3950C5F /* IMetadataConverterUtils_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMetadataConverterUtils_I.h; path = ../Interfaces/IMetadataConverterUtils_I.h; sourceTree = SOURCE_ROOT; };
+		0529995719E44E0BA92B84AC /* IConfigurationManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IConfigurationManager.h; path = ../../public/include/XMPCommon/Interfaces/IConfigurationManager.h; sourceTree = SOURCE_ROOT; };
+		055C6ACE1DE241A39D8B2067 /* IPathSegment_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IPathSegment_I.h; path = ../Interfaces/IPathSegment_I.h; sourceTree = SOURCE_ROOT; };
+		05D069B01F4D40CE98AD521B /* DOMSerializerImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DOMSerializerImpl.cpp; path = ../source/DOMSerializerImpl.cpp; sourceTree = SOURCE_ROOT; };
+		068DEEEE03AA49AA83E6B88C /* IMemoryAllocator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMemoryAllocator.h; path = ../../public/include/XMPCommon/Interfaces/IMemoryAllocator.h; sourceTree = SOURCE_ROOT; };
+		0973BE0B956A45D9AEF1E288 /* IObjectFactory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IObjectFactory.h; path = ../../public/include/XMPCommon/Interfaces/IObjectFactory.h; sourceTree = SOURCE_ROOT; };
+		0A6AA12BE22B4B12872AA3D6 /* XMPCoreFwdDeclarations_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreFwdDeclarations_I.h; path = ../XMPCoreFwdDeclarations_I.h; sourceTree = SOURCE_ROOT; };
+		0B909F3ADA13459B8603AC37 /* IConfigurable_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IConfigurable_I.cpp; path = ../../XMPCommon/source/IConfigurable_I.cpp; sourceTree = SOURCE_ROOT; };
+		0C5355F1807F4F5E846442C2 /* ICompositeNode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICompositeNode.h; path = ../../public/include/XMPCore/Interfaces/ICompositeNode.h; sourceTree = SOURCE_ROOT; };
+		0D088E58FB1D4C979B89AB6B /* XMP_LibUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMP_LibUtils.cpp; path = ../../source/XMP_LibUtils.cpp; sourceTree = SOURCE_ROOT; };
+		0D34BDCC559B433F9CD2BB6F /* IArrayNode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IArrayNode.h; path = ../../public/include/XMPCore/Interfaces/IArrayNode.h; sourceTree = SOURCE_ROOT; };
+		0E0C1621C97C45BE95F974BD /* SimpleNodeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = SimpleNodeImpl.h; path = ../ImplHeaders/SimpleNodeImpl.h; sourceTree = SOURCE_ROOT; };
+		0E98E49A70C64BBC8EFD8667 /* UTF8String.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = UTF8String.h; path = ../../XMPCommon/Utilities/UTF8String.h; sourceTree = SOURCE_ROOT; };
+		0ED89A86DED94A83BBEC8394 /* IClientDOMParser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IClientDOMParser.h; path = ../../public/include/XMPCore/Interfaces/IClientDOMParser.h; sourceTree = SOURCE_ROOT; };
+		0F696E278C7F43209F58D929 /* TWrapperFunctions2_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TWrapperFunctions2_I.h; path = ../../XMPCommon/Utilities/TWrapperFunctions2_I.h; sourceTree = SOURCE_ROOT; };
+		0FA9E16B636F42E390329365 /* NodeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = NodeImpl.h; path = ../ImplHeaders/NodeImpl.h; sourceTree = SOURCE_ROOT; };
+		0FE9EB9DC3C449998153BA82 /* IConfigurationManager_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IConfigurationManager_I.h; path = ../../XMPCommon/Interfaces/IConfigurationManager_I.h; sourceTree = SOURCE_ROOT; };
+		10F65A5EE14049CD892640C8 /* SharedObjectImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = SharedObjectImpl.cpp; path = ../../XMPCommon/source/SharedObjectImpl.cpp; sourceTree = SOURCE_ROOT; };
+		111204FFB7E545E4B2E39318 /* IStructureNode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IStructureNode.h; path = ../../public/include/XMPCore/Interfaces/IStructureNode.h; sourceTree = SOURCE_ROOT; };
+		119EB90015C844CF944AFE48 /* TXMPIterator.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = TXMPIterator.hpp; path = ../../public/include/TXMPIterator.hpp; sourceTree = SOURCE_ROOT; };
+		1443D6C468914609B9741382 /* XMPCommonErrorCodes_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonErrorCodes_I.h; path = ../../XMPCommon/XMPCommonErrorCodes_I.h; sourceTree = SOURCE_ROOT; };
+		148577ADE22B4AF299AD1C64 /* NameSpacePrefixMapImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = NameSpacePrefixMapImpl.h; path = ../ImplHeaders/NameSpacePrefixMapImpl.h; sourceTree = SOURCE_ROOT; };
+		15464BE4BEBC435D98103200 /* DOMImplementationRegistryImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DOMImplementationRegistryImpl.h; path = ../ImplHeaders/DOMImplementationRegistryImpl.h; sourceTree = SOURCE_ROOT; };
+		1572668887AF4252AEE60B0F /* IStructureNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IStructureNode.cpp; path = ../../public/include/XMPCore/source/IStructureNode.cpp; sourceTree = SOURCE_ROOT; };
+		175A18553B0E447AB75E3E31 /* TXMPUtils.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = TXMPUtils.hpp; path = ../../public/include/TXMPUtils.hpp; sourceTree = SOURCE_ROOT; };
+		1894497D3AEC4573BE106077 /* WXMPMeta.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = WXMPMeta.cpp; path = ../source/WXMPMeta.cpp; sourceTree = SOURCE_ROOT; };
+		198684AE0A14425A9EDBC0B3 /* XMPCore.exp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = XMPCore.exp; path = ../resource/mac/XMPCore.exp; sourceTree = SOURCE_ROOT; };
+		19E735B8DFDF499584F3D4E2 /* TXMPDocOps.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = TXMPDocOps.hpp; path = ../../public/include/TXMPDocOps.hpp; sourceTree = SOURCE_ROOT; };
+		1BD32A1106814E0FA72A2EAD /* ICompositeNode_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICompositeNode_I.cpp; path = ../source/ICompositeNode_I.cpp; sourceTree = SOURCE_ROOT; };
+		1ED54C4A7385411A868AB037 /* MemoryManagedObject.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MemoryManagedObject.h; path = ../../XMPCommon/BaseClasses/MemoryManagedObject.h; sourceTree = SOURCE_ROOT; };
+		1EDBF43DF67546AF9128A9DE /* IDOMImplementationRegistry.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMImplementationRegistry.h; path = ../../public/include/XMPCore/Interfaces/IDOMImplementationRegistry.h; sourceTree = SOURCE_ROOT; };
+		1F00FEF34FE349B082BEED9C /* TNodeIteratorImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TNodeIteratorImpl.h; path = ../ImplHeaders/TNodeIteratorImpl.h; sourceTree = SOURCE_ROOT; };
+		1F0D7ABD1C9A445AA624D741 /* IConfigurable.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IConfigurable.cpp; path = ../../public/include/XMPCommon/source/IConfigurable.cpp; sourceTree = SOURCE_ROOT; };
+		1FE26B833AB545BEA88B1E56 /* TXMPDocOps.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = TXMPDocOps.incl_cpp; path = "../../public/include/client-glue/TXMPDocOps.incl_cpp"; sourceTree = SOURCE_ROOT; };
+		20CB886DC48E48C79AB9F6BE /* IArrayNode_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IArrayNode_I.h; path = ../Interfaces/IArrayNode_I.h; sourceTree = SOURCE_ROOT; };
+		2101DC5E12A64AE28DB18BC8 /* WXMPDocOps.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = WXMPDocOps.hpp; path = "../../public/include/client-glue/WXMPDocOps.hpp"; sourceTree = SOURCE_ROOT; };
+		21F821541ABD46C4AC0BCC64 /* XMPCore_ChangeLog.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPCore_ChangeLog.hpp; path = ../source/XMPCore_ChangeLog.hpp; sourceTree = SOURCE_ROOT; };
+		2259CEC297084912B430CE7E /* WXMPIterator.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = WXMPIterator.hpp; path = "../../public/include/client-glue/WXMPIterator.hpp"; sourceTree = SOURCE_ROOT; };
+		22680F025BDC45FD963C4FB8 /* xmltok.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = xmltok.c; path = "../third-party/expat/public/lib/xmltok.c"; sourceTree = SOURCE_ROOT; };
+		22FCD70806E345668E08C58F /* XMPCore.unexp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = XMPCore.unexp; path = ../resource/mac/XMPCore.unexp; sourceTree = SOURCE_ROOT; };
+		23476719D8284717B0FBE842 /* ConfigurableImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ConfigurableImpl.h; path = ../../XMPCommon/ImplHeaders/ConfigurableImpl.h; sourceTree = SOURCE_ROOT; };
+		23663B001AA14A40A2CF2DD2 /* TXMPMeta.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = TXMPMeta.hpp; path = ../../public/include/TXMPMeta.hpp; sourceTree = SOURCE_ROOT; };
+		24B9BDED617A4638803D650C /* XMPUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPUtils.cpp; path = ../source/XMPUtils.cpp; sourceTree = SOURCE_ROOT; };
+		2625338E8D8045129BD955BE /* ICoreObjectFactory_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICoreObjectFactory_I.h; path = ../Interfaces/ICoreObjectFactory_I.h; sourceTree = SOURCE_ROOT; };
+		26A28A40B4544E2286A89FCA /* ErrorImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ErrorImpl.cpp; path = ../../XMPCommon/source/ErrorImpl.cpp; sourceTree = SOURCE_ROOT; };
+		274D3E41C1D246B2A43489A4 /* XMPCommonFwdDeclarations_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonFwdDeclarations_I.h; path = ../../XMPCommon/XMPCommonFwdDeclarations_I.h; sourceTree = SOURCE_ROOT; };
+		278CB128085741829C45B65B /* IErrorNotifier.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IErrorNotifier.cpp; path = ../../public/include/XMPCommon/source/IErrorNotifier.cpp; sourceTree = SOURCE_ROOT; };
+		298140B9AB2F45048C3BD50A /* ArrayNodeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ArrayNodeImpl.h; path = ../ImplHeaders/ArrayNodeImpl.h; sourceTree = SOURCE_ROOT; };
+		2BE1EBB2920D423E9210ED3C /* INode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INode.h; path = ../../public/include/XMPCore/Interfaces/INode.h; sourceTree = SOURCE_ROOT; };
+		2C2B674A17D24801B82EDC59 /* DOMParserImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DOMParserImpl.h; path = ../ImplHeaders/DOMParserImpl.h; sourceTree = SOURCE_ROOT; };
+		2D8CAC8E98714B5283BD36FE /* xmlparse.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = xmlparse.c; path = "../third-party/expat/public/lib/xmlparse.c"; sourceTree = SOURCE_ROOT; };
+		2DBF8BA9722042578859D54E /* IDOMParser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMParser.cpp; path = ../../public/include/XMPCore/source/IDOMParser.cpp; sourceTree = SOURCE_ROOT; };
+		2E32DCE287C64463A18E2C26 /* UnicodeConversions.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = UnicodeConversions.hpp; path = ../../source/UnicodeConversions.hpp; sourceTree = SOURCE_ROOT; };
+		2E914D71A5DF448FBEB1E802 /* TAllocator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAllocator.h; path = ../../XMPCommon/Utilities/TAllocator.h; sourceTree = SOURCE_ROOT; };
+		2EA7CF9ED8EA4161AFD66406 /* ZUIDUUID.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ZUIDUUID.cpp; path = "../../third-party/zuid/sources/ZUIDUUID.cpp"; sourceTree = SOURCE_ROOT; };
+		2EFF885DBF05498B9944888A /* TWrapperFunctions_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TWrapperFunctions_I.h; path = ../../XMPCommon/Utilities/TWrapperFunctions_I.h; sourceTree = SOURCE_ROOT; };
+		2F6C14382926458E93B45CA2 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		30B1519CF4B6428AA07E2EC1 /* DOMSerializerImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DOMSerializerImpl.h; path = ../ImplHeaders/DOMSerializerImpl.h; sourceTree = SOURCE_ROOT; };
+		31D9E07EE1AD4D6AAF4BD69B /* IPath.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IPath.h; path = ../../public/include/XMPCore/Interfaces/IPath.h; sourceTree = SOURCE_ROOT; };
+		323150620EEC40428C5B811D /* UnicodeInlines.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = UnicodeInlines.incl_cpp; path = ../../source/UnicodeInlines.incl_cpp; sourceTree = SOURCE_ROOT; };
+		32425EC23A17487195804BBB /* CompositeNodeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = CompositeNodeImpl.cpp; path = ../source/CompositeNodeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		33601F84117D4445AA3C4C9B /* ThreadSafeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ThreadSafeImpl.cpp; path = ../../XMPCommon/source/ThreadSafeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		33B4D2D757524F88AC2851BE /* ErrorNotifierWrapperImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ErrorNotifierWrapperImpl.cpp; path = ../../XMPCommon/source/ErrorNotifierWrapperImpl.cpp; sourceTree = SOURCE_ROOT; };
+		36D5062579F84A02B4B5FADD /* ICoreObjectFactory_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICoreObjectFactory_I.cpp; path = ../source/ICoreObjectFactory_I.cpp; sourceTree = SOURCE_ROOT; };
+		3751B0E7F70C4782B935B933 /* IError.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IError.h; path = ../../public/include/XMPCommon/Interfaces/IError.h; sourceTree = SOURCE_ROOT; };
+		37757AF38FBD4F73B294959F /* XMPCommonDefines_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonDefines_I.h; path = ../../XMPCommon/XMPCommonDefines_I.h; sourceTree = SOURCE_ROOT; };
+		38082AD228DF4A43B588F993 /* ClientDOMParserWrapperImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ClientDOMParserWrapperImpl.h; path = ../ImplHeaders/ClientDOMParserWrapperImpl.h; sourceTree = SOURCE_ROOT; };
+		3AE6698C3ED54AF88B62A14D /* StructureNodeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = StructureNodeImpl.h; path = ../ImplHeaders/StructureNodeImpl.h; sourceTree = SOURCE_ROOT; };
+		3B22AD2190EB466782395B76 /* TAtomicTypes_Linux.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAtomicTypes_Linux.h; path = ../../XMPCommon/Utilities/TAtomicTypes_Linux.h; sourceTree = SOURCE_ROOT; };
+		3BB4BAD44C064F879FE4A75F /* SimpleNodeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = SimpleNodeImpl.cpp; path = ../source/SimpleNodeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		3BDD269CE80B4FCDA063BFA9 /* IClientDOMParser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IClientDOMParser.cpp; path = ../../public/include/XMPCore/source/IClientDOMParser.cpp; sourceTree = SOURCE_ROOT; };
+		3E6FE3F61DD948FA9046FD3C /* RDFDOMParserImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = RDFDOMParserImpl.cpp; path = ../source/RDFDOMParserImpl.cpp; sourceTree = SOURCE_ROOT; };
+		3F2B1C49228D438CB230DE58 /* ISharedObject.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ISharedObject.h; path = ../../public/include/XMPCommon/Interfaces/BaseInterfaces/ISharedObject.h; sourceTree = SOURCE_ROOT; };
+		3F6EAA292B35424391FE86C3 /* IDOMImplementationRegistry_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMImplementationRegistry_I.h; path = ../Interfaces/IDOMImplementationRegistry_I.h; sourceTree = SOURCE_ROOT; };
+		403D75A46A154D898B28275E /* ParseRDF.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ParseRDF.cpp; path = ../source/ParseRDF.cpp; sourceTree = SOURCE_ROOT; };
+		4049921AF16E47C883F9ABFF /* IConfigurable_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IConfigurable_I.h; path = ../../XMPCommon/Interfaces/BaseInterfaces/IConfigurable_I.h; sourceTree = SOURCE_ROOT; };
+		40B32B596D754F23B47D3948 /* CoreObjectFactoryImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = CoreObjectFactoryImpl.h; path = ../ImplHeaders/CoreObjectFactoryImpl.h; sourceTree = SOURCE_ROOT; };
+		41B89D0B2DCF4FEC9DB252AF /* WXMPMeta.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = WXMPMeta.hpp; path = "../../public/include/client-glue/WXMPMeta.hpp"; sourceTree = SOURCE_ROOT; };
+		41FC308685CA4B7992F25C93 /* IMetadataConverterUtils_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IMetadataConverterUtils_I.cpp; path = ../source/IMetadataConverterUtils_I.cpp; sourceTree = SOURCE_ROOT; };
+		4206B270D3F04287BC43C81B /* XMP_Const.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMP_Const.h; path = ../../public/include/XMP_Const.h; sourceTree = SOURCE_ROOT; };
+		4564B9CB207E4F4C99CC889D /* XMLParserAdapter.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMLParserAdapter.hpp; path = ../../source/XMLParserAdapter.hpp; sourceTree = SOURCE_ROOT; };
+		474AC6D81EA94034B58DA57B /* ClientDOMParserWrapperImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ClientDOMParserWrapperImpl.cpp; path = ../source/ClientDOMParserWrapperImpl.cpp; sourceTree = SOURCE_ROOT; };
+		478482E2B0A742A8857B9084 /* ClientDOMSerializerWrapperImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ClientDOMSerializerWrapperImpl.h; path = ../ImplHeaders/ClientDOMSerializerWrapperImpl.h; sourceTree = SOURCE_ROOT; };
+		47C9DAE187F14F6BBC45E695 /* ExpatAdapter.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ExpatAdapter.hpp; path = ../../source/ExpatAdapter.hpp; sourceTree = SOURCE_ROOT; };
+		4BCC740792B84143B690DCB8 /* IUTF8String.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IUTF8String.cpp; path = ../../public/include/XMPCommon/source/IUTF8String.cpp; sourceTree = SOURCE_ROOT; };
+		4CF941DF94214F8089DCB94D /* MetadataImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = MetadataImpl.cpp; path = ../source/MetadataImpl.cpp; sourceTree = SOURCE_ROOT; };
+		4CFC3E2BE55442C2A3359F9C /* AutoSharedLock.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = AutoSharedLock.h; path = ../../XMPCommon/Utilities/AutoSharedLock.h; sourceTree = SOURCE_ROOT; };
+		4D8EB58D07F347D381835585 /* ISimpleNode.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ISimpleNode.h; path = ../../public/include/XMPCore/Interfaces/ISimpleNode.h; sourceTree = SOURCE_ROOT; };
+		4DF707B2E001497DADFE7504 /* ArrayNodeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ArrayNodeImpl.cpp; path = ../source/ArrayNodeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		4EB3084484C34CF68EAD042B /* ThreadSafeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ThreadSafeImpl.h; path = ../../XMPCommon/ImplHeaders/ThreadSafeImpl.h; sourceTree = SOURCE_ROOT; };
+		4ED2A1D2F82043BDB9E72DD1 /* PathSegmentImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PathSegmentImpl.h; path = ../ImplHeaders/PathSegmentImpl.h; sourceTree = SOURCE_ROOT; };
+		4F1AD5DAFCEC4A498D56B67B /* xmlrole.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; name = xmlrole.c; path = "../third-party/expat/public/lib/xmlrole.c"; sourceTree = SOURCE_ROOT; };
+		52E79DE189A34D01B8F6E038 /* XMP_Environment.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMP_Environment.h; path = ../../public/include/XMP_Environment.h; sourceTree = SOURCE_ROOT; };
+		52F17B8ACBDE46AEA2E27BDE /* XMPCoreLatestInterfaceVersions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreLatestInterfaceVersions.h; path = ../../public/include/XMPCore/XMPCoreLatestInterfaceVersions.h; sourceTree = SOURCE_ROOT; };
+		5400D77CDDCC4FFCA3CAE9F8 /* IConfigurationManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IConfigurationManager.cpp; path = ../../public/include/XMPCommon/source/IConfigurationManager.cpp; sourceTree = SOURCE_ROOT; };
+		5455F334144045D38131CE88 /* NodeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = NodeImpl.cpp; path = ../source/NodeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		567350ED77644ADF99009F56 /* ExpatAdapter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ExpatAdapter.cpp; path = ../source/ExpatAdapter.cpp; sourceTree = SOURCE_ROOT; };
+		56D27055413B4276B774BCF5 /* XMP_BuildInfo.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMP_BuildInfo.h; path = ../../build/XMP_BuildInfo.h; sourceTree = SOURCE_ROOT; };
+		56E08706E75445D4A2F0519C /* IMemoryAllocator_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IMemoryAllocator_I.cpp; path = ../../XMPCommon/source/IMemoryAllocator_I.cpp; sourceTree = SOURCE_ROOT; };
+		59C042E8EF184630A3E7CF90 /* UnicodeConversions.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = UnicodeConversions.cpp; path = ../../source/UnicodeConversions.cpp; sourceTree = SOURCE_ROOT; };
+		5AD534C0336A4514B7A8E68E /* DOMParserImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DOMParserImpl.cpp; path = ../source/DOMParserImpl.cpp; sourceTree = SOURCE_ROOT; };
+		5BAF9FE313BB4AEB92F817C9 /* INameSpacePrefixMap_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INameSpacePrefixMap_I.h; path = ../Interfaces/INameSpacePrefixMap_I.h; sourceTree = SOURCE_ROOT; };
+		5BF7A933B7214B3E98220722 /* MetadataConverterUtilsImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = MetadataConverterUtilsImpl.cpp; path = ../source/MetadataConverterUtilsImpl.cpp; sourceTree = SOURCE_ROOT; };
+		5E36E6145A3B40599F28F88C /* SharedMutexImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = SharedMutexImpl.cpp; path = ../../XMPCommon/source/SharedMutexImpl.cpp; sourceTree = SOURCE_ROOT; };
+		5FC6C61455AE4602A72A521C /* INameSpacePrefixMap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INameSpacePrefixMap.h; path = ../../public/include/XMPCore/Interfaces/INameSpacePrefixMap.h; sourceTree = SOURCE_ROOT; };
+		61B6C833F3B14339A12298A6 /* CoreObjectFactoryImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = CoreObjectFactoryImpl.cpp; path = ../source/CoreObjectFactoryImpl.cpp; sourceTree = SOURCE_ROOT; };
+		62392B543E2A4F249863027B /* WXMPDocOps.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = WXMPDocOps.cpp; path = ../source/WXMPDocOps.cpp; sourceTree = SOURCE_ROOT; };
+		629C1C74793046BB8DEDA810 /* PathImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PathImpl.h; path = ../ImplHeaders/PathImpl.h; sourceTree = SOURCE_ROOT; };
+		63EAEE5DB4414EB9A1B9D0B3 /* IVersionable.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IVersionable.h; path = ../../public/include/XMPCommon/Interfaces/BaseInterfaces/IVersionable.h; sourceTree = SOURCE_ROOT; };
+		65A8E27944154AE9AB3DC07F /* IErrorNotifier.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IErrorNotifier.h; path = ../../public/include/XMPCommon/Interfaces/IErrorNotifier.h; sourceTree = SOURCE_ROOT; };
+		664C601EDE854B8A9FD140A4 /* PathSegmentImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = PathSegmentImpl.cpp; path = ../source/PathSegmentImpl.cpp; sourceTree = SOURCE_ROOT; };
+		66853F5643A842CE8229F3C5 /* IUTF8StringComparator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IUTF8StringComparator.cpp; path = ../../XMPCommon/source/IUTF8StringComparator.cpp; sourceTree = SOURCE_ROOT; };
+		682F9868E49244289B724CAA /* INodeIterator_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INodeIterator_I.h; path = ../Interfaces/INodeIterator_I.h; sourceTree = SOURCE_ROOT; };
+		686FB892413E43AAA7C90052 /* IDOMParser_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMParser_I.h; path = ../Interfaces/IDOMParser_I.h; sourceTree = SOURCE_ROOT; };
+		6994A2F8F53A47B39C1B6177 /* ISimpleNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ISimpleNode.cpp; path = ../../public/include/XMPCore/source/ISimpleNode.cpp; sourceTree = SOURCE_ROOT; };
+		6AFD96778E8B4E9DB13AA700 /* IUTF8String_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IUTF8String_I.h; path = ../../XMPCommon/Interfaces/IUTF8String_I.h; sourceTree = SOURCE_ROOT; };
+		6CAB04CC214F47CE8EABAEE9 /* XMPCoreDefines_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreDefines_I.h; path = ../XMPCoreDefines_I.h; sourceTree = SOURCE_ROOT; };
+		6E6AFDB7017549ACAC41DD41 /* XMPDocOps-Utils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPDocOps-Utils.cpp"; path = "../source/XMPDocOps-Utils.cpp"; sourceTree = SOURCE_ROOT; };
+		70A42379AA044B1A8DF886C3 /* XMPCommonLatestInterfaceVersions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonLatestInterfaceVersions.h; path = ../../public/include/XMPCommon/XMPCommonLatestInterfaceVersions.h; sourceTree = SOURCE_ROOT; };
+		715899F1E78C4630B8A38EEA /* IClientDOMSerializer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IClientDOMSerializer.cpp; path = ../../public/include/XMPCore/source/IClientDOMSerializer.cpp; sourceTree = SOURCE_ROOT; };
+		718D20B738464F88946A71A2 /* expat_config.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = expat_config.h; path = ../resource/mac/expat_config.h; sourceTree = SOURCE_ROOT; };
+		7251A67481C34AB3B504BD7B /* IArrayNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IArrayNode.cpp; path = ../../public/include/XMPCore/source/IArrayNode.cpp; sourceTree = SOURCE_ROOT; };
+		730085F6881C4427AA292822 /* IStructureNode_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IStructureNode_I.h; path = ../Interfaces/IStructureNode_I.h; sourceTree = SOURCE_ROOT; };
+		7540060BE12448689CD75353 /* INameSpacePrefixMap.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INameSpacePrefixMap.cpp; path = ../../public/include/XMPCore/source/INameSpacePrefixMap.cpp; sourceTree = SOURCE_ROOT; };
+		75666AD9B7FC4F00A096ADDB /* ErrorImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ErrorImpl.h; path = ../../XMPCommon/ImplHeaders/ErrorImpl.h; sourceTree = SOURCE_ROOT; };
+		7671EA1441494CB1B201C27B /* IMemoryAllocator_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMemoryAllocator_I.h; path = ../../XMPCommon/Interfaces/IMemoryAllocator_I.h; sourceTree = SOURCE_ROOT; };
+		767B850171BD4785BF791905 /* MemoryAllocatorWrapperImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MemoryAllocatorWrapperImpl.h; path = ../../XMPCommon/ImplHeaders/MemoryAllocatorWrapperImpl.h; sourceTree = SOURCE_ROOT; };
+		76DB50D38A4A415AA61FD03F /* XMPIterator2.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPIterator2.cpp; path = ../source/XMPIterator2.cpp; sourceTree = SOURCE_ROOT; };
+		7853932FA3CE469DA3E36DC5 /* IError_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IError_I.h; path = ../../XMPCommon/Interfaces/IError_I.h; sourceTree = SOURCE_ROOT; };
+		790556C2C98D4AA99F098EE6 /* IDOMSerializer_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMSerializer_I.h; path = ../Interfaces/IDOMSerializer_I.h; sourceTree = SOURCE_ROOT; };
+		7B09392C91494ACCA0285205 /* TXMPAlbumArt.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = TXMPAlbumArt.incl_cpp; path = "../../public/include/client-glue/TXMPAlbumArt.incl_cpp"; sourceTree = SOURCE_ROOT; };
+		7E39430C753448E8BDB8C8D8 /* XMP.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = XMP.incl_cpp; path = ../../public/include/XMP.incl_cpp; sourceTree = SOURCE_ROOT; };
+		7F1B10792CF24789BB07990F /* ConfigurationManagerImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ConfigurationManagerImpl.cpp; path = ../../XMPCommon/source/ConfigurationManagerImpl.cpp; sourceTree = SOURCE_ROOT; };
+		7F7F39A7986B4F8A947CA30C /* XMPCoreErrorCodes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreErrorCodes.h; path = ../../public/include/XMPCore/XMPCoreErrorCodes.h; sourceTree = SOURCE_ROOT; };
+		7FC05EDC65C9422D83665859 /* ICoreObjectFactory.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICoreObjectFactory.cpp; path = ../../public/include/XMPCore/source/ICoreObjectFactory.cpp; sourceTree = SOURCE_ROOT; };
+		8003147336034E0EB32260E5 /* IPathSegment.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IPathSegment.h; path = ../../public/include/XMPCore/Interfaces/IPathSegment.h; sourceTree = SOURCE_ROOT; };
+		817C459538424D81B8FF60C7 /* XMPDocOps-Utils2.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPDocOps-Utils2.cpp"; path = "../source/XMPDocOps-Utils2.cpp"; sourceTree = SOURCE_ROOT; };
+		84473595427E4BDA9D3C0EA0 /* CoreConfigurationManagerImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = CoreConfigurationManagerImpl.cpp; path = ../source/CoreConfigurationManagerImpl.cpp; sourceTree = SOURCE_ROOT; };
+		8645A29D100A477C9037C692 /* IDOMSerializer_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMSerializer_I.cpp; path = ../source/IDOMSerializer_I.cpp; sourceTree = SOURCE_ROOT; };
+		89B343E55ABD4211BD8FADAD /* CoreConfigurationManagerImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = CoreConfigurationManagerImpl.h; path = ../ImplHeaders/CoreConfigurationManagerImpl.h; sourceTree = SOURCE_ROOT; };
+		8A116D4D1F2644D99B04094B /* TWrapperFunctions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TWrapperFunctions.h; path = ../../public/include/XMPCommon/Utilities/TWrapperFunctions.h; sourceTree = SOURCE_ROOT; };
+		8B20B8961938403A8678BA3C /* ISharedObject_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ISharedObject_I.h; path = ../../XMPCommon/Interfaces/BaseInterfaces/ISharedObject_I.h; sourceTree = SOURCE_ROOT; };
+		8B2F61C52D2048278138A429 /* TXMPIterator.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = TXMPIterator.incl_cpp; path = "../../public/include/client-glue/TXMPIterator.incl_cpp"; sourceTree = SOURCE_ROOT; };
+		8C5E000B3F71437689D9BE22 /* WXMPUtils.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = WXMPUtils.hpp; path = "../../public/include/client-glue/WXMPUtils.hpp"; sourceTree = SOURCE_ROOT; };
+		8C80051239FD4D47B36D9AEE /* IError.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IError.cpp; path = ../../public/include/XMPCommon/source/IError.cpp; sourceTree = SOURCE_ROOT; };
+		8C9FC2B430D84F5F9F0DD449 /* ICoreConfigurationManager.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICoreConfigurationManager.h; path = ../../public/include/XMPCore/Interfaces/ICoreConfigurationManager.h; sourceTree = SOURCE_ROOT; };
+		8D39D0DD8FF54665991091EE /* MemoryManagedObject.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = MemoryManagedObject.cpp; path = ../../XMPCommon/source/MemoryManagedObject.cpp; sourceTree = SOURCE_ROOT; };
+		8E609E81404E4FFFBC24781B /* ZUIDSysDep.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ZUIDSysDep.cpp; path = "../../third-party/zuid/sources/ZUIDSysDep.cpp"; sourceTree = SOURCE_ROOT; };
+		8F217999F5104E2CA477DA63 /* IConfigurationManager_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IConfigurationManager_I.cpp; path = ../../XMPCommon/source/IConfigurationManager_I.cpp; sourceTree = SOURCE_ROOT; };
+		8FE7E3FE10324C15B73F01BC /* IDOMParser_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMParser_I.cpp; path = ../source/IDOMParser_I.cpp; sourceTree = SOURCE_ROOT; };
+		92B4BA40E7E244BFB71056B7 /* UTF8StringImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = UTF8StringImpl.cpp; path = ../../XMPCommon/source/UTF8StringImpl.cpp; sourceTree = SOURCE_ROOT; };
+		94AC672538414B91A2733447 /* IDOMSerializer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMSerializer.h; path = ../../public/include/XMPCore/Interfaces/IDOMSerializer.h; sourceTree = SOURCE_ROOT; };
+		94FAE0FA873A4E1D8197534F /* IDOMImplementationRegistry.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMImplementationRegistry.cpp; path = ../../public/include/XMPCore/source/IDOMImplementationRegistry.cpp; sourceTree = SOURCE_ROOT; };
+		952EAAD21CF84863A9B21EB5 /* ISimpleNode_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ISimpleNode_I.h; path = ../Interfaces/ISimpleNode_I.h; sourceTree = SOURCE_ROOT; };
+		95BE06486BDE414A9972A406 /* XMPCoreFwdDeclarations.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreFwdDeclarations.h; path = ../../public/include/XMPCore/XMPCoreFwdDeclarations.h; sourceTree = SOURCE_ROOT; };
+		978FB2D431DF45CDBFC3A497 /* IClientDOMSerializer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IClientDOMSerializer.h; path = ../../public/include/XMPCore/Interfaces/IClientDOMSerializer.h; sourceTree = SOURCE_ROOT; };
+		99D54EB4E114491CA498D175 /* ConfigurationManagerImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ConfigurationManagerImpl.h; path = ../../XMPCommon/ImplHeaders/ConfigurationManagerImpl.h; sourceTree = SOURCE_ROOT; };
+		9A40AFD2A6FC4CE6BC98C80A /* TXMPUtils.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = TXMPUtils.incl_cpp; path = "../../public/include/client-glue/TXMPUtils.incl_cpp"; sourceTree = SOURCE_ROOT; };
+		9B7FAED0270F493888747B10 /* WXMPIterator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = WXMPIterator.cpp; path = ../source/WXMPIterator.cpp; sourceTree = SOURCE_ROOT; };
+		9B844C82F3C345AD8B5D5751 /* TSingleton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TSingleton.h; path = ../../XMPCommon/BaseClasses/TSingleton.h; sourceTree = SOURCE_ROOT; };
+		9BC3E769BF4C4D5CAE7BCFD5 /* XMPCore_Impl.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPCore_Impl.hpp; path = ../source/XMPCore_Impl.hpp; sourceTree = SOURCE_ROOT; };
+		9E2AD91BC9694717A3A8FAFA /* MetadataConverterUtilsImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MetadataConverterUtilsImpl.h; path = ../ImplHeaders/MetadataConverterUtilsImpl.h; sourceTree = SOURCE_ROOT; };
+		9EDBC8F2F4E14837AE25D2CA /* IPathSegment_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IPathSegment_I.cpp; path = ../source/IPathSegment_I.cpp; sourceTree = SOURCE_ROOT; };
+		9FC5595A5C4F4F38984AD3D1 /* RDFDOMSerializerImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = RDFDOMSerializerImpl.cpp; path = ../source/RDFDOMSerializerImpl.cpp; sourceTree = SOURCE_ROOT; };
+		A05CC9E4B43C44E59973445A /* XMPCore.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.text.plist; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = XMPCore.plist; path = ../resource/mac/XMPCore.plist; sourceTree = SOURCE_ROOT; };
+		A1B29CA0C88E44C9BB71F5DF /* TXMPAlbumArt.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = TXMPAlbumArt.hpp; path = ../../public/include/TXMPAlbumArt.hpp; sourceTree = SOURCE_ROOT; };
+		A4C8A7B494D54A73B9A7A079 /* INameSpacePrefixMap_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INameSpacePrefixMap_I.cpp; path = ../source/INameSpacePrefixMap_I.cpp; sourceTree = SOURCE_ROOT; };
+		A59843DB598E4782AD28D87A /* ICoreConfigurationManager_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICoreConfigurationManager_I.cpp; path = ../source/ICoreConfigurationManager_I.cpp; sourceTree = SOURCE_ROOT; };
+		A668740AA38648C187C035AD /* INode_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INode_I.h; path = ../Interfaces/INode_I.h; sourceTree = SOURCE_ROOT; };
+		A731253CCBC449129F742CCD /* ISharedMutex.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ISharedMutex.h; path = ../../XMPCommon/Interfaces/ISharedMutex.h; sourceTree = SOURCE_ROOT; };
+		A876045AE63C4650B70B7AB8 /* DefaultErrorNotifierImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DefaultErrorNotifierImpl.h; path = ../../XMPCommon/ImplHeaders/DefaultErrorNotifierImpl.h; sourceTree = SOURCE_ROOT; };
+		A8A57C96E9414BEA852EA2EA /* StructureNodeImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = StructureNodeImpl.cpp; path = ../source/StructureNodeImpl.cpp; sourceTree = SOURCE_ROOT; };
+		AA25D15DC00244E6AF6C24DA /* XMPMeta.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPMeta.hpp; path = ../source/XMPMeta.hpp; sourceTree = SOURCE_ROOT; };
+		AB6AA3BA243141888DB4A61D /* MetadataImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MetadataImpl.h; path = ../ImplHeaders/MetadataImpl.h; sourceTree = SOURCE_ROOT; };
+		ADF89E68FAC143EC8BB18F6D /* ErrorNotifierWrapperImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ErrorNotifierWrapperImpl.h; path = ../../XMPCommon/ImplHeaders/ErrorNotifierWrapperImpl.h; sourceTree = SOURCE_ROOT; };
+		AE0E792DF6A14926A4AAFDB4 /* IPath_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IPath_I.cpp; path = ../source/IPath_I.cpp; sourceTree = SOURCE_ROOT; };
+		AE9D97FF2B0F460D8E5FBC9B /* IMetadata.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IMetadata.cpp; path = ../../public/include/XMPCore/source/IMetadata.cpp; sourceTree = SOURCE_ROOT; };
+		B03DDE61B8D948548E15F785 /* INodeIterator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = INodeIterator.h; path = ../../public/include/XMPCore/Interfaces/INodeIterator.h; sourceTree = SOURCE_ROOT; };
+		B0B87666A4704F1D81A143E0 /* RDFDOMParserImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = RDFDOMParserImpl.h; path = ../ImplHeaders/RDFDOMParserImpl.h; sourceTree = SOURCE_ROOT; };
+		B2DC1043E2734B7DB56C04B9 /* XMPCommon.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPCommon.cpp; path = ../../XMPCommon/source/XMPCommon.cpp; sourceTree = SOURCE_ROOT; };
+		B313AE0B81AF4A569E31564B /* XML_Node.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XML_Node.cpp; path = ../../source/XML_Node.cpp; sourceTree = SOURCE_ROOT; };
+		B43DFC4381B34DCC98DE235F /* IMetadata_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMetadata_I.h; path = ../Interfaces/IMetadata_I.h; sourceTree = SOURCE_ROOT; };
+		B5792DA92C36463CADAC0C37 /* XMPMeta-Parse.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPMeta-Parse.cpp"; path = "../source/XMPMeta-Parse.cpp"; sourceTree = SOURCE_ROOT; };
+		B5A3F85DCE2743C39A152353 /* XMPDocOps.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPDocOps.hpp; path = ../source/XMPDocOps.hpp; sourceTree = SOURCE_ROOT; };
+		B5AAAD5EFFC24E9A98B51AD6 /* IThreadSafe.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IThreadSafe.h; path = ../../public/include/XMPCommon/Interfaces/BaseInterfaces/IThreadSafe.h; sourceTree = SOURCE_ROOT; };
+		B630237B856C47B9960D2363 /* TAtomicTypes_Mac.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAtomicTypes_Mac.h; path = ../../XMPCommon/Utilities/TAtomicTypes_Mac.h; sourceTree = SOURCE_ROOT; };
+		B7ED1B9390264227B8497C14 /* XMPMeta2-GetSet.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPMeta2-GetSet.cpp"; path = "../source/XMPMeta2-GetSet.cpp"; sourceTree = SOURCE_ROOT; };
+		B839B38AAC0F4BE3A9E3852A /* XMPDocOps2.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPDocOps2.cpp; path = ../source/XMPDocOps2.cpp; sourceTree = SOURCE_ROOT; };
+		B8B292527713430D85F89885 /* IMetadataConverterUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMetadataConverterUtils.h; path = ../../public/include/XMPCore/Interfaces/IMetadataConverterUtils.h; sourceTree = SOURCE_ROOT; };
+		BA3F97DAB566482F8824FBFC /* XMPCoreDefines.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCoreDefines.h; path = ../../public/include/XMPCore/XMPCoreDefines.h; sourceTree = SOURCE_ROOT; };
+		BA595BC064EF47EF8B295FAB /* XMPCommonErrorCodes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonErrorCodes.h; path = ../../public/include/XMPCommon/XMPCommonErrorCodes.h; sourceTree = SOURCE_ROOT; };
+		BAE18C772AB041FFB6CD1A89 /* IDOMSerializer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IDOMSerializer.cpp; path = ../../public/include/XMPCore/source/IDOMSerializer.cpp; sourceTree = SOURCE_ROOT; };
+		BAE528743B38486FB01D00A0 /* ClientDOMSerializerWrapperImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ClientDOMSerializerWrapperImpl.cpp; path = ../source/ClientDOMSerializerWrapperImpl.cpp; sourceTree = SOURCE_ROOT; };
+		BBF633CB69274AC6B823B96A /* XMPMeta-GetSet.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPMeta-GetSet.cpp"; path = "../source/XMPMeta-GetSet.cpp"; sourceTree = SOURCE_ROOT; };
+		BDA0707394DC406F9A7A4612 /* TAtomicTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAtomicTypes.h; path = ../../XMPCommon/Utilities/TAtomicTypes.h; sourceTree = SOURCE_ROOT; };
+		BE31682B97BC4494A09A55B7 /* TAtomicTypes_Win.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAtomicTypes_Win.h; path = ../../XMPCommon/Utilities/TAtomicTypes_Win.h; sourceTree = SOURCE_ROOT; };
+		BE912DC3B2EA40A9935BC1A3 /* DOMImplementationRegistryImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DOMImplementationRegistryImpl.cpp; path = ../source/DOMImplementationRegistryImpl.cpp; sourceTree = SOURCE_ROOT; };
+		BEA97C20527743DA9E41FF0E /* ICompositeNode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICompositeNode.cpp; path = ../../public/include/XMPCore/source/ICompositeNode.cpp; sourceTree = SOURCE_ROOT; };
+		BF6EFEEBCE73494E98668B25 /* SharedMutexImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = SharedMutexImpl.h; path = ../../XMPCommon/ImplHeaders/SharedMutexImpl.h; sourceTree = SOURCE_ROOT; };
+		BFBB1DB81F3C44B4BBC7530C /* XMPUtils2.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPUtils2.cpp; path = ../source/XMPUtils2.cpp; sourceTree = SOURCE_ROOT; };
+		C0258DF8BCA24F898C9E54AB /* ISimpleNode_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ISimpleNode_I.cpp; path = ../source/ISimpleNode_I.cpp; sourceTree = SOURCE_ROOT; };
+		C1647C903CF44038A09E750E /* XMPCorePList.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCorePList.h; path = ../resource/mac/XMPCorePList.h; sourceTree = SOURCE_ROOT; };
+		C340044464CE4B2DA55470F5 /* UTF8StringImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = UTF8StringImpl.h; path = ../../XMPCommon/ImplHeaders/UTF8StringImpl.h; sourceTree = SOURCE_ROOT; };
+		C4C6A428D7624CF7AE87BC91 /* DefaultErrorNotifierImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = DefaultErrorNotifierImpl.cpp; path = ../../XMPCommon/source/DefaultErrorNotifierImpl.cpp; sourceTree = SOURCE_ROOT; };
+		C4EE4024B76845EBA847B67B /* PathImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = PathImpl.cpp; path = ../source/PathImpl.cpp; sourceTree = SOURCE_ROOT; };
+		C6ADCCF964794C2B987B3B0B /* IUTF8String.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IUTF8String.h; path = ../../public/include/XMPCommon/Interfaces/IUTF8String.h; sourceTree = SOURCE_ROOT; };
+		C6E871F9B47448D89598B92C /* TAtomicTypes_Android.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TAtomicTypes_Android.h; path = ../../XMPCommon/Utilities/TAtomicTypes_Android.h; sourceTree = SOURCE_ROOT; };
+		C78F97BBBB694A81857D81B5 /* XMPDocOps.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPDocOps.cpp; path = ../source/XMPDocOps.cpp; sourceTree = SOURCE_ROOT; };
+		C8CA9367B74F487E8BFFFE54 /* MD5.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = MD5.cpp; path = "../../third-party/zuid/sources/MD5.cpp"; sourceTree = SOURCE_ROOT; };
+		C9AD13C0BE1848E1B24C77E5 /* AutoSharedLock.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = AutoSharedLock.cpp; path = ../../XMPCommon/source/AutoSharedLock.cpp; sourceTree = SOURCE_ROOT; };
+		CBF8A02DD99F4AACA342642E /* IArrayNode_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IArrayNode_I.cpp; path = ../source/IArrayNode_I.cpp; sourceTree = SOURCE_ROOT; };
+		CBFFE400B415411E9C44636A /* XMPCommon_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommon_I.h; path = ../../XMPCommon/XMPCommon_I.h; sourceTree = SOURCE_ROOT; };
+		CC03EB3D7E924B86B7C9ACE8 /* IDOMParser.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IDOMParser.h; path = ../../public/include/XMPCore/Interfaces/IDOMParser.h; sourceTree = SOURCE_ROOT; };
+		CC6A773FA3DB45E9B806E776 /* XMPUtils-FileInfo.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPUtils-FileInfo.cpp"; path = "../source/XMPUtils-FileInfo.cpp"; sourceTree = SOURCE_ROOT; };
+		CF64E817798646969B191066 /* SharedObjectImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = SharedObjectImpl.h; path = ../../XMPCommon/ImplHeaders/SharedObjectImpl.h; sourceTree = SOURCE_ROOT; };
+		D0268C97784E47798FB121CF /* NameSpacePrefixMapImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = NameSpacePrefixMapImpl.cpp; path = ../source/NameSpacePrefixMapImpl.cpp; sourceTree = SOURCE_ROOT; };
+		D1D4ACA183C24E348B17EF57 /* ICoreObjectFactory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICoreObjectFactory.h; path = ../../public/include/XMPCore/Interfaces/ICoreObjectFactory.h; sourceTree = SOURCE_ROOT; };
+		D3636AAEEFB848DB833422A1 /* CompositeNodeImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = CompositeNodeImpl.h; path = ../ImplHeaders/CompositeNodeImpl.h; sourceTree = SOURCE_ROOT; };
+		D3B3C40FE343455E80EC7CBE /* ICoreConfigurationManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ICoreConfigurationManager.cpp; path = ../../public/include/XMPCore/source/ICoreConfigurationManager.cpp; sourceTree = SOURCE_ROOT; };
+		D461046F2D1140DDAA93FF4B /* ITSingleton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ITSingleton.h; path = ../../XMPCommon/Interfaces/BaseInterfaces/ITSingleton.h; sourceTree = SOURCE_ROOT; };
+		D71D0B5344654DA9A9B7042D /* INodeIterator_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INodeIterator_I.cpp; path = ../source/INodeIterator_I.cpp; sourceTree = SOURCE_ROOT; };
+		D72BFBA4574A45628CFBF4F9 /* XMP_Version.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMP_Version.h; path = ../../public/include/XMP_Version.h; sourceTree = SOURCE_ROOT; };
+		D82C6C20236D45D99C637CF6 /* XMPIterator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPIterator.cpp; path = ../source/XMPIterator.cpp; sourceTree = SOURCE_ROOT; };
+		D9B2185061944255B6F33B02 /* XMP.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMP.hpp; path = ../../public/include/XMP.hpp; sourceTree = SOURCE_ROOT; };
+		DA0E00F05B934BCBA441F3AA /* IStructureNode_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IStructureNode_I.cpp; path = ../source/IStructureNode_I.cpp; sourceTree = SOURCE_ROOT; };
+		DBE17CB688C74B2FB45EDFD1 /* TWrapperFunctions2.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TWrapperFunctions2.h; path = ../../public/include/XMPCommon/Utilities/TWrapperFunctions2.h; sourceTree = SOURCE_ROOT; };
+		DCEC99FB045D44C4BD147FB6 /* XMPIterator.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = XMPIterator.hpp; path = ../source/XMPIterator.hpp; sourceTree = SOURCE_ROOT; };
+		DD9AAE92669B4489B0909882 /* XMPMeta-Serialize.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = "XMPMeta-Serialize.cpp"; path = "../source/XMPMeta-Serialize.cpp"; sourceTree = SOURCE_ROOT; };
+		DDB67F5E1A764B1CBC7ABE31 /* XMPCore_Impl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPCore_Impl.cpp; path = ../source/XMPCore_Impl.cpp; sourceTree = SOURCE_ROOT; };
+		DF1014CFCD874135B0A413DE /* ICompositeNode_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICompositeNode_I.h; path = ../Interfaces/ICompositeNode_I.h; sourceTree = SOURCE_ROOT; };
+		DF3EFA5C8EC147168C1EE027 /* IPath.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IPath.cpp; path = ../../public/include/XMPCore/source/IPath.cpp; sourceTree = SOURCE_ROOT; };
+		E050BCB6B437460E8E6611EB /* ICoreConfigurationManager_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ICoreConfigurationManager_I.h; path = ../Interfaces/ICoreConfigurationManager_I.h; sourceTree = SOURCE_ROOT; };
+		E0B643F920D04E77A73B77B3 /* IConfigurable.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IConfigurable.h; path = ../../public/include/XMPCommon/Interfaces/BaseInterfaces/IConfigurable.h; sourceTree = SOURCE_ROOT; };
+		E286F8856E064DE880B6C614 /* IXMPLanguageAlternative.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IXMPLanguageAlternative.h; path = ../../public/include/XMPCore/Interfaces/IXMPLanguageAlternative.h; sourceTree = SOURCE_ROOT; };
+		E35CD57CE377414381817CB0 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		E3B74C77C04B47BCB6EA8919 /* IUTF8StringComparator.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IUTF8StringComparator.h; path = ../../XMPCommon/Utilities/IUTF8StringComparator.h; sourceTree = SOURCE_ROOT; };
+		E59D5208757540218FD5ADB7 /* TSmartPointers_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TSmartPointers_I.h; path = ../../XMPCommon/Utilities/TSmartPointers_I.h; sourceTree = SOURCE_ROOT; };
+		E68293B86D924F26BDFF2A9E /* IPathSegment.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IPathSegment.cpp; path = ../../public/include/XMPCore/source/IPathSegment.cpp; sourceTree = SOURCE_ROOT; };
+		E70F315CCDE14500B8F171F5 /* IMetadata.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IMetadata.h; path = ../../public/include/XMPCore/Interfaces/IMetadata.h; sourceTree = SOURCE_ROOT; };
+		E71D6FDDD4444E14BB9E4DBA /* INode_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INode_I.cpp; path = ../source/INode_I.cpp; sourceTree = SOURCE_ROOT; };
+		E991F9C491C24CBFA49E1F74 /* RDFDOMSerializerImpl.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = RDFDOMSerializerImpl.h; path = ../ImplHeaders/RDFDOMSerializerImpl.h; sourceTree = SOURCE_ROOT; };
+		E9FA8B8A312448F1A8BC24EA /* INodeIterator.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INodeIterator.cpp; path = ../../public/include/XMPCore/source/INodeIterator.cpp; sourceTree = SOURCE_ROOT; };
+		ECA0E5C40CBC4A02B220DE3F /* XMPMeta.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = XMPMeta.cpp; path = ../source/XMPMeta.cpp; sourceTree = SOURCE_ROOT; };
+		ED28B643194948FB8F284EDC /* XMPCommonDefines.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonDefines.h; path = ../../public/include/XMPCommon/XMPCommonDefines.h; sourceTree = SOURCE_ROOT; };
+		ED589CB01DC3467298013015 /* MemoryAllocatorWrapperImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = MemoryAllocatorWrapperImpl.cpp; path = ../../XMPCommon/source/MemoryAllocatorWrapperImpl.cpp; sourceTree = SOURCE_ROOT; };
+		EE62808CDB6A448EBE773C6B /* IErrorNotifier_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IErrorNotifier_I.cpp; path = ../../XMPCommon/source/IErrorNotifier_I.cpp; sourceTree = SOURCE_ROOT; };
+		EF86B84F898B4E6B9D7A3135 /* WXMPUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = WXMPUtils.cpp; path = ../source/WXMPUtils.cpp; sourceTree = SOURCE_ROOT; };
+		EFAA9C99258C4D6FA2899AF0 /* IThreadSafe_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IThreadSafe_I.h; path = ../../XMPCommon/Interfaces/BaseInterfaces/IThreadSafe_I.h; sourceTree = SOURCE_ROOT; };
+		F2B9641C1BCC4E9BB9DE4CEE /* IErrorNotifier_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IErrorNotifier_I.h; path = ../../XMPCommon/Interfaces/IErrorNotifier_I.h; sourceTree = SOURCE_ROOT; };
+		F382383A3C564DDEA15BB910 /* IError_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IError_I.cpp; path = ../../XMPCommon/source/IError_I.cpp; sourceTree = SOURCE_ROOT; };
+		F4958533602F464CB7D09F84 /* libXMPCoreStaticDebug.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libXMPCoreStaticDebug.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52B936081F747DD90CAF4FE /* XMPDocOps-Utils.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = "XMPDocOps-Utils.hpp"; path = "../source/XMPDocOps-Utils.hpp"; sourceTree = SOURCE_ROOT; };
+		F54C4E7F29224653AC732192 /* IMetadataConverterUtils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IMetadataConverterUtils.cpp; path = ../../public/include/XMPCore/source/IMetadataConverterUtils.cpp; sourceTree = SOURCE_ROOT; };
+		F5F3986959884D4AAFE005C2 /* INode.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = INode.cpp; path = ../../public/include/XMPCore/source/INode.cpp; sourceTree = SOURCE_ROOT; };
+		F85E06F4B7AA47B4BBC37CEE /* ConfigurableImpl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ConfigurableImpl.cpp; path = ../../XMPCommon/source/ConfigurableImpl.cpp; sourceTree = SOURCE_ROOT; };
+		F909ABB4BBC5485182454FB9 /* WXMP_Common.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = WXMP_Common.hpp; path = "../../public/include/client-glue/WXMP_Common.hpp"; sourceTree = SOURCE_ROOT; };
+		F9458B252DA44142B2F29146 /* IUTF8String_I.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = IUTF8String_I.cpp; path = ../../XMPCommon/source/IUTF8String_I.cpp; sourceTree = SOURCE_ROOT; };
+		FA5761B1B40F44EBA5A80DBB /* XMPCommonFwdDeclarations.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = XMPCommonFwdDeclarations.h; path = ../../public/include/XMPCommon/XMPCommonFwdDeclarations.h; sourceTree = SOURCE_ROOT; };
+		FA70E7D9A473440B8D609B6F /* TXMPMeta.incl_cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode; fileEncoding = 4; name = TXMPMeta.incl_cpp; path = "../../public/include/client-glue/TXMPMeta.incl_cpp"; sourceTree = SOURCE_ROOT; };
+		FCD2F8CFEEC14131A74518AD /* IPath_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IPath_I.h; path = ../Interfaces/IPath_I.h; sourceTree = SOURCE_ROOT; };
+		FF466CA6B72545E8AE7162A7 /* IXMPLanguageAlternative_I.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = IXMPLanguageAlternative_I.h; path = ../Interfaces/IXMPLanguageAlternative_I.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42CA40EA5C494AF29D4F33DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0246349BFC0E4C3F94BC5665 /* ABI Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				62392B543E2A4F249863027B /* WXMPDocOps.cpp */,
+				9B7FAED0270F493888747B10 /* WXMPIterator.cpp */,
+				1894497D3AEC4573BE106077 /* WXMPMeta.cpp */,
+				EF86B84F898B4E6B9D7A3135 /* WXMPUtils.cpp */,
+			);
+			name = "ABI Wrappers";
+			sourceTree = "<group>";
+		};
+		03A8AC3299254242BCEE383A /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				081771285F4347A6B066ED55 /* XMPCore */,
+				A1EBD2D0B3E14ED282541025 /* XMPCommon */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		081771285F4347A6B066ED55 /* XMPCore */ = {
+			isa = PBXGroup;
+			children = (
+				298140B9AB2F45048C3BD50A /* ArrayNodeImpl.h */,
+				38082AD228DF4A43B588F993 /* ClientDOMParserWrapperImpl.h */,
+				478482E2B0A742A8857B9084 /* ClientDOMSerializerWrapperImpl.h */,
+				D3636AAEEFB848DB833422A1 /* CompositeNodeImpl.h */,
+				89B343E55ABD4211BD8FADAD /* CoreConfigurationManagerImpl.h */,
+				40B32B596D754F23B47D3948 /* CoreObjectFactoryImpl.h */,
+				15464BE4BEBC435D98103200 /* DOMImplementationRegistryImpl.h */,
+				2C2B674A17D24801B82EDC59 /* DOMParserImpl.h */,
+				30B1519CF4B6428AA07E2EC1 /* DOMSerializerImpl.h */,
+				9E2AD91BC9694717A3A8FAFA /* MetadataConverterUtilsImpl.h */,
+				AB6AA3BA243141888DB4A61D /* MetadataImpl.h */,
+				148577ADE22B4AF299AD1C64 /* NameSpacePrefixMapImpl.h */,
+				0FA9E16B636F42E390329365 /* NodeImpl.h */,
+				629C1C74793046BB8DEDA810 /* PathImpl.h */,
+				4ED2A1D2F82043BDB9E72DD1 /* PathSegmentImpl.h */,
+				B0B87666A4704F1D81A143E0 /* RDFDOMParserImpl.h */,
+				E991F9C491C24CBFA49E1F74 /* RDFDOMSerializerImpl.h */,
+				0E0C1621C97C45BE95F974BD /* SimpleNodeImpl.h */,
+				3AE6698C3ED54AF88B62A14D /* StructureNodeImpl.h */,
+				1F00FEF34FE349B082BEED9C /* TNodeIteratorImpl.h */,
+				20CB886DC48E48C79AB9F6BE /* IArrayNode_I.h */,
+				DF1014CFCD874135B0A413DE /* ICompositeNode_I.h */,
+				E050BCB6B437460E8E6611EB /* ICoreConfigurationManager_I.h */,
+				2625338E8D8045129BD955BE /* ICoreObjectFactory_I.h */,
+				3F6EAA292B35424391FE86C3 /* IDOMImplementationRegistry_I.h */,
+				686FB892413E43AAA7C90052 /* IDOMParser_I.h */,
+				790556C2C98D4AA99F098EE6 /* IDOMSerializer_I.h */,
+				049FF7B698D547F1B3950C5F /* IMetadataConverterUtils_I.h */,
+				B43DFC4381B34DCC98DE235F /* IMetadata_I.h */,
+				5BAF9FE313BB4AEB92F817C9 /* INameSpacePrefixMap_I.h */,
+				682F9868E49244289B724CAA /* INodeIterator_I.h */,
+				A668740AA38648C187C035AD /* INode_I.h */,
+				055C6ACE1DE241A39D8B2067 /* IPathSegment_I.h */,
+				FCD2F8CFEEC14131A74518AD /* IPath_I.h */,
+				952EAAD21CF84863A9B21EB5 /* ISimpleNode_I.h */,
+				730085F6881C4427AA292822 /* IStructureNode_I.h */,
+				FF466CA6B72545E8AE7162A7 /* IXMPLanguageAlternative_I.h */,
+				6CAB04CC214F47CE8EABAEE9 /* XMPCoreDefines_I.h */,
+				0A6AA12BE22B4B12872AA3D6 /* XMPCoreFwdDeclarations_I.h */,
+				21F821541ABD46C4AC0BCC64 /* XMPCore_ChangeLog.hpp */,
+				9BC3E769BF4C4D5CAE7BCFD5 /* XMPCore_Impl.hpp */,
+				F52B936081F747DD90CAF4FE /* XMPDocOps-Utils.hpp */,
+				B5A3F85DCE2743C39A152353 /* XMPDocOps.hpp */,
+				DCEC99FB045D44C4BD147FB6 /* XMPIterator.hpp */,
+				AA25D15DC00244E6AF6C24DA /* XMPMeta.hpp */,
+				01C82E6580DB49EBBF710B01 /* XMPUtils.hpp */,
+				56D27055413B4276B774BCF5 /* XMP_BuildInfo.h */,
+				47C9DAE187F14F6BBC45E695 /* ExpatAdapter.hpp */,
+				2E32DCE287C64463A18E2C26 /* UnicodeConversions.hpp */,
+				323150620EEC40428C5B811D /* UnicodeInlines.incl_cpp */,
+				4564B9CB207E4F4C99CC889D /* XMLParserAdapter.hpp */,
+			);
+			name = XMPCore;
+			sourceTree = "<group>";
+		};
+		12E532F7D40948728292754A /* XMPCore */ = {
+			isa = PBXGroup;
+			children = (
+				4DF707B2E001497DADFE7504 /* ArrayNodeImpl.cpp */,
+				474AC6D81EA94034B58DA57B /* ClientDOMParserWrapperImpl.cpp */,
+				BAE528743B38486FB01D00A0 /* ClientDOMSerializerWrapperImpl.cpp */,
+				32425EC23A17487195804BBB /* CompositeNodeImpl.cpp */,
+				84473595427E4BDA9D3C0EA0 /* CoreConfigurationManagerImpl.cpp */,
+				61B6C833F3B14339A12298A6 /* CoreObjectFactoryImpl.cpp */,
+				BE912DC3B2EA40A9935BC1A3 /* DOMImplementationRegistryImpl.cpp */,
+				5AD534C0336A4514B7A8E68E /* DOMParserImpl.cpp */,
+				05D069B01F4D40CE98AD521B /* DOMSerializerImpl.cpp */,
+				CBF8A02DD99F4AACA342642E /* IArrayNode_I.cpp */,
+				1BD32A1106814E0FA72A2EAD /* ICompositeNode_I.cpp */,
+				A59843DB598E4782AD28D87A /* ICoreConfigurationManager_I.cpp */,
+				36D5062579F84A02B4B5FADD /* ICoreObjectFactory_I.cpp */,
+				00D40CB0FF45406198D48506 /* IDOMImplementationRegistry_I.cpp */,
+				8FE7E3FE10324C15B73F01BC /* IDOMParser_I.cpp */,
+				8645A29D100A477C9037C692 /* IDOMSerializer_I.cpp */,
+				41FC308685CA4B7992F25C93 /* IMetadataConverterUtils_I.cpp */,
+				01A537BC566D4B24BFF8E2C0 /* IMetadata_I.cpp */,
+				A4C8A7B494D54A73B9A7A079 /* INameSpacePrefixMap_I.cpp */,
+				D71D0B5344654DA9A9B7042D /* INodeIterator_I.cpp */,
+				E71D6FDDD4444E14BB9E4DBA /* INode_I.cpp */,
+				9EDBC8F2F4E14837AE25D2CA /* IPathSegment_I.cpp */,
+				AE0E792DF6A14926A4AAFDB4 /* IPath_I.cpp */,
+				C0258DF8BCA24F898C9E54AB /* ISimpleNode_I.cpp */,
+				DA0E00F05B934BCBA441F3AA /* IStructureNode_I.cpp */,
+				5BF7A933B7214B3E98220722 /* MetadataConverterUtilsImpl.cpp */,
+				4CF941DF94214F8089DCB94D /* MetadataImpl.cpp */,
+				D0268C97784E47798FB121CF /* NameSpacePrefixMapImpl.cpp */,
+				5455F334144045D38131CE88 /* NodeImpl.cpp */,
+				C4EE4024B76845EBA847B67B /* PathImpl.cpp */,
+				664C601EDE854B8A9FD140A4 /* PathSegmentImpl.cpp */,
+				3E6FE3F61DD948FA9046FD3C /* RDFDOMParserImpl.cpp */,
+				9FC5595A5C4F4F38984AD3D1 /* RDFDOMSerializerImpl.cpp */,
+				3BB4BAD44C064F879FE4A75F /* SimpleNodeImpl.cpp */,
+				A8A57C96E9414BEA852EA2EA /* StructureNodeImpl.cpp */,
+			);
+			name = XMPCore;
+			sourceTree = "<group>";
+		};
+		14CCAEF9CB2E46DAB617333C = {
+			isa = PBXGroup;
+			children = (
+				BD41DBD6DCB74F3DA2249C43 /* XMPCoreStatic */,
+				581EA8D26CEF471C8072138B /* ALL_BUILD */,
+				81AE60ECAF9C427A9BE76737 /* Products */,
+				5194CB38FF6D4AE68C0B3B97 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		219741604CDE44298E313925 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				567350ED77644ADF99009F56 /* ExpatAdapter.cpp */,
+				403D75A46A154D898B28275E /* ParseRDF.cpp */,
+				DDB67F5E1A764B1CBC7ABE31 /* XMPCore_Impl.cpp */,
+				59C042E8EF184630A3E7CF90 /* UnicodeConversions.cpp */,
+				B313AE0B81AF4A569E31564B /* XML_Node.cpp */,
+				0D088E58FB1D4C979B89AB6B /* XMP_LibUtils.cpp */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		2F66A88C3397448DB97313D3 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				3E4FC9DB275A4CBF966DC8A9 /* XMPCommon */,
+				B54852057594486A8F6157CA /* XMPCore */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		35ACF0F2084B445CA33BD31A /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		3E4FC9DB275A4CBF966DC8A9 /* XMPCommon */ = {
+			isa = PBXGroup;
+			children = (
+				1F0D7ABD1C9A445AA624D741 /* IConfigurable.cpp */,
+				5400D77CDDCC4FFCA3CAE9F8 /* IConfigurationManager.cpp */,
+				8C80051239FD4D47B36D9AEE /* IError.cpp */,
+				278CB128085741829C45B65B /* IErrorNotifier.cpp */,
+				4BCC740792B84143B690DCB8 /* IUTF8String.cpp */,
+			);
+			name = XMPCommon;
+			sourceTree = "<group>";
+		};
+		5194CB38FF6D4AE68C0B3B97 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		581EA8D26CEF471C8072138B /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				35ACF0F2084B445CA33BD31A /* CMake Rules */,
+				E35CD57CE377414381817CB0 /* CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		640D6D0AB77D4AD781E29731 /* XMPCommon */ = {
+			isa = PBXGroup;
+			children = (
+				C9AD13C0BE1848E1B24C77E5 /* AutoSharedLock.cpp */,
+				F85E06F4B7AA47B4BBC37CEE /* ConfigurableImpl.cpp */,
+				7F1B10792CF24789BB07990F /* ConfigurationManagerImpl.cpp */,
+				C4C6A428D7624CF7AE87BC91 /* DefaultErrorNotifierImpl.cpp */,
+				26A28A40B4544E2286A89FCA /* ErrorImpl.cpp */,
+				33B4D2D757524F88AC2851BE /* ErrorNotifierWrapperImpl.cpp */,
+				0B909F3ADA13459B8603AC37 /* IConfigurable_I.cpp */,
+				8F217999F5104E2CA477DA63 /* IConfigurationManager_I.cpp */,
+				EE62808CDB6A448EBE773C6B /* IErrorNotifier_I.cpp */,
+				F382383A3C564DDEA15BB910 /* IError_I.cpp */,
+				56E08706E75445D4A2F0519C /* IMemoryAllocator_I.cpp */,
+				66853F5643A842CE8229F3C5 /* IUTF8StringComparator.cpp */,
+				F9458B252DA44142B2F29146 /* IUTF8String_I.cpp */,
+				ED589CB01DC3467298013015 /* MemoryAllocatorWrapperImpl.cpp */,
+				8D39D0DD8FF54665991091EE /* MemoryManagedObject.cpp */,
+				5E36E6145A3B40599F28F88C /* SharedMutexImpl.cpp */,
+				10F65A5EE14049CD892640C8 /* SharedObjectImpl.cpp */,
+				33601F84117D4445AA3C4C9B /* ThreadSafeImpl.cpp */,
+				92B4BA40E7E244BFB71056B7 /* UTF8StringImpl.cpp */,
+				B2DC1043E2734B7DB56C04B9 /* XMPCommon.cpp */,
+			);
+			name = XMPCommon;
+			sourceTree = "<group>";
+		};
+		6D3E994265114A4AA6D7A540 /* XMPCore */ = {
+			isa = PBXGroup;
+			children = (
+				0D34BDCC559B433F9CD2BB6F /* IArrayNode.h */,
+				0ED89A86DED94A83BBEC8394 /* IClientDOMParser.h */,
+				978FB2D431DF45CDBFC3A497 /* IClientDOMSerializer.h */,
+				0C5355F1807F4F5E846442C2 /* ICompositeNode.h */,
+				8C9FC2B430D84F5F9F0DD449 /* ICoreConfigurationManager.h */,
+				D1D4ACA183C24E348B17EF57 /* ICoreObjectFactory.h */,
+				1EDBF43DF67546AF9128A9DE /* IDOMImplementationRegistry.h */,
+				CC03EB3D7E924B86B7C9ACE8 /* IDOMParser.h */,
+				94AC672538414B91A2733447 /* IDOMSerializer.h */,
+				E70F315CCDE14500B8F171F5 /* IMetadata.h */,
+				B8B292527713430D85F89885 /* IMetadataConverterUtils.h */,
+				5FC6C61455AE4602A72A521C /* INameSpacePrefixMap.h */,
+				2BE1EBB2920D423E9210ED3C /* INode.h */,
+				B03DDE61B8D948548E15F785 /* INodeIterator.h */,
+				31D9E07EE1AD4D6AAF4BD69B /* IPath.h */,
+				8003147336034E0EB32260E5 /* IPathSegment.h */,
+				4D8EB58D07F347D381835585 /* ISimpleNode.h */,
+				111204FFB7E545E4B2E39318 /* IStructureNode.h */,
+				E286F8856E064DE880B6C614 /* IXMPLanguageAlternative.h */,
+				BA3F97DAB566482F8824FBFC /* XMPCoreDefines.h */,
+				7F7F39A7986B4F8A947CA30C /* XMPCoreErrorCodes.h */,
+				95BE06486BDE414A9972A406 /* XMPCoreFwdDeclarations.h */,
+				52F17B8ACBDE46AEA2E27BDE /* XMPCoreLatestInterfaceVersions.h */,
+			);
+			name = XMPCore;
+			sourceTree = "<group>";
+		};
+		708F526F17C640F99822B1F1 /* Header Files */ = {
+			isa = PBXGroup;
+			children = (
+				C242504B78B64C8AAD2185C3 /* Public */,
+				03A8AC3299254242BCEE383A /* Private */,
+			);
+			name = "Header Files";
+			sourceTree = "<group>";
+		};
+		792E55D12D6B4FBC9DDCDCC8 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				12E532F7D40948728292754A /* XMPCore */,
+				640D6D0AB77D4AD781E29731 /* XMPCommon */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+		81AE60ECAF9C427A9BE76737 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4958533602F464CB7D09F84 /* libXMPCoreStaticDebug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		857CEDFB8AA64E4D8E694668 /* Client Glue */ = {
+			isa = PBXGroup;
+			children = (
+				7B09392C91494ACCA0285205 /* TXMPAlbumArt.incl_cpp */,
+				1FE26B833AB545BEA88B1E56 /* TXMPDocOps.incl_cpp */,
+				8B2F61C52D2048278138A429 /* TXMPIterator.incl_cpp */,
+				FA70E7D9A473440B8D609B6F /* TXMPMeta.incl_cpp */,
+				9A40AFD2A6FC4CE6BC98C80A /* TXMPUtils.incl_cpp */,
+				2101DC5E12A64AE28DB18BC8 /* WXMPDocOps.hpp */,
+				2259CEC297084912B430CE7E /* WXMPIterator.hpp */,
+				41B89D0B2DCF4FEC9DB252AF /* WXMPMeta.hpp */,
+				8C5E000B3F71437689D9BE22 /* WXMPUtils.hpp */,
+				F909ABB4BBC5485182454FB9 /* WXMP_Common.hpp */,
+			);
+			name = "Client Glue";
+			sourceTree = "<group>";
+		};
+		86FB955D0BA0411F905185FE /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				2D8CAC8E98714B5283BD36FE /* xmlparse.c */,
+				4F1AD5DAFCEC4A498D56B67B /* xmlrole.c */,
+				22680F025BDC45FD963C4FB8 /* xmltok.c */,
+				C8CA9367B74F487E8BFFFE54 /* MD5.cpp */,
+				8E609E81404E4FFFBC24781B /* ZUIDSysDep.cpp */,
+				2EA7CF9ED8EA4161AFD66406 /* ZUIDUUID.cpp */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		8C4ABA3700224BC297BBC128 /* Resource Files */ = {
+			isa = PBXGroup;
+			children = (
+				198684AE0A14425A9EDBC0B3 /* XMPCore.exp */,
+				A05CC9E4B43C44E59973445A /* XMPCore.plist */,
+				22FCD70806E345668E08C58F /* XMPCore.unexp */,
+				C1647C903CF44038A09E750E /* XMPCorePList.h */,
+				718D20B738464F88946A71A2 /* expat_config.h */,
+			);
+			name = "Resource Files";
+			sourceTree = "<group>";
+		};
+		9CB44BD2EDE84AF8AFC89C55 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				0246349BFC0E4C3F94BC5665 /* ABI Wrappers */,
+				DEF324F6290E43DC9C34400D /* Core Classes */,
+				86FB955D0BA0411F905185FE /* Third Party */,
+				219741604CDE44298E313925 /* Utilities */,
+				792E55D12D6B4FBC9DDCDCC8 /* Private */,
+				2F66A88C3397448DB97313D3 /* Public */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		A1EBD2D0B3E14ED282541025 /* XMPCommon */ = {
+			isa = PBXGroup;
+			children = (
+				1ED54C4A7385411A868AB037 /* MemoryManagedObject.h */,
+				9B844C82F3C345AD8B5D5751 /* TSingleton.h */,
+				23476719D8284717B0FBE842 /* ConfigurableImpl.h */,
+				99D54EB4E114491CA498D175 /* ConfigurationManagerImpl.h */,
+				A876045AE63C4650B70B7AB8 /* DefaultErrorNotifierImpl.h */,
+				75666AD9B7FC4F00A096ADDB /* ErrorImpl.h */,
+				ADF89E68FAC143EC8BB18F6D /* ErrorNotifierWrapperImpl.h */,
+				767B850171BD4785BF791905 /* MemoryAllocatorWrapperImpl.h */,
+				BF6EFEEBCE73494E98668B25 /* SharedMutexImpl.h */,
+				CF64E817798646969B191066 /* SharedObjectImpl.h */,
+				4EB3084484C34CF68EAD042B /* ThreadSafeImpl.h */,
+				C340044464CE4B2DA55470F5 /* UTF8StringImpl.h */,
+				4049921AF16E47C883F9ABFF /* IConfigurable_I.h */,
+				8B20B8961938403A8678BA3C /* ISharedObject_I.h */,
+				D461046F2D1140DDAA93FF4B /* ITSingleton.h */,
+				EFAA9C99258C4D6FA2899AF0 /* IThreadSafe_I.h */,
+				0FE9EB9DC3C449998153BA82 /* IConfigurationManager_I.h */,
+				F2B9641C1BCC4E9BB9DE4CEE /* IErrorNotifier_I.h */,
+				7853932FA3CE469DA3E36DC5 /* IError_I.h */,
+				7671EA1441494CB1B201C27B /* IMemoryAllocator_I.h */,
+				A731253CCBC449129F742CCD /* ISharedMutex.h */,
+				6AFD96778E8B4E9DB13AA700 /* IUTF8String_I.h */,
+				4CFC3E2BE55442C2A3359F9C /* AutoSharedLock.h */,
+				E3B74C77C04B47BCB6EA8919 /* IUTF8StringComparator.h */,
+				2E914D71A5DF448FBEB1E802 /* TAllocator.h */,
+				BDA0707394DC406F9A7A4612 /* TAtomicTypes.h */,
+				C6E871F9B47448D89598B92C /* TAtomicTypes_Android.h */,
+				3B22AD2190EB466782395B76 /* TAtomicTypes_Linux.h */,
+				B630237B856C47B9960D2363 /* TAtomicTypes_Mac.h */,
+				BE31682B97BC4494A09A55B7 /* TAtomicTypes_Win.h */,
+				E59D5208757540218FD5ADB7 /* TSmartPointers_I.h */,
+				0F696E278C7F43209F58D929 /* TWrapperFunctions2_I.h */,
+				2EFF885DBF05498B9944888A /* TWrapperFunctions_I.h */,
+				0E98E49A70C64BBC8EFD8667 /* UTF8String.h */,
+				37757AF38FBD4F73B294959F /* XMPCommonDefines_I.h */,
+				1443D6C468914609B9741382 /* XMPCommonErrorCodes_I.h */,
+				274D3E41C1D246B2A43489A4 /* XMPCommonFwdDeclarations_I.h */,
+				CBFFE400B415411E9C44636A /* XMPCommon_I.h */,
+			);
+			name = XMPCommon;
+			sourceTree = "<group>";
+		};
+		B54852057594486A8F6157CA /* XMPCore */ = {
+			isa = PBXGroup;
+			children = (
+				7251A67481C34AB3B504BD7B /* IArrayNode.cpp */,
+				3BDD269CE80B4FCDA063BFA9 /* IClientDOMParser.cpp */,
+				715899F1E78C4630B8A38EEA /* IClientDOMSerializer.cpp */,
+				BEA97C20527743DA9E41FF0E /* ICompositeNode.cpp */,
+				D3B3C40FE343455E80EC7CBE /* ICoreConfigurationManager.cpp */,
+				7FC05EDC65C9422D83665859 /* ICoreObjectFactory.cpp */,
+				94FAE0FA873A4E1D8197534F /* IDOMImplementationRegistry.cpp */,
+				2DBF8BA9722042578859D54E /* IDOMParser.cpp */,
+				BAE18C772AB041FFB6CD1A89 /* IDOMSerializer.cpp */,
+				AE9D97FF2B0F460D8E5FBC9B /* IMetadata.cpp */,
+				F54C4E7F29224653AC732192 /* IMetadataConverterUtils.cpp */,
+				7540060BE12448689CD75353 /* INameSpacePrefixMap.cpp */,
+				F5F3986959884D4AAFE005C2 /* INode.cpp */,
+				E9FA8B8A312448F1A8BC24EA /* INodeIterator.cpp */,
+				DF3EFA5C8EC147168C1EE027 /* IPath.cpp */,
+				E68293B86D924F26BDFF2A9E /* IPathSegment.cpp */,
+				6994A2F8F53A47B39C1B6177 /* ISimpleNode.cpp */,
+				1572668887AF4252AEE60B0F /* IStructureNode.cpp */,
+			);
+			name = XMPCore;
+			sourceTree = "<group>";
+		};
+		BD41DBD6DCB74F3DA2249C43 /* XMPCoreStatic */ = {
+			isa = PBXGroup;
+			children = (
+				708F526F17C640F99822B1F1 /* Header Files */,
+				9CB44BD2EDE84AF8AFC89C55 /* Source Files */,
+				8C4ABA3700224BC297BBC128 /* Resource Files */,
+				2F6C14382926458E93B45CA2 /* CMakeLists.txt */,
+			);
+			name = XMPCoreStatic;
+			sourceTree = "<group>";
+		};
+		C242504B78B64C8AAD2185C3 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				857CEDFB8AA64E4D8E694668 /* Client Glue */,
+				E1754E25015D4221B313FA97 /* XMPCommon */,
+				6D3E994265114A4AA6D7A540 /* XMPCore */,
+				A1B29CA0C88E44C9BB71F5DF /* TXMPAlbumArt.hpp */,
+				19E735B8DFDF499584F3D4E2 /* TXMPDocOps.hpp */,
+				119EB90015C844CF944AFE48 /* TXMPIterator.hpp */,
+				23663B001AA14A40A2CF2DD2 /* TXMPMeta.hpp */,
+				175A18553B0E447AB75E3E31 /* TXMPUtils.hpp */,
+				D9B2185061944255B6F33B02 /* XMP.hpp */,
+				7E39430C753448E8BDB8C8D8 /* XMP.incl_cpp */,
+				4206B270D3F04287BC43C81B /* XMP_Const.h */,
+				52E79DE189A34D01B8F6E038 /* XMP_Environment.h */,
+				D72BFBA4574A45628CFBF4F9 /* XMP_Version.h */,
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		DEF324F6290E43DC9C34400D /* Core Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6E6AFDB7017549ACAC41DD41 /* XMPDocOps-Utils.cpp */,
+				817C459538424D81B8FF60C7 /* XMPDocOps-Utils2.cpp */,
+				C78F97BBBB694A81857D81B5 /* XMPDocOps.cpp */,
+				B839B38AAC0F4BE3A9E3852A /* XMPDocOps2.cpp */,
+				D82C6C20236D45D99C637CF6 /* XMPIterator.cpp */,
+				76DB50D38A4A415AA61FD03F /* XMPIterator2.cpp */,
+				BBF633CB69274AC6B823B96A /* XMPMeta-GetSet.cpp */,
+				B5792DA92C36463CADAC0C37 /* XMPMeta-Parse.cpp */,
+				DD9AAE92669B4489B0909882 /* XMPMeta-Serialize.cpp */,
+				ECA0E5C40CBC4A02B220DE3F /* XMPMeta.cpp */,
+				B7ED1B9390264227B8497C14 /* XMPMeta2-GetSet.cpp */,
+				CC6A773FA3DB45E9B806E776 /* XMPUtils-FileInfo.cpp */,
+				24B9BDED617A4638803D650C /* XMPUtils.cpp */,
+				BFBB1DB81F3C44B4BBC7530C /* XMPUtils2.cpp */,
+			);
+			name = "Core Classes";
+			sourceTree = "<group>";
+		};
+		E1754E25015D4221B313FA97 /* XMPCommon */ = {
+			isa = PBXGroup;
+			children = (
+				E0B643F920D04E77A73B77B3 /* IConfigurable.h */,
+				3F2B1C49228D438CB230DE58 /* ISharedObject.h */,
+				B5AAAD5EFFC24E9A98B51AD6 /* IThreadSafe.h */,
+				63EAEE5DB4414EB9A1B9D0B3 /* IVersionable.h */,
+				0529995719E44E0BA92B84AC /* IConfigurationManager.h */,
+				3751B0E7F70C4782B935B933 /* IError.h */,
+				65A8E27944154AE9AB3DC07F /* IErrorNotifier.h */,
+				068DEEEE03AA49AA83E6B88C /* IMemoryAllocator.h */,
+				0973BE0B956A45D9AEF1E288 /* IObjectFactory.h */,
+				C6ADCCF964794C2B987B3B0B /* IUTF8String.h */,
+				8A116D4D1F2644D99B04094B /* TWrapperFunctions.h */,
+				DBE17CB688C74B2FB45EDFD1 /* TWrapperFunctions2.h */,
+				ED28B643194948FB8F284EDC /* XMPCommonDefines.h */,
+				BA595BC064EF47EF8B295FAB /* XMPCommonErrorCodes.h */,
+				FA5761B1B40F44EBA5A80DBB /* XMPCommonFwdDeclarations.h */,
+				70A42379AA044B1A8DF886C3 /* XMPCommonLatestInterfaceVersions.h */,
+			);
+			name = XMPCommon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9F9A4FFF65E442D85983BF2 /* XMPCoreStatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD6E9B039D0745259A8C60ED /* Build configuration list for PBXNativeTarget "XMPCoreStatic" */;
+			buildPhases = (
+				67EE8058AA2B4EA0A2C31838 /* Sources */,
+				42CA40EA5C494AF29D4F33DC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XMPCoreStatic;
+			productName = XMPCoreStatic;
+			productReference = F4958533602F464CB7D09F84 /* libXMPCoreStaticDebug.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F99A0345513D4AA1B5421B34 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1220;
+			};
+			buildConfigurationList = 366EBE9ED8F34F0C954223AF /* Build configuration list for PBXProject "XMPCore64" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 14CCAEF9CB2E46DAB617333C;
+			projectDirPath = ../;
+			projectRoot = "";
+			targets = (
+				4520958A23F8466598251C70 /* ALL_BUILD */,
+				C9F9A4FFF65E442D85983BF2 /* XMPCoreStatic */,
+				71C995A7C40D46CFADAEA27D /* ZERO_CHECK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F31A9A139FBD59C5BE84612 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+				../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeFiles/ALL_BUILD,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  echo Build\\ all\\ projects\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7FA0F896D1DCA4761E0FFCA3 /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+				../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeFiles/ZERO_CHECK,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  make -f ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  make -f ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  make -f ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd ../../../toolkit/XMPCore/build/CMake64_libcpp_ios\n  make -f ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/CMakeScripts/ReRunCMake.make\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		67EE8058AA2B4EA0A2C31838 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4A41363550442B38540018A /* AutoSharedLock.cpp in Sources */,
+				5821461065B64279878CF41A /* ConfigurableImpl.cpp in Sources */,
+				38409B38EFE44D03850C1A97 /* ConfigurationManagerImpl.cpp in Sources */,
+				7E12B3BCB73F43C6BB1E5EF0 /* DefaultErrorNotifierImpl.cpp in Sources */,
+				4CA8B04E41CE40F9AE3FA27F /* ErrorImpl.cpp in Sources */,
+				1F13385323234F589CC65DE0 /* ErrorNotifierWrapperImpl.cpp in Sources */,
+				8B793F8AD0024BD4AA1256E9 /* IConfigurable_I.cpp in Sources */,
+				6319CE8AD9BE4794B2CEC073 /* IConfigurationManager_I.cpp in Sources */,
+				3A0C38B3741143CFAFB19235 /* IErrorNotifier_I.cpp in Sources */,
+				DCC6A7CF754548D897CCE086 /* IError_I.cpp in Sources */,
+				8B76B0DDC5BB4CD890F69EF0 /* IMemoryAllocator_I.cpp in Sources */,
+				819A60F89AB24906B8594257 /* IUTF8StringComparator.cpp in Sources */,
+				143E512551DA424998F4A2DA /* IUTF8String_I.cpp in Sources */,
+				5F671AA7E55E4BBFA4DF15F3 /* MemoryAllocatorWrapperImpl.cpp in Sources */,
+				FB4F5ACD57D54D6E882C1511 /* MemoryManagedObject.cpp in Sources */,
+				0F9458B65B774A4688DC59A8 /* SharedMutexImpl.cpp in Sources */,
+				E923C8FFFD3D4F91A68B4F29 /* SharedObjectImpl.cpp in Sources */,
+				E89F1E5086734AE3B1BD069C /* ThreadSafeImpl.cpp in Sources */,
+				D39A7927C64848C89DDC5247 /* UTF8StringImpl.cpp in Sources */,
+				6BC3AEBCC7CB477787F40CDE /* XMPCommon.cpp in Sources */,
+				9DF7E858E5DA44619A6608A8 /* ArrayNodeImpl.cpp in Sources */,
+				F59F4C90A54442A793F5E0CE /* ClientDOMParserWrapperImpl.cpp in Sources */,
+				9ABC1385A99C4DA58601FC87 /* ClientDOMSerializerWrapperImpl.cpp in Sources */,
+				1FC7EFD2885E4944851EA33D /* CompositeNodeImpl.cpp in Sources */,
+				0B50B699D0A74F4EB77F6823 /* CoreConfigurationManagerImpl.cpp in Sources */,
+				7A34FB759CBB4A05805E302B /* CoreObjectFactoryImpl.cpp in Sources */,
+				E74B8E810C704586B2FE332D /* DOMImplementationRegistryImpl.cpp in Sources */,
+				AAB6662B31514CC7949B363D /* DOMParserImpl.cpp in Sources */,
+				5024EFABBEED4AF29C20E3E3 /* DOMSerializerImpl.cpp in Sources */,
+				649B02CA3E1C471794EFE00A /* ExpatAdapter.cpp in Sources */,
+				24CCE51A981247A1B0E238C8 /* IArrayNode_I.cpp in Sources */,
+				01D4853825474BD0BDE0BBCD /* ICompositeNode_I.cpp in Sources */,
+				F486562BDA7B45EF9CF11606 /* ICoreConfigurationManager_I.cpp in Sources */,
+				D54B71100F1D4D3FA02583FB /* ICoreObjectFactory_I.cpp in Sources */,
+				7642C6689D4942E49013EFA2 /* IDOMImplementationRegistry_I.cpp in Sources */,
+				532A1364D68149B3A9DA9D9E /* IDOMParser_I.cpp in Sources */,
+				21441580390B455BB4B0333E /* IDOMSerializer_I.cpp in Sources */,
+				EC4E767D4F1F45F8850C43E1 /* IMetadataConverterUtils_I.cpp in Sources */,
+				086F755137F34349BE85768B /* IMetadata_I.cpp in Sources */,
+				0C15D6DC716C43AE976262BB /* INameSpacePrefixMap_I.cpp in Sources */,
+				3F8B1BB0F0064C08BC5734F9 /* INodeIterator_I.cpp in Sources */,
+				0B5890E30A5749FC94741620 /* INode_I.cpp in Sources */,
+				9A86BE0D97414E8AA688F59E /* IPathSegment_I.cpp in Sources */,
+				39EECAA6965D476A926BBB0F /* IPath_I.cpp in Sources */,
+				3718501CE3E04AF6B462B6C6 /* ISimpleNode_I.cpp in Sources */,
+				1A80492DE28749D8BE6719B8 /* IStructureNode_I.cpp in Sources */,
+				2F485B20B2A9409882AD084A /* MetadataConverterUtilsImpl.cpp in Sources */,
+				22C7582AA2AC4288A28D32CA /* MetadataImpl.cpp in Sources */,
+				C063AC6EDED0448AADB6CA54 /* NameSpacePrefixMapImpl.cpp in Sources */,
+				97A969EA003C4B0EB5B9A3EC /* NodeImpl.cpp in Sources */,
+				4DA9BC95CBD547F3BB49AF75 /* ParseRDF.cpp in Sources */,
+				26FD22061E1243DEA1B2A958 /* PathImpl.cpp in Sources */,
+				4F5C0D797D9D40A3BFAF8B48 /* PathSegmentImpl.cpp in Sources */,
+				81DF63BF44C54E23BFC6EAA3 /* RDFDOMParserImpl.cpp in Sources */,
+				5B1A16E54D304CB2826EF6EA /* RDFDOMSerializerImpl.cpp in Sources */,
+				201CDD79D6324FB998046282 /* SimpleNodeImpl.cpp in Sources */,
+				91CF60FA2A5A4864966E6748 /* StructureNodeImpl.cpp in Sources */,
+				57EBE5496DD4454DB4CC8CAD /* WXMPDocOps.cpp in Sources */,
+				18D4FDA2B603468BA9CFF328 /* WXMPIterator.cpp in Sources */,
+				BF36258FDD0F4AD281735C4B /* WXMPMeta.cpp in Sources */,
+				1B31F8F8B499482DB9B1CB0C /* WXMPUtils.cpp in Sources */,
+				A79F98AA87A04ED3B4B1CC83 /* XMPCore_Impl.cpp in Sources */,
+				D27E40B16F5440949D409C57 /* XMPDocOps-Utils.cpp in Sources */,
+				78C169EBF3B748789946AD4E /* XMPDocOps-Utils2.cpp in Sources */,
+				5E480A54E4E1462FA8B07C68 /* XMPDocOps.cpp in Sources */,
+				EB426B16DF7F4AD7ACD70F3B /* XMPDocOps2.cpp in Sources */,
+				36D74278A73349C9A8A35322 /* XMPIterator.cpp in Sources */,
+				5D3E6BC50E5142E9B77447AB /* XMPIterator2.cpp in Sources */,
+				AEE165598F2A42F1B540BAC8 /* XMPMeta-GetSet.cpp in Sources */,
+				1B6F575506BC488F81C350D2 /* XMPMeta-Parse.cpp in Sources */,
+				C6379EBEBCFB43CF88928B3E /* XMPMeta-Serialize.cpp in Sources */,
+				EA9F67CEBA4248589DB1BD1E /* XMPMeta.cpp in Sources */,
+				117A81B9E9094A7AB13DE03F /* XMPMeta2-GetSet.cpp in Sources */,
+				F963C9CAEAF744D3BCCA0B9B /* XMPUtils-FileInfo.cpp in Sources */,
+				B7F00625C7174266AFAE3022 /* XMPUtils.cpp in Sources */,
+				51A56A38EFA54BA0AC32AADE /* XMPUtils2.cpp in Sources */,
+				B279AD01DECE4823B1C703CB /* xmlparse.c in Sources */,
+				666C4FB0E83248AAB07D4AFF /* xmlrole.c in Sources */,
+				C0316A052F474E058BC2D469 /* xmltok.c in Sources */,
+				FBD493E4213F4F0681038FAB /* IConfigurable.cpp in Sources */,
+				4828A22BE0A145C48CDCDD4C /* IConfigurationManager.cpp in Sources */,
+				18E33400B9FD4DDEA15F9445 /* IError.cpp in Sources */,
+				8F26AC86F6EB45788DA03B04 /* IErrorNotifier.cpp in Sources */,
+				50EDFDB1DCD44F7EACE1EAEB /* IUTF8String.cpp in Sources */,
+				818638F8659B4C67B9DEA83A /* IArrayNode.cpp in Sources */,
+				A0D7F8DD17FB48F4B5EA6761 /* IClientDOMParser.cpp in Sources */,
+				DF8BF17F37F94A3BBDDF6D4E /* IClientDOMSerializer.cpp in Sources */,
+				A7F77A27DF904BF2BEE81104 /* ICompositeNode.cpp in Sources */,
+				86AA463AD0894D1B99040F5E /* ICoreConfigurationManager.cpp in Sources */,
+				484C71AA7D954001B8C45E47 /* ICoreObjectFactory.cpp in Sources */,
+				260A1E7F2DB1427ABD107493 /* IDOMImplementationRegistry.cpp in Sources */,
+				BD8481E22E1D4491BB229E6E /* IDOMParser.cpp in Sources */,
+				8374C8556ACC43B0A8A8B5F9 /* IDOMSerializer.cpp in Sources */,
+				8A8CAF92AB164490B471F367 /* IMetadata.cpp in Sources */,
+				0752690B04E443E49A7DAA61 /* IMetadataConverterUtils.cpp in Sources */,
+				E74BBD58ECBA4550BE1520C2 /* INameSpacePrefixMap.cpp in Sources */,
+				E4F17FE6EA574AD9908B0F8A /* INode.cpp in Sources */,
+				CAD00E3C6F4B48B7A0F82A2C /* INodeIterator.cpp in Sources */,
+				1548DDF99F7B4D8ABBE93C24 /* IPath.cpp in Sources */,
+				1CD76BEDC7EC4486B4583F59 /* IPathSegment.cpp in Sources */,
+				825ADDB00164438E94AF30B8 /* ISimpleNode.cpp in Sources */,
+				D220BD5F00AD49FAB2D6DFC7 /* IStructureNode.cpp in Sources */,
+				261D187E504F41AF9D8D2FDF /* UnicodeConversions.cpp in Sources */,
+				F606CA279D4940918448C4E1 /* XML_Node.cpp in Sources */,
+				2930566BE060435F90A6515E /* XMP_LibUtils.cpp in Sources */,
+				51FB7538993A4B1CA22FF07B /* MD5.cpp in Sources */,
+				F50A14368ED24AFC99E7ADE5 /* ZUIDSysDep.cpp in Sources */,
+				4452AF6930DF43CE970E347E /* ZUIDUUID.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B9372C6CA7E441D882EBB54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71C995A7C40D46CFADAEA27D /* ZERO_CHECK */;
+			targetProxy = 01536F565F834891A40ED647 /* PBXContainerItemProxy */;
+		};
+		6264F108AD1A496CADDED0CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9F9A4FFF65E442D85983BF2 /* XMPCoreStatic */;
+			targetProxy = 7A943468F5E44E1BA601C1BC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		17623F3374664375B00CE9D2 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"'AdobePrivate=1'",
+					"'ENABLE_CPP_DOM_MODEL=1'",
+					"'XML_STATIC=1'",
+					"'HAVE_EXPAT_CONFIG_H=1'",
+					"'XMP_StaticBuild=1'",
+					"'IOS_ENV=1'",
+					"'BUILDING_XMPCORE_LIB=1'",
+					"'XMP_COMPONENT_INT_NAMESPACE=AdobeXMPCore_Int'",
+					"'BUILDING_XMPCORE_AS_STATIC=1'",
+					"$(inherited)",
+				);
+				GCC_SHORT_ENUMS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = (
+					../../../toolkit/XMPCore/build/../../../toolkit,
+					../../../toolkit/XMPCore/build/../../../toolkit/public/include,
+					"../../../toolkit/XMPCore/build/../../../toolkit/third-party/expat/public/lib",
+					../../../toolkit/XMPCore/build/../resource/mac,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = " $(inherited)";
+				LIBRARY_STYLE = STATIC;
+				OBJROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fstack-protector",
+					"-D_FORTIFY_SOURCE=2",
+					"-DNDEBUG",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-fstack-protector",
+					"-DNDEBUG",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "XMPCoreStatic$(CONFIGURATION)";
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/libraries/ios;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "";
+			};
+			name = MinSizeRel;
+		};
+		282CCDE85B764E25A8D2CDCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		4F08D8F67CA54A27B2F3A1C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = XML_POOR_ENTROPY;
+				SDKROOT = iphoneos;
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/build;
+			};
+			name = Debug;
+		};
+		59DAC5BF7C8B4B9DB9A41AD4 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = RelWithDebInfo;
+		};
+		5B62BC852C794B978E582B09 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = XML_POOR_ENTROPY;
+				SDKROOT = iphoneos;
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/build;
+			};
+			name = MinSizeRel;
+		};
+		6761CCF7657C453BA1D21451 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = MinSizeRel;
+		};
+		6BF4EEB1BEEB4382997BDFAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		7331C9A1BE6E4C81AB0712DC /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = XML_POOR_ENTROPY;
+				SDKROOT = iphoneos;
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/build;
+			};
+			name = RelWithDebInfo;
+		};
+		7BF69A7DAFBE4AEB8264B11C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"'AdobePrivate=1'",
+					"'ENABLE_CPP_DOM_MODEL=1'",
+					"'XML_STATIC=1'",
+					"'HAVE_EXPAT_CONFIG_H=1'",
+					"'XMP_StaticBuild=1'",
+					"'IOS_ENV=1'",
+					"'BUILDING_XMPCORE_LIB=1'",
+					"'XMP_COMPONENT_INT_NAMESPACE=AdobeXMPCore_Int'",
+					"'BUILDING_XMPCORE_AS_STATIC=1'",
+					"$(inherited)",
+				);
+				GCC_SHORT_ENUMS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = (
+					../../../toolkit/XMPCore/build/../../../toolkit,
+					../../../toolkit/XMPCore/build/../../../toolkit/public/include,
+					"../../../toolkit/XMPCore/build/../../../toolkit/third-party/expat/public/lib",
+					../../../toolkit/XMPCore/build/../resource/mac,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = " $(inherited)";
+				LIBRARY_STYLE = STATIC;
+				OBJROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fstack-protector",
+					"-D_FORTIFY_SOURCE=2",
+					"-DDEBUG=1",
+					"-D_DEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-fstack-protector",
+					"-DDEBUG=1",
+					"-D_DEBUG=1",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "XMPCoreStatic$(CONFIGURATION)";
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/libraries/ios;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		814A20A1BDBD45C8A48F6A13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		9EB6286BC8824F21B7F24424 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		A53840DAA78646CFAAE27836 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = MinSizeRel;
+		};
+		C6C1E26B9BB2489F8C8E4A80 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = RelWithDebInfo;
+		};
+		C78D7DCEE01B44318C279D50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = XML_POOR_ENTROPY;
+				SDKROOT = iphoneos;
+				SYMROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios/build;
+			};
+			name = Release;
+		};
+		D6A2BDA2B41447B995775D97 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"'AdobePrivate=1'",
+					"'ENABLE_CPP_DOM_MODEL=1'",
+					"'XML_STATIC=1'",
+					"'HAVE_EXPAT_CONFIG_H=1'",
+					"'XMP_StaticBuild=1'",
+					"'IOS_ENV=1'",
+					"'BUILDING_XMPCORE_LIB=1'",
+					"'XMP_COMPONENT_INT_NAMESPACE=AdobeXMPCore_Int'",
+					"'BUILDING_XMPCORE_AS_STATIC=1'",
+					"$(inherited)",
+				);
+				GCC_SHORT_ENUMS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = (
+					../../../toolkit/XMPCore/build/../../../toolkit,
+					../../../toolkit/XMPCore/build/../../../toolkit/public/include,
+					"../../../toolkit/XMPCore/build/../../../toolkit/third-party/expat/public/lib",
+					../../../toolkit/XMPCore/build/../resource/mac,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = " $(inherited)";
+				LIBRARY_STYLE = STATIC;
+				OBJROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fstack-protector",
+					"-D_FORTIFY_SOURCE=2",
+					"-DNDEBUG",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-fstack-protector",
+					"-DNDEBUG",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "XMPCoreStatic$(CONFIGURATION)";
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/libraries/ios;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "";
+			};
+			name = RelWithDebInfo;
+		};
+		DC5CE9170F584D58AB42A0D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_BITCODE = NO;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"'AdobePrivate=1'",
+					"'ENABLE_CPP_DOM_MODEL=1'",
+					"'XML_STATIC=1'",
+					"'HAVE_EXPAT_CONFIG_H=1'",
+					"'XMP_StaticBuild=1'",
+					"'IOS_ENV=1'",
+					"'BUILDING_XMPCORE_LIB=1'",
+					"'XMP_COMPONENT_INT_NAMESPACE=AdobeXMPCore_Int'",
+					"'BUILDING_XMPCORE_AS_STATIC=1'",
+					"$(inherited)",
+				);
+				GCC_SHORT_ENUMS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = (
+					../../../toolkit/XMPCore/build/../../../toolkit,
+					../../../toolkit/XMPCore/build/../../../toolkit/public/include,
+					"../../../toolkit/XMPCore/build/../../../toolkit/third-party/expat/public/lib",
+					../../../toolkit/XMPCore/build/../resource/mac,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LIBRARY_SEARCH_PATHS = " $(inherited)";
+				LIBRARY_STYLE = STATIC;
+				OBJROOT = ../../../toolkit/XMPCore/build/CMake64_libcpp_ios;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fstack-protector",
+					"-D_FORTIFY_SOURCE=2",
+					"-DNDEBUG=1",
+					"-D_NDEBUG=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-fstack-protector",
+					"-DNDEBUG=1",
+					"-D_NDEBUG=1",
+				);
+				OTHER_LIBTOOLFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "XMPCoreStatic$(CONFIGURATION)";
+				SECTORDER_FLAGS = "";
+				SYMROOT = ../../../toolkit/libraries/ios;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17E7F5C13E0843D0A99AC516 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BF4EEB1BEEB4382997BDFAA /* Debug */,
+				9EB6286BC8824F21B7F24424 /* Release */,
+				6761CCF7657C453BA1D21451 /* MinSizeRel */,
+				59DAC5BF7C8B4B9DB9A41AD4 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		366EBE9ED8F34F0C954223AF /* Build configuration list for PBXProject "XMPCore64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F08D8F67CA54A27B2F3A1C5 /* Debug */,
+				C78D7DCEE01B44318C279D50 /* Release */,
+				5B62BC852C794B978E582B09 /* MinSizeRel */,
+				7331C9A1BE6E4C81AB0712DC /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DBD5079EAE8F49A68BBC35C1 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				814A20A1BDBD45C8A48F6A13 /* Debug */,
+				282CCDE85B764E25A8D2CDCC /* Release */,
+				A53840DAA78646CFAAE27836 /* MinSizeRel */,
+				C6C1E26B9BB2489F8C8E4A80 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD6E9B039D0745259A8C60ED /* Build configuration list for PBXNativeTarget "XMPCoreStatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BF69A7DAFBE4AEB8264B11C /* Debug */,
+				DC5CE9170F584D58AB42A0D2 /* Release */,
+				17623F3374664375B00CE9D2 /* MinSizeRel */,
+				D6A2BDA2B41447B995775D97 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F99A0345513D4AA1B5421B34 /* Project object */;
+}

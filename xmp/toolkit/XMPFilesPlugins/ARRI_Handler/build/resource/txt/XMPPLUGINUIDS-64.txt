@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PluginResource Architecture="x64">
+	<Handler
+		Name="com.adobe.xmp.plugins.ARRI.handler"
+		Version="1.0.0"
+		HandlerType="NormalHandler">
+		<Extensions>
+			<Extension Name="ARI" />
+		</Extensions>
+		<FormatIDs>
+			<FormatID Name="ARRI" />
+		</FormatIDs>
+		<HandlerFlags>
+			<HandlerFlag Name="kXMPFiles_AllowsOnlyXMP" />
+			<HandlerFlag Name="kXMPFiles_ReturnsRawPacket" />	
+		</HandlerFlags>
+		<SerializeOptions>
+			<SerializeOption Name="kXMP_UseCompactFormat" />
+			<SerializeOption Name="kXMP_OmitPacketWrapper"/>
+		</SerializeOptions>
+	</Handler>
+</PluginResource>

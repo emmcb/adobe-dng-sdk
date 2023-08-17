@@ -1,0 +1,14 @@
+XMP_COMMON_FLAGS = ENABLE_CPP_DOM_MODEL=0 XML_STATIC=1 HAVE_EXPAT_CONFIG_H=1 XMP_StaticBuild=1 XMP_64=1
+
+DNG_SDK_COMMON_FLAGS = qMacOS=1 qWinOS=0 qDNGUseStdInt=1 Macintosh=1 MAC_ENV=1 BIB_MULTI_THREAD=1 $(XMP_COMMON_FLAGS)
+
+// Note: It is up to each project to define DNG_ROOT correctly 
+// so that the following flags do the right thing.
+
+// Headers.
+
+DNG_SDK_DNG_SDK_HEADERS	   = $(DNG_ROOT)/dng_sdk/source
+DNG_SDK_LIBJPEG_HEADERS	   = $(DNG_ROOT)/libjpeg
+DNG_SDK_XMP_HEADERS		   = $(DNG_ROOT)/xmp/toolkit/public/include
+
+DNG_SDK_COMMON_HEADERS	   = $(DNG_SDK_DNG_SDK_HEADERS) $(DNG_SDK_LIBJPEG_HEADERS) $(DNG_SDK_XMP_HEADERS)

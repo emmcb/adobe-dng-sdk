@@ -1,0 +1,19 @@
+#ifndef _H_MacPDFLPrefix
+
+#define _H_MacPDFLPrefix
+
+#define PLATFORM "MacPlatform.h"
+
+/* MAC_ENV is an archaic synonym for MAC_PLATFORM */
+#define MAC_ENV 1
+
+#define TOOLKIT 1
+
+#define PRODUCT "HFTLibrary.h"
+
+//tells SnippetRunner source files this is PDFL SnippetRunner (not Acrobat SnippetRunner)
+#define PDFL_SDK_SAMPLE 1
+
+#define PI_ACROCOLOR_VERSION			AcroColorHFT_VERSION_6
+
+#endif /* _H_MacPDFLPrefix */

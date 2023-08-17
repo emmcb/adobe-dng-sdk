@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug DLL|ARM64">
+      <Configuration>Debug DLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug DLL|x64">
+      <Configuration>Debug DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|ARM64">
+      <Configuration>Release DLL</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|x64">
+      <Configuration>Release DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5A6C7899-C635-3933-A88E-ABA86B34227F}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>XMPFilesStatic</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|ARM64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_x64\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_x64\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_arm64\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|ARM64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_arm64\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">XMPFilesStatic.dir\Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">XMPFilesStatic.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug DLL|ARM64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug DLL|ARM64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_x64\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_x64\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_arm64\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|ARM64'">..\..\..\..\..\xmp\toolkit\public\libraries\windows_arm64\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">XMPFilesStatic.dir\Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">XMPFilesStatic.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release DLL|ARM64'">XMPFilesStatic$(Configuration)</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release DLL|ARM64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:ARM64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;DEBUG;_ITERATOR_DEBUG_LEVEL=2;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:ARM64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj /FD</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj /FD</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:ARM64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj /FD</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|ARM64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /J /bigobj /FD</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;XML_POOR_ENTROPY;WIN_ENV=1;_CRT_SECURE_NO_WARNINGS=1;_SCL_SECURE_NO_WARNINGS=1;WIN64;_WIN64=1;NOMINMAX;UNICODE;_UNICODE;NDEBUG;_ITERATOR_DEBUG_LEVEL=0;AdobePrivate=1;ENABLE_CPP_DOM_MODEL=0;XML_STATIC=1;HAVE_EXPAT_CONFIG_H=1;XMP_StaticBuild=1;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\public\include\client-glue;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPCore\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\third-party\expat\public\lib;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\..\..\toolkit\XMPFilesPlugins\api\source;..\..\..\..\..\xmp\toolkit\XMPFiles\build\..\resource\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:ARM64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\XMPFiles_ChangeLog.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\Endian.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\SafeStringAPIs.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\SafeTypes.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\SuppressSAL.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\build\XMP_BuildInfo.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\XMPFiles.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\XMPFiles_Impl.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\ASF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AVCHD_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AVCUltra_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Basic_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\CanonXF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\FLV_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\GIF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Generic_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\HEIF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\InDesign_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\JPEG_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MP3_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MPEG2_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MPEG4_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\P2_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PNG_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PSD_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PostScript_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\RIFF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SVG_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SWF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Scanner_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SonyHDV_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\TIFF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Trivial_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\UCF_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\WAVE_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\WebP_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMEX_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMFAM_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMSAM_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAM_Handler.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFBehavior.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFReconcile.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\Chunk.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\ChunkController.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\ChunkPath.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\IChunkBehavior.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\IChunkContainer.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\IChunkData.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\BEXTMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\CartMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\Cr8rMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\DISPMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\INFOMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\PrmLMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\WAVEBehavior.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\WAVEReconcile.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\iXMLMetadata.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WebP\WebPBehavior.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ASF_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AVCUltra_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ID3_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IPTC_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ISOBaseMedia_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\META_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\MOOV_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\P2_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PNG_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PSIR_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PackageFormat_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PostScript_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\QuickTime_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\RIFF.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\RIFF_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ReconcileLegacy.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\Reconcile_Impl.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\SVG_Adapter.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\SWF_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TIFF_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TimeConversionUtils.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\XDCAM_Support.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\XMPScanner.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\FileHandler.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\FileHandlerInstance.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\Module.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\ModuleUtils.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\PluginManager.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\XMPAtoms.h" />
+    <None Include="..\..\..\..\..\xmp\toolkit\public\include\client-glue\TXMPAlbumArt.incl_cpp">
+    </None>
+    <None Include="..\..\..\..\..\xmp\toolkit\public\include\client-glue\TXMPFiles.incl_cpp">
+    </None>
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\client-glue\WXMP_Common.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\client-glue\WXMPFiles.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\TXMPAlbumArt.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\TXMPFiles.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\TXMPIterator.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\TXMPMeta.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\TXMPUtils.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\XMP.hpp" />
+    <None Include="..\..\..\..\..\xmp\toolkit\public\include\XMP.incl_cpp">
+    </None>
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\XMP_Const.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\XMP_Environment.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\XMP_IO.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\public\include\XMP_Version.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\crc32.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\deflate.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\gzguts.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inffast.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inffixed.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inflate.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inftrees.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\trees.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\zconf.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\zlib.h" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\zutil.h" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\adler32.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\compress.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\crc32.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\deflate.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\infback.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inffast.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inflate.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\inftrees.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\trees.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\uncompr.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zlib\zutil.c" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\Host_IO.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\XIO.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\IOUtils.hpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\source\XMPFiles_IO.hpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\NativeMetadataSupport\IMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\NativeMetadataSupport\IReconcile.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\NativeMetadataSupport\MetadataSet.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\third-party\zuid\sources\MD5.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\UnicodeConversions.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\HandlerRegistry.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\SafeStringAPIs.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\PerfUtils.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\WXMPFiles.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\XIO.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\IOUtils.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\XML_Node.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\XMP_LibUtils.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\XMP_ProgressTracker.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\XMPFiles.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\XMPFiles_Impl.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\XMPFiles_IO.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\source\Host_IO-Win.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AIFF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\ASF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AVCHD_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AVCUltra_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Basic_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\CanonXF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\FLV_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\GIF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Generic_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\HEIF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\InDesign_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\JPEG_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MP3_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MPEG2_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\MPEG4_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\P2_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PNG_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PSD_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\PostScript_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\RIFF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SVG_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SWF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Scanner_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\SonyHDV_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\TIFF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\Trivial_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\UCF_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\WAVE_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\WebP_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMEX_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMFAM_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAMSAM_Handler.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\XDCAM_Handler.cpp" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FileHandlers\AIFF_Handler.hpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFBehavior.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AIFF\AIFFReconcile.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\Chunk.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\ChunkController.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\ChunkPath.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IFF\IChunkBehavior.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\BEXTMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\CartMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\Cr8rMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\DISPMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\INFOMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\PrmlMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\WAVEBehavior.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\WAVEReconcile.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WAVE\iXMLMetadata.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\WebP\WebPBehavior.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ASF_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\AVCUltra_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ID3_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\IPTC_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ISOBaseMedia_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\META_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\MOOV_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\P2_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PNG_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PSIR_FileWriter.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PSIR_MemoryReader.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PackageFormat_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\PostScript_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\QuickTime_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\RIFF.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\RIFF_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ReconcileIPTC.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ReconcileLegacy.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\ReconcileTIFF.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\Reconcile_Impl.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\SVG_Adapter.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\SWF_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TIFF_FileWriter.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TIFF_MemoryReader.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TIFF_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\TimeConversionUtils.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\XDCAM_Support.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\FormatSupport\XMPScanner.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\FileHandlerInstance.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\HostAPIImpl.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\Module.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\PluginManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\XMPAtoms.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPFiles\source\PluginHandler\OS_Utils_WIN.cpp" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPCore\third-party\expat\public\lib\xmlparse.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPCore\third-party\expat\public\lib\xmlrole.c" />
+    <ClCompile Include="..\..\..\..\..\xmp\toolkit\XMPCore\third-party\expat\public\lib\xmltok.c" />
+    <ClInclude Include="..\..\..\..\..\xmp\toolkit\XMPCore\resource\win\expat_config.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,27 @@
+Dumping XMPMeta object ""  (0x0)
+   pdf:  http://ns.adobe.com/pdf/1.3/  (0x80000000 : schema)
+      pdf:Producer = "Acrobat Distiller 7.0 (Windows)"
+      pdf:Keywords = ""XMP  metadata  schema XML RDF""
+      pdf:Copyright = "2005 Adobe Systems Inc."
+   pdfx:  http://ns.adobe.com/pdfx/1.3/  (0x80000000 : schema)
+      pdfx:Copyright = "2005 Adobe Systems Inc."
+   xmp:  http://ns.adobe.com/xap/1.0/  (0x80000000 : schema)
+      xmp:CreatorTool = "FrameMaker 7.0"
+      xmp:ModifyDate = "2005-06-23T08:45:01-07:00"
+      xmp:CreateDate = "2005-06-23T07:46:18Z"
+      xmp:MetadataDate = "2005-06-23T08:45:01-07:00"
+   xmpMM:  http://ns.adobe.com/xap/1.0/mm/  (0x80000000 : schema)
+      xmpMM:DocumentID = "uuid:7a24b6ab-cefc-4c0c-b9ea-c4a00d24633b"
+      xmpMM:InstanceID = "uuid:43b08fa6-423d-4203-a31c-49f498c2ef00"
+   dc:  http://purl.org/dc/elements/1.1/  (0x80000000 : schema)
+      dc:format = "application/pdf"
+      dc:description  (0x1E00 : isLangAlt isAlt isOrdered isArray)
+         [1] = "XMP metadata specification"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-default"  (0x20 : isQual)
+      dc:title  (0x1E00 : isLangAlt isAlt isOrdered isArray)
+         [1] = "Extensible Metadata Platform (XMP) Specification"  (0x50 : hasLang hasQual)
+               ? xml:lang = "x-default"  (0x20 : isQual)
+      dc:creator  (0x600 : isOrdered isArray)
+         [1] = "Adobe Developer Technologies"
+      dc:subject  (0x200 : isArray)
+         [1] = "XMP  metadata  schema XML RDF"

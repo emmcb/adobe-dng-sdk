@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and
+targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="linux">
+		<buildgroup name="xmp" title="XMP">
+			<dependencies>
+				<dependency name="zuid" type="external" version="zuid"/>
+				<dependency name="zlib" type="external" version="1.2.11"/>
+				<dependency name="expat" type="external" version="2.2.9"/>
+				<dependency name="boost" type="external" version="1.60"/>
+			</dependencies>
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+			<target name="xmpcmakeall" title="xmpcmakeall" buildtags="debug,release,32,64,pr">
+				<compiler name="gcc" projectfilelocation="/xmp/toolkit/build/Makefile" env="toolchain=ToolchainRelEng.cmake RelEngAll" options="-k -f"/>
+					<files>
+						<file location="/xmp/toolkit/build/CMakeDebug/Makefile" verify="1" />
+						<file location="/xmp/toolkit/build/CMakeRelease/Makefile" verify="1" />
+						<file location="/xmp/toolkit/build/CMake64Debug/Makefile" verify="1" />
+						<file location="/xmp/toolkit/build/CMake64Release/Makefile" verify="1" />
+					</files>
+			</target>
+			<target name="xmpdb-linux" title="XMP_Debug" buildtags="debug,32">
+				<compiler name="gcc" projectfilelocation="/xmp/toolkit/build/Makefile" env="build32debug" options="-k -j8 -f"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/i80386linux/debug">
+							<file location="/xmp/toolkit/public/libraries/i80386linux/debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/debug/libAdobeXMP.so.7.0" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/debug/libAdobeXMPFiles.so.7.0" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/MXF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/MXF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/PDF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/PDF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/debug/libMiniPDFL.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MOVOEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MOVOEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MP4OEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/debug/MP4OEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-linux" title="XMP_Release" buildtags="release,32">
+				<compiler name="gcc" projectfilelocation="/xmp/toolkit/build/Makefile" env="build32release" options="-k -j8 -f"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/i80386linux/release">
+							<file location="/xmp/toolkit/public/libraries/i80386linux/release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/release/libAdobeXMP.so.7.0" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux/release/libAdobeXMPFiles.so.7.0" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/MXF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/MXF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/PDF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/PDF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux/release/libMiniPDFL.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MOVOEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MOVOEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MP4OEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux/release/MP4OEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb64-linux" title="XMP Debug 64-bit" buildtags="debug,64">
+				<compiler name="gcc" projectfilelocation="/xmp/toolkit/build/Makefile" env="build64debug" options="-k -j8 -f"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/i80386linux_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/debug/libAdobeXMP.so.7.0" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/debug/libAdobeXMPFiles.so.7.0" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/MXF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/MXF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/PDF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/PDF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/debug/libMiniPDFL.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MOVOEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MOVOEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MP4OEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/debug/MP4OEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel64-linux" title="XMP Release 64-bit" buildtags="release,64,pr">
+				<compiler name="gcc" projectfilelocation="/xmp/toolkit/build/Makefile" env="build64release" options="-k -j8 -f"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/i80386linux_x64/release">
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/release/libAdobeXMP.so.7.0" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/i80386linux_x64/release/libAdobeXMPFiles.so.7.0" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/MXF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/MXF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/PDF_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/PDF_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/i80386linux_x64/release/libMiniPDFL.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MOVOEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MOVOEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MP4OEM_Handler.resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/i80386linux_x64/release/MP4OEM_Handler.resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+		</buildgroup>
+	</platform>
+</buildmetadata>

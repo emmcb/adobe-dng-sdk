@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and
+targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="uwp">
+		<buildgroup name="xmp" title="XMP">
+			<dependencies>
+				<dependency name="zuid" type="external" version="zuid"/>
+				<dependency name="zlib" type="external" version="1.2.11"/>
+				<dependency name="expat" type="external" version="2.2.9"/>
+			</dependencies>
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+			<target name="xmpcmakeuwp64" title="xmpcmakeuwp64" buildtags="debug,release,64,pr">
+				<compiler name="msvc15" target="Release_Universal|x64"  projectfilelocation="/XMP/toolkit/build/vc15_uwp/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file location="/XMP/toolkit/build/CMake64_UWP_VC15/XMPToolkit64.sln" verify="1"/>
+					</files>
+			</target>
+			<target name="xmpdbuwpx64-win" title="XMP_Debug_UWP_x64" buildtags="debug,64">
+				<compiler name="msvc15" target="Debug|x64" projectfilelocation="/xmp/toolkit/build/CMake64_UWP_VC15/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/uwp/uwp_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMP.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/uwp/uwp_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMPFiles.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/debug/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpreluwpx64-win" title="XMP_Release_UWP_x64" buildtags="release,64,pr">
+				<compiler name="msvc15" target="Release|x64" projectfilelocation="/xmp/toolkit/build/CMake64_UWP_VC15/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/uwp/uwp_x64/release">
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMP.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/uwp/uwp_x64/release">
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMPFiles.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/uwp/uwp_x64/release/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+		</buildgroup>
+	</platform>
+</buildmetadata>

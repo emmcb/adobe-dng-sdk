@@ -1,0 +1,12 @@
+; Declares the entry points for the DLL.
+
+LIBRARY	"AdobeXMPScript"
+
+EXPORTS
+	ESInitialize
+	ESTerminate
+	ESGetVersion
+	ESFreeMem
+	getVersion
+
+	

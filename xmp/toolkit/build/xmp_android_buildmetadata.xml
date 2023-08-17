@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and 
+	 targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+	 1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+	 2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+	 3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+	 4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+	 5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+	 6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="android">
+		<buildgroup name="xmp" title="XMP">
+			<dependencies>
+				<dependency name="zuid" type="external" version="zuid"/>
+				<dependency name="zlib" type="external" version="1.2.11"/>
+				<dependency name="expat" type="external" version="2.2.9"/>
+				<dependency name="boost" type="external" version="1.60"/>
+			</dependencies>
+	
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+	
+			<buildgroup name="xmp_android" title="XMP Android">
+				<target name="xmp-android armeabi-v7a libcpp debug" title="XMP Android armeabi-v7a  using libc++ debug" buildtags="debug">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleArmv7aDebug"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/armeabi-v7a/Debug">
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Debug/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/armeabi-v7a/DebugSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/DebugSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/DebugSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/DebugSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android armeabi-v7a libcpp release" title="XMP Android armeabi-v7a  using libc++ release" buildtags="release">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleArmv7aRelease"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/armeabi-v7a/Release">
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/Release/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/armeabi-v7a/ReleaseSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/ReleaseSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/ReleaseSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/armeabi-v7a/ReleaseSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android arm64-v8a libcpp debug" title="XMP Android arm64-v8a using libc++ debug" buildtags="debug">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleArm64Debug"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/arm64-v8a/Debug">
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Debug/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/arm64-v8a/DebugSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/DebugSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/DebugSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/DebugSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android arm64-v8a libcpp release" title="XMP Android arm64-v8a using libc++ release" buildtags="release,pr">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleArm64Release"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/arm64-v8a/Release">
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/Release/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/arm64-v8a/ReleaseSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/ReleaseSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/ReleaseSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/arm64-v8a/ReleaseSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android x86_64 libcpp debug" title="XMP Android x86_64  using libc++ debug" buildtags="debug">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleIntel64Debug"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86_64/Debug">
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Debug/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86_64/DebugSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/DebugSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/DebugSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/DebugSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android x86_64 libcpp release" title="XMP Android x86_64  using libc++ release" buildtags="release">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleIntel64Release"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86_64/Release">
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/Release/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86_64/ReleaseSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/ReleaseSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/ReleaseSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86_64/ReleaseSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android x86 libcpp debug" title="XMP Android x86 using libc++ debug" buildtags="debug">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleIntel32Debug"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86/Debug">
+							<file location="/xmp/toolkit/public/libraries/android/x86/Debug/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/Debug/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/Debug/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86/DebugSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/x86/DebugSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/DebugSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/DebugSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+				<target name="xmp-android x86 libcpp release" title="XMP Android x86 using libc++ release" buildtags="release">
+					<compiler name="androidstudio 4.1.2" projectfilelocation="/xmp/toolkit/build/androidstudio4/app" env="gradle" options="assembleIntel32Release"/>
+					<files>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86/Release">
+							<file location="/xmp/toolkit/public/libraries/android/x86/Release/libAdobeXMP.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/Release/libAdobeXMPFiles.so" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/Release/libAdobeXMPCompareAndMerge.so" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="libAdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/android/x86/ReleaseSymbols">
+							<file location="/xmp/toolkit/public/libraries/android/x86/ReleaseSymbols/libAdobeXMP.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/ReleaseSymbols/libAdobeXMPFiles.so.sym" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/android/x86/ReleaseSymbols/libAdobeXMPCompareAndMerge.so.sym" verify="1" post="1"/>
+						</artifact>
+					</files>
+				</target>
+			</buildgroup>
+		</buildgroup>
+	</platform>
+</buildmetadata>

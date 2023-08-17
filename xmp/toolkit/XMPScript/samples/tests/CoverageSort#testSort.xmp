@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<rdf:Description rdf:about="Test:APICoverage/kRDFCoverage" xmlns:my="http://mynamespace" xmlns:my2="http://mynamespace2">
+		<my:SimpleProp1>Simple1 value</my:SimpleProp1>
+		<my:SimpleProp2 xml:lang="x-default">Simple2 value</my:SimpleProp2>
+		<my:ArrayProp1>
+			<rdf:Bag>
+				<rdf:li>Item1.1 value</rdf:li>
+				<rdf:li>Item1.2 value</rdf:li>
+			</rdf:Bag>
+		</my:ArrayProp1>
+		<my:ArrayProp2>
+			<rdf:Alt>
+				<rdf:li xml:lang="x-two">Item2.2 value</rdf:li>
+				<rdf:li xml:lang="x-one">Item2.1 value</rdf:li>
+			</rdf:Alt>
+		</my:ArrayProp2>
+		<my:ArrayProp3>
+			<rdf:Alt>
+				<rdf:li xml:lang="x-one">Item3.1 value</rdf:li>
+				<rdf:li>Item3.2 value</rdf:li>
+			</rdf:Alt>
+		</my:ArrayProp3>
+		<my:ArrayProp4>
+			<rdf:Alt>
+				<rdf:li>Item4.1 value</rdf:li>
+				<rdf:li xml:lang="x-two">Item4.2 value</rdf:li>
+			</rdf:Alt>
+		</my:ArrayProp4>
+		<my:ArrayProp5>
+			<rdf:Alt>
+				<rdf:li xml:lang="x-xxx">Item5.2 value</rdf:li>
+				<rdf:li xml:lang="x-xxx">Item5.1 value</rdf:li>
+			</rdf:Alt>
+		</my:ArrayProp5>
+		<my:StructProp rdf:parseType="Resource">
+			<my2:Field2>Field2 value</my2:Field2>
+			<my2:Field1>Field1 value</my2:Field1>
+		</my:StructProp>
+		<my:QualProp1 rdf:parseType="Resource">
+			<rdf:value>Prop value</rdf:value>
+			<my2:Qual>Qual value</my2:Qual>
+		</my:QualProp1>
+		<my:QualProp2 rdf:parseType="Resource">
+			<rdf:value xml:lang="x-default">Prop value</rdf:value>
+			<my2:Qual>Qual value</my2:Qual>
+		</my:QualProp2>
+		<my:QualProp3 xml:lang="x-default" rdf:parseType="Resource">
+			<rdf:value>Prop value</rdf:value>
+			<my2:Qual>Qual value</my2:Qual>
+		</my:QualProp3>
+		<my:NestedStructProp rdf:parseType="Resource">
+			<my2:Outer rdf:parseType="Resource">
+				<my2:Middle rdf:parseType="Resource">
+					<my2:Inner2 rdf:parseType="Resource">
+						<my2:Field2>Field2 value</my2:Field2>
+						<my2:Field1>Field1 value</my2:Field1>
+					</my2:Inner2>
+					<my2:Inner rdf:parseType="Resource">
+						<my2:Field2>Field2 value</my2:Field2>
+						<my2:Field1>Field1 value</my2:Field1>
+					</my2:Inner>
+				</my2:Middle>
+			</my2:Outer>
+		</my:NestedStructProp>
+	</rdf:Description>
+</rdf:RDF>

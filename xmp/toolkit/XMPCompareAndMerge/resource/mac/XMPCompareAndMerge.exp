@@ -1,0 +1,4 @@
+_XMPCM_GetVersionInfo
+_XMPCM_Initialize
+_XMPCM_Terminate
+_XMPCM_GetObjectFactoryInstance

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PluginResource Architecture="x86">
+
+	<Handler Name="adobe.coretech.xmp.MXF" Version="1.00" HandlerType="OwningHandler" Priority="false">
+		<CheckFormat Offset="0" Length="14" ByteSeq="0x060E2B34020501010D0102010102"/>
+		<FormatIDs>
+			<FormatID Name="MXF " />
+		</FormatIDs>
+		<Extensions>
+			<Extension Name="mxf"/>
+		</Extensions>
+		<HandlerFlags>
+			<HandlerFlag Name="kXMPFiles_CanInjectXMP"/>
+			<HandlerFlag Name="kXMPFiles_CanExpand"/>
+			<HandlerFlag Name="kXMPFiles_CanRewrite"/>
+			<HandlerFlag Name="kXMPFiles_AllowsOnlyXMP"/>
+			<HandlerFlag Name="kXMPFiles_ReturnsRawPacket"/>
+			<HandlerFlag Name="kXMPFiles_HandlerOwnsFile"/>
+			<HandlerFlag Name="kXMPFiles_AllowsSafeUpdate"/>
+			<HandlerFlag Name="kXMPFiles_UsesSidecarXMP"/>
+		</HandlerFlags>
+		<SerializeOptions>
+			<SerializeOption Name="kXMP_UseCompactFormat"/>
+			<SerializeOption Name="kXMP_OmitPacketWrapper"/>
+		</SerializeOptions>
+	</Handler>
+
+</PluginResource>
