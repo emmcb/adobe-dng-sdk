@@ -4,54 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 12-15-09 AWL 5.0-f122 [2500563] Force WAV text chunks to have even size.
-// 11-19-09 AWL 5.0-f117 [2480909] Fix AVI problems with LIST:INFO placement.
-// 11-18-09 AWL 5.0-f116 Change loops in ContainerChunk::changesAndSize to avoid excessive MS iterator checks.
-// 11-18-09 AWL 5.0-f115 Rewrite ContainerChunk::changesAndSize for better placement and simpler code.
-// 11-17-09 AWL 5.0-f114 [2480954] Fix placement of LIST:Tdat chunk in RIFF files.
-// 11-16-09 SAM 5.0-f110 [2471511] Fixing tolerance of missing pad byte at very end of file.
-// 11-13-09 AWL 5.0-f109 [2471511] Restore file repair for some ill-formed RIFF files.
-// 11-12-09 AWL 5.0-f108 [2476274] Remove internal limit of chunk size, accept any well-formed chunk.
-// 11-12-09 AWL 5.0-f107 [2471511] Workaround issue of bad RIFF chunk size, tolerate on read and throw on write.
-// 11-11-09 SAM 5.0-f106 [2473381] Fixed iter corruption after deletion of child in vector
-// 11-06-09 FNO 5.0-f105 [2473381] Fixed Cr8r,PrmL,TDat last-chunk-creation.
-// 11-06-09 FNO 5.0-f104 [2473381] Assert 2/4GB border, prevent main growth, remove Index Adjustments.
-// 11-06-09 FNO 5.0-f103 [2457482] Cr8r,PrmL read support.
-// 11-05-09 FNO 5.0-f102 JUNK-Optimization II (64k buffer).
-// 11-05-09 FNO 5.0-f101 JUNK-Optimization (in response to code review).
-// 11-04-09 FNO 5.0-f098 [2473303] RIFF: Fixed stomp-on-feet effect on rewrite.
-// 10-26-09 FNO 5.0-f094 [2435625] RIFF: Prevent breaking index chunks.
-// 10-23-09 FNO 5.0-f092 RIFF: Substantial rewrite of chunk logic to prepare for index adjustments.
-// 10-13-09 FNO 5.0-f087 [2414649] Fix "Bad Assert error".
-// 08-20-09 FNO 5.0-f066 RIFF-Handler: Edge case: First chunk is JUNK.
-// 07-16-09 FNO 5.0-f056 [2376832] JUNK padding chunks... now also fixed for WAV(DISP chunk). Code simplified.
-// 07-15-09 FNO 5.0-f055 [2376832] JUNK padding chunks are not used effectivly. File grows.
-// 07-13-09 FNO 5.0-f053 [1521093] Proper handling of RIFF files with no last pad byte.
-// 07-10-09 FNO 5.0-f052 Move RIFF (AVI/WAV) handler from NewHandlers to regular Handlers.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -230,9 +184,10 @@ Chunk::Chunk( ContainerChunk* _parent, RIFF_MetaHandler* handler, bool skip, Chu
 		bool repairFile = XMP_OptionIsSet ( handler->parent->openFlags, kXMPFiles_OpenRepairFile );
 		if ( (! isUpdate) || (repairFile && (_parent == 0)) ) {
 			this->oldSize = chunkLimit - this->oldPos;
-			if(this->oldSize < 8) {
-                              XMP_Throw ( "Invalid RIFF chunk size", kXMPErr_BadFileFormat );
-			    }
+			if (this->oldSize < 8)
+			{
+				XMP_Throw("Invalid RIFF chunk size", kXMPErr_BadFileFormat);
+			}
 		} else {
 			XMP_Throw ( "Bad RIFF chunk size", kXMPErr_BadFileFormat );
 		}

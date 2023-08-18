@@ -4,79 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	HK	Honey Kansal
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-06-15 AB  5.6-f130 Redesign XDCAM Handler by dividing it into 2 child handlers XDCAMFAM_Handler and XDCAMSAM_Handler and making it more consistent as per latest spec.
-// 03-13-14 IJS 5.6-f097 Fix the break after 5.6-f096.
-// 03-12-14 IJS 5.6-f096 [3714412] Proxy and High Res Clip in XDCAM FAM should open the same XMP.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-// 02-26-13 HK  5.6-f042 Support old sidecar naming convention for XMPilot and SxS formats to maintain backward compatibility.
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-// 02-13-13 HK  5.6-f034 [3498318] In XDCAM_FAM handler, if an old side car of XMPilot can't be renamed, XMPFiles should at least allow to read it.
-// 02-05-13 HK  5.6-f030 Fixed bugs#3477099, #3495118, #3490341, #3492358.
-// 01-30-13 IJS 5.6-f028 [3477008] Modified XDCAM FAM(XMPilot) so as to preserve metadata from an old mxf Sidecar.
-// 01-18-13 IJS 5.6-f024 Implemented GetAssociatedResources and IsMetadataWritable APIs for XDCAM Family.
-// 12-13-12 IJS 5.6-f002 [3143977] Tweaks to identify the variant XDCAM Memory SxS of XDCAM FAM format.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 09-19-12 AWL 5.5-f033 [3211021] Fix the folder handlers complain about read-only XMP files when opening for update.
-// 09-17-12	AWL	5.5-f032 Integrate tweaks to support XMPilot variant of XDCAM FAM.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 09-30-11 AWL 5.4-f017 Add XDCAM (EX/FAM/SAM) support for GetFileModDate.
-//
-// 11-24-10	AWL	5.3-f020 [2755623,2755632] Add XDCAM fixes for non-XMP metadata problems.
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 01-29-09 AWL 5.0-f022 [1699977] Fixes for UNIX file case sensitivity.
-// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 03-06-08 AWL 4.2-f093 Change the XDCAM file type constants to be explicit about all 3: FAM/SAM/EX.
-// 03-03-08 AWL 4.2-f088 [1704032] Fix references to legacy .XML file in the XDCAM handlers.
-// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
-//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
-// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
-//				handlers they must use the parent pointer in the XMPFileHandler base class.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-// 01-01-08 AWL 4.2-f053 Move the legacy digests for P2 and XDCAM to the xmp:NativeDigests struct.
-// 12-31-07 AWL 4.2-f052 Integrate P2 and XDCAM handler changes from Peter Lee and Gerry Miller.
-// 12-06-07 AWL 4.2-f043 Add basic XDCAM handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

@@ -7,80 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	FNO Frank Nocke
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//	IJS Inder Jeet Singh
-//  SKP	Sunil Kishor Pathak
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 07-01-13 SKP 5.6-f070 [3578790] Fix issues raised from Veracode static scan
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 01-30-13 IJS 5.6-f029 Removed LocateMetadataFiles API from XMPFiles
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 12-21-12 IJS 5.6-f008 Added GetAssociatedResources and IsWritable APIs 
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 09-28-12 AWL 5.5-f039 Add LocateMetadataFiles.
-// 09-28-12 ADC 5.5-f038 Implement public API and glue layer for XMPFiles error notifications.
-// 06-20-12 AWL 5.5-f018 Add outer layers for XMPFiles progress notifications.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 05-12-09 AWL 5.0-f037 Finish deprecated function removal.
-// 02-03-09 FNO 5.0-f025 Setting XMP_IO* to XMP_Int32 (before: void*) for UNIX_ENV (Linux/Unix).
-// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
-//
-// 01-28-08 AWL 4.2-f062 Add public CheckFileFormat and CheckPackageFormat functions.
-// 01-11-07 AWL 4.2-f007 [1454747] Change QuickTime init/term calls to handle main and background thread issues.
-//
-// 05-19-06 AWL 4.0-f006 Change XMPFiles::OpenFile to return bool, don't throw if smart handler not
-//				found when kXMPFiles_OpenUseSmartHandler is passed.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 07-21-05 AWL 1.3-001 Remove BIB, same as XMP. Create Xcode project. Bump version to 1.3.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-//
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-// 10-07-04 AWL 1.0-009 Add first cut of support for crash safe file update.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-//
-// 08-23-04 AWL Add GetVersion.
-// 08-20-04 AWL Add handlerFlags output to GetFileInfo.
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 07-02-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 
@@ -93,9 +21,6 @@
 #include "source/XMP_ProgressTracker.hpp"
 
 class XMPFileHandler;
-#if AdobePrivate
-struct AlbumArt;
-#endif
 namespace Common{ struct XMPFileHandlerInfo; }
 
 // =================================================================================================
@@ -318,11 +243,6 @@ public:
 
 	bool CanPutXMP(const SXMPMeta & xmpObj);
 	bool CanPutXMP(XMP_StringPtr xmpPacket, XMP_StringLen xmpPacketLen = kXMP_UseNullTermination);
-#if	AdobePrivate
-	bool GetAlbumArts( std::vector<AlbumArt> * albumArtVector );
-
-	bool PutAlbumArts( const std::vector<AlbumArt> & albumArtVector );
-#endif
 	void SetAbortProc(XMP_AbortProc abortProc, void * abortArg);
 
 	void SetProgressCallback(const XMP_ProgressTracker::CallbackInfo & cbInfo);

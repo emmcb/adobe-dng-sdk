@@ -6,39 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//
-// mm/dd/yy who Description of changes, most recent on top.
-//
-// 03-16-15 AJ  5.6-c048 Fixing build break due to XMPCore.def
-// 03-02-15 AJ  5.6-c039 Marker Extensibility - Backward compatibility for extensions in GetBulkMarkers() and SetBulkMarkers()
-// 05-19-09 AWL 5.0-c031-f039 First part of threading improvements. Force full rebuilds.
-//
-// 10-31-07 AWL 4.2-c023 Add new class XMPDocOps.
-// 08-24-07 AWL 4.2-c019 Remove support for ancient CXMP_* init/term routines and non-public (AXE) expat.
-// 08-02-07 AWL 4.2 Incorporate major revamp to doxygen comments.
-//
-// 03-24-06 AWL 4.0 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 04-19-05 AWL Improve Doxygen comments for SDK.
-// 01-28-05 AWL Remove BIB.
-// 01-17-04 AWL Move into new Perforce depot, cosmetic cleanup.
-// 03-06-03 AWL Add conditional template class typedefs and Doxygen comments.
-// 09-11-02 AWL Started first draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 //  ================================================================================================
 /// \file XMP.hpp
@@ -99,33 +68,18 @@
     #include "TXMPMeta.hpp"
     #include "TXMPIterator.hpp"
     #include "TXMPUtils.hpp"
-	#if AdobePrivate
-    	#include "TXMPDocOps.hpp"
-	#endif
-	
     typedef class TXMPMeta <TXMP_STRING_TYPE>     SXMPMeta;       // For client convenience.
     typedef class TXMPIterator <TXMP_STRING_TYPE> SXMPIterator;
     typedef class TXMPUtils <TXMP_STRING_TYPE>    SXMPUtils;
-    #if AdobePrivate
-	    typedef class TXMPDocOps <TXMP_STRING_TYPE>   SXMPDocOps;
-	#endif
-	
     #if TXMP_EXPAND_INLINE
     	#error "TXMP_EXPAND_INLINE is not working at present. Please don't use it."
         #include "client-glue/TXMPMeta.incl_cpp"
         #include "client-glue/TXMPIterator.incl_cpp"
         #include "client-glue/TXMPUtils.incl_cpp"
-        #if AdobePrivate
-	        #include "client-glue/TXMPDocOps.incl_cpp"
-        #endif
         #include "client-glue/TXMPFiles.incl_cpp"
     #endif
 
 	#if XMP_INCLUDE_XMPFILES
-#if AdobePrivate
-		#include "TXMPAlbumArt.hpp"
-		typedef class TXMPAlbumArt<TXMP_STRING_TYPE>    SXMPAlbumArt;
-#endif
 		#include "TXMPFiles.hpp"	// ! Needs typedef for SXMPMeta.
 		typedef class TXMPFiles <TXMP_STRING_TYPE>    SXMPFiles;
 		#if TXMP_EXPAND_INLINE

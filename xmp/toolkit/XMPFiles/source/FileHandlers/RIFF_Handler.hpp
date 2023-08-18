@@ -4,39 +4,10 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 #ifndef __RIFF_Handler_hpp__
 #define __RIFF_Handler_hpp__	1
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 11-16-09 AWL 5.0-f112 [2448942] Tolerate limited amounts of trailing garbage in RIFF files.
-// 11-06-09 FNO 5.0-f105 [2473381] Fixed Cr8r,PrmL,TDat last-chunk-creation.
-// 11-06-09 FNO 5.0-f104 [2473381] Assert 2/4GB border, prevent main growth, remove Index Adjustments.
-// 11-06-09 FNO 5.0-f103 [2457482] Cr8r,PrmL read support.
-// 11-03-09 FNO 5.0-f097 RIFF: Minor functional optimizations, comments, indentation, cleanup.
-// 10-30-09 FNO 5.0-f096 [2465689] Fix avi indices. Metadata export re-enabled.
-// 07-29-09 FNO 5.0-f058 [2389942] XMP props not properly preserved in ServerMode.
-// 07-10-09 FNO 5.0-f052 Move RIFF (AVI/WAV) handler from NewHandlers to regular Handlers.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

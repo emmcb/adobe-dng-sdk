@@ -7,49 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 09-14-11	AWL	5.5-f030 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-//
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-//
-// 05-18-06 AWL 4.0-f005 Add support for JPEG/Exif thumbnails.
-// 05-15-06 AWL 4.0-f004 Working, but minimally tested read-only smart JPEG handler under NewHandlers.
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 09-01-05 AWL 1.3-003 [1225858] Don't implicitly set the SafeUpdate flag for non-owning handlers.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-//
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-//
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 08-12-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 

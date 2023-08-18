@@ -4,35 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 11-29-11 AWL 5.4-f040 [3053308] Fix infinite loop in SWF decompression.
-// 11-02-11 SAM 5.4-f033 Fix size calculcation in SWF decompress.
-// 10-10-11 AWL 5.4-f019 [2831943] Fix SWF handler bugs causing it to further corrupt ill-formed files.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 02-05-10 AWL 5.1-f002 Fix build warnings from Xcode 3.2.
-//
-// 03-07-08 AWL 4.2-f095 [1708927] Fix SWF_Support's FileInfo::Inf to properly track the source position.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

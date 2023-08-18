@@ -4,46 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//  HK  Honey Kansal
-//  AJ  Abhishek Jindal
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-06-15 AJ  5.6-f131 Fixing warnings due to implicit typecasting
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-//
-// 09-17-12 AWL 5.5-f031 Refine the Host_IO exceptions for permission errors and disk full writes.
-//
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-//
-// 12-15-10	AWL	5.3-f022 Change Host_IO::GetNextChild to recognize AIX termination of readdir_r iteration.
-// 10-21-10	AWL	5.3-f014 Host_IO-UNIX and XMPFiles_IO tweaks as a result of unit testing.
-// 10-08-10	AWL	5.3-f011 Host_IO tweaks as a result of unit testing.
-//
-// 08-27-10 AWL 5.2-f009 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.2-f008 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.2-f006 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.2-f003 Integrate I/O revamp to main.
-//
-// =================================================================================================
-#endif
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

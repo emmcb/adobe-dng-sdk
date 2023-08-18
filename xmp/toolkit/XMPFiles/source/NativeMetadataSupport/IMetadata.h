@@ -4,35 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef _IMetadata_h_
 #define _IMetadata_h_
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JEH Joerg Ehrlich
-//	PW	Patrick Wolleck
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-14-14 ADC 5.6-f114 Timecode computation from iXML information for wave file.
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							New design for Reconciliation code
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-// 07-28-10	JEH	5.2-f001 Initial creation of new AIFF handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include "public/include/XMP_Const.h"

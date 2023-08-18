@@ -3,33 +3,25 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>AdobeXMP</string>
+	<string>XMPCore</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.adobe.AdobeXMPCore</string>
+	<string>com.xmp.XMPCore</string>
 	<key>CFBundleName</key>
-	<string>AdobeXMPCore</string>
+	<string>XMPCore</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Adobe XMP Core kShortVersion, kXMP_Copyright</string>
+	<string>XMP Core kBasicVersion, kXMP_Copyright</string>
 	<key>CFBundleShortVersionString</key>
-	<string>kShortVersion</string>
+	<string>XMP Core kBasicVersion</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleSignature</key>
 	<string>XMP </string>
-	<key>CFBundleVersion</key>
-	<string>kShortVersion</string>
-	<key>BuildDate</key>
-	<string>BUILDDATE</string>
-	<key>BuildVersion</key>
-	<string>BUILDVERSION_MAC</string>
-	<key>BuildID</key>
-	<string>BUILDID</string>
 	<key>Configuration</key>
 	<string>kConfig</string>
 	<key>FileVersion</key>
-	<string>kFileVersion</string>
+	<string>kBasicVersion</string>
 	<key>ProductName</key>
-	<string>AdobeXMP</string>
+	<string>XMP Core</string>
 	<key>ProductVersion</key>
 	<string>XMPCORE_API_VERSION</string>
 </dict>

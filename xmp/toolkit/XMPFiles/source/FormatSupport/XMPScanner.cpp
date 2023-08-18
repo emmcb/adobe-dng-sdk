@@ -3,39 +3,11 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm/dd/yy who Description of changes, most recent on top.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 11-28-07 FNO 4.2-f038 Made MOV-handler and other exclusions/changes needed for x64 windows.
-//
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-25-06 AWL 1.3-014 Don't try to decrement iter.begin, even if result is unused, VC8 debug checks complain.
-//
-// 05-26-04 AWL 3.1-043 Use Bravo numeric types.
-// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
-// 03-01-04 AWL Adapt from old XMLPacketScanner. Simplify and add large file support.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #if WIN32
 	#pragma warning ( disable : 4127 )	// conditional expression is constant
@@ -55,7 +27,6 @@
 #include <cassert>
 #include <string>
 #include <cstdlib>
-#include <memory>
 
 #if DEBUG
 	#include <iostream>
@@ -1018,7 +989,7 @@ XMPScanner::InternalSnip::InternalSnip ( XMP_Int64 offset, XMP_Int64 length )
 
 XMPScanner::InternalSnip::InternalSnip ( const InternalSnip & rhs ) :
 	fInfo ( rhs.fInfo ),
-	fMachine (nullptr )
+	fMachine ( NULL )
 {
 
 	assert ( rhs.fMachine.get() == NULL );	// Don't copy a snip with a machine.
@@ -1290,10 +1261,9 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 		#else
 			{
 				// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-				//PacketMachine *	pm	= new PacketMachine ( bufferOffset, bufferOrigin, bufferLength );
-				//unique_ptr<PacketMachine>	ap ( pm );
-				//snipPos->fMachine = std::make_unique<PacketMachine>(bufferOffset, bufferOrigin, bufferLength);
-				snipPos->fMachine.reset (new PacketMachine (bufferOffset, bufferOrigin, bufferLength));
+				PacketMachine *	pm	= new PacketMachine ( bufferOffset, bufferOrigin, bufferLength );
+				auto_ptr<PacketMachine>	ap ( pm );
+				snipPos->fMachine = ap;
 			}
 		#endif
 		thisMachine = snipPos->fMachine.get();
@@ -1316,8 +1286,8 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 			#else
 				{
 					// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-					unique_ptr<PacketMachine>	ap (nullptr );
-					snipPos->fMachine = std::move(ap);
+					auto_ptr<PacketMachine>	ap ( 0 );
+					snipPos->fMachine = ap;
 				}
 			#endif
 			bufferDone = true;
@@ -1409,8 +1379,8 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 					#else
 						{
 							// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-							unique_ptr<PacketMachine>	ap (nullptr );
-							snipPos->fMachine = std::move(ap);
+							auto_ptr<PacketMachine>	ap ( 0 );
+							snipPos->fMachine = ap;
 						}
 					#endif
 					bufferDone = true;
@@ -1422,7 +1392,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 
 					InternalSnipIterator	tailPos	= NextSnip ( snipPos );
 
-					tailPos->fMachine = std::move(snipPos->fMachine);	// auto_ptr assignment - taking ownership
+					tailPos->fMachine = snipPos->fMachine;	// auto_ptr assignment - taking ownership
 					thisMachine->ResetMachine ();
 
 					snipPos = tailPos;

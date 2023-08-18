@@ -4,34 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	PW	Patrick Wollek
-//	IJS Inder Jeet Singh
-//	JKR Jens Krueger
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-02-13 ADC 5.6-f044 Incorporating Review comments for support for preloading plugins based on handler flags.
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-//
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H

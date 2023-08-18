@@ -4,76 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//  ADC	Amandeep Chawla
-//	SKP Sunil Kishor Pathak
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 11-05-14 SKP 5.6-f121 Implemented MWG spec to read IPTC irrespective of IIM digest matching or not.
-// 03-06-14 ADC 5.6-f095 Reverting changes done via CL # 155650 (MWG specification related).
-// 09-14-11	AWL	5.5-f030 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-// 09-04-12 IJS 5.5-f028 Add file update progress tracking to the TIFF handler.
-// 05-09-12	AWL	5.5-f013 Make the JPEG, TIFF, and PSD handlers ignore XMP parsing errors.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-06-09 AWL 5.0-f084 [2426060,2434421,2424514] Fix TrimTrailingSpaces in ReconcileTIFF.cpp to handle all
-//				blank input. Fix Mac script conversions to use the right script. Fix MPEG-4 imports
-//				to not let one failure abort all. Fix TIFF handler to keep the XMP the same size if possible.
-// 12-18-08 AWL 5.0-f010 [1932925] Fix TIFF handler to ignore trailing zero bytes for LONG tag 33723.
-//				Don't parse read-only IPTC if the digest matches, always parse for update.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 02-27-08 AWL 4.2-f085 [1700696] Fix in-place update logic for JPEG, PSD, and TIFF handlers.
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 01-30-08 AWL 4.2-f065 [1643402] Always strip IIM and PSIR from DNG. Have TIFF handler reject DNG
-//				if DNGBackwardVersion has a high order byte that is not 1 (>= 2.0.0.0).
-// 10-10-07 AWL 4.2-f027 Add handler method GetSerializeOptions. Introduce FillPacketInfo to replace
-//				GetPacketCharForm, GetPacketRWMode, and GetPacketPadSize. And tolerate no wrapper.
-// 01-30-07 AWL 4.2-f014 [1471832] Change the JPEG/PSD/TIFF handlers to do a forced legacy import if
-//				the XMP portion won't parse.
-// 11-01-06 AWL 4.1-f059 [1409577] Fix JPEG and PSD legacy import to better match Photoshop. There
-//				are different JPEG/PSD/TIFF file policies for TIFF tags 270 (dc:description), 315
-//				(dc:creator), and 33432 (dc:rights).
-// 10-16-06 AWL 4.1-f044 [1388170] Fix a major regression in the previous f042 changes. That caused
-//				TIFF and Exif imports to stop for plain camera files - ones with TIFF and Exif but
-//				no PSIR or XMP.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-// 08-31-06 AWL 4.1-f032 More work on in-place updates. Have ReconcileXMPtoJTP only update the IPTC
-//				and PSIR blocks if they have changed. Move the XMP updating out to the file handler.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 06-09-06 AWL 4.0-f011 Add hackery to support TIFF files written by Photoshop 6.
-// 05-26-06 AWL Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include "public/include/XMP_Const.h"

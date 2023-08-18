@@ -11,69 +11,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//    AWL Alan Lillich
-//    ADC Amandeep Chawla
-//    IJS Inder Jeet Singh
-//    AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-21-14 AB  5.6.f120 [3836549] Making kXMPFiles_OptimizeFileLayout flag public for XMP SDK.
-// 01-31-14 IJS 5.6-f091 Reverting Changes Done in 5.6-f089
-// 01-20-14 ADC 5.6-f089 [3696245] Generic Handler: Generic handler returns kXMP_Unknown type for handler->format.
-// 01-16-14 IJS 5.6-f088 Generic Handling Feature - Adding support for kXMPFiles_OpenUseGenericHandler OpenFile() flag.
-// 01-30-13 IJS 5.6-f029 Removed LocateMetadataFiles API from XMPFiles
-// 01-11-13 IJS 5.6-f020 Reworked GetFileModDate, GetAssociatedResources and IsMetadataWritable APIs.
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 12-21-12 IJS 5.6-f008 Added GetAssociatedResources and IsWritable APIs 
-//
-// 09-28-12 AWL 5.5-f039 Add LocateMetadataFiles.
-// 09-28-12 ADC 5.5-f038 Implement public API and glue layer for XMPFiles error notifications.
-// 06-20-12 AWL 5.5-f018 Add outer layers for XMPFiles progress notifications, no handlers use it yet.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 05-19-09 AWL 5.0-f039 First part of threading improvements, revamp the client glue.
-// 05-12-09 AWL 5.0-f037 Finish deprecated function removal.
-//
-// 02-11-08 AWL 4.2-f071 Enable SXMPFiles::CheckFileFormat, the leaks were not real.
-// 01-28-08 AWL 4.2-f062 Add public CheckFileFormat and CheckPackageFormat functions.
-// 08-02-07 AWL 4.2 Incorporate major revamp to doxygen comments.
-//
-// 01-11-07 AWL 4.2-f007 [1454747] Change QuickTime init/term calls to handle main and background thread issues.
-//
-// 05-19-06 AWL 4.0-f006 Change XMPFiles::OpenFile to return bool, don't throw if smart handler not
-//                found when kXMPFiles_OpenUseSmartHandler is passed.
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//                early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 07-21-05 AWL 1.3-001 Remove BIB, same as XMP. Create Xcode project. Bump version to 1.3.
-//
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//                result to LFA_Seek. Add SetAbortProc and abort checking.
-// 08-23-04 AWL Add GetVersion.
-// 08-20-04 AWL Add handlerFlags output to GetFileInfo.
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 06-07-04 AWL First draft based on talk with Jerry Scoggins.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 // =================================================================================================
 /// \file TXMPFiles.hpp
@@ -372,10 +311,6 @@ public:
     /// the default packet scanning plus heuristics. */
 
 
-#if AdobePrivate
-    // *** kXMPFiles_CanRewrite is really a SaveAs-like operation - change the name?
-#endif
-
     static bool GetFormatInfo ( XMP_FileFormat   format,
                                 XMP_OptionBits * handlerFlags = 0 );
 
@@ -557,20 +492,10 @@ public:
     ///   \li \c #kXMPFiles_OpenUsePacketScanning - Force packet scanning, do not use a smart handler.
 	///   \li \c #kXMPFiles_OptimizeFileLayout - When updating a file, spend the effort necessary 
 	///    to optimize file layout.
-#if AdobePrivate
-	///   \li \c #kXMPFiles_OpenUseGenericHandler - Open the file using Generic Handler if there 
-	///    is no Smart handler for the file format.
-#endif
     ///
     /// @return True if the file is succesfully opened and attached to a file handler. False for
     /// anticipated problems, such as passing \c #kXMPFiles_OpenUseSmartHandler but not having an
     /// appropriate smart handler. Throws an exception for serious problems.
-
-#if AdobePrivate
-    // *** Need to think more about interaction of reconcile & strict, default behavior.
-    // *** Use specific format as hint by default and add kXMPFiles_KnownFormat option?
-    // *** Document exceptions for various typical errors.
-#endif
 
     bool OpenFile ( XMP_StringPtr  filePath,
                     XMP_FileFormat format = kXMP_UnknownFile,
@@ -615,7 +540,7 @@ public:
     /// If the file is opened for update (passing \c #kXMPFiles_OpenForUpdate), the disk file remains
     /// open until \c CloseFile() is called. The disk file is only updated once, when \c CloseFile()
     /// is called, regardless of how many calls are made to \c PutXMP(). When in-place update is not possible
-    /// we might write into a temporary file and then swap for corruption/crash safety.
+    /// we might write into a temporary file and then swap for corruption/crash safety. /* Documenatation update for CTECHXMP-4170278*/
     ///
     /// @param closeFlags Option flags for optional closing actions. This bit-flag constant is
     /// defined:
@@ -803,40 +728,6 @@ public:
     bool CanPutXMP ( XMP_StringPtr xmpPacket,
                      XMP_StringLen xmpLength = kXMP_UseNullTermination );
 
-#if AdobePrivate
-	// ---------------------------------------------------------------------------------------------
-	/// @brief \c GetAlbumArts() retrieves the Album Artworks from the file
-	///
-	/// This must be called after OpenFile() and before CloseFile() else exception will be thrown.
-	/// Album art or Cover art information may exist in a file. This can be used to get album art
-	/// information from a file using TXMPAlbumArt. This is format specific information and currently
-	/// the support has been provided for MP3 files only. If album art information exists in a file having
-	/// Album Art support then true will be returned.
-	///
-	/// @param albumArtVector The pointer to a vector of TXMPAlbumArt, which will be filled by XMP. All the
-	///	required memory will be allocated at the client side and will be freed using destructer.
-	/// This vector will be first cleared before processing.
-	///
-	/// @return True if the file has Album Art information, false otherwise.
-
-	bool GetAlbumArts( std::vector<SXMPAlbumArt> * albumArtVector );
-
-	// ---------------------------------------------------------------------------------------------
-	/// @brief \c PutAlbumArts() updates the Album Artworks in a file
-	///
-	/// This must be called after OpenFile() and before CloseFile() else exception will be thrown.
-	/// This can be used to update the album art information in a file using TXMPAlbumArt. This is 
-	///	format specific information and currently the support has been provided for MP3 files only.
-	/// If the format supports album art processing then provided album artworks will be updated in
-	/// the file. The actual changes in the file will not be reflected till the user calls CloseFile().
-	///
-	/// @param albumArtVector The pointer to a vector of TXMPAlbumArt which will be inserted and updated in
-	///	the file.
-	///
-	/// @return True if the album art information has been updated in the file, false otherwise.
-
-	bool PutAlbumArts( const std::vector<SXMPAlbumArt> & albumArtVector );
-#endif
     /// @}
 
     // =============================================================================================
@@ -955,14 +846,6 @@ private:
     // involve heap allocations. This ensures the allocations occur within the client.
     static void SetClientString ( void * clientPtr, XMP_StringPtr valuePtr, XMP_StringLen valueLen );
     static void SetClientStringVector ( void * clientPtr, XMP_StringPtr* arrayPtr, XMP_Uns32 stringCount );
-#if AdobePrivate
-	static void GetArtInfo1 (	void * clientPtr, XMP_Uns32 indexVector, XMP_Uns32 * imageLength,
-								XMP_StringPtr * description, XMP_StringLen * descLen, XMP_Uns8 * usageType,
-								XMP_Uns8 * formatType, XMP_Uns8 * encodingType, XMP_BinaryData * imageData );
-	static void PushArtInfo1 (  void * clientPtr, XMP_Uns32 imageLength, XMP_StringPtr description,
-								XMP_StringLen descLen, XMP_Uns8 usageType, XMP_Uns8 formatType,
-								XMP_Uns8 encodingType, XMP_BinaryData imageData );
-#endif
 };    // class TXMPFiles
 
 // =================================================================================================

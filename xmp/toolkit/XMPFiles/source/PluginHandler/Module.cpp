@@ -4,40 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//	PW  Patrick Wollek
-//	IJS Inder Jeet Singh
-//	JKR Jens Krueger
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-10-13 ADC 5.6-f052 [3432113] Garbage error message is returned if the XMP_Error thrown by Plugins are caught by any dll.
-// 03-02-13 ADC 5.6-f044 Incorporating Review comments for support for preloading plugins based on handler flags.
-// 02-27-13 ADC 5.6-f043 Adding support for preloading plugins based on handler flags. PDF Handler will support preloading.
-// 02-18-13 JKR 5.6-f037 New plugin entry point InitializePlugin2() which call SetupPlugin().
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 01-02-13 ADC 5.6-f011 Allowing multiple different plugins to be loaded simultaneously.
-// 12-19-12 ADC 5.6-f006 [3427733] PluginRegistry isn't thread-safe.
-// 12-17-12 ADC 5.6-f004 Bumping version of XMPFiles Plug-in API to 2.
-//
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "Module.h"
 #include "HostAPI.h"

@@ -7,29 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-30-09 FNO 5.0-f096 [2465689] Fix avi indices. Metadata export re-enabled.
-// 10-23-09 FNO 5.0-f092 RIFF: Substantial rewrite of chunk logic to prepare for index adjustments.
-// 07-10-09 FNO 5.0-f052 Move RIFF (AVI/WAV) handler from NewHandlers to regular Handlers.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include <vector>

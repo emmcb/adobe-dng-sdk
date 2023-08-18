@@ -4,30 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//
-//	IJS Inder Jeet Singh
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-//
-// =================================================================================================
-#endif
 
 #include "source/IOUtils.hpp"
 #include "source/Host_IO.hpp"

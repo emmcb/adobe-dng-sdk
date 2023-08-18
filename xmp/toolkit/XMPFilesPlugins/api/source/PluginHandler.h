@@ -4,9 +4,7 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 /**************************************************************************
@@ -17,37 +15,6 @@
 * to implement exported function InitializePlugin.
 * 
 ***************************************************************************/
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	ADC Amandeep Chawla
-//	IJS Inder Jeet Singh
-//	JKR Jens Krueger
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 02-18-13 JKR 5.6-f037 New plugin entry point InitializePlugin2() which call SetupPlugin().
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-// 01-11-13 IJS 5.6-f020 Reworked GetFileModDate, GetAssociatedResources and IsMetadataWritable APIs.
-//                       Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 12-21-12 IJS 5.6-f009 Added FillAssociatedResources support in plugins 
-// 12-19-12 IJS 5.6-f007 Removing #if DISABLE_SERIALIZED_IMPORT_EXPORT  
-// 12-19-12 IJS 5.6-f005 Making the importToXMP and exportFromXMP as public Plug-in methods
-//
-// 12-10-12 IJS 5.5-f059 Adding Serialized versions for importToXMP and exportFromXMP Plug-in APIs.
-// 11-05-12 ADC 5.5-f056 XMP Plug-ins support for LocateMetadataFiles API.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef __Plugin_Handler_hpp__
 #define __Plugin_Handler_hpp__	1

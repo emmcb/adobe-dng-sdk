@@ -4,44 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	JEH	Joerg Ehrlich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-26-13 IJS 5.6-f057 Fix a typo in import code of ASF handler
-//
-// 09-04-12 IJS 5.5-f026 Add file update progress tracking to the ASF handler.
-// 02-02-12	AWL	5.5-f008 [3093755] Fix ASF handler truncation when updating with an almost full disk.
-//
-// 11-23-10 JEH 5.3-f018 Fix of out of bounds access in ASF_LegacyManager::ComputeDigest
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 08-25-09 AWL 5.0-f071 [2412960] Fix P2, AVCHD, and ASF handlers to create dc:creator as an ordered array.
-//
-// 10-13-08 AWL 4.4-f012 Add support for zone-less times.
-// 09-30-08 AWL 4.4-f011 [1899539] Fix ASF handler to not create empty XMP values for missing native items.
-//
-// 03-05-08 AWL 4.2-f092 [1708630] Fix ASF bug in updating the File Properties object's file size field.
-// 09-12-06 ALB Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"
@@ -184,7 +148,8 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 		XMP_Uns32 numberOfHeaders = GetUns32LE ( &buffer[24] );
 		ASF_ObjectBase objectBase;
 
-		while ( read < newObject.len && numberOfHeaders > 0) {
+		while (read < newObject.len && numberOfHeaders > 0)
+		{
 
 			fileRef->Seek ( pos, kXMP_SeekFromStart );
 			if ( kASF_ObjectBaseLen != fileRef->Read ( &objectBase, kASF_ObjectBaseLen, true ) ) break;
@@ -192,10 +157,10 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 			fileRef->Seek ( pos, kXMP_SeekFromStart );
 			objectBase.size = GetUns64LE ( &objectBase.size );
 
-			if(XMP_Uns32(objectBase.size) <=0)   /* as ASF_ObjectBase has size in XMP_Uns64 , XMP_Uns32 would give 0 for very large files exceeding UINT32_MAX */
-                              {
-                                   XMP_Throw ( "Failure reading ASF header object", kXMPErr_InternalFailure );
-                              }
+			if (XMP_Uns32(objectBase.size) <= 0) /* as ASF_ObjectBase has size in XMP_Uns64 , XMP_Uns32 would give 0 for very large files exceeding UINT32_MAX */
+			{
+				XMP_Throw("Failure reading ASF header object", kXMPErr_InternalFailure);
+			}
 
 			if ( IsEqualGUID ( ASF_File_Properties_Object, objectBase.guid) && (objectBase.size >= 104 ) ) {
 
@@ -267,7 +232,7 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 				XMP_Uns32 fieldPos = 28;
 
 				// copyright URL is 3. element with variable size
-				for ( int i = 1; i <= 3 && fieldPos < buffer.size() ; ++i ) {
+				for ( int i = 1; i <= 3 && fieldPos < buffer.size() ; ++i ) { 
 					XMP_Uns32 len = GetUns32LE ( &buffer[fieldPos] );
 					if ( i == 3 ) {
 						std::string copyrightURLStr = buffer.substr ( fieldPos + 4, len );
@@ -315,9 +280,8 @@ bool ASF_Support::ReadHeaderObject ( XMP_IO* fileRef, ObjectState& inOutObjectSt
 
 			pos += objectBase.size;
 			read += objectBase.size;
-            numberOfHeaders--;
+			numberOfHeaders--;
 		}
-
 	} catch ( ... ) {
 
 		return false;
@@ -543,7 +507,7 @@ bool ASF_Support::WriteHeaderObject ( XMP_IO* sourceRef, XMP_IO* destRef, const 
 
 			pos += objectBase.size;
 			read += objectBase.size;
-            numberOfHeaders--;
+			numberOfHeaders--;
 			writtenObjects ++;
 
 		}

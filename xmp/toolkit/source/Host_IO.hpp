@@ -6,35 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-12-14 IJS 5.6-f096 [3714412] Proxy and High Res Clip in XDCAM FAM should open the same XMP.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-//
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-//
-// 08-26-10 AWL 5.2-f008 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.2-f006 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.2-f003 Integrate I/O revamp to main.
-//
-// =================================================================================================
-#endif
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

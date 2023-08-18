@@ -6,9 +6,7 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
@@ -87,23 +85,8 @@ public:
 	
 	BoxNode metaNode;
 	
-#if AdobePrivate
-	//Flags of Data Information Box
-	std::vector<XMP_Uns32> dinfFlags;
-	bool ImportItemInformation();
-	bool ImportItemLocationInformation();
-	bool ImportDataInformationBox();
-	bool ImportItemReferenceBox();
-	bool AddItemInfoEntry(XMP_Uns32 itemid, itemInfoEntry iItem);
-#endif
 	std::set<XMP_Uns32> traversed;
 
-#if AdobePrivate
-	bool AddReferenceToPrimaryItem(XMP_Uns32 primaryItemID, XMP_Uns32 itemID);// move to heifhandler
-	//BoxRef AddChildBox(BoxRef parentRef, XMP_Uns32 childType, const void* dataPtr, XMP_Uns32 size, const XMP_Uns8 * idUUID = 0);
-	void RemoveReferenceToPrimaryItem(XMP_Uns32 primaryItemID, XMP_Uns32 itemID);
-	void AddIlocItem(XMP_Uns32 &id, XMP_Uns32 length, ExtentIDMap &emap);
-#endif
 	void UpdateMemoryTree();
 	void UpdateIlocBoxContent(); 
 private:

@@ -4,37 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	ALB Alexander Born
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-21-12 AWL 5.5-f022 Remove use of IOBuffer from the ASF, GIF, and PNG handlers.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-21-09 AWL 5.0-f091 [1776893] Make sure temp files are deleted when exceptions get propagated.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 07-02-06 ALB Initial creation.
-// 07-19-06 ALB Fixes and endian support for MacTel.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

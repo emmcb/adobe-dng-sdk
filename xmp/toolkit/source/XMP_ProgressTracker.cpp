@@ -4,29 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent first.
-//
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-//
-// 06-22-12 AWL 5.5-f019 Add file update progress tracking to the MPEG-4 handler.
-// 06-20-12 AWL 5.5-f018 Add outer layers for XMPFiles progress notifications, no handlers use it yet.
-//
-// =================================================================================================
-#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

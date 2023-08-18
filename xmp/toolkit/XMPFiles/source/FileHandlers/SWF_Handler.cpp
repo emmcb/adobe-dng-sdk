@@ -4,41 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  PKA Patrick Kamin
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 09-13-12 AWL 5.5-f029 [3213337] Fix two SWF handler bugs: update full length in file header, and
-//				recompress on output if the input was compressed.
-//
-// 10-10-11 AWL 5.4-f019 [2831943] Fix SWF handler bugs causing it to further corrupt ill-formed files.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 03-28-08 PKA 4.2-f098 [1707700] SWF handler: Fix scaling down to smaller XMP
-// 12-13-07 PKA 4.2-f046 Fixed mishandling of existing metadata tags in SWF files without file attribute tag.
-// 11-14-07 PKA 4.2-f036 Add multiple metadata tag support to Swf Handler. Write XMP tag at the beginning of the file.
-//				SWF handler moved out of NewHandler section
-// 10-16-07 PKA	4.2-f029 Added compressed swf support to SWF handler. Considering of HasMetadata flag.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -171,6 +138,7 @@ void SWF_MetaHandler::CacheFileData() {
 	}
 	
 	// Look for the FileAttributes and Metadata tags.
+	
 	if(this->expandedSize <= SWF_IO::HeaderPrefixSize ) return; // Throw?
 	this->firstTagOffset = SWF_IO::FileHeaderSize ( this->expandedSWF[SWF_IO::HeaderPrefixSize] );
 	
@@ -268,7 +236,7 @@ void SWF_MetaHandler::UpdateFile ( bool doSafeUpdate )
 		PutUns16LE ( ((SWF_IO::FileAttributesTagID << 6) | 4), &buffer[0] );
 		PutUns32LE ( SWF_IO::HasMetadataMask, &buffer[2] );
 		
-	        if(this->expandedSWF.size() < this->firstTagOffset ){
+		if(this->expandedSWF.size() < this->firstTagOffset ){
                      XMP_Throw ( "Index not valid.Invalid SWF, can't update.", kXMPErr_BadIndex );
                  }
 		this->expandedSWF.insert ( (this->expandedSWF.begin() + this->firstTagOffset), 6, 0 );
@@ -337,7 +305,6 @@ void SWF_MetaHandler::UpdateFile ( bool doSafeUpdate )
 	this->metadataTag.contentLength = (XMP_Uns32)this->xmpPacket.size();
 
 	XMP_Uns32 newMetaLength = 6 + this->metadataTag.contentLength;	// Always use a long tag header.
-
 	if(this->expandedSWF.size() < this->metadataTag.tagOffset ){
              XMP_Throw ( "Index not valid.Invalid SWF, can't update.", kXMPErr_BadIndex );
 	}

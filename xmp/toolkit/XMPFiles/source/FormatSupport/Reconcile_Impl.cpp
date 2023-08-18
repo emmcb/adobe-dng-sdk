@@ -4,50 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 12-11-13 HK  5.6-f086 [3682902] Defining mapping of Mac language to available encodings on IOS.
-// 12-04-13 HK  5.6-f085 [3677602] Fixing Unicode conversion issues on IOS.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-//
-// 10-06-09 AWL 5.0-f084 [2426060,2434421,2424514] Fix TrimTrailingSpaces in ReconcileTIFF.cpp to handle all
-//				blank input. Fix Mac script conversions to use the right script. Fix MPEG-4 imports
-//				to not let one failure abort all. Fix TIFF handler to keep the XMP the same size if possible.
-// 04-20-09 AWL 5.0-f033 [2307195] Add language parameter for Mac text conversions.
-// 03-10-09 AWL 5.0-f027 Initial integration of QuickTime support into MPEG-4 handler.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-//
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-//
-// 10-18-06 AWL 4.1-f046 [1395599] Add ISO Latin-1 conversions, change ID3 support to use it.
-// 08-15-06 AWL 4.1-f023 Fix partial conversion bugs in the Mac code for ReconcileUtils::UTF8ToLocal
-//				and ReconcileUtils::LocalToUTF8. It turns out that Apple's ConvertFromUnicodeToText
-//				and ConvertFromTextToUnicode return kTECOutputBufferFullStatus instead of noErr.
-//
-// 06-07-06 AWL 4.0-f010 Implement the Unicode to/from local encoding conversions.
-//
-// 04-21-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include "public/include/XMP_Const.h"

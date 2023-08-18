@@ -3,31 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-//
-// 01-16-08 AWL 4.2-c035 Add XML_Node::SetAttrValue.
-// 12-18-07 AWL 4.2-c034 Add XML_Node::IsEmptyLeafNode and XML_Node::GetAttrValue.
-// 12-07-07 AWL 4.2-c032 Add serialization and tree dump for the exposed Expat parser.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 #include "source/XMLParserAdapter.hpp"

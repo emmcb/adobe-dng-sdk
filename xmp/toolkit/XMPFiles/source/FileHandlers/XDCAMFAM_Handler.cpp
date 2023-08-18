@@ -4,9 +4,7 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 // =================================================================================================
@@ -87,24 +85,6 @@ bool XDCAMFAM_CheckFormat ( XMP_FileFormat format,
 		clipName.erase( clipName.begin() + length - 3, clipName.end() );
 	}
 
-#if AdobePrivate
-	// Picture pointer file (.PPN) and clipinfo file (.smi) support
-	// Decided to skip currently
-	/*
-	if ( ( parentName == "SUB" || parentName == "LOCAL" ) && IsDigit( clipName.at( length - 2 ) ) && IsDigit( clipName.at( length - 1 ) ) )
-	{
-		const char fileType = clipName.at( length - 3 );
-		if ( parentName == "SUB" )
-		{
-			if( fileType != 'S' )
-				return false;
-		}
-		else if ( ! ( fileType == 'I' || fileType == 'C' ) ) 
-			return false;
-		clipName.erase( clipName.begin() + length - 3, clipName.end() );
-	}
-	*/
-#endif
 	tempPath += clipName;
 	
 	// .MXF file Existence with case sensitive is the new check inserted
@@ -116,10 +96,6 @@ bool XDCAMFAM_CheckFormat ( XMP_FileFormat format,
 			return false;
 	}
 
-#if AdobePrivate 
-	// We are igonring the case of Clip without Metadata which is a valid case
-	// Because we don't fetch Metadata from MXF incase NRT file doesn't exists
-#endif
 	tempPath += "M01.XML";
 	if ( Host_IO::GetFileMode ( tempPath.c_str() ) != Host_IO::kFMode_IsFile )
 		return false;
@@ -149,16 +125,6 @@ XDCAMFAM_MetaHandler::XDCAMFAM_MetaHandler ( XMPFiles * _parent ) : XDCAM_MetaHa
 // ====================================
 void XDCAMFAM_MetaHandler::SetPathVariables ( const std::string & clientPath )
 {
-#if AdobePrivate
-	/* To Be Done */
-	// Alias.XML support need to be added
-	// If file with alias name is given then we should check for its existance using Alias.XML
-	// For Example if file is stored as adobe.mxf but internally saved as C1000.mxf
-	// Two conditions may exist
-	// 1) if user gives name as adobe.mxf then we will handle that
-	// 2) if user gives name as c1000.mxf then we will ignore this file. So need to provide support
-
-#endif
 	// No need to check for existing or non existing as would have been done at check file format if ForceGivenHandler flag is not provided
 	std::string tempPath = clientPath;
 	std::string parentName, GroupName;
@@ -187,12 +153,6 @@ void XDCAMFAM_MetaHandler::SetPathVariables ( const std::string & clientPath )
 			this->isXDStyle = true;
 		this->rootPath = tempPath;
 		
-#if AdobePrivate
-		// Currently we assume parentName to be Clip directory only. Need to provide support for more Directories Edit,Take but not asked till now
-		// Real Path may be ..root//Clip//clipname.MXF
-		// So we check for ..root//Clip//clipNameM01.xml
-		// Our sidecar file will be ..root//Clip//clipNameM01.XMP or clipname.MXF.xmp
-#endif
 		size_t length = this->clipName.length();
 		
 		// Proxy file support
@@ -206,21 +166,6 @@ void XDCAMFAM_MetaHandler::SetPathVariables ( const std::string & clientPath )
 		}
 		else
 			tempPath += kDirChar + parentName;
-#if AdobePrivate
-		/*
-		if ( parentName == "Sub" || parentName == "Local" )
-		{
-			XMP_Assert( IsDigit( clipName.at( length - 2 ) ) && IsDigit( clipName.at( length - 1 ) ) );
-			const char fileType = this->clipName.at( length - 3 );
-			XMP_Assert( ( parentName == "Sub" ) ==  ( fileType == 'S' ) );
-			XMP_Assert( ( parentName == "Local" ) == ( fileType == 'I' || fileType == 'C' ) );
-			this->clipName.erase( this->clipName.begin() + length - 3, clipName.end() );
-			tempPath += kDirChar ;
-			tempPath += "Clip";
-		}
-		*/
-		// For Parent Edit and Take we should throw an error as more than one clips may exists
-#endif
 	}
 
 	// Checks for Clip folder in XDCAM

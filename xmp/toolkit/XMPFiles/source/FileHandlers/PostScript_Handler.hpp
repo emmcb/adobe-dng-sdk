@@ -7,45 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-09-12 IJS 5.5-f043 Reverting IOBuffer Changes because of perf issues in large PS files.
-// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
-// 09-20-12 IJS 5.5-f035 Add Progress Notification flag to MPEG-4,PSD,AIFF,WAVE,ASF,TIFF,FLV and PS Handlers.
-// 08-13-12 IJS 5.5-f023 Added support to write(expand), inject and reconcile metadata in PS/EPS files.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 09-01-05 AWL 1.3-003 [1225858] Don't implicitly set the SafeUpdate flag for non-owning handlers.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-//
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-//
-// 08-19-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

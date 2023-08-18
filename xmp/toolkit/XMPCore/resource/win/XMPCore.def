@@ -1,7 +1,7 @@
 ; Declares the entry points for the DLL.
-; Highest index: 129 WXMPMeta_GetIXMPMetadata_1
+; Highest index: 127 - WXMPMeta_GetXMPDOMFactoryInstance_1
 
-LIBRARY   AdobeXMP
+LIBRARY   XMPCore
 
 EXPORTS
 
@@ -15,17 +15,17 @@ EXPORTS
 
 	WXMPMeta_GetGlobalOptions_1				@7
 	WXMPMeta_SetGlobalOptions_1				@8
-	WXMPMeta_GetMemProcs_1					@9
-	WXMPMeta_RegisterAssertNotify_1			@10
-	WXMPMeta_UnregisterAssertNotify_1		@11
+;	unused									@9
+;	unused									@10
+;	unused									@11
 ;	unused									@12
 	WXMPMeta_DumpNamespaces_1				@13
-	WXMPMeta_DumpPropertyTraits_1			@14
+;	unused									@14
 	WXMPMeta_RegisterNamespace_1			@15
 	WXMPMeta_GetNamespacePrefix_1			@16
 	WXMPMeta_GetNamespaceURI_1				@17
 	WXMPMeta_DeleteNamespace_1				@18
-	WXMPMeta_RegisterPropertyTraits_1		@19
+;	unused									@19
 
 	WXMPMeta_GetProperty_1					@20
 	WXMPMeta_GetArrayItem_1					@21
@@ -65,7 +65,7 @@ EXPORTS
 	WXMPMeta_Erase_1						@55
 	WXMPMeta_Clone_1						@56
 	WXMPMeta_CountArrayItems_1				@57
-	WXMPMeta_MarkStaleProperties_1			@58
+;	unused									@58
 	WXMPMeta_DumpObject_1					@59
 	WXMPMeta_ParseFromBuffer_1				@60
 	WXMPMeta_SerializeToBuffer_1			@61
@@ -74,8 +74,6 @@ EXPORTS
 	WXMPMeta_SetErrorCallback_1				@125
 	WXMPMeta_ResetErrorCallbackLimit_1		@126
 	WXMPMeta_GetXMPDOMFactoryInstance_1		@127
-	WXMPMeta_Use_CPP_DOM_APIs_1				@128
-	WXMPMeta_GetIXMPMetadata_1				@129
 
 	WXMPIterator_PropCTor_1					@62
 	WXMPIterator_TableCTor_1				@63
@@ -113,34 +111,34 @@ EXPORTS
 	WXMPUtils_SeparateArrayItems_1			@93
 	WXMPUtils_ApplyTemplate_1				@123
 	WXMPUtils_RemoveProperties_1			@94
-	WXMPUtils_AppendProperties_1			@95
+;	unused									@95
 	WXMPUtils_DuplicateSubtree_1			@96
-	WXMPUtils_CollectMultiFileXMP_1			@97
-	WXMPUtils_DistributeMultiFileXMP_1		@98
-	WXMPUtils_IsPropertyMultiValued_1		@99
-	WXMPUtils_GetDateRange_1				@100
-	WXMPUtils_GetMergedListPath_1			@101
-	WXMPUtils_RemoveMultiValueInfo_1		@102
+;	unused									@97
+;	unused									@98
+;	unused									@99
+;	unused									@100
+;	unused									@101
+;	unused									@102
 
-	WXMPUtils_GetBulkMarkers_1				@103
-	WXMPUtils_SetBulkMarkers_1				@104
-	
-	WXMPDocOps_SetAppName_1					@105
-	WXMPDocOps_CreateID_1					@106
-	WXMPDocOps_CTor_1						@107
-	WXMPDocOps_IncrementRefCount_1			@108
-	WXMPDocOps_DecrementRefCount_1			@109
-	WXMPDocOps_NewXMP_1						@110
-	WXMPDocOps_OpenXMP_1					@111
-	WXMPDocOps_BranchXMP_1					@112
-	WXMPDocOps_PrepareForSave_1				@113
-	WXMPDocOps_NoteChange_1					@114
-	WXMPDocOps_HasPartChanged_1				@115
-	WXMPDocOps_GetPartChangeID_1			@116
-	WXMPDocOps_EnsureIDsExist_1				@117
-	WXMPDocOps_IsDirty_1					@118
-	WXMPDocOps_Clone_1						@119
-	WXMPDocOps_GetMetaRef_1					@120
+;	unused									@103
+;	unused									@104
+
+;	unused									@105
+;	unused									@106
+;	unused									@107
+;	unused									@108
+;	unused									@109
+;	unused									@110
+;	unused									@111
+;	unused									@112
+;	unused									@113
+;	unused									@114
+;	unused									@115
+;	unused									@116
+;	unused									@117
+;	unused									@118
+;	unused									@119
+;	unused									@120
 
 	XMP_NewExpatAdapter						@121
-	XMP_GetAssertNotify						@122
+;	unused									@122

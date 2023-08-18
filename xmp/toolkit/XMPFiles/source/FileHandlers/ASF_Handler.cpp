@@ -4,40 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ===============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ALB Alexander Born
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 09-04-12 IJS 5.5-f026 Add file update progress tracking to the ASF handler.
-// 08-21-12 AWL 5.5-f022 Remove use of IOBuffer from the ASF, GIF, and PNG handlers.
-// 02-02-12	AWL	5.5-f008 [3093755] Fix ASF handler truncation when updating with an almost full disk.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-21-09 AWL 5.0-f091 [1776893] Make sure temp files are deleted when exceptions get propagated.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 03-05-08 AWL 4.2-f092 [1708630] Fix ASF bug in updating the File Properties object's file size field.
-// 09-12-06 ALB Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

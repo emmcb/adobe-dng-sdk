@@ -4,57 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 06-18-13 ADC 5.6-f068 [3556901] Save Metadata for some JPGs fails.
-//
-// 04-29-11	AWL	5.3-f027 [2860903] Fix TIFF import code to tolerate a too short UserComment.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-//
-// 01-30-08 AWL 4.2-f066 [1648922] Fix TIFF_MemoryReader to not assume pointers are 32-bit.
-//
-// 11-27-06 AWL 4.1-f075 [1429154] Make the TIFF parser tolerate no IFDs and empty IFDs. Both are
-//				formally invalid, but there are real world instances that we need to accept.
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-// 08-24-06 AWL 4.1-f030 Fix problems with the TIFF condensed rewrite code. This lets the JPEG save
-//				logic work properly when the TIFF appends cause it to exceed 64K.
-// 08-18-06 AWL 4.1-f026 [1352603] Add support for rewriting a full TIFF memory stream. This handles
-//				edit-by-append overflow of the Exif in JPEG files. And as a side effect adds support
-//				for wack-o JPEG files that have no initial Exif section. Fix related bugs in the
-//				JPEG handler for writing files that have no Exif/PSIR/IPTC.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 06-07-06 AWL 4.0-f010 Improve the Unicode conversions.
-// 05-22-06 AWL Collapse the derived class tree to just a memory reader and general manager.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-27-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

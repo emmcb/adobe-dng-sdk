@@ -4,59 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  SDS Sankar Dey Sarkar
-//  AWL Alan Lillich
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//	HK  Honey Kansal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-// 02-21-13 HK  5.6-f041 [3503922] Support GetAssociatedResources and IsMetadataWritable API's for MPEG2.
-// 10-10-12 ADC 5.5-f046 Fixing compile time issues which creeped into while doing merging of my changelist.
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 09-27-11 AWL 5.4-f014 Add MPEG-2 support for GetFileModDate.
-//
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 11-13-07 AWL 4.2-f035 Add MPEG-4 skeleton handler. Rename MPEG handler to MPEG-2.
-//
-// 10-12-06 AWL 4.1-f040 [1394229] Make sure all handlers accept only "proper" files. Preferably
-//				only by file content. Where we must, by "known" file extension.
-// 09-19-06 AWL 4.1-f036 [1379782] Fix the MPEG handler to truncate an existing sidecar before rewriting.
-// 09-15-06 AWL 4.1-f035 Revamp the MPEG handler to be platform neutral.
-//
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-24-06 AWL 1.3-012 Adapt for VC8.
-//
-// 03-29-05 SDS First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #if XMP_WinBuild
 	#pragma warning ( disable : 4996 )	// '...' was declared deprecated

@@ -4,58 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-09-12 IJS 5.5-f043 Reverting IOBuffer Changes because of perf issues in large PS files.
-// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
-// 09-20-12 IJS 5.5-f034 Add file update progress tracking to the PostScript handler.
-// 08-13-12 IJS 5.5-f023 Added support to write(expand), inject and reconcile metadata in PS/EPS files.
-//
-// 05-19-11	AWL	5.3-f029 Fix sloppy but not buggy IOBuffer seek/fill actions in InDesign and PostScript handlers.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 01-30-09 AWL 5.0-f024 [2268451] Fix PostScript checks of DSC version numbers.
-//
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-//
-// 07-31-06 AWL 4.0-f018 [1337834] Fix I/O regression in the PostScript/EPS handler. Need to make the
-//				buffer look empty when doing LFA_Seek and RefillBuffer.
-// 05-19-06 AWL 4.0-f007 Package I/O buffer info into a struct, change I/O macros to functions.
-//				This will make it reasonable to pass the buffer state among layered functions.
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-// 02-16-05 AWL 1.1-048 [1153053] Fix inconsistent handling of PostScript that lacks a marker comment.
-//
-// 01-07-05 AWL 1.0-028 [1014854] Set stdCharForm in handlers that require UTF-8.
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-//
-// 08-19-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

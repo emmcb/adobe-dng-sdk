@@ -11,16 +11,11 @@ global:
 
 	WXMPMeta_GetGlobalOptions_1;
 	WXMPMeta_SetGlobalOptions_1;
-	WXMPMeta_GetMemProcs_1;
-	WXMPMeta_RegisterAssertNotify_1;
-	WXMPMeta_UnregisterAssertNotify_1;
 	WXMPMeta_DumpNamespaces_1;
-	WXMPMeta_DumpPropertyTraits_1;
 	WXMPMeta_RegisterNamespace_1;
 	WXMPMeta_GetNamespacePrefix_1;
 	WXMPMeta_GetNamespaceURI_1;
 	WXMPMeta_DeleteNamespace_1;
-	WXMPMeta_RegisterPropertyTraits_1;
 
 	WXMPMeta_GetProperty_1;
 	WXMPMeta_GetArrayItem_1;
@@ -60,7 +55,6 @@ global:
 	WXMPMeta_Sort_1;
 	WXMPMeta_Erase_1;
 	WXMPMeta_CountArrayItems_1;
-	WXMPMeta_MarkStaleProperties_1;
 	WXMPMeta_DumpObject_1;
 	WXMPMeta_ParseFromBuffer_1;
 	WXMPMeta_SerializeToBuffer_1;
@@ -68,10 +62,7 @@ global:
 	WXMPMeta_SetDefaultErrorCallback_1;
 	WXMPMeta_SetErrorCallback_1;
 	WXMPMeta_ResetErrorCallbackLimit_1;
-
 	WXMPMeta_GetXMPDOMFactoryInstance_1;
-	WXMPMeta_Use_CPP_DOM_APIs_1;
-	WXMPMeta_GetIXMPMetadata_1;
 
 	WXMPIterator_PropCTor_1;
 	WXMPIterator_TableCTor_1;
@@ -109,36 +100,9 @@ global:
 	WXMPUtils_SeparateArrayItems_1;
 	WXMPUtils_ApplyTemplate_1;
 	WXMPUtils_RemoveProperties_1;
-	WXMPUtils_AppendProperties_1;
 	WXMPUtils_DuplicateSubtree_1;
-	WXMPUtils_CollectMultiFileXMP_1;
-	WXMPUtils_DistributeMultiFileXMP_1;
-	WXMPUtils_IsPropertyMultiValued_1;
-	WXMPUtils_GetDateRange_1;
-	WXMPUtils_GetMergedListPath_1;
-	WXMPUtils_RemoveMultiValueInfo_1;
-
-	WXMPUtils_GetBulkMarkers_1;
-	WXMPUtils_SetBulkMarkers_1;
-	WXMPDocOps_SetAppName_1;
-	WXMPDocOps_CreateID_1;
-	WXMPDocOps_CTor_1;
-	WXMPDocOps_IncrementRefCount_1;
-	WXMPDocOps_DecrementRefCount_1;
-	WXMPDocOps_NewXMP_1;
-	WXMPDocOps_OpenXMP_1;
-	WXMPDocOps_BranchXMP_1;
-	WXMPDocOps_PrepareForSave_1;
-	WXMPDocOps_NoteChange_1;
-	WXMPDocOps_HasPartChanged_1;
-	WXMPDocOps_GetPartChangeID_1;
-	WXMPDocOps_EnsureIDsExist_1;
-	WXMPDocOps_IsDirty_1;
-	WXMPDocOps_Clone_1;
-	WXMPDocOps_GetMetaRef_1;
 	
 	XMP_NewExpatAdapter;
-	XMP_GetAssertNotify;
 
 local:
 

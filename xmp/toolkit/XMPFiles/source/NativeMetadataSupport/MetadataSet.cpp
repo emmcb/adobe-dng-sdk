@@ -4,29 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JEH Joerg Ehrlich
-//	PW	Patrick Wolleck
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							New design for Reconciliation code
-// 07-28-10	JEH	5.2-f001 Initial creation of new AIFF handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
-
 
 #include "XMPFiles/source/NativeMetadataSupport/MetadataSet.h"
 #include "source/XMP_LibUtils.hpp"

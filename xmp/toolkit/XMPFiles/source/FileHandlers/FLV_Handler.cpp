@@ -4,40 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 09-04-12 IJS 5.5-f027 Add file update progress tracking to the FLV handler.
-// 10-12-11 AWL 5.4-f022 [2932182] Fix corruption of FLV files that have no OnMetadata tag.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-21-09 AWL 5.0-f091 [1776893] Make sure temp files are deleted when exceptions get propagated.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-// 07-15-08 AWL 4.4-f006 [1847764] Change FLV to use onXMPData instead of onXMP.
-//
-// 01-22-08 AWL 4.2-f059 First working, minimally tested FLV handler.
-// 12-21-07 AWL 4.2-f050 Add initial skeleton FLV handler under NewHandlers.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"
@@ -242,7 +210,8 @@ static void GetTagInfo ( XMP_IO* fileRef, XMP_Uns64 tagPos, TagInfo * info )
 
 static XMP_Uns32 GetASValueLen ( const XMP_Uns8 * asValue, const XMP_Uns8 * asLimit )
 {
-    if (asValue > asLimit) return 0;
+	if (asValue > asLimit)
+		return 0;
 	XMP_Uns32 valueLen = 0;
 	const XMP_Uns8 * itemPtr;
 	XMP_Uns32 arrayCount;

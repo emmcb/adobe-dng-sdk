@@ -104,7 +104,6 @@ GetVersionInfo ( XMP_VersionInfo * info )
 	#endif
 #endif
 
-#if ! AdobePrivate
 XMP_MethodIntro(TXMPMeta,bool)::
 Initialize()
 {
@@ -133,55 +132,6 @@ Initialize()
 	return ok;
 
 }
-#else 
-XMP_MethodIntro(TXMPMeta,bool)::
-Initialize ( XMP_AllocateProc AllocateProc /* = 0 */,
-             XMP_DeleteProc   DeleteProc /* = 0 */ )
-{
-	// Verify critical type sizes.
-#if XMP_DebugBuild
-	int moot= 2 * 2;
-	int moot2=moot*2 - 8; // equals zero
-	(void) moot2;	// Suppress warning.
-	XMP_TypeCheck ( ((sizeof(XMP_Int8)  == 1) + moot2), "Size wrong for critical type XMP_Int8" );
-	XMP_TypeCheck ( ((sizeof(XMP_Int16) == 2) + moot2), "Size wrong for critical type XMP_Int16" );
-	XMP_TypeCheck ( ((sizeof(XMP_Int32) == 4) + moot2), "Size wrong for critical type XMP_Int32" );
-	XMP_TypeCheck ( ((sizeof(XMP_Int64) == 8) + moot2), "Size wrong for critical type XMP_Int64" );
-	XMP_TypeCheck ( ((sizeof(XMP_Uns8)  == 1) + moot2), "Size wrong for critical type XMP_Uns8" );
-	XMP_TypeCheck ( ((sizeof(XMP_Uns16) == 2) + moot2), "Size wrong for critical type XMP_Uns16" );
-	XMP_TypeCheck ( ((sizeof(XMP_Uns32) == 4) + moot2), "Size wrong for critical type XMP_Uns32" );
-	XMP_TypeCheck ( ((sizeof(XMP_Uns64) == 8) + moot2), "Size wrong for critical type XMP_Uns64" );
-	XMP_TypeCheck ( (sizeof(XMP_Bool)  == 1), "Size wrong for critical type XMP_Bool" );
-#else
-	XMP_TypeCheck ( (sizeof(XMP_Int8)  == 1), "Size wrong for critical type XMP_Int8" );
-	XMP_TypeCheck ( (sizeof(XMP_Int16) == 2), "Size wrong for critical type XMP_Int16" );
-	XMP_TypeCheck ( (sizeof(XMP_Int32) == 4), "Size wrong for critical type XMP_Int32" );
-	XMP_TypeCheck ( (sizeof(XMP_Int64) == 8), "Size wrong for critical type XMP_Int64" );
-	XMP_TypeCheck ( (sizeof(XMP_Uns8)  == 1), "Size wrong for critical type XMP_Uns8" );
-	XMP_TypeCheck ( (sizeof(XMP_Uns16) == 2), "Size wrong for critical type XMP_Uns16" );
-	XMP_TypeCheck ( (sizeof(XMP_Uns32) == 4), "Size wrong for critical type XMP_Uns32" );
-	XMP_TypeCheck ( (sizeof(XMP_Uns64) == 8), "Size wrong for critical type XMP_Uns64" );
-	XMP_TypeCheck ( (sizeof(XMP_Bool)  == 1), "Size wrong for critical type XMP_Bool" );
-
-#endif //#if XMP_DebugBuild
-	#if XMP_TraceClientCallsToFile
-		xmpClientLog = fopen ( "XMPClientLog.txt", "w" );
-		if ( xmpClientLog == 0 ) xmpClientLog = stderr;
-	#endif
-
-	WrapCheckBool ( ok, zXMPMeta_Initialize_1 ( AllocateProc, DeleteProc ) );
-
-	
-	#if ENABLE_CPP_DOM_MODEL
-		AdobeXMPCore::ICoreObjectFactory::SetupCoreObjectFactory();
-	#endif
-
-
-	return ok;
-
-}
-#endif
-
 // -------------------------------------------------------------------------------------------------
 
 XMP_MethodIntro(TXMPMeta,void)::
@@ -319,40 +269,6 @@ SetGlobalOptions ( XMP_OptionBits options )
 
 // -------------------------------------------------------------------------------------------------
 
-#if AdobePrivate
-XMP_MethodIntro(TXMPMeta,void)::
-GetMemProcs ( XMP_AllocateProc * AllocateProc,
-              XMP_DeleteProc *   DeleteProc )
-{
-	WrapCheckVoid ( zXMPMeta_GetMemProcs_1 ( AllocateProc, DeleteProc ) );
-}
-
-#if ENABLE_CPP_DOM_MODEL
-XMP_MethodIntro(TXMPMeta, void)::
-Use_CPP_DOM_APIs( XMP_Bool useNewCoreAPIs )
-{
-	WrapCheckVoid( zXMPMeta_Use_CPP_DOM_APIs_1( useNewCoreAPIs ) );
-}
-#endif
-
-// -------------------------------------------------------------------------------------------------
-
-XMP_MethodIntro(TXMPMeta,void)::
-RegisterAssertNotify ( XMP_AssertNotifyProc notifyProc,
-                       void *               refCon )
-{
-	WrapCheckVoid ( zXMPMeta_RegisterAssertNotify_1 ( notifyProc, refCon ) );
-}
-
-// -------------------------------------------------------------------------------------------------
-
-XMP_MethodIntro(TXMPMeta,void)::
-UnregisterAssertNotify ( XMP_AssertNotifyProc notifyProc )
-{
-	WrapCheckVoid ( zXMPMeta_UnregisterAssertNotify_1 ( notifyProc ) );
-}
-#endif
-
 // -------------------------------------------------------------------------------------------------
 
 XMP_MethodIntro(TXMPMeta,XMP_Status)::
@@ -365,19 +281,6 @@ DumpNamespaces ( XMP_TextOutputProc outProc,
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-XMP_MethodIntro(TXMPMeta,XMP_Status)::
-DumpPropertyTraits ( XMP_TextOutputProc outProc,
-                     void *             refCon )
-{
-	TOPW_Info info ( outProc, refCon );
-	WrapCheckStatus ( status, zXMPMeta_DumpPropertyTraits_1 ( TextOutputProcWrapper, &info ) );
-	return status;
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
 
 XMP_MethodIntro(TXMPMeta,bool)::
 RegisterNamespace ( XMP_StringPtr namespaceURI,
@@ -415,32 +318,6 @@ DeleteNamespace ( XMP_StringPtr namespaceURI )
 {
 	WrapCheckVoid ( zXMPMeta_DeleteNamespace_1 ( namespaceURI ) );
 }
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-
-XMP_MethodIntro(TXMPMeta,void)::
-RegisterPropertyTraits ( XMP_StringPtr  schemaNS,
-                         XMP_StringPtr  propName,
-                         XMP_OptionBits options )
-{
-	WrapCheckVoid ( zXMPMeta_RegisterPropertyTraits_1 ( schemaNS, propName, options ) );
-}
-
-#if ENABLE_CPP_DOM_MODEL
-XMP_MethodIntro(TXMPMeta,AdobeXMPCore::spIMetadata)::
-GetIMetadata()
-{
-	WrapCheckNewMetadata( result, zXMPMeta_GetIXMPMetadata_1() );
-	if ( result ) {
-		AdobeXMPCore::pIMetadata_base ptr = static_cast< AdobeXMPCore::pIMetadata_base >( result );
-		AdobeXMPCore::spIMetadata sp = AdobeXMPCore::IMetadata::MakeShared( ptr );
-		return sp;
-	}
-	return AdobeXMPCore::spIMetadata();
-}
-#endif
-#endif
 
 // =================================================================================================
 // Basic property manipulation functions
@@ -965,16 +842,6 @@ CountArrayItems ( XMP_StringPtr schemaNS,
 
 // -------------------------------------------------------------------------------------------------
 
-#if AdobePrivate
-XMP_MethodIntro(TXMPMeta,void)::
-MarkStaleProperties ( XMP_OptionBits options /* = 0 */ )
-{
-	WrapCheckVoid ( zXMPMeta_MarkStaleProperties_1 ( options ) );
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
-
 XMP_MethodIntro(TXMPMeta,XMP_Status)::
 DumpObject ( XMP_TextOutputProc outProc,
              void *             refCon ) const
@@ -1018,19 +885,6 @@ SerializeToBuffer ( tStringObj *   pktString,
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-XMP_MethodIntro(TXMPMeta,void)::
-SerializeToBuffer ( tStringObj *   pktString,
-                    XMP_OptionBits options,
-					XMP_StringPtr  newline,
-					XMP_StringPtr  indent,
-					XMP_Index      baseIndent,
-					XMP_StringLen  padding ) const
-{
-	this->SerializeToBuffer ( pktString, options, padding, newline, indent, baseIndent );
-}
-#endif
 
 // -------------------------------------------------------------------------------------------------
 

@@ -4,38 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef _IReconcile_h_
 #define _IReconcile_h_
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JEH Joerg Ehrlich
-//	PW	Patrick Wolleck
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-27-14 ADC 5.6-f118 [3813039] [iXML] : Parse and map iXML <CIRCLED> property to xmpDM:good.
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// 08-02-11 AWL 5.4-f003 Add support for the AES cart chunk in WAV files.
-//
-// 12-07-10 PW  5.3-f021 export to local encoding: [2753033] BWF: On Wave format only: Double byte characters such as Japanese in BWF fields becomes ? marks when reopens the file after save
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							New design for Reconciliation code
-// 07-28-10	JEH	5.2-f001 Initial creation of new AIFF handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include <string>
 #include <vector>

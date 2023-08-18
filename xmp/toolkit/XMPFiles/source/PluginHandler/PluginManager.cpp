@@ -4,51 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  PKG Praveen Kumar Goyal
-//  AWL Alan Lillich
-//  JEH Joerg Ehrlich
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//  JKR Jens Krueger
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 05-06-13 IJS 5.6-f058 Fix Checkformat and GetXMPStandard  Host  implementation issues
-//						 Refactoring the GetXMPStandard code as per review comments
-// 03-02-13 ADC 5.6-f044 Incorporating Review comments for support for preloading plugins based on handler flags.
-// 02-27-13 ADC 5.6-f043 Adding support for preloading plugins based on handler flags. PDF Handler will support preloading.
-// 02-18-13 ADC 5.6-f037 [3496361] Plugin Multi-threading: Either crash or memory leak is there when multiple plugins are tried to be loaded simultaneously.
-//                       Fixed memory leaks on all platforms.
-// 02-18-13 JKR 5.6-f036 [3473194] Handler version in plugin manifest file is used to resolve plugin handler conflicts
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 01-12-12 AWL 5.5-f003 [3082003] Add support for the PluginResource Architecture attribute.
-//
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 08-29-11 JEH 5.4-f008 Remove file extension check from PluginManager Checkfileformat function
-// 08-25-11 AWL 5.4-f007 Fix bugs in the handler registration and replacement logic.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "PluginManager.h"
 #include "FileHandler.h"
@@ -731,7 +688,7 @@ void PluginManager::scanRecursive( const std::string & tempPath, std::vector<std
 
 			StringVec::const_iterator iterFound =
 				std::find_if ( mExtensions.begin(), mExtensions.end(), 
-							   std::bind ( std::equal_to<std::string>(), std::placeholders::_1, fileExt ) );
+							   std::bind2nd ( std::equal_to<std::string>(), fileExt ) );
 
 			if ( iterFound != mExtensions.end() ) {
 
@@ -741,7 +698,7 @@ void PluginManager::scanRecursive( const std::string & tempPath, std::vector<std
 				
 				StringVec::const_iterator pluginNeeded =
 					std::find_if ( mPluginsNeeded.begin(), mPluginsNeeded.end(),
-								   std::bind ( std::equal_to<std::string>(), std::placeholders::_1, childName ) );
+								   std::bind2nd ( std::equal_to<std::string>(), childName ) );
 
 				if ( (pluginNeeded != mPluginsNeeded.end()) || mPluginsNeeded.empty() ) {
 					ioFoundLibs.push_back ( childPath );

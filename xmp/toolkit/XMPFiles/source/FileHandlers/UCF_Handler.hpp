@@ -7,35 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 04-11-08 FNO 4.2.2-f104 [1720135] Integrate large ucf (zip-64) support. LFA_Routines to source/LargeFileAccess.cpp|hpp.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 10-16-07 FNO 4.2-f028 UCF read-only in NewHandlers (not final), added LFA_Read* convenience routines to XMPFiles.
-// 10-09-07 FNO 4.2-f026 Added UCF draft to NewHandlers.
-// 09-17-07 FNO Initial creation in new handlers.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -736,7 +709,7 @@ private:
 	XMP_StringLen uncomprPacketLen;
 	XMP_StringPtr finalPacketStr;
 	XMP_StringLen finalPacketLen;
-    std::string compressedPacket;
+	std::string compressedPacket;
 	std::vector<CDFileHeader> cdEntries;
 	EndOfCD endOfCD;
 	void writeOut( XMP_IO* sourceFile, XMP_IO* targetFile, bool isRewrite, bool isInPlace);

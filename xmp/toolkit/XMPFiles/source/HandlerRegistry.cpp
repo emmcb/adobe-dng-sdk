@@ -4,39 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  PW  Patrick Wollek
-//  JKR Jens Krueger
-//  ADC Amandeep Chawla
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-04-15 AB  5.5-f136 First checkin of SVG Handler.
-// 02-06-15 AB  5.6-f130 Redesign XDCAM Handler by dividing it into 2 child handlers XDCAMFAM_Handler and XDCAMSAM_Handler and making it more consistent as per latest spec.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 06-08-12 JKR 5.5-f016 Introduced EnablePluginManager preprocessor define to disable plugins for iOS
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 10-21-11 AWL 5.4-f027 [2891842] Fix case sensitivity in Canon XF and XDCAM EX handlers.
-// 10-12-11 AWL 5.4-f023 [2763298] Fix SelectSmartHandler to only extract the file extension for existing files.
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 08-25-11 AWL 5.4-f007 Fix bugs in the handler registration and replacement logic.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"
@@ -71,14 +40,6 @@
 	#include "XMPFiles/source/FileHandlers/XDCAMEX_Handler.hpp"
 	#include "XMPFiles/source/FileHandlers/XDCAMFAM_Handler.hpp"
 	#include "XMPFiles/source/FileHandlers/XDCAMSAM_Handler.hpp"
-	#if AdobePrivate	// Handlers that must not be in the public SDK:
-		#include "XMPFiles/source/FileHandlers/AVCHD_Handler.hpp"
-		#include "XMPFiles/source/FileHandlers/CanonXF_Handler.hpp"
-		#include  "XMPFiles/source/FileHandlers/AVCUltra_Handler.hpp"
-		#include "XMPFiles/source/FileHandlers/HEIF_Handler.hpp"
-		#include "XMPFiles/source/FileHandlers/WebP_Handler.hpp"
-
-	#endif
 #endif
 
 #if EnableMiscHandlers
@@ -92,12 +53,6 @@
 //#if EnablePacketScanning
 //#include "XMPFiles/source/FileHandlers/Scanner_Handler.hpp"
 //#endif
-
-#if AdobePrivate
-	#if IncludeNewHandlers
-
-	#endif
-#endif
 
 using namespace Common;
 
@@ -118,18 +73,6 @@ static inline bool CheckP2ContentChild ( const std::string & folderName )
 	}
 	return false;
 }
-
-#if AdobePrivate
-
-static bool CheckAVCUltraFormat( const std::string & folderName, const std::string & clipName )
-{
-
-	if ( clipName.length() != 8 || !( folderName == "AVCLIP" || folderName == "CLIP" || folderName == "ICON" || folderName == "PROXY" ) )
-		return false;
-	return true;
-}
-
-#endif
 
 #endif
 
@@ -184,17 +127,6 @@ void HandlerRegistry::initialize()
 	allOK &= this->registerFolderHandler ( kXMP_XDCAM_FAMFile, kXDCAMFAM_HandlerFlags, XDCAMFAM_CheckFormat, XDCAMFAM_MetaHandlerCTor );
 	allOK &= this->registerFolderHandler ( kXMP_XDCAM_SAMFile, kXDCAMSAM_HandlerFlags, XDCAMSAM_CheckFormat, XDCAMSAM_MetaHandlerCTor );
 	allOK &= this->registerFolderHandler ( kXMP_XDCAM_EXFile, kXDCAMEX_HandlerFlags, XDCAMEX_CheckFormat, XDCAMEX_MetaHandlerCTor );
-	#if AdobePrivate	// These handlers must not be in the public SDK:
-		allOK &= this->registerFolderHandler ( kXMP_AVCHDFile, kAVCHD_HandlerFlags, AVCHD_CheckFormat, AVCHD_MetaHandlerCTor );
-		allOK &= this->registerFolderHandler ( kXMP_CanonXFFile, kCanonXF_HandlerFlags, CanonXF_CheckFormat, CanonXF_MetaHandlerCTor );
-		allOK &= this->registerFolderHandler ( kXMP_AVCUltraFile, kAVCUltra_HandlerFlags, AVCUltra_CheckFormat, AVCUltra_MetaHandlerCTor );
-	#endif
-#endif
-
-#if AdobePrivate
-	#if EnableNewHandlers
-		// no new handlers right now
-	#endif
 #endif
 
 	// ------------------------------------------------------------------------------------------
@@ -217,10 +149,6 @@ void HandlerRegistry::initialize()
 	allOK &= this->registerNormalHandler ( kXMP_MOVFile, kMPEG4_HandlerFlags, MPEG4_CheckFormat, MPEG4_MetaHandlerCTor );	// ! Yes, MPEG-4 includes MOV.
 	allOK &= this->registerNormalHandler ( kXMP_FLVFile, kFLV_HandlerFlags, FLV_CheckFormat, FLV_MetaHandlerCTor );
 	allOK &= this->registerNormalHandler ( kXMP_AIFFFile, kAIFF_HandlerFlags, AIFF_CheckFormat, AIFF_MetaHandlerCTor );
-#if AdobePrivate
-	allOK &= this->registerNormalHandler (kXMP_HEIFFile, kHEIF_HandlerFlags, HEIF_CheckFormat, HEIF_MetaHandlerCTor);
-	allOK &= this->registerNormalHandler (kXMP_WebPFile, kWebP_HandlerFlags, WebP_CheckFormat, WebP_MetaHandlerCTor);
-#endif
 #endif
 
 #if EnableMiscHandlers
@@ -233,24 +161,12 @@ void HandlerRegistry::initialize()
 	allOK &= this->registerNormalHandler ( kXMP_SVGFile, kSVG_HandlerFlags, SVG_CheckFormat, SVG_MetaHandlerCTor );
 #endif
 
-#if AdobePrivate
-	#if EnableNewHandlers
-		
-	#endif
-#endif
-
 	// ------------------------------------------------------------------------------------
 	// Register the file-oriented handlers that need to open and close the file themselves.
 
 #if EnableDynamicMediaHandlers
 	allOK &= this->registerOwningHandler ( kXMP_MPEGFile, kMPEG2_HandlerFlags, MPEG2_CheckFormat, MPEG2_MetaHandlerCTor );
 	allOK &= this->registerOwningHandler ( kXMP_MPEG2File, kMPEG2_HandlerFlags, MPEG2_CheckFormat, MPEG2_MetaHandlerCTor );
-#endif
-
-#if AdobePrivate
-	#if EnableNewHandlers
-		// These are in-development handlers that need to own the file.
-	#endif
 #endif
 
 	if ( ! allOK ) XMP_Throw ( "Failure initializing linked-in file handlers", kXMPErr_InternalFailure );
@@ -970,17 +886,6 @@ XMPFileHandlerInfo* HandlerRegistry::tryFolderHandlers( XMP_FileFormat format,
 	childPath += kDirChar;
 	size_t baseLen = childPath.size();
 
-#if AdobePrivate
-
-	// AVC-Ultra .../MyMovie/CONTENTS/<group>/... - only check for CONTENTS/AVCLIP
-	childPath += "CONTENTS";
-	childPath += kDirChar;
-	childPath += "AVCLIP";
-	if ( Host_IO::GetFileMode( childPath.c_str() ) == Host_IO::kFMode_IsFolder ) return kXMP_AVCUltraFile;
-	childPath.erase( baseLen );
-
-#endif
-
 	// P2 .../MyMovie/CONTENTS/<group>/... - only check for CONTENTS/CLIP
 	childPath += "CONTENTS";
 	childPath += kDirChar;
@@ -1018,24 +923,6 @@ XMPFileHandlerInfo* HandlerRegistry::tryFolderHandlers( XMP_FileFormat format,
 	if ( Host_IO::GetFileMode ( childPath.c_str() ) == Host_IO::kFMode_IsFolder ) return kXMP_SonyHDVFile;
 	childPath.erase ( baseLen );
 
-#if AdobePrivate	// These handlers must not be in the public SDK:
-
-	// AVCHD .../MyMovie/BDMV/CLIPINF/<file>.<ext> - check for BDMV/CLIPINF
-	childPath += "BDMV";
-	childPath += kDirChar;
-	childPath += "CLIPINF";
-	if ( Host_IO::GetFileMode ( childPath.c_str() ) == Host_IO::kFMode_IsFolder ) return kXMP_AVCHDFile;
-	childPath.erase ( baseLen );
-
-	// Canon XF .../MyMovie/CONTENTS/CLIPS001/<clip>/<file>.<ext> - check for CONTENTS/CLIPS001
-	childPath += "CONTENTS";
-	childPath += kDirChar;
-	childPath += "CLIPS001";
-	if ( Host_IO::GetFileMode ( childPath.c_str() ) == Host_IO::kFMode_IsFolder ) return kXMP_CanonXFFile;
-	childPath.erase ( baseLen );
-
-#endif
-
 	return kXMP_UnknownFile;
 
 }	// CheckTopFolderName
@@ -1060,14 +947,6 @@ XMPFileHandlerInfo* HandlerRegistry::tryFolderHandlers( XMP_FileFormat format,
 	//
 	// Since we don't have many folder handlers, this is simple hardwired code. Note that the caller
 	// has already shifted the names to upper case.
-
-#if AdobePrivate
-	
-	// AVC-Ultra  .../MyMovie/CONTENTS/<group>/<file>.<ext> - check CONTENTS and <group>
-	if ( gpName == "CONTENTS" && CheckAVCUltraFormat( parentName, leafName ) )
-		return kXMP_AVCUltraFile;
-
-#endif
 
 	// P2  .../MyMovie/CONTENTS/<group>/<file>.<ext> - check CONTENTS and <group>
 	if ( (gpName == "CONTENTS") && CheckP2ContentChild ( parentName ) ) return kXMP_P2File;
@@ -1097,22 +976,6 @@ XMPFileHandlerInfo* HandlerRegistry::tryFolderHandlers( XMP_FileFormat format,
 
 	// Sony HDV  .../MyMovie/VIDEO/HVR/<file>.<ext> - check for VIDEO and HVR
 	if ( (gpName == "VIDEO") && (parentName == "HVR") ) return kXMP_SonyHDVFile;
-
-#if AdobePrivate	// These handlers must not be in the public SDK:
-
-	// AVCHD .../MyMovie/BDMV/<group>/<file>.<ext> - check for BDMV and CLIPINF or STREAM
-	if ( (gpName == "BDMV") && ((parentName == "CLIPINF") || (parentName == "STREAM")) ) return kXMP_AVCHDFile;
-
-	// Canon XF .../MyMovie/CONTENTS/CLIPS001/<group>/<file>.<ext> - check for CONTENTS/CLIPS001
-	if ( gpName == "CLIPS001" ) {
-		std::string tempPath, greatGP;
-		tempPath = rootPath;
-		XIO::SplitLeafName ( &tempPath, &greatGP );
-		MakeUpperCase ( &greatGP );
-		if ( greatGP == "CONTENTS" ) return kXMP_CanonXFFile;
-	}
-
-#endif
 
 	return kXMP_UnknownFile;
 

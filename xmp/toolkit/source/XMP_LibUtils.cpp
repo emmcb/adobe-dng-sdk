@@ -3,42 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who M.m-bbb Description of changes, most recent on top.
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-//
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-//
-// 06-23-09 AWL 5.0-c040-f049 Add hack to revert to global DLL locking.
-// 06-23-09 AWL 5.0-c039-f048 Fix atomic increment and decrement to be optional, not on Solaris.
-// 06-22-09 AWL 5.0-c038-f047 Fix locking code to use atomic increment and decrement.
-// 06-18-09 AWL 5.0-c037-f046 Minor tweaks from code review.
-// 06-12-09 AWL 5.0-c035-f045 Simplify the multiple lock permutations.
-// 06-11-09 AWL 5.0-c034-f043 Finish threading revamp, implement friendly reader/writer locking.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"
 

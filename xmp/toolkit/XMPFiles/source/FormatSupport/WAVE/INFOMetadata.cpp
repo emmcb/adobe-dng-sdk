@@ -4,27 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PW Patrick Wollek
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 11-17-11 SAM 5.4-f038 [2981712] WAVE: Fixed bug in LIST:INFO parser to read empty LIST chunks.
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							Adding new WAVE handler based on new IFF common code
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include <string.h>
 

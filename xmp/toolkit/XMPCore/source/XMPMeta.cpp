@@ -3,206 +3,11 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	FNO Frank Nocke
-//	SM  Stefan Makswit
-//	ADC	Amandeep Chawla
-//	ANS	Ankita Sharma
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-24-15 ADC 5.6-c061 Adding inbuilt support for ixml namespace.
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 11-05-14 ANS 5.6-c024 Moving new DOM API references inside the AdobePrivate flag.
-// 07-31-14 ADC 5.6-c022 [3790748] PDFLChef crashes/hangs indefinitely on main branch due to xmp library.
-// 07-15-14 ADC 5.6-c020 Checking XML validity of name and prefix.
-// 07-10-14 ADC 5.6-c017 Fixing issues related to Mac build.
-// 07-10-14 ADC 5.6-c015 Refactoring, partial documentation and bug fixes of XMPCommon and XMPCore C++ APIs.
-// 05-19-14 ADC 5.6-c012 Refactoring XMPCommon code and appropriate changes in XMPCore and XMPCompareAndMerge.
-// 02-24-14 ADC 5.6-c001 XMPCommon Framework and XMPCore new APIs ported to Mac Environment.
-//
-// 02-09-14 ADC 5.5-c026 Re-factoring of XMPCommon Framework
-// 02-05-14 ADC 5.5-c024 Added a new API to the XMPCore to return pointer to interface
-//						 IXMPDOMFactory
-// 07-05-13 ADC 5.5-c021 In Terminate reset static variables.
-// 05-13-13 ADC 5.5-c018 Removing usage of bool in APIs exposed at DLL boundaries.
-// 04-26-13 ADC 5.5-c017 [3532883] XMP libraries provide mechanisms to clients for registration of memory allocation and 
-//						 de-allocation function pointers which causes problems with the static std::string obejcts in the code base.
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 09-21-12 AWL 5.5-c011 Remove Transform XMP.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-// 08-03-12 AWL 5.5-c006 Remove defunct XMPMeta prevTkVer data member.
-// 08-02-12 AWL 5.5-c005 Implement the internal infrastructure for XMPCore error notifications.
-// 08-01-12 AWL 5.5-c004 Implement public API and glue layer for XMPCore error notifications.
-//
-// 07-28-11 AWL 5.3-c007 Add the AEScart: namespace for the AES cart chunk in WAV files.
-// 07-21-11 AWL 5.3-c006 Add the exifx: namespace for CIPA definition of XMP with Exif 2.3.
-// 10-26-10 PW  5.3-c004 Integration from winwood: Adding transient namespace RIFFINFO.
-//
-// 08-20-10	SM 	5.3-c001 Adding namespace for IPTC Extension Schema (IPTC4xmpExt)
-// 07-01-10 AWL 5.1-c008 Add XMP_Node::GetLocalURI.
-// 05-27-10 AWL 5.1-c006 [2598001] Add namespace for PLUS.
-// 02-25-10 AWL 5.1-c003 [2558846] Add alias for exif:DateTimeDigitized to xmp:CreateDate.
-//
-// 12-02-09 AWL 5.0-c060 [2411289] Fix IsInternalProperty to make bext:version be internal.
-// 12-01-09 AWL 5.0-c059 [2415230] Fix IsInternalProperty for recent xmpDM: and xmpScript: external properties.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 05-27-09 AWL 5.0-c033 Remove XMPMeta::SendAssertNotify.
-// 05-19-09 AWL 5.0-c031 First part of threading improvements, revamp the client glue.
-// 05-14-09 AWL 5.0-c030 Improve the call tracing mechanism.
-// 05-12-09 AWL 5.0-c029 Finish deprecated function removal.
-// 04-03-09 AWL 5.0-c022 Change PlainXMP to TransformXMP.
-// 04-03-09 AWL 5.0-c021 Fix Terminate to be tolerant of too many calls (count going negative).
-// 02-06-09 FNO 5.0-c007 Add scannable ADOBE_INFO to VersionInfo (mostly for Linux/Unix).
-//
-// 07-01-08 AWL 4.3-c060 Hide all uses of PlainXMP.
-//
-// 04-04-08 AWL 4.2.2-c049 [1744200] Add the DICOM namespace.
-// 03-31-08 AWL 4.2.2-c047 Add kXMP_NS_CreatorAtom standard namespace.
-//
-// 02-28-08 AWL 4.2-c046 Add SXMPMeta::Erase.
-// 02-25-08 FNO 4.2-c045 Integrate minor tweaks for Solaris
-// 01-25-08 AWL 4.2-c037 Change all xap* namespace prefixes to xmp*.
-// 01-22-08 AWL 4.2-c036 Add fixes and comments for the Acrobat security review.
-// 12-10-07 AWL 4.2-c033 Implement DeleteNamespace.
-// 11-07-07 AWL 4.2-c025 More progress implementing XMPDocOps.
-// 11-02-07 AWL 4.2-c024 Start implementing XMPDocOps.
-// 08-27-07 AWL 4.2-c020 Add Sort, change the Dump* routines to hexify non-ASCII characters.
-// 08-24-07 AWL 4.2-c019 Remove support for ancient CXMP_* init/term routines and non-public (AXE) expat.
-// 03-30-07 AWL 4.2-c014 [1519329] Tolerate unknown namespaces in XMPIterator.cpp, AddSchemaAliases.
-//				Add  PDF/X-ID to the set of standard namespaces.
-// 03-26-07 AWL 4.2-c012 Add standard namespace for the WAV legacy digest.
-// 02-13-07 AWL 4.2-c011 Centralize the Adobe IP constant.
-// 01-23-07 AWL 4.2-c007 Finish changing the copyright to 2007.
-// 01-15-07 AWL 4.2-c006 [1434921] Use DLL C++ runtime on Linux and Solaris. Change copyright to 2007.
-//
-// 10-12-06 AWL 4.1-c021 [1235816] Remove the new/delete overrides from static builds.
-// 08-30-06 AWL 4.1-c019 [1361874] Fix the PDF/A namespace URI strings.
-//
-// 07-18-06 AWL 4.0-c011 [1239739] Add namespaces for PDF/A. [1241078] Make the xmpDM namespace
-//				registration public.
-// 05-16-06 AWL 4.0-c006 Add SXMPUtils::PackageForJPEG and SXMPUtils::MergeFromJPEG. Register the
-//				xmpNote namespace.
-// 05-01-06 AWL 4.0-c005 Revamp the embedded, Mac PList, and WIndows Property info.
-// 05-01-06 AWL 4.0-004c [1277181] Change stFNT prefix to the original stFnt.
-// 04-14-06 AWL 4.0-c003 Undo the previous edits. There seems to be no way on the UNIX platforms to
-//				determine the endianness safely. There are no standard macros, we can't force it on
-//				the client's build scripts.
-// 04-14-06 AWL 4.0-c002 Add XMP_NativeBigEndian macro to XMP_Environment.h, verify the setting at
-//				init time in both the client and DLL. Verify that this matches the expat_config.h
-//				settings. Change UnicodeConversions to use the macro.
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-25-06 AWL 3.3-011 Fix iterator compare mistake in DumpNamespaces - detected by VC8.
-// 01-24-06 AWL 3.3-010 Turn off snprintf warning.
-// 08-08-05 AWL 3.3-004 Change ResolveAlias to allow general alias path.
-//
-// 06-07-05 AWL 3.2-112 Serialize empty packets nicely.
-// 06-06-05 AWL 3.2-111 [0536565] Fix the compact serialization of empty structs.
-// 06-03-05 AWL 3.2-109 [0467370] Parse failures must leave the XMP object empty, ready for another parse.
-// 06-03-05 AWL 3.2-108 Output empty element in RDF for an empty array, e.g. <rdf:Seq/>.
-// 06-02-05 AWL 3.2-105 [1016912] Use empty element form when rdf:Description has only attribute content.
-// 06-01-05 AWL 3.2-105 [1110051] Add delete-existing option for SetProperty.
-// 06-01-05 AWL 3.2-103 [0509601,1204017] Fix SetLocalizedText to find and set a matching "real"
-//				language value when the specific_lang parameter is "x-default".
-// 05-27-05 AWL 3.2-102 Move the setting of the alloc/free procs to the top of XMPMeta::Initialize.
-// 05-16-05 AWL 3.2-100 Complete the deBIBification, integrate the internal and SDK source. Bump the
-//              version to 3.3 and build to 100, well ahead of main's latest 3.3-009.
-//
-// 05-02-05 AWL 3.2-019 Add the Dynamic Media namespace, kXMP_NS_DM, "http://ns.adobe.com/xmp/1.0/DynamicMedia/".
-// 04-14-05 AWL 3.2-018 Move the padding param, add overloads to simplify use of SerializeToBuffer.
-// 04-13-05 AWL 3.2-017 Improve the documentation and behavior of Get/SetLocalizedText.
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-08-05 AWL 3.2-015 Undo unnecessary constant changes in XMP_Const.h - keep compatibility over
-//				"perfection" so that SDK and internal code are easier to merge.
-// 04-07-05 AWL 3.2-014 Fix SetLocalizedText to set the alt-text bit for empty alt array. This became
-//				broken in the changes for 3.2-010 (SDK) and 3.3-003 (main). Don't throw an exception
-//				if x:xmpmeta is missing and kXMP_RequireXMPMeta is used. Old code ignored that
-//				candidate. This changed in the previous build's root node lookup changes.
-// 04-06-05 AWL 3.2-013 [0509601] Normalize "single value" alt-text arrays. Improve the way the root
-//				XML node is found and extract the previous toolkit version number.
-// 04-05-05 AWL 3.2-012 [1172565] Move instance ID from rdf:about to xmpMM:InstanceID.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 04-01-05 AWL 3.2-010 Add leafOptions parameter to FindNode, used when creating new nodes.
-// 03-17-05 AWL 3.2-006 Revise Plain XMP parsing and serialization for latest proposal.
-// 02-16-05 AWL 3.2-005 Add first cut of Plain XMP parsing and serialization.
-// 02-14-05 AWL 3.2-003 Add thread locks.
-// 02-11-05 AWL 3.2-002 Add client reference counting.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 02-02-05 AWL 3.1.1-110 [1145657] Fix XMPMeta::SerializeToBuffer to do an exact size UTF-16 or UTF-32
-//				packet correctly. It was doing UTF-8 of the exact size, then converting.
-// 01-26-05 AWL 3.1.1-107 [1141684] Add XMPMeta::UnregisterAssertNotify and XMPMeta::SendAssertNotify.
-// 01-25-05 AWL 3.1.1-106 [1141007] Add XMPMeta::RegisterAssertNotify.
-// 01-17-05 AWL 3.1.1-105 [1135773] Delete empty schema in addition to removing the pointer from the
-//				tree node's child vector. This bug was introduced in the -101 changes.
-// 01-07-05 AWL 3.1.1-104 [1129616] Fix SetObjectName to verify that the string is UTF-8.
-// 12-14-04 AWL 3.1.1-101 [1085740] Delete empty schema nodes in CleanupParsedAliases.
-// 12-14-04 AWL 3.1.1-100 [1022350,1075328] Add more namespaces and internal/external properties.
-// 12-09-04 AWl 3.1.1-099 [1041438] Add parsing and serialization support for UTF-16 and UTF-32.
-// 11-05-04 AWL 3.1.1-093 [1037508] Touch up exif:GPSTimeStamp values that have zero for the date.
-// 11-05-04 AWL 3.1.1-092 [1106408] Add new IPTC namespace.
-// 10-29-04 AWL 3.1.1-089 [1099634] Fix ParseFromBuffer to properly handle a partial escape followed
-//				by another escape. E.g. "blah blah &#" then "xA;&#xA; blah blah".
-// 10-20-04 AWL 3.1.1-085 [1084185] Fix XMP_InternalRef to not depend on BIBContainerBase layout.
-// 10-12-04 AWL 3.1.1-084 [0616293] Add value checking to SetNodeValue, prefix checking to RegisterNamespace.
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-// 10-05-04 AWL 3.1.1-082 [1061778] Use recursive form of BIB mutex.
-//
-// 08-27-04 AWL 3.1-079 Remove overly aggressive option checks in SerializeAsRDF.
-// 08-27-04 AWL 3.1-078 Add EXIF_Aux and CameraRaw namespaces.
-// 08-23-04 AWL 3.1-076 Add kXMP_NS_PSAlbum as a predefined namespace.
-// 08-04-04 AWL 3.1-073 [1050719] Fix handling of an empty default namespace declaration.
-// 07-28-04 AWL 3.1-069 [1043286] Preflight parse buffers for ASCII controls.
-// 07-26-04 AWL 3.1-068 [1046381,1046384] Fix XMPUtils::ConvertToXyz to throw instead of assert for
-//				null or empty string. Fix XMPMeta::GetProperty_Xyz to make sure property is simple.
-// 07-21-04 AWL 3.1-067 [1044036] Increase fudge factor for output reserve in SerializeToBuffer.
-// 07-15-04 AWL 3.1-066 [1015904] Fix Get/SetLocalizedText to allow empty alt arrays.
-// 07-14-04 AWL 3.1-062 [1026373] Strip old iX:changes elements during parsing.
-// 07-14-04 AWL 3.1-059 [0658992] Fix SetQualifier to throw if property does not exist.
-// 07-13-04 AWL 3.1-058 [1014255] Remove empty schema nodes.
-// 07-13-04 AWL 3.1-057 [1006568] Check all XPath components for valid namespace prefixes.
-// 07-09-04 AWL 3.1-053 [1037918] Use double escaping for ASCII controls other than tab, lf, and cr.
-// 06-10-04 AWL 3.1-047 Fix more HPUX and AIX compilation errors and warnings.
-// 06-04-04 AWL 3.1-046 Fix HPUX compilation errors and warnings.
-//
-// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
-// 05-14-04 AWL [1016811,1018220] Fix escaping bugs in serialization.
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers. Properly delete partial tree when parse
-//				errors throw an exception. Clean up memory leaks.
-// 04-19-04 AWL [1010249] Don't write a final newline after the packet trailer, the packet must end
-//			    at the '>' of the trailer.
-// 04-16-04 AWL Fix major bogosity in IsAttrQualifier XMPMeta.cpp.
-// 04-16-04 AWL Inflate serialization size estimate to accommodate anticipated character entities,
-//              e.g. &#xA; for newlines. There can be a lot in the base 64 encoding of a thumbnail.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message. Have GetProperty
-//				and friends throw an exception if the schema namespace is not registered.
-// 03-04-04 AWL Add hacks to handle the DC singleton denormalization of the XMP from Acrobat 5.
-// 02-19-04 AWL Add the new "transient" standard namespace.
-// 02-06-04 AWL Register a couple of missing standard namespaces.
-// 01-29-04 AWL Add AppendArrayItem.
-// 01-26-04 AWL Revamp expanded XPath handling to work better for aliases.
-// 04-24-03	AWL	Initial start on the new implementation.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 
@@ -218,16 +23,7 @@
 #include "XMPCore/source/XMPMeta.hpp"
 #include "XMPCore/source/XMPIterator.hpp"
 #include "XMPCore/source/XMPUtils.hpp"
-#if AdobePrivate
-	#include "XMPCore/source/XMPDocOps.hpp"
-#endif
-
 #include "public/include/XMP_Version.h"
-#if AdobePrivate
-	#include "XMPCore/source/XMPCore_ChangeLog.hpp"
-	#include "build/XMP_BuildInfo.h"
-#endif
-
 #include "source/UnicodeInlines.incl_cpp"
 #include "source/UnicodeConversions.hpp"
 
@@ -306,34 +102,10 @@ XMP_VarString * xdefaultName = 0;	// Needed in XMPMeta-Parse.cpp, MoveExplicitAl
 
 static XMPMeta::ErrorCallbackInfo sDefaultErrorCallback;
 
-#if AdobePrivate
-XMP_AssertNotifyProc sAssertNotify  = 0;
-void *               sAssertRefCon  = 0;
-#endif
-
 // These are embedded version strings.
 
 const char * kXMPCore_EmbeddedVersion   = kXMPCore_VersionMessage;
 const char * kXMPCore_EmbeddedCopyright = kXMPCoreName " " kXMP_CopyrightStr;
-
-#if AdobePrivate
-
-	const char * kXMPCore_EmbeddedAdobeIP = kXMP_AdobeIPStr;
-
-	// Ugly strings wanted by CoreTech tools.
-	const char * uglyCoreBuildVersion = "ADOBE_INFO BUILDVERSION : " BUILDVERSIONSTR;
-	const char * uglyCoreBuildDate    = "ADOBE_INFO BUILDDATE : " BUILDDATESTR;
-	const char * uglyCoreFileVersion  = "ADOBE_INFO FILEVERSION : " XMPCORE_API_VERSION_STRING "-c" kXMPCore_EngString;
-	const char * uglyCoreCopyright    = "ADOBE_INFO COPYRIGHT : " kXMP_CopyrightStr;
-	const char * uglyCoreBuildId          = "ADOBE_INFO BUILDID : " BUILDIDSTR;
-
-	#if XMP_DebugBuild
-		const char * uglyCoreBuildVariant = "ADOBE_INFO BUILDVARIANT : Debug";
-	#else
-		const char * uglyCoreBuildVariant = "ADOBE_INFO BUILDVARIANT : Release";
-	#endif
-
-#endif
 
 // =================================================================================================
 // Local Utilities
@@ -966,9 +738,6 @@ XMPMeta::GetVersionInfo ( XMP_VersionInfo * info )
 	info->minor   = XMPCORE_API_VERSION_MINOR;
 	info->micro   = 0; //no longer used
 	info->isDebug = kXMPCore_DebugFlag;
-#if AdobePrivate
-	info->build   = kXMPCore_EngBuild;
-#endif
 	info->flags   = 0;	// ! None defined yet.
 	info->message = kXMPCore_VersionMessage;
 
@@ -987,16 +756,7 @@ XMPMeta::GetVersionInfo ( XMP_VersionInfo * info )
 #endif
 
 /* class-static */ bool
-#if ! AdobePrivate
 XMPMeta::Initialize()
-#else
-
-//******* DEPRECATED *************************//
-//******* SEE : CTECHXMP-4169971 *************//
-
-XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
-                      XMP_DeleteProc   DeleteProc )
-#endif
 {
 	// Allocate and initialize static objects.
 
@@ -1008,20 +768,6 @@ XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
 		if ( xmpCoreLog == 0 ) xmpCoreLog = stderr;
 	#endif
 
-#if AdobePrivate
-	//******* SEE : CTECHXMP-4169971 *************//
-#if 0
-	if ( AllocateProc != 0 ) {
-		#if XMP_StaticBuild
-			XMP_Throw ( "XMP memory procs are only supported in DLL builds", kXMPErr_Unavailable );
-		#else
-			sXMP_MemAlloc = AllocateProc;
-			sXMP_MemFree  = DeleteProc;
-		#endif
-	}
-#endif
-#endif
-
 	#if UseGlobalLibraryLock
 		InitializeBasicMutex ( sLibraryLock );
 	#endif
@@ -1032,15 +778,6 @@ XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
 		try {
 			AdobeXMPCore_Int::InitializeXMPCommonFramework();
 	
-			#if AdobePrivate
-			#if !XMP_StaticBuild
-				auto confManager = AdobeXMPCore::ICoreConfigurationManager::GetCoreConfigurationManager();
-				if ( confManager && AllocateProc != 0 && DeleteProc != 0 ) {
-					sInternalClientAllocator = new InternalClientAllocator();
-					confManager->RegisterMemoryAllocator( sInternalClientAllocator );
-				}
-			#endif
-			#endif
 		} catch ( ... ) {
 			return false;
 		}
@@ -1084,10 +821,6 @@ XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
 
 	(void) RegisterNamespace ( kXMP_NS_AdobeStockPhoto, "bmsp", &voidPtr, &voidLen );
 	(void) RegisterNamespace ( kXMP_NS_CreatorAtom, "creatorAtom", &voidPtr, &voidLen );
-
-#if AdobePrivate
-	(void) RegisterNamespace ( kXMP_NS_Transient, "xmpx", &voidPtr, &voidLen );
-#endif
 
 	(void) RegisterNamespace ( kXMP_NS_XMP_Rights, "xmpRights", &voidPtr, &voidLen );
 	(void) RegisterNamespace ( kXMP_NS_XMP_MM, "xmpMM", &voidPtr, &voidLen );
@@ -1134,20 +867,12 @@ XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
 
 	(void) RegisterNamespace( kXMP_NS_iXML, "iXML", &voidPtr, &voidLen );
 
-#if AdobePrivate
-	(void) RegisterNamespace("http://www.day.com/jcr/cq/1.0", "cq", &voidPtr, &voidLen);
-	(void) RegisterNamespace("http://www.day.com/dam/1.0", "dam", &voidPtr, &voidLen);
-#endif
-
 	RegisterStandardAliases();
 
 	// Initialize the other core classes.
 
 	if ( ! XMPIterator::Initialize() ) XMP_Throw ( "Failure from XMPIterator::Initialize", kXMPErr_InternalFailure );
 	if ( ! XMPUtils::Initialize() ) XMP_Throw ( "Failure from XMPUtils::Initialize", kXMPErr_InternalFailure );
-	#if AdobePrivate
-		if ( ! XMPDocOps::Initialize() ) XMP_Throw ( "Failure from XMPDocOps::Initialize", kXMPErr_InternalFailure );
-	#endif
 	// Do miscelaneous semantic checks of types and arithmetic.
 
 	XMP_Assert ( sizeof(XMP_Int8) == 1 );
@@ -1214,13 +939,6 @@ XMPMeta::Initialize ( XMP_AllocateProc AllocateProc,
 
 	// Make sure the embedded info strings are referenced and kept.
 	if ( (kXMPCore_EmbeddedVersion[0] == 0) || (kXMPCore_EmbeddedCopyright[0] == 0) ) return false;
-	#if AdobePrivate
-		if ( kXMPCore_EmbeddedAdobeIP[0] == 0 ) return false;
-		if ( (uglyCoreBuildVersion[0] == 0) || (uglyCoreBuildDate[0] == 0) ||
-			 (uglyCoreFileVersion[0] == 0)  || (uglyCoreCopyright[0] == 0) ||
-			 (uglyCoreBuildVariant[0] == 0) || (uglyCoreBuildId[0] == 0) ) return false;
-	#endif
-
 	return true;
 
 }	// Initialize
@@ -1238,11 +956,6 @@ XMPMeta::Terminate() RELEASE_NO_THROW
 
 	XMPIterator::Terminate();
 	XMPUtils::Terminate();
-	#if AdobePrivate
-		XMPDocOps::Terminate();
-	#endif
-
-
 #if ENABLE_CPP_DOM_MODEL
 		AdobeXMPCore_Int::INameSpacePrefixMap_I::DestroyDefaultNameSapcePrefixMap();
 		AdobeXMPCore_Int::IDOMImplementationRegistry_I::DestoryDOMImplementationRegistry();
@@ -1276,67 +989,7 @@ XMPMeta::Terminate() RELEASE_NO_THROW
 
 	// reset static variables
 	sDefaultErrorCallback.Clear();
-	#if AdobePrivate
-		sAssertNotify = NULL;
-		sAssertRefCon = 0;
-		#if !XMP_StaticBuild
-			//reset memory pointers
-			sXMP_MemAlloc = malloc;
-			sXMP_MemFree = free;
-		#endif
-	#endif
-
 }	// Terminate
-
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-// RegisterAssertNotify
-// --------------------
-
-/* class-static */ void
-XMPMeta::RegisterAssertNotify ( XMP_AssertNotifyProc notifyProc,
-                                void *               refCon )
-{
-
-	if ( sAssertNotify == 0 ) {
-		sAssertNotify  = notifyProc;
-		sAssertRefCon  = refCon;
-	}
-
-}	// RegisterAssertNotify
-
-
-// -------------------------------------------------------------------------------------------------
-// UnregisterAssertNotify
-// ----------------------
-
-/* class-static */ void
-XMPMeta::UnregisterAssertNotify	( XMP_AssertNotifyProc notifyProc )
-{
-
-	if ( (notifyProc == 0) || (notifyProc == sAssertNotify) ) {
-		sAssertNotify  = 0;
-		sAssertRefCon  = 0;
-	}
-
-}	// UnregisterAssertNotify
-
-
-// -------------------------------------------------------------------------------------------------
-// XMP_GetAssertNotify
-// --------------------
-
-extern "C" void
-XMP_GetAssertNotify ( XMP_AssertNotifyProc * notifyProc,
-					  void * *               refCon )
-{
-
-	*notifyProc = sAssertNotify;	// Private hook to let XMPFiles get the callback info.
-	*refCon     = sAssertRefCon;
-
-}	// XMP_GetAssertNotify
-#endif	//AdobePrivate
 
 
 // -------------------------------------------------------------------------------------------------
@@ -1356,25 +1009,6 @@ XMPMeta::DumpNamespaces ( XMP_TextOutputProc outProc,
 	return 0;
 
 }	// DumpNamespaces
-
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-// DumpPropertyTraits
-// ------------------
-
-/* class-static */ XMP_Status
-XMPMeta::DumpPropertyTraits ( XMP_TextOutputProc outProc,
-                              void *             refCon )
-{
-	XMP_Assert ( outProc != 0 );	// ! Enforced by wrapper.
-	void * p; p = &outProc; p = &refCon;	// Avoid unused param warnings.
-	XMP_Throw ( "Unimplemented method XMPMeta::DumpPropertyTraits", kXMPErr_Unimplemented );
-		
-	return -1;	// Avoid no-result warning.
-
-}	// DumpPropertyTraits
-#endif
 
 
 // -------------------------------------------------------------------------------------------------
@@ -1476,25 +1110,6 @@ XMPMeta::DeleteNamespace ( XMP_StringPtr namespaceURI )
 	XMP_Throw ( "Unimplemented method XMPMeta::DeleteNamespace", kXMPErr_Unimplemented );
 
 }	// DeleteNamespace
-
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-// RegisterPropertyTraits
-// ----------------------
-
-/* class-static */ void
-XMPMeta::RegisterPropertyTraits	( XMP_StringPtr  schemaNS,
-								  XMP_StringPtr	 propName,
-								  XMP_OptionBits options )
-{
-
-	XMP_Assert ( (schemaNS != 0) && (propName != 0) );	// Enforced by wrapper.
-	void * p; p = &schemaNS; p = &propName; p = &options;	// Avoid unused param warnings.
-	XMP_Throw ( "Unimplemented method XMPMeta::RegisterPropertyTraits", kXMPErr_Unimplemented );
-
-}	// RegisterPropertyTraits
-#endif
 
 
 // =================================================================================================
@@ -1604,20 +1219,6 @@ XMPMeta::CountArrayItems ( XMP_StringPtr schemaNS,
 
 }	// CountArrayItems
 
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-// MarkStaleProperties
-// -------------------
-
-void
-XMPMeta::MarkStaleProperties ( XMP_OptionBits options )
-{
-	void * p; p = &options;	// Avoid unused param warnings.
-	XMP_Throw ( "Unimplemented method XMPMeta::MarkStaleProperties", kXMPErr_Unimplemented );
-
-}	// MarkStaleProperties
-#endif
 
 // -------------------------------------------------------------------------------------------------
 // GetObjectName

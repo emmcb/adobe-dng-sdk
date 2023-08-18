@@ -3,46 +3,21 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
-// This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification. 
+// This file includes implementation of SVG metadata, according to Scalable Vector Graphics (SVG) 1.1 Specification.
 // "https://www.w3.org/TR/2003/REC-SVG11-20030114/"
-// Copyright © 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology, 
-// Institut National de Recherche en Informatique et en Automatique, Keio University). 
+// Copyright © 1994-2002 World Wide Web Consortium, (Massachusetts Institute of Technology,
+// Institut National de Recherche en Informatique et en Automatique, Keio University).
 // All Rights Reserved . http://www.w3.org/Consortium/Legal
 //
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-24-15 AB  5.6-f146 Doing changes in SVG_Adapter to support for complex workflows of SVG.
-// 03-13-15 AB	5.6-f140 Making SVG support only for UTF-8 SVG files.
-// 03-05-15 AB	5.6-f137 Setting correct error for invalid SVG file.
-// 03-04-15 AB	5.6-c043 Initial creation of SVG Adapter for SVG handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 
 #include "XMPFiles/source/FormatSupport/SVG_Adapter.hpp"
 
-#if AdobePrivate
-#include "XMPCore/third-party/expat/public/lib/expat.h"
-#else
 #include "third-party/expat/lib/expat.h"
-#endif
-
 #include <string.h>
 
 using namespace std;
@@ -159,7 +134,7 @@ XMP_Int64 SVG_Adapter::GetPIOffset( std::string PIName, XMP_Uns32 requiredIndex 
 			XMP_Uns32 index = 0;
 			IteratorStringXMP_Int64 indexIterator = iterator.first;
 			for ( ; index < ( requiredIndex - 1 ) && indexIterator != iterator.second; ++indexIterator, ++index );
-			if ( index == requiredIndex - 1 )
+			if ( indexIterator != this->mPIWithOffsetMap.end() && index == requiredIndex - 1 )
 				return indexIterator->second;
 		}
 	}
@@ -236,9 +211,12 @@ XMP_Bool SVG_Adapter::ParseBufferNoThrow( const void * buffer, size_t length, bo
 		length = 1;
 	}
 
-    try {
-		status = XML_Parse( this->parser, ( const char * ) buffer, static_cast< XMP_StringLen >( length ), last );
-	} catch(XMP_Error & e){
+	try
+	{
+		status = XML_Parse(this->parser, (const char *)buffer, static_cast<XMP_StringLen>(length), last);
+	}
+	catch (XMP_Error &e)
+	{
 		return false; //Don't let one failure abort checking other file formats , this api is called only from checkFileFormat
 	}
 
@@ -262,7 +240,8 @@ static void ParseFullNS( XMP_StringPtr fullName, string & NS, string &localName 
 {
 	// Expat delivers the full name as a catenation of namespace URI, separator, and local name.
 	size_t sepPos = strlen( fullName );
-	if(!sepPos) return; //Throw?
+	if (!sepPos)
+		return; //Throw?
 	for ( --sepPos; sepPos > 0; --sepPos ) {
 		if ( fullName[ sepPos ] == FullNameSeparator ) break;
 	}

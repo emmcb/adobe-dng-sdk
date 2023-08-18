@@ -4,59 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-21-12 AWL 5.5-f021 Remove use of IOBuffer from the InDesign handler.
-//
-// 11-01-11 AWL 5.4-f032 [2935215] Make the InDesign handler tolerant of endian mistakes when reading.
-//
-// 05-19-11	AWL	5.3-f029 Fix sloppy but not buggy IOBuffer seek/fill actions in InDesign and PostScript handlers.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 05-06-08 AWL 4.2.2-f112 [1780077] Fix InDesign handler to use the proper "live" XMP length when updating.
-//
-// 12-14-07 AWL 4.2-f048 [1645489] Fix 64-bit failure for InDesign databases.
-//
-// 07-13-06 AWL 4.0-f017 Fix I/O regression in the InDesign handler. Need to make the buffer look
-//				empty when doing LFA_Seek and RefillBuffer.
-// 05-19-06 AWL 4.0-f007 Package I/O buffer info into a struct, change I/O macros to functions.
-//				This will make it reasonable to pass the buffer state among layered functions.
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-//
-// 01-07-05 AWL 1.0-028 [1014854] Set stdCharForm in handlers that require UTF-8.
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-// 10-07-04 AWL 1.0-009 Add first cut of support for crash safe file update.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-// 09-22-04 AWL 1.0-006 Fix bugs in InDesign handler.
-// 08-24-04 AWL 1.0-003 Change InDesign handler to a Basic_Handler.
-//
-// 08-19-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

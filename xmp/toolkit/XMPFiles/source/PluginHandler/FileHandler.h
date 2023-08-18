@@ -4,27 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  PKG Praveen Kumar Goyal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-18-13 JKR 5.6-f036 [3473194] Handler version in plugin manifest file is used to resolve plugin handler conflicts
-//
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef PLUGINHANDLER_H
 #define PLUGINHANDLER_H

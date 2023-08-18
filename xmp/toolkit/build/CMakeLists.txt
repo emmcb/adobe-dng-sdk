@@ -1,20 +1,11 @@
-#/*************************************************************************
-#*
-#* ADOBE CONFIDENTIAL
-#* ___________________
-#*
-#* Copyright [2012] Adobe Systems Incorporated
-#* All Rights Reserved.
-#*
-#* NOTICE:  All information contained herein is, and remains
-#* the property of Adobe Systems Incorporated and its suppliers,
-#* if any.  The intellectual and technical concepts contained
-#* herein are proprietary to Adobe Systems Incorporated and its
-#* suppliers and are protected by trade secret or copyright law.
-#* Dissemination of this information or reproduction of this material
-#* is strictly forbidden unless prior written permission is obtained
-#* from Adobe Systems Incorporated.
-#**************************************************************************/
+# =================================================================================================
+# ADOBE SYSTEMS INCORPORATED
+# Copyright 2013 Adobe Systems Incorporated
+# All Rights Reserved
+#
+# NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
+# of the Adobe license agreement accompanying it.
+# =================================================================================================
   
 # ==============================================================================
 # define minimum cmake version
@@ -28,33 +19,27 @@ endif(ANDROID)
 
 # Enable folder grouping of projects in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "")
-set(CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
+
 # ==============================================================================
 # This project
 option(CMAKE_CL_64 "64bit target?" OFF)
-set(TARGET_NAME XMPToolkit)
+set(TARGET_NAME XMPToolkitSDK)
+SET(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configurations" FORCE)
 if(CMAKE_CL_64)
 	project(${TARGET_NAME}64)
 else(CMAKE_CL_64)
 	project(${TARGET_NAME})
 endif(CMAKE_CL_64)
 
-#if(NOT DEFINED XMP_TOPLEVELPROJECT)
-#	set(XMP_TOPLEVELPROJECT "XMPBuild" CACHE INTERNAL "Identify top level project responsible for build XMP libs")
-#endif()
+if(NOT DEFINED XMP_TOPLEVELPROJECT)
+	set(XMP_TOPLEVELPROJECT "XMPBuild" CACHE INTERNAL "Identify top level project responsible for build XMP libs")
+endif()
 
 # ==============================================================================
 # Globals
 # ==============================================================================
 
 set(XMP_ROOT ${PROJECT_SOURCE_DIR}/..)
-
-# For Android always build dynamic library
-if(ANDROID)
-	set(XMP_BUILD_STATIC OFF)
-endif()
-
 
 # ==============================================================================
 # SET XMP and Plugin Version Numbers defined in an external file
@@ -85,59 +70,13 @@ endif()
 # Shared config
 # ==============================================================================
 # setup some values before calling shared config
-#set(XMP_THIS_PROJECT_RELATIVEPATH "../..")
 include(${XMP_ROOT}/build/XMP_Config.cmake)
 
 # ==============================================================================
 # Sub projects
 # ==============================================================================
-#add_subdirectory(${XMP_ROOT}/XMPCommon/build ${XMP_ROOT}/XMPCommon/build/${XMP_CMAKEFOLDER_NAME})
 add_subdirectory(${XMP_ROOT}/XMPCore/build ${XMP_ROOT}/XMPCore/build/${XMP_CMAKEFOLDER_NAME})
-	add_subdirectory(${XMP_ROOT}/XMPFiles/build ${XMP_ROOT}/XMPFiles/build/${XMP_CMAKEFOLDER_NAME})
-
-if(NOT CMAKE_WINUNIVERSAL AND (WIN32 OR APPLE OR ANDROID ) )
-		add_subdirectory(${XMP_ROOT}/XMPCompareAndMerge/build ${XMP_ROOT}/XMPCompareAndMerge/build/${XMP_CMAKEFOLDER_NAME})
-	if( NOT APPLE_IOS AND NOT ANDROID AND CMAKE_CL_64)
-			add_subdirectory(${XMP_ROOT}/XMPScript/build ${XMP_ROOT}/XMPScript/build/${XMP_CMAKEFOLDER_NAME})
-	endif()
-endif()
-
-if (NOT APPLE_IOS AND NOT CMAKE_WINUNIVERSAL AND NOT ANDROID AND NOT XMP_BUILD_STATIC )
-    if(NOT WIN32 OR NOT  ${CMAKE_ARCH} MATCHES "ARM64" AND NOT APPLE_UNIVERSAL)
-	add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/PDF_Handler/build ${XMP_ROOT}/XMPFilesPlugins/PDF_Handler/build/${XMP_CMAKEFOLDER_NAME})
-	endif()
-	if(WIN32 OR APPLE OR ANDROID OR APPLE_IOS OR CMAKE_WINUNIVERSAL)
-		if(NOT WIN32 OR NOT  ${CMAKE_ARCH} MATCHES "ARM64")
-			if(NOT WIN32 OR NOT ${CMAKE_ARCH} MATCHES "x86")
-				add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/RED_Handler/build ${XMP_ROOT}/XMPFilesPlugins/RED_Handler/build/${XMP_CMAKEFOLDER_NAME})
-			endif()	
-		endif()
-	endif()
-	add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/MXF_Handler/build ${XMP_ROOT}/XMPFilesPlugins/MXF_Handler/build/${XMP_CMAKEFOLDER_NAME})
-	add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/MP4OEM_Handler/build ${XMP_ROOT}/XMPFilesPlugins/MP4OEM_Handler/build/${XMP_CMAKEFOLDER_NAME})
-	add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/MOVOEM_Handler/build ${XMP_ROOT}/XMPFilesPlugins/MOVOEM_Handler/build/${XMP_CMAKEFOLDER_NAME})
-	if((APPLE OR WIN32) AND CMAKE_CL_64 AND NOT APPLE_UNIVERSAL)
-		if(NOT WIN32 OR NOT  ${CMAKE_ARCH} MATCHES "ARM64")
-			add_subdirectory(${XMP_ROOT}/XMPFilesPlugins/ARRI_Handler/build ${XMP_ROOT}/XMPFilesPlugins/ARRI_Handler/build/${XMP_CMAKEFOLDER_NAME})
-		endif()
-	endif()
-endif()
-
-
-# ==============================================================================
-# Custom Targets
-# ==============================================================================
-if (APPLE AND NOT APPLE_IOS)
-	add_custom_target(Documentation
-		COMMAND rm -Rf ../../public/docs/XMPToolkit/
-		COMMAND mkdir -p ../../public/docs/XMPToolkit/
-		COMMAND ../../sdk/tools/doxygen/doxygen ../Doxyfile
-		COMMAND cp ../../documents/toolkit/static/api.gif ../../public/docs/XMPToolkit/
-		COMMAND cp ../../documents/toolkit/static/asn.gif ../../public/docs/XMPToolkit/
-		COMMAND cp ../../documents/toolkit/static/1pTrans.gif ../../public/docs/XMPToolkit/
-		COMMENT "Creating Doxygen Documentation"
-	)
-endif()
+add_subdirectory(${XMP_ROOT}/XMPFiles/build ${XMP_ROOT}/XMPFiles/build/${XMP_CMAKEFOLDER_NAME})
 
 
 # ==============================================================================
@@ -157,4 +96,7 @@ message (STATUS " ${XMP_GLOBALS}")
 message (STATUS " Compiler: ")
 message (STATUS " CC=${CMAKE_C_COMPILER}")
 message (STATUS " CXX=${CMAKE_CXX_COMPILER}")
+
+#disable cmake warning "Manually-specified variables were not used by the project"
+set(ignore "${CMAKE_CL_64}${CMAKE_BUILD_TYPE}${XMP_CMAKEFOLDER_NAME}${CMAKE_TOOLCHAIN_FILE}${CMAKE_LIBCPP}${XMP_BUILD_WARNING_AS_ERROR}") 
 message (STATUS "===========================================================================")

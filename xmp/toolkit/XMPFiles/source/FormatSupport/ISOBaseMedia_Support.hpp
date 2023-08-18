@@ -7,48 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//  ADC Amandeep Chawla
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-31-15 AB  5.6-f147 Adding support for 3gp and 3g2 formats as well as adding more brands for mp4.
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 09-03-14 AB  5.6-f119 Adding support of UUID atom in MPEG4 Handler.
-// 09-05-13 IJS 5.6-f077 [3611478] MP4/QT files- Differentiate incomplete box data from Garbage and on repair, truncate only if it is Garbage.
-// 06-12-13 ADC 5.6-f067 Support for GoPro files in MPEG4 file handler.
-// 05-29-13 IJS 5.6-f064 [3533210] Added check for "RED2" in  CheckFormat() to detect and ignore it quickly.
-// 04-26-13 IJS 5.6-f053 [3533210] Optimize the code in the CheckFormat() API in MPEG handler if the first box is "REDV" or "RED1"
-//
-// 09-21-12 IJS 5.5-f037 [3300999] Ignore timecode Sample if the Data refernces in timecode track of a QT file are external.
-// 11-11-11 AWL 5.4-f035 [2945829] Include QuickTime starting offset in the timecode string.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 09-24-09 AWL 5.0-f081 Revamp MPEG-4 handler to keep the entire 'moov' subtree in memory.
-// 08-24-09 AWL 5.0-f069 Add support for QuickTime timecode information.
-// 03-10-09 AWL 5.0-f027 Initial integration of QuickTime support into MPEG-4 handler.
-//
-// 11-13-07 AWL 4.2-f035 Add MPEG-4 skeleton handler. Rename MPEG handler to MPEG-2.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"     // ! This must be the first include.
 
@@ -149,19 +109,7 @@ namespace ISOMedia {
 	ISOboxType(k_XMP_,0x584D505FUL) /* The QuickTime variant XMP box.*/ 
 
 
-#if AdobePrivate
-#define ISOBoxPrivateList SEPARATOR\
-	ISOboxType(k_RED1,0x52454431UL)SEPARATOR /* Boxes in R3D RAW */ \
-	ISOboxType(k_RED2,0x52454432UL)SEPARATOR \
-	ISOboxType(k_REDV,0x52454456UL)SEPARATOR \
-	ISOboxType(k_MVTG,0x4D565447UL)SEPARATOR /* FujiFilm private atom */ \
-	ISOboxType(k_CNTH,0x434E5448UL)SEPARATOR /* Canon thumbanil atom */ \
-	ISOboxType(k_CNDA,0x434E4441UL)SEPARATOR /* Subatom of CNTH Atom */ \
-	ISOboxType(k_PANA,0x50414E41UL)			 /* Exif atom for Panasonic cameras*/
-#else
 #define ISOBoxPrivateList 
-#endif //AdobePrivate
-
 #define ISOboxType(x,y) x=y
 #define SEPARATOR ,
 	enum {
@@ -171,21 +119,10 @@ namespace ISOMedia {
 #undef ISOboxType
 #undef SEPARATOR
 
-#if AdobePrivate
-	//List of recognised boxes in 
-	enum {
-		kISO_GPS = 0xA978797aUL // '�xyz'
-	};
-#endif
-
 	bool IsKnownBoxType(XMP_Uns32 boxType) ;
 	void TerminateGlobals();
 
 	static XMP_Uns8 k_xmpUUID [16] = { 0xBE, 0x7A, 0xCF, 0xCB, 0x97, 0xA9, 0x42, 0xE8, 0x9C, 0x71, 0x99, 0x94, 0x91, 0xE3, 0xAF, 0xAC };
-
-	#if AdobePrivate				// Added for Unit Test only
-	static XMP_Uns8 k_canonUUID [16] = { 0x85, 0xC0, 0xB6, 0x87, 0x82, 0x0F, 0x11, 0xE0, 0x81, 0x11, 0xF4, 0xCE, 0x46, 0x2B, 0x6A, 0x48 };
-	#endif
 
 	struct BoxInfo {
 		XMP_Uns32 boxType;         // In memory as native endian!
@@ -208,27 +145,6 @@ namespace ISOMedia {
 		                   BoxInfo * info, bool doSeek = true, bool throwErrors = false );
 
 	//     XMP_Uns32 CountChildBoxes ( XMP_IO* fileRef, const XMP_Uns64 childOffset, const XMP_Uns64 childLimit );
-
-#if AdobePrivate
-	class SemiProXMLMeta
-	{
-	public:
-
-		SemiProXMLMeta() :xmlAdapter(0), isValid(false) {}
-
-		bool ValidateXML(const void* inXmlContent, XMP_Uns32 inSize);
-		bool ImportXMLProperties(SXMPMeta * xmp);
-		bool IsXMLValid();
-		virtual ~SemiProXMLMeta();
-	private:
-
-		void GetValue(XML_NodePtr node, std::string &value);
-		void GetAttributeValue(XML_NodePtr node, std::string& value);
-		ExpatAdapter *xmlAdapter;
-		bool isValid;
-	};
-
-#endif
 
 }      // namespace ISO_Media
 

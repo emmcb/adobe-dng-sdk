@@ -3,82 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 08-14-12 AWL 5.5-c009 Add XMPCore error notifications for RDF parsing errors.
-// 06-06-12 AWL 5.5-c001 Make the RDF parsing recover from errors and deliver as much as possible.
-//
-// 05-01-12 AWL 5.4-c004 [3145445] Tolerate element use of rdf:_n notation for array items.
-//
-// 12-12-11 AWL 5.3-c010 [3017939,3060455] Undo erroneous changes from misleading static analysis
-//				complaints that are breaking data structures and causing heap corruption.
-//
-// 05-27-10 AWL 5.1-c005 [0525610,1534508] Fix parsing of RDF Typed Nodes to agree with ISO-ized spec.
-//
-// 05-04-09 AWL 5.0-c026 Remove compact structs and arrays from TransformXMP.
-// 04-03-09 AWL 5.0-c022 Change PlainXMP to TransformXMP.
-//
-// 07-01-08 AWL 4.3-c060 Hide all uses of PlainXMP.
-//
-// 12-04-07 AWL 4.2-c029 [1646368] Fix the rdf:about checking to allow a mix of empty and non-empty values.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-//
-// 11-28-06 AWL 4.1-c027 [1424359] Fix a mistake in the xml:lang handling for rdf:value nodes.
-// 11-17-06 AWL 4.1-c026 [1424359] Fix RDF parser to recognize xml:lang qualifier as an element.
-//				[1424264] Fix Plain XMP parser to complain about duplicate properties and qualifiers.
-//				[1424292] Fix Plain XMP parser to detect aliases.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 10-13-05 AWL 3.3-007 [1247060,1246288,1246286] Fix handling of special rdf: attributes, allow and
-//				ignore inner XML processing instructions, add Expat handler for CDATA sections.
-// 10-12-05 AWL 3.3-006 [1246290] Fix handling of a qualified property as an emptyPropertyElt.
-// 06-07-05 AWL 3.2-113 [1071829] Throw better exception for RDF missing rdf:parseType='Resource'.
-// 06-03-05 AWL 3.2-109 [0467370] Fix bugs in in RDF_ResourcePropertyElement: catch CData child
-//				where an element is required; catch child element in no namespace.
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 03-17-05 AWL 3.2-006 Revise Plain XMP parsing and serialization for latest proposal.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 11-08-04 AWl 3.1.1-098 [1012513] Throw exception for use of rdf:resource attribute with property value.
-// 11-08-04 AWl 3.1.1-097 [1008644] Throw BadRDF for elements that are in no namespace.
-//
-// 07-14-04 AWL 3.1-062 [1026373] Strip old iX:changes elements during parsing.
-// 07-14-04 AWL 3.1-060 [1040363] Allow whitespace and processing instructions between x:xmpmeta and rdf:RDF.
-//
-// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
-// 04-30-04 AWL Clean up memory leaks.
-// 04-21-04 AWL Improve the handling of XML elements and attributes that are not in any namespace.
-//				Allow them in the XML parsing, complain on the RDF side.
-// 04-20-04 AWL Complain when adding a child or qualifier that lacks an XML namespace.
-// 04-12-04 AWL Fix recognition of RDF emptyPropertyElt, it can be used for a struct with all simple
-//				fields written as attrProps.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message.
-// 02-09-04 AWL Make sure rdf:value is recognized as an attribute also.
-// 01-23-04 AWL Add logic to detect language alternatives: 7.2.15 resourcePropertyElt.
-// 01-17-04 AWL Move into new Perforce depot, cosmetic cleanup.
-//
-// =================================================================================================
-#endif // AdobePrivate
-
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 #if DEBUG

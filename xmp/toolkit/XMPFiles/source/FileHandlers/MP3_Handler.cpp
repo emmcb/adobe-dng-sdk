@@ -4,45 +4,10 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 07-05-12 AWL 5.5-f015 [2999627] Improve ID3 genre handling.
-//
-// 09-20-11 AWL 5.4-f011 Fix bugs left in ID3 v2.2 support.
-// 09-14-11 AWL 5.4-f010 Finish adding support for ID3 v2.2.
-// 09-06-11 AWL 5.4-f009 Add support for ID3 v2.2 to ID3_Support.hpp.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-29-09 SAM 5.0-f095 [2430362] MP3: fix import/export of date and time.
-// 10-14-09 SAM 5.0-f089 [2338569] MP3: fix truncation of file length.
-// 09-16-09 FNO 5.0-f080 [2430362] xmp:CreateDate import from ID3v2.
-// 09-10-09 FNO 5.0-f079 Add ID3v1 and ID3v1.1 support to MP3 handler.
-// 05-27-09 FNO 5.0-f042 [2352188] MP3: map ID3v2:TCOP to dc:rights['x-default'].
-// 11-17-08 FNO 5.0-f006 Move MP3 handler CS5 rewrite from NewHandlers to regular handlers.
-// 10-08-08 FNO 4.4.0 Thorough rewrite of MP3 handler.
-//
-// ================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
-
-#include <sstream>
 
 #include "public/include/XMP_Const.h"
 #include "public/include/XMP_IO.hpp"
@@ -54,6 +19,8 @@
 #include "source/XIO.hpp"
 
 #include "XMPFiles/source/FileHandlers/MP3_Handler.hpp"
+
+#include <sstream>
 
 // =================================================================================================
 /// \file MP3_Handler.cpp
@@ -163,13 +130,8 @@ MP3_MetaHandler::MP3_MetaHandler ( XMPFiles * _parent )
 	this->newFramesSize = 0;
 	this->tagIsDirty = false;
 	this->mustShift = false;
-#if AdobePrivate
-	this->majorVersion = 0;
-	this->minorVersion = 0;
-#else
 	this->majorVersion = 2;
 	this->minorVersion = 2;
-#endif
 	this->hasID3Tag = false;
 	this->hasFooter = false;
 	this->extHeaderSize = 0;
@@ -192,26 +154,6 @@ MP3_MetaHandler::~MP3_MetaHandler()
 		delete curFrame;
 		framesVector.pop_back();
 	}
-#if AdobePrivate
-	// If require, we need to free memory allocated for album art
-	if ( this->needsArtUpdate )
-	{
-		std::vector<AlbumArt>::iterator iter;
-		for ( iter = this->albumArtVector.begin(); iter != this->albumArtVector.end(); ++iter )
-		{
-			if ( iter->description != NULL )
-			{
-				delete[] iter->description;
-				iter->description = NULL;
-			}
-			if ( iter->imageData != NULL )
-			{
-				delete[] iter->imageData;
-				iter->imageData = NULL;
-			}
-		}
-	}
-#endif
 }
 
 // =================================================================================================
@@ -259,9 +201,6 @@ void MP3_MetaHandler::CacheFileData()
 	}
 
 	this->framesVector.clear(); //mac precaution
-#if AdobePrivate
-	this->apicFramesIndices.clear();	// Clearing the vector for fresh start
-#endif
 	ID3v2Frame* curFrame = 0; // reusable
 
 	////////////////////////////////////////////////////
@@ -269,16 +208,10 @@ void MP3_MetaHandler::CacheFileData()
 	
 	XMP_Uns32 xmpID = XMP_V23_ID;
 	XMP_Uns16 frameHeaderSize = ID3v2Frame::kV23_FrameHeaderSize;
-#if AdobePrivate
-	XMP_Uns32 apicID = apicLogicalID;		// APIC
-#endif
 	if ( this->majorVersion == 2 )
 	{
 		xmpID = XMP_V22_ID;
 		frameHeaderSize = ID3v2Frame::kV22_FrameHeaderSize;
-#if AdobePrivate
-		apicID = 0x50494300;			// PIC
-#endif
 	}
 
 	while ( file->Offset() < this->oldTagSize ) {
@@ -291,12 +224,6 @@ void MP3_MetaHandler::CacheFileData()
 				delete curFrame; // ..since not becoming part of vector for latter delete.
 				break;			 // not a throw. There's nothing wrong with padding.
 			}
-#if AdobePrivate
-			// Now, We are just storing index into a vector,
-			// Later, GetAlbumArt will do further processing
-			if ( curFrame->id == apicID )
-				this->apicFramesIndices.push_back( this->framesVector.size() );
-#endif
 			this->containsXMP = true;
 		} catch ( ... ) {
 			delete curFrame;
@@ -356,79 +283,6 @@ void MP3_MetaHandler::CacheFileData()
 }	// MP3_MetaHandler::CacheFileData
 
 
-#if AdobePrivate
-static XMP_Uns8 GetUTF8String( const XMP_Uns8 & encodingType, const char * contentPtr, std::string & utf8String, AlbumArt & albumArt, XMP_Uns32 maxLimit )
-{
-	XMP_Uns8 length = 0;
-	XMP_Uns8 offset = 0;
-
-	switch ( encodingType )
-	{
-	case 0: //ISO-8859-1, 0-terminated
-	{
-		for ( ; length < maxLimit && contentPtr[ length ] != 0; ++length );
-		if ( contentPtr[ length ] != 0 )
-			XMP_Throw( "Invalid IDIT data block", kXMPErr_BadFileFormat );
-
-		ReconcileUtils::Latin1ToUTF8( contentPtr, length, &utf8String );
-		++length;		// For 0x00
-		albumArt.encodingType = kXMPFiles_AlbumArt_Enc_Latin1;
-		break;
-	}
-
-	case 1: // Unicode, v2.4: UTF-16 (undetermined Endianess), with BOM, terminated 0x00 00
-	case 2: // UTF-16BE without BOM, terminated 0x00 00
-	{
-		
-		bool bigEndian = true;	// assume for now (if no BOM follows)
-		
-		if ( GetUns16BE( contentPtr ) == 0xFEFF ) {
-			offset = 2;
-			bigEndian = true;
-			albumArt.encodingType = kXMPFiles_AlbumArt_Enc_UTF16Big;
-		}
-		else if ( GetUns16BE( contentPtr ) == 0xFFFE ) {
-			offset = 2;
-			bigEndian = false;
-			albumArt.encodingType = kXMPFiles_AlbumArt_Enc_UTF16Little;
-		}
-
-		for ( ; length < ( 2 * maxLimit ) && GetUns16BE( contentPtr + length + offset ) != 0x0000; length +=2 );
-		if ( contentPtr[ length + offset ] != 0 )
-			XMP_Throw( "Invalid IDIT data block", kXMPErr_BadFileFormat );
-
-		FromUTF16( ( UTF16Unit* ) ( contentPtr + offset ), ( length / 2 ), &utf8String, bigEndian );
-		length += 2;		// For 0x0000
-
-		break;
-	}
-
-	case 3: // UTF-8 unicode, terminated \0
-	{
-		if ( ( GetUns32BE( contentPtr ) & 0xFFFFFF00 ) == 0xEFBBBF00 ){
-			offset = 3;	// swallow any BOM, just in case
-		}
-
-		for ( ; length < maxLimit && contentPtr[ length + offset ] != 0; ++length );
-		if ( contentPtr[ length + offset ] != 0 )
-			XMP_Throw( "Invalid IDIT data block", kXMPErr_BadFileFormat );
-		
-		utf8String.assign( contentPtr + offset, length - offset );
-		++length;		// For 0x00
-		albumArt.encodingType = kXMPFiles_AlbumArt_Enc_UTF8;
-
-		break;
-	}
-
-	default:
-		albumArt.encodingType = kXMPFiles_AlbumArt_Enc_Unknown;
-		XMP_Throw( "unknown text encoding", kXMPErr_BadFileFormat ); //COULDDO assume latin-1 or utf-8 as best-effort
-		break;
-	}
-
-	return length + offset;
-}
-#endif
 // =================================================================================================
 // MP3_MetaHandler::ProcessXMP
 // ===========================
@@ -633,10 +487,6 @@ void MP3_MetaHandler::UpdateFile ( bool doSafeUpdate )
 	// and don't know enough about the encoding of unrelated frames...
 	XMP_Assert( this->containsXMP );
 
-#if AdobePrivate
-	// Updating the album art related processing
-	this->UpdateAPICFrames();
-#endif
 	tagIsDirty = false;
 	mustShift = false;
 
@@ -887,266 +737,3 @@ void MP3_MetaHandler::WriteTempFile ( XMP_IO* tempRef )
 	XMP_Throw ( "MP3_MetaHandler::WriteTempFile: Not supported", kXMPErr_Unimplemented );
 }	// MP3_MetaHandler::WriteTempFile
 
-#if AdobePrivate
-// =================================================================================================
-// MP3_MetaHandler::ConvertAPICToAlbumArt
-// ==============================
-
-#define curAPICMaxLimit (apicFramePtr->contentSize - curPos)
-
-void MP3_MetaHandler::ConvertAPICToAlbumArt( ID3_Support::ID3v2Frame * apicFramePtr, AlbumArt & albumArt )
-{
-	// Parsing and storing information in 'APIC' tag
-	char * contentPtr = apicFramePtr->content;
-	XMP_Uns32 curPos = 0;
-	XMP_Uns8 encodingByte = contentPtr[ curPos++ ];
-	XMP_Uns32 mimeLength = 0;
-	while ( true )
-	{
-		if ( mimeLength == curAPICMaxLimit )
-			XMP_Throw ( "Invalid IDIT data block" , kXMPErr_BadFileFormat );
-		if ( contentPtr[curPos + mimeLength] == 0 )
-			break;
-		++mimeLength;
-	}
-
-	std::string mimeType;
-	mimeType.reserve( mimeLength );
-	mimeType.assign( contentPtr + curPos, mimeLength );
-	curPos += ( mimeLength + 1 );			// 1 extra byte for NULL
-
-	albumArt.usageType = contentPtr[ curPos++ ];
-
-	std::string description;
-	curPos += GetUTF8String( encodingByte, contentPtr + curPos, description, albumArt, curAPICMaxLimit );
-
-	if ( !description.empty() )
-	{
-		albumArt.description = new char[ description.length() + 1 ];
-		albumArt.descLength = static_cast< XMP_Uns32 >( description.length() );
-		memset( ( void * ) albumArt.description, 0, description.length() + 1 );
-		memcpy( ( void * ) albumArt.description, description.c_str(), description.length() );
-	}
-
-	std::string picData;
-	albumArt.imageDataLength = curAPICMaxLimit;
-	if ( albumArt.imageDataLength != 0 )
-		albumArt.imageData = new XMP_Uns8[albumArt.imageDataLength];
-	else
-		albumArt.imageData = NULL;
-	memcpy( albumArt.imageData, contentPtr + curPos, albumArt.imageDataLength );
-	
-	// If we get supported mime type then we will write value for format,
-	// but if we get unsupported mime type or "image/" then we will not write format information
-	// If we get "-->" mimetype then ignore whole tag as we don't support linked image
-	XMP_Uns8 formatType = kXMPFiles_AlbumArt_NoFormat;
-	if ( mimeType == "image/jpeg" )
-		formatType = kXMPFiles_AlbumArt_JPEG;
-	else if ( mimeType == "image/png" )
-		formatType = kXMPFiles_AlbumArt_PNG;
-	else if ( mimeType == "image/tiff" || mimeType == "image/tiff-fx" )
-		formatType = kXMPFiles_AlbumArt_TIFF;
-	else if ( mimeType == "image/gif" )
-		formatType = kXMPFiles_AlbumArt_GIF;
-	else if ( mimeType == "-->" )
-		formatType = kXMPFiles_AlbumArt_URLImage;
-	else
-		formatType = kXMPFiles_AlbumArt_UnSupportedFormat;
-
-	albumArt.formatType = formatType;
-
-}	//	MP3_MetaHandler::ConvertAPICToAlbumArt
-
-// =================================================================================================
-// MP3_MetaHandler::GetAlbumArtworks
-// ==============================
-
-bool MP3_MetaHandler::GetAlbumArtworks( )
-{
-
-	// If no ID3 then no need to parse for 'APIC' tag
-	if ( this->hasID3Tag )
-	{
-		std::vector<size_t>::iterator iter;
-		XMP_Uns32 apicID = 0x41504943;		// APIC
-		if ( this->majorVersion == 2 )
-			apicID = 0x50494300;			// PIC
-
-		for ( iter = this->apicFramesIndices.begin(); iter != this->apicFramesIndices.end(); iter++ )
-		{
-			XMP_Assert( (*iter) < this->framesVector.size() );
-			ID3_Support::ID3v2Frame * apicFramePtr = this->framesVector.at(*iter);
-			XMP_Assert( apicFramePtr->id == apicID );
-			XMP_Assert( ( apicFramePtr->content != 0 ) && ( apicFramePtr->contentSize >= 0 ) && ( apicFramePtr->contentSize < 20 * 1024 * 1024 ) );
-
-			if ( apicFramePtr->contentSize < 2 )
-				continue;
-
-			AlbumArt albumArt;
-			this->ConvertAPICToAlbumArt( apicFramePtr, albumArt );
-			this->albumArtVector.push_back( albumArt );
-		}
-	}
-	if ( this->albumArtVector.size() != 0 )
-		return true;
-	return false;
-
-}	// MP3_MetaHandler::GetAlbumArtworks
-
-// =================================================================================================
-// MP3_MetaHandler::ConvertUTF8ToEncoding
-// ==============================
-
-XMP_Uns8 MP3_MetaHandler::ConvertUTF8ToEncoding( const XMP_Uns8 & encodingType, XMP_StringPtr utf8Desc, XMP_StringLen utf8DescLen, std::string & encodedDesc )
-{
-
-	encodedDesc.clear();
-	XMP_Uns8 localEnc = 0;
-	if ( utf8DescLen > 64 )
-		utf8DescLen = 64;
-	switch ( encodingType )
-	{
-	case kXMPFiles_AlbumArt_Enc_UTF16Big:
-		localEnc = 1;
-		ToUTF16( ( XMP_Uns8* ) utf8Desc, utf8DescLen, &encodedDesc, true );
-		encodedDesc.append( "\x00\x00", 2 );
-		break;
-
-	case kXMPFiles_AlbumArt_Enc_UTF16Little:
-		localEnc = 1;
-		ToUTF16( ( XMP_Uns8* ) utf8Desc, utf8DescLen, &encodedDesc, false );
-		encodedDesc.append( "\x00\x00", 2 );
-		return 1;
-		
-	default:
-		localEnc = 0;
-		ReconcileUtils::UTF8ToLatin1( utf8Desc, utf8DescLen, &encodedDesc );
-		encodedDesc.append( "\x00", 1 );
-		break;
-	}
-
-	return localEnc;
-
-}	// MP3_MetaHandler::ConvertUTF8ToEncoding
-
-// =================================================================================================
-// MP3_MetaHandler::UpdateAPICFrames
-// ==============================
-
-void MP3_MetaHandler::UpdateAPICFrames()
-{
-	/* Updating album arts if required
-	There are four cases exits. T = APIC exists, F = APIC not exits
-	Old File  |  New File	|	Operation
-	T		 |		T		|	Complex ( 2 options )
-	T		 |		F		|	Delete existing frame
-	F		 |		T		|	Create new Frame
-	F		 |		F		|	No Need to do anything
-	1) is complex.
-	If user has separetly called SetAlbumArt then we need to update this case by deleting existing APIC frames and creating new frames.
-	We will check for in-place update only when old file had just 1 APIC frame,
-	For files, having more than one frame, we will delete existing APIC frames and create new APIC frames
-	In future, we may extend in-place update support for files having more than 1 APIC frame.
-	If user has not called SetAlbumArt then we no need to anything. Just ignore this case.
-	*/
-	if ( this->needsArtUpdate )
-	{
-		// 3 possibilities, TF, FT, TT
-		bool needsDeleteExisting = true;
-		bool needsNewFrame = true;
-		if ( this->apicFramesIndices.size() == 1 && this->albumArtVector.size() == 1 )
-		{
-			// Compare existing album art
-			AlbumArt oldAlbumArt;
-			AlbumArt newAlbumArt = this->albumArtVector[ 0 ];
-			ConvertAPICToAlbumArt( this->framesVector[ this->apicFramesIndices[ 0 ] ], oldAlbumArt );
-			if ( ( oldAlbumArt.imageDataLength == newAlbumArt.imageDataLength ) &&
-				( oldAlbumArt.usageType == newAlbumArt.usageType ) &&
-				( oldAlbumArt.formatType == newAlbumArt.formatType ) &&
-				( oldAlbumArt.encodingType == newAlbumArt.encodingType ) &&
-				( oldAlbumArt.descLength == newAlbumArt.descLength ) )
-			{
-				XMP_Uns32 index = 0;
-				for ( ; index < oldAlbumArt.descLength; ++index )
-				{
-					if ( oldAlbumArt.description[ index ] != newAlbumArt.description[ index ] )
-						break;
-				}
-				if ( ( index == oldAlbumArt.descLength ) &&
-					( memcmp( oldAlbumArt.imageData, newAlbumArt.imageData, oldAlbumArt.imageDataLength ) == 0 ) )
-					needsDeleteExisting = needsNewFrame = false;
-			}
-			// Deleting the variables filled by ConvertAPICToAlbumArt()
-			if ( oldAlbumArt.description != NULL )
-			{
-				delete[] oldAlbumArt.description;
-				oldAlbumArt.description = 0;
-			}
-			if ( oldAlbumArt.imageData != NULL )
-			{
-				delete[] oldAlbumArt.imageData;
-				oldAlbumArt.imageData = 0;
-			}
-		}
-
-		// Deleting existing APIC frames from file
-		if ( needsDeleteExisting )
-		{
-			std::vector<size_t>::iterator iter;
-			for ( iter = this->apicFramesIndices.begin(); iter != this->apicFramesIndices.end(); ++iter )
-				( this->framesVector[ ( *iter ) ] )->active = false;
-		}
-
-		// Creating new APIC frames if required
-		if ( needsNewFrame )
-		{
-			std::vector<AlbumArt>::iterator iter;
-			for ( iter = this->albumArtVector.begin(); iter != this->albumArtVector.end(); ++iter )
-			{
-
-				ID3v2Frame * newFramePtr = new ID3v2Frame( apicLogicalID );
-				std::stringstream apicstream;
-				std::string encodedDesc;
-
-				// Convert description according to encoding type
-				XMP_Uns8 localEnc = ConvertUTF8ToEncoding( iter->encodingType, iter->description, iter->descLength,encodedDesc );
-				apicstream.put( localEnc );
-				switch ( iter->formatType )				// Mime type
-				{
-				case kXMPFiles_AlbumArt_JPEG:
-					apicstream << "image/jpeg";
-					break;
-				case kXMPFiles_AlbumArt_TIFF:
-					apicstream << "image/tiff";
-					break;
-				case kXMPFiles_AlbumArt_PNG:
-					apicstream << "image/png";
-					break;
-				case kXMPFiles_AlbumArt_GIF:
-					apicstream << "image/gif";
-					break;
-				case kXMPFiles_AlbumArt_URLImage:
-					apicstream << "-->";
-					break;
-				default:
-					apicstream << "image/";
-					break;
-				}
-				apicstream.put('\0');						// Inserting NULL character
-				// XMP is making 0xFF as constant for representing usage as None
-				apicstream << iter->usageType;
-				if ( iter->encodingType == kXMPFiles_AlbumArt_Enc_UTF16Big )
-					apicstream << "\xFE\xFF";
-				else if ( iter->encodingType == kXMPFiles_AlbumArt_Enc_UTF16Little )
-					apicstream << "\xFF\xFE";
-				apicstream << encodedDesc;
-				apicstream.write( (const char *)iter->imageData, iter->imageDataLength );
-				newFramePtr->setFrameValue( apicstream.str(), false, false, false, false, true );
-				newFramePtr->active = true;
-				this->framesVector.push_back( newFramePtr );
-
-			}
-		}
-	}
-}	// UpdateAPICFrames
-#endif

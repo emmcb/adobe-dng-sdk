@@ -7,49 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 09-14-11	AWL	5.5-f030 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-// 09-03-12 IJS 5.5-f024 Add file update progress tracking to the PSD handler.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-08-10 AWL 5.1-f008 [2581817] Fix erroneous release of name for memory-based PSIR resource.
-//
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 03-03-08 AWL 4.2-f090 [1706551] Fix empty XMP and legacy handling for JPEG, PSD, and TIFF.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 01-29-08 AWL 4.2-f063 [1652570] Preserve the name of PSIRs.
-// 01-16-07 AWL 4.2-f009 [1457497] Fix PSD handler to do in-place update of XMP at the right offset.
-//				Improve ExportIPTC_DateCreated to not create the IPTC time (2:60) unless necessary.
-// 01-10-07 AWL 4.2-f006 [1454756] Change PSIR_Support to handle any resource type, not just "8BIM".
-//
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-//
-// 04-18-06 AWL Revise like TIFF_Support, have reader/writer, memory/file versions.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-27-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

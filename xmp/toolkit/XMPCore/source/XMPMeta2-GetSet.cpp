@@ -3,9 +3,7 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
@@ -26,11 +24,6 @@
 #include "XMPCore/source/XMPUtils.hpp"
 
 #include "public/include/XMP_Version.h"
-#if AdobePrivate
-	#include "XMPCore/source/XMPCore_ChangeLog.hpp"
-	#include "build/XMP_BuildInfo.h"
-#endif
-
 #include "source/UnicodeInlines.incl_cpp"
 #include "source/UnicodeConversions.hpp"
 #include "source/ExpatAdapter.hpp"

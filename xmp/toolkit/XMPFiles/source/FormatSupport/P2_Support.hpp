@@ -7,27 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-28-14 IJS 5.6-f105 [3751378] Initializing ClipTitle to NULL to fix a uninitialized dereferencing crash.
-// 04-22-14 IJS 5.6-f101 [3742456] Fixing P2 Handler to pick the clipName from clipFileName instead of P2 content XML.
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	
 #include "public/include/XMP_Const.h"

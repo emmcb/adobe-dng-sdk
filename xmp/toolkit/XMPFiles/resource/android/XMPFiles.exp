@@ -26,8 +26,6 @@ global:
 	WXMPFiles_ResetErrorCallbackLimit_1;
 	WXMPFiles_GetAssociatedResources_1;
 	WXMPFiles_IsMetadataWritable_1;
-	WXMPFiles_GetAlbumArts_1;
-	WXMPFiles_PutAlbumArts_1;
 
 local:
 

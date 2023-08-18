@@ -4,91 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  SAM Samy Makki
-//  IJS Inder Jeet Singh
-//  ADC Amandeep Chawla
-//  AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-31-15 AB  5.6-f147 Adding support for 3gp and 3g2 formats as well as adding more brands for mp4.
-// 02-02-15 ADC 5.6-f128 Porting XMPFiles to gcc 4.8.x on Linux Platform.
-// 10-21-14 AB  5.6.f120 [3836549] Making kXMPFiles_OptimizeFileLayout flag public for XMP SDK.
-// 09-03-14 AB  5.6-f119 Adding support of UUID atom.
-// 08-04-14 AB  5.6-f110 [3747608] Invalid frame Count in tmcd sample in stsd entry.
-// 09-11-13 ADC 5.6-f081 Wrongly used trackNumber string in place of tempo.
-// 09-11-13 ADC 5.6-f080 Tweaking the logic of reconciliation of tempo field with iTunes native data.
-// 09-06-13 ADC 5.6-f079 Ignoring iTunes ReleaseDate in case it is same as that of stored in releaseDate property of DM namespace.
-// 09-05-13 ADC 5.6-f078 [3594877] Cannot write property Dynamic Media / Disc Number into Quicktime files.
-// 09-05-13 IJS 5.6-f077 [3611478] MP4/QT files- Differentiate incomplete box data from Garbage and on repair, truncate only if it is Garbage.
-// 08-13-13 IJS 5.6-f076 [3206367,3206363] Enabling  repair of ill-formed structure in all MPEG4 Files.
-//						 Enabling Error Notifications for Bad file format exceptions in MPEG4_Handler.
-// 08-08-13 IJS 5.6-f075 [3557717]  Enabling  timecode import for ISO MP4 files.
-// 06-12-13 ADC 5.6-f067 Support for GoPro files in MPEG4 file handler.
-// 05-29-13 IJS 5.6-f064 [3533210] Added check for "RED2" in  CheckFormat() to detect and ignore it quickly.
-// 05-24-13 ADC 5.6-f062 [3564457] Cannot write property Dynamic Media / Disc Number into Quicktime files.
-// 04-26-13 IJS 5.6-f053 [3533210] Optimize the code in the CheckFormat() API in MPEG handler if the first box is "REDV" or "RED1"
-//
-// 10-18-12 ADC 5.5-f052 Support for iTunes metadata.
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 09-21-12 IJS 5.5-f037 [3300999] Ignore timecode Sample if the Data refernces in timecode track of a QT file are external.
-// 06-22-12 AWL 5.5-f019 Add file update progress tracking to the MPEG-4 handler.
-// 03-29-12	AWL	5.5-f011 [3151551] Fix timecode problem with Canon 5D Mark 3 video.
-//
-// 11-11-11 AWL 5.4-f035 [2945829] Include QuickTime starting offset in the timecode string.
-// 10-21-11 AWL 5.4-f029 [3006421] Have existing XMP win over the Cr8r and PrmL boxes.
-// 10-04-11 AWL 5.4-f018 [2958689] Fix the MPEG-4 handler to set all necessary parts of the non-XMP timecode.
-//
-// 01-13-11	AWL	5.3-f023 [2691680] Fix box counting bug in MPEG-4 handler.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 05-26-10 SAM 5.1-f007 Include tweak for MPEG-4 update in order to workaround bug#2604185.
-//						 Change order of processing to become (moov, XMP, free, mdat).
-// 02-05-10 AWL 5.1-f003 Fix build warnings from Visual Studio.
-//
-// 10-20-09 AWL 5.0-f090 [2457482] Restore lost support for 'Cr8r' box in QuickTime files.
-// 10-07-09 AWL 5.0-f085 Minor tweaks for file layout optimization.
-// 10-06-09 AWL 5.0-f083 Add MPEG-4 support for kXMPFiles_OptimizeFileLayout.
-// 09-24-09 AWL 5.0-f081 Revamp MPEG-4 handler to keep the entire 'moov' subtree in memory.
-// 08-28-09 AWL 5.0-f076 [2417142] Fix export of timecode-derived QT 'udta' items.
-// 08-26-09 AWL 5.0-f074 [2398293] Fix MPEG-4 handler to not always think the iTunes metadata changed.
-// 08-24-09 AWL 5.0-f069 Add support for QuickTime timecode information.
-// 03-30-09 AWL 5.0-f030 [2306833] Fix first loop in ExportISOCopyrights to cover index 0.
-// 03-26-09 AWL 5.0-f029 More QT related fixes. Properly handle OpenStrictly for MPEG-4 and MOV.
-//				FIll in remaining Mac langXyz to XMP (ISO 639) mappings. Add 0xA9 to set of OK chars
-//				for unexpected top level boxes in CheckFormat. Fix byte order of ISO 'cprt' language.
-//				Output iTunes metadata if it did not yet exist.
-// 03-16-09 AWL 5.0-f028 Incorporate MOV file repair into new QuickTime support.
-// 03-10-09 AWL 5.0-f027 Initial integration of QuickTime support into MPEG-4 handler.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 01-21-08 AWL 4.2-f058 Global tweak to have the handler's packetInfo always refer to the file.
-// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
-//				handlers they must use the parent pointer in the XMPFileHandler base class.
-// 01-15-08 AWL 4.2-f056 [1665011] Fix assertions failures in MPEG-4.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-// 01-01-08 AWL 4.2-f053 Output the legacy digest.
-// 12-21-07 AWL 4.2-f049 First working version of MPEG-4 handler, still under NewHandlers.
-// 11-14-07 AWL Slight progress on MPEG-4 handler. Set aside to work on P2.
-// 11-13-07 AWL 4.2-f035 Add MPEG-4 skeleton handler. Rename MPEG handler to MPEG-2.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -359,12 +276,6 @@ bool MPEG4_CheckFormat ( XMP_FileFormat format,
 		return true;
 
 	} else {
-#if AdobePrivate
-		// Don't waste time in searching for classic QuickTime boxes in the file if it is a 
-		// R3D RAW 
-		if (currBox.boxType==ISOMedia::k_RED1 || currBox.boxType==ISOMedia::k_REDV || currBox.boxType==ISOMedia::k_RED2  )
-			return false;
-#endif // AdobePrivate
 		// No 'ftyp', look for classic QuickTime: 'moov', 'mdat', 'pnot', 'free', 'skip', and 'wide'.
 		// As an expedient, quit when a 'moov' box is found. Tolerate other boxes, they are in the
 		// wild for ill-formed files, e.g. seen when 'moov'/'udta' children get left at top level.
@@ -521,130 +432,6 @@ static void XMPDateToSeconds ( const XMP_DateTime & _xmpDate, XMP_Uns64 * isoSec
 	*isoSeconds = tempSeconds;
 
 }	// XMPDateToSeconds
-
-#if AdobePrivate
-// =================================================================================================
-// ImportVideoEnabledTrackItems
-// ===============
-
-#define FP16_16(x) ( double(x)/(1<<16) ) 
-#define PI 3.1415926535897
-
-// The matrix provides transformation matrix of video ( u, v, w restricted to 0,0,1 )
-// |a b u |
-// |c d v |
-// |x y w |
-//
-// Identity matrix (0x00010000, 0, 0, 0, 0x00010000, 0, 0, 0, 0x40000000)
-// All the values in a matrix are stored as 16.16 fixed-point values,
-// except for u, v and w, which are stored as 2.30 fixed-point values
-//
-
-static bool ImportVideoEnabledTrackItems ( const XMP_Int32 *matrix , SXMPMeta * xmp )
-{
-	double a , b , c , d;
-	a = FP16_16 ( ( XMP_Int32 ) GetUns32BE ( matrix + 0 ) );
-	b = FP16_16 ( ( XMP_Int32 ) GetUns32BE ( matrix + 1 ) );
-	c = FP16_16 ( ( XMP_Int32 ) GetUns32BE ( matrix + 3 ) );
-	d = FP16_16 ( ( XMP_Int32 ) GetUns32BE ( matrix + 4 ) );
-	
-	// check for identity matrix
-
-	double scaleX = sqrt ( a*a + c*c );
-	double scaleY = sqrt ( b*b + d*d );
-
-    // Nan is scalex or scaley is not defined
-    if (scaleX == 0.0 || scaleY == 0.0)
-        return false;
-    
-	XMP_Int32 rotation = (XMP_Int32)( ( atan2 ( b/scaleY, a/scaleX ) * 180 ) / PI );
-    
-    int sx = 1;
-    int sy = 1;
-
-    if(abs(rotation) == 90 || abs(rotation) == 270 )
-    {
-		sx = (int)(-c / sin(rotation));
-		sy = (int)(b / sin(rotation));
-    }
-    
-    else if(abs(rotation) == 0 || abs(rotation) == 180 )
-    {
-		sx = (int)(a / cos(rotation));
-	   sy = (int)(d / cos(rotation));
-
-    }
-    else
-        return false;
-    
-    // map orientation with tiff orientation
-    
-    int orientation;
-    bool notFound = false;
-    
-    switch (rotation) {
-            
-        case 0:
-        case 360:
-            if(sx == -1 && sy == -1)
-                orientation = 3;
-            else if(sx == -1)
-                orientation = 2;
-            else if(sy == -1)
-                orientation = 4;
-            else
-                orientation = 1;
-            break;
-            
-        case 90:
-        case -270:
-            if(sx == -1 && sy == -1)
-                orientation = 8;
-            else if(sx == -1)
-                orientation = 7;
-            else if(sy == -1)
-                orientation = 5;
-            else
-                orientation = 6;
-            break;
-            
-        case 180:
-        case -180:
-            if(sx == -1 && sy == -1)
-                orientation = 1;
-            else if(sx == -1)
-                orientation = 4;
-            else if(sy == -1)
-                orientation = 2;
-            else
-                orientation = 3;
-            break;
-            
-        case -90:
-        case 270:
-            if(sx == -1 && sy == -1)
-                orientation = 6;
-            else if(sx == -1)
-                orientation = 5;
-            else if(sy == -1)
-                orientation = 7;
-            else
-                orientation = 8;
-            break;
-        default:
-            notFound =true;
-            break;
-    }
-	//map the value to tiff orientation
-    if(!notFound)
-    {
-        xmp->SetProperty_Int ( kXMP_NS_TIFF , "Orientation", orientation );
-        return true;
-    }
-
-	return false;
-} // ImportVideoEnabledTrackItems
-#endif
 
 // =================================================================================================
 // ImportMVHDItems
@@ -1027,363 +814,12 @@ static void ExportISOCopyrights ( const SXMPMeta & xmp, MOOV_Manager * moovMgr )
 
 }	// ExportISOCopyrights
 
-#if AdobePrivate
-#if EnableITunesMetadata
-// =================================================================================================
-// ImportITunesItems
-// =================
-
-static bool ImportITunesItems ( const iTunes_Manager & iTunesMgr, SXMPMeta * xmp )
-{
-	bool haveImports = false;
-	bool found;
-	std::string utf8Str;
-
-	// Name
-	found = iTunesMgr.GetName ( utf8Str );
-	if ( found ) {
-		xmp->SetLocalizedText ( kXMP_NS_DC, "title", "", "x-default", utf8Str.c_str() );
-		haveImports = true;
-	}
-
-	// Artist
-	found = iTunesMgr.GetArtist ( utf8Str );
-	if ( found ) {
-		xmp->SetProperty ( kXMP_NS_DM, "artist", utf8Str );
-		haveImports = true;
-	}
-
-	// Album artist: no matching found
-
-	// Album
-	found = iTunesMgr.GetAlbum ( utf8Str );
-	if ( found ) {
-		xmp->SetProperty ( kXMP_NS_DM, "album", utf8Str );
-		haveImports = true;
-	}
-
-	// Genre
-	found = iTunesMgr.GetGenre ( utf8Str );
-	if ( found ) {
-		xmp->SetProperty ( kXMP_NS_DM, "genre", utf8Str );
-		haveImports = true;
-	}
-
-	// Year
-	XMP_DateTime releaseDate;
-	found = iTunesMgr.GetReleaseDate ( releaseDate );
-	if ( found ) {
-		XMP_DateTime actualDate;
-		bool useiTunesDate = true;
-		if ( xmp->GetProperty_Date( kXMP_NS_DM, "releaseDate", &actualDate, 0 ) ) {
-			if ( SXMPUtils::CompareDateTime( actualDate, releaseDate ) == 0) {
-				useiTunesDate = false;
-			}
-		}
-		if ( useiTunesDate ) {
-			xmp->SetProperty_Date( kXMP_NS_DM, "releaseDate", releaseDate );
-			haveImports = true;
-		}
-	}
-
-	// Composer
-	found = iTunesMgr.GetComposer ( utf8Str );
-	if ( found ) {
-		xmp->SetProperty ( kXMP_NS_DM, "composer", utf8Str );
-		haveImports = true;
-	}
-
-	// Comments
-	found = iTunesMgr.GetComments ( utf8Str );
-	if ( found ) {
-		xmp->SetProperty ( kXMP_NS_DM, "logComment", utf8Str );
-		haveImports = true;
-	}
-
-	// Track Number
-	XMP_Uns16 trackNumber;
-	found = iTunesMgr.GetTrackNumber ( trackNumber );
-	if ( found ) {
-		xmp->SetProperty_Int ( kXMP_NS_DM, "trackNumber", (XMP_Int32) trackNumber );
-		haveImports = true;
-	}
-
-	// Disk Number
-	XMP_Uns16 diskNumber, totalDisks;
-	found = iTunesMgr.GetDiskNumber ( diskNumber, totalDisks );
-	if ( found ) {
-		if ( totalDisks > 0 ) {
-			std::string sDiskNumber, sTotalDisks;
-			SXMPUtils::ConvertFromInt( diskNumber, "%d", &sDiskNumber );
-			SXMPUtils::ConvertFromInt( totalDisks, "%d", &sTotalDisks );
-			sDiskNumber += "/";
-			sDiskNumber += sTotalDisks;
-			xmp->SetProperty( kXMP_NS_DM, "discNumber", sDiskNumber );
-		} else {
-			xmp->SetProperty_Int ( kXMP_NS_DM, "discNumber", (XMP_Int32) diskNumber );
-		}
-	}
-
-	// BPM
-	XMP_Uns16 tempo;
-	found = iTunesMgr.GetTempo ( tempo );
-	if ( found ) {
-		double actualTempo;
-		bool useiTunesTempo = true;
-		if ( xmp->GetProperty_Float( kXMP_NS_DM, "tempo", &actualTempo, 0) ) {
-			if ( fabs(actualTempo - tempo) < 0.5 ) {
-				useiTunesTempo = false;
-			}
-		}
-		if ( useiTunesTempo ) {
-			xmp->SetProperty_Int ( kXMP_NS_DM, "tempo", (XMP_Int32) tempo );
-			haveImports = true;
-		}
-	}
-
-	// Grouping: no matching found
-
-	// Copyrights
-	found = iTunesMgr.GetCopyright ( utf8Str );
-	if ( found ) {
-		xmp->SetLocalizedText ( kXMP_NS_DC, "rights", "", "x-default", utf8Str );
-		haveImports = true;
-	}
-
-	return haveImports;
-
-}	// ImportITunesItems
-
-#endif
-#endif
-
-#if AdobePrivate
-#if EnableITunesMetadata
-// =================================================================================================
-// ExportITunesItems
-// =================
-
-static void ExportITunesItems ( const SXMPMeta & xmp, iTunes_Manager * iTunesMgr, MOOV_Manager * moovMgr,
-							   GenericErrorCallback * errorCallbackPtr ) {
-	bool found;
-	std::string xmpStr, iTunesStr;
-
-	// Name
-	found = xmp.GetLocalizedText ( kXMP_NS_DC, "title", "", "x-default", 0, &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetName ( xmpStr );
-	} else {
-		iTunesMgr->RemoveName ();
-	}
-
-	// Artist
-	found = xmp.GetProperty ( kXMP_NS_DM, "artist", &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetArtist ( xmpStr );
-	} else {
-		iTunesMgr->RemoveArtist ();
-	}
-
-	// Album artist: no matching found
-
-	// Album
-	found = xmp.GetProperty ( kXMP_NS_DM, "album", &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetAlbum ( xmpStr );
-	} else {
-		iTunesMgr->RemoveAlbum ();
-	}
-
-	// Genre
-	found = xmp.GetProperty ( kXMP_NS_DM, "genre", &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetGenre ( xmpStr );
-	} else {
-		iTunesMgr->RemoveGenre ();
-	}
-
-	// Year
-	XMP_DateTime date;
-	try { 
-		found = xmp.GetProperty_Date ( kXMP_NS_DM, "releaseDate", &date, 0 );
-	} catch ( ... ) {
-		XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, releaseDate needs to have a date value" );
-		XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-		found = false;
-	}
-	if ( found ) {
-		iTunesMgr->SetReleaseDate ( date );
-	} else {
-		iTunesMgr->RemoveReleaseDate ();
-	}
-
-	// Composer
-	found = xmp.GetProperty ( kXMP_NS_DM, "composer", &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetComposer ( xmpStr );
-	} else {
-		iTunesMgr->RemoveComposer();
-	}
-
-	// Comments
-	found = xmp.GetProperty ( kXMP_NS_DM, "logComment", &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetComments ( xmpStr );
-	} else {
-		iTunesMgr->RemoveComments ();
-	}
-
-	// Track Number
-	XMP_Int64 trackNumber;
-	try { 
-		found = xmp.GetProperty_Int64 ( kXMP_NS_DM, "trackNumber", &trackNumber, 0 );
-	} catch ( ... ) {
-		XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, trackNumber needs to be an integer" );
-		XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-		found = false;
-	}
-	if ( found ) {
-		if ( trackNumber < 0 || trackNumber > 0xFFFF ) {
-			XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, trackNumber needs to be between 0 and 65535" );
-			XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-			found = false;
-		}
-	}
-	if ( found ) {
-		iTunesMgr->SetTrackNumber ( (XMP_Uns16) trackNumber );
-	} else {
-		iTunesMgr->RemoveTrackNumber();
-	}
-
-	// Disk Number
-	found = xmp.GetProperty( kXMP_NS_DM, "discNumber", &xmpStr, 0 );
-	XMP_Int64 diskNumber = 0, totalDiskNumber = 0;
-	if ( found ) {
-		size_t posOfSlash = xmpStr.find("/");
-		if ( posOfSlash == std::string::npos ) {
-			// single disc Number mentioned
-			try {
-				diskNumber = SXMPUtils::ConvertToInt64( xmpStr.data() );
-			} catch ( ... ) {
-				XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, discNumber needs to be an integer or integer/integer" );
-				XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-				found = false;
-			}
-		} else {
-			// it is of the format diskNumber/TotalDiscs
-			std::string sDiskNumber = xmpStr.substr(0, posOfSlash);
-			try {
-				diskNumber = SXMPUtils::ConvertToInt64( sDiskNumber.data() );
-				totalDiskNumber = SXMPUtils::ConvertToInt64( xmpStr.data() + posOfSlash + 1 );
-			} catch ( ... ) {
-				XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, discNumber needs to be an integer or integer/integer" );
-				XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-				found = false;
-			}
-		}
-		if ( found ) {
-			if ( diskNumber < 0 || diskNumber > 0xFFFF ) {
-				XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, discNumber needs to be between 0 and 65535" );
-				XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-				found = false;
-			}
-
-			if ( totalDiskNumber < 0 || totalDiskNumber > 0xFFFF ) {
-				XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, total discNumbers needs to be between 0 and 65535" );
-				XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-				found = false;
-			}
-		}
-	}
-	if ( found ) {
-		iTunesMgr->SetDiskNumber( (XMP_Uns16) diskNumber, (XMP_Uns16) totalDiskNumber );
-	} else {
-		iTunesMgr->RemoveDiskNumber();
-	}
-
-	// BPM
-	double dTempo;
-	XMP_Int64 tempo;
-	try {
-		found = xmp.GetProperty_Float( kXMP_NS_DM, "tempo", &dTempo, 0 );
-		dTempo = (dTempo > 0.0 ) ? floor (dTempo + 0.5 ) : ceil (dTempo - 0.5 );
-		tempo = (XMP_Int64) (dTempo + 0.5);
-	} catch ( ... ) {
-		XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, tempo needs to be an integer or floating point" );
-		XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-		found = false;
-	}
-	if ( found ) {
-		if ( tempo < 0 || tempo > 0xFFFF ) {
-			XMP_Error err( kXMPErr_BadValue, "For reconciliation with iTunes specific metadata, tempo needs to be between 0 and 65535" );
-			XMPFileHandler::NotifyClient( errorCallbackPtr, kXMPErrSev_Recoverable, err );
-			found = false;
-		}
-	}
-	if ( found ) {
-		iTunesMgr->SetTempo( (XMP_Uns16) tempo );
-	} else {
-		iTunesMgr->RemoveTempo ();
-	}
-
-	// Grouping: no matching found
-
-	// Copyrights
-	found = xmp.GetLocalizedText ( kXMP_NS_DC, "rights", "", "x-default", 0, &xmpStr, 0 );
-	if ( found ) {
-		iTunesMgr->SetCopyright ( xmpStr );
-	} else {
-		iTunesMgr->RemoveCopyright ();
-	}
-
-	iTunesMgr->UpdateChangedBoxes ( moovMgr );
-
-}	// ExportITunesItems
-#endif
-#endif
-
-#if AdobePrivate
-#if EnableQuickTimeMetadata
-// =================================================================================================
-// ImportQuickTimeItems
-// ====================
-
-static bool ImportQuickTimeItems ( const TradQT_Manager & qtMgr, SXMPMeta * xmp )
-{
-	bool haveImports = false;
-
-	haveImports |= qtMgr.ImportSimpleXMP ( kQTilst_Album, xmp, kXMP_NS_DM, "album" );
-	haveImports |= qtMgr.ImportSimpleXMP ( kQTilst_Artist, xmp, kXMP_NS_DM, "artist" );
-	haveImports |= qtMgr.ImportSimpleXMP ( kQTilst_Comment, xmp, kXMP_NS_DM, "logComment" );
-	haveImports |= qtMgr.ImportLangAltXMP ( kQTilst_Copyright, xmp, kXMP_NS_DC, "rights" );
-	haveImports |= qtMgr.ImportLangAltXMP ( kQTilst_Description, xmp, kXMP_NS_DC, "description" );
-	haveImports |= qtMgr.ImportSimpleXMP ( kQTilst_Software, xmp, kXMP_NS_XMP, "CreatorTool" );
-
-	// Some special case QuickTime 'udta' items are handled by ImportTimecodeItems.
-
-	return haveImports;
-
-}	// ImportQuickTimeItems
-#endif
-#endif
-
 // =================================================================================================
 // ExportQuickTimeItems
 // ====================
 
 static void ExportQuickTimeItems ( const SXMPMeta & xmp, TradQT_Manager * qtMgr, MOOV_Manager * moovMgr )
 {
-
-#if AdobePrivate
-#if EnableQuickTimeMetadata
-	qtMgr->ExportSimpleXMP ( kQTilst_Album, xmp, kXMP_NS_DM, "album" );
-	qtMgr->ExportSimpleXMP ( kQTilst_Artist, xmp, kXMP_NS_DM, "artist" );
-	qtMgr->ExportSimpleXMP ( kQTilst_Comment, xmp, kXMP_NS_DM, "logComment" );
-	qtMgr->ExportLangAltXMP ( kQTilst_Copyright, xmp, kXMP_NS_DC, "rights" );
-	qtMgr->ExportLangAltXMP ( kQTilst_Description, xmp, kXMP_NS_DC, "description" );
-	qtMgr->ExportSimpleXMP ( kQTilst_Software, xmp, kXMP_NS_XMP, "CreatorTool" );
-#endif
-#endif
 
 	// The QuickTime 'udta' timecode items are done here for simplicity.
 
@@ -1398,17 +834,6 @@ static void ExportQuickTimeItems ( const SXMPMeta & xmp, TradQT_Manager * qtMgr,
 
 }	// ExportQuickTimeItems
 
-#if AdobePrivate
-static bool ImportQTMetaBoxItems(TradQT_Manager& qtMgr, SXMPMeta * xmp, bool isSemiProValid)
-{
-	bool ret = qtMgr.ImportCreateDateMetaAtom(xmp);
-	ret |= qtMgr.ImportLocationMetaAtom(xmp);
-
-	if(!isSemiProValid)
-		ret |= qtMgr.ImportModelMetaAtom(xmp);
-	return ret;
-}	// ImportQTMetaBoxItems
-#endif
 #if 0
 static bool ExportQTMetaBoxItems(const SXMPMeta & xmp, TradQT_Manager * qtMgr, MOOV_Manager * moovMgr)
 {
@@ -1423,34 +848,6 @@ static bool ExportQTMetaBoxItems(const SXMPMeta & xmp, TradQT_Manager * qtMgr, M
 }	// ExportQTMetaBoxItems
 #endif
 
-#if AdobePrivate
-static bool ImportGPSForNormalISO(MOOV_Manager::BoxInfo currInfo, SXMPMeta * xmp) {
-	if ((currInfo.boxType >> 24) != 0xA9) return false;
-	if (currInfo.contentSize < 2 + 2 + 1)  return false;	// Want enough for a non-empty value.
-
-	XMP_Uns8 * boxPtr = (XMP_Uns8*)currInfo.content;
-	XMP_Uns8 * boxEnd = boxPtr + currInfo.contentSize;
-	XMP_Uns16 miniLen, macLang;
-	std::string   macValue;
-
-	miniLen = 4 + GetUns16BE(boxPtr);	// ! Include header in local miniLen.
-
-	//Since GPS is in numerical numbers we don't need to worry about different lang
-	macLang = GetUns16BE(boxPtr + 2);
-	if ((miniLen <= 4) || (miniLen > (boxEnd - boxPtr))) return false;	// Ignore bad or empty values.
-
-	XMP_StringPtr valuePtr = (char*)(boxPtr + 4);
-	size_t valueLen = miniLen - 4;
-
-	TradQT_Manager tmgr;
-	/*
-	** Since we don't have proper docuentation for this box,
-	** priority is false. We don't want to replace existing GPS value if it is present in xmp packet.
-	*/
-	return tmgr.ConvertGPSToXMPFormat(valuePtr, xmp, (XMP_Uns32)valueLen, true);
-
-}
-#endif
 // =================================================================================================
 // SelectTimeFormat
 // ================
@@ -2612,24 +2009,6 @@ void MPEG4_MetaHandler::CacheFileData()
 			if ( xmpUuidFound && metaFound ) break;	// Exit the loop when both are found.
 
 		} 
-#if AdobePrivate
-		else if ((!metaFound) && (currBox.boxType == ISOMedia::k_meta)) {
-
-			XMP_Uns64 fullMetaSize = currBox.headerSize + currBox.contentSize;
-			if (fullMetaSize > TopBoxSizeLimit) {	// From here on we know 32-bit offsets are safe.
-				XMP_Throw("Oversize 'meta' box", kXMPErr_EnforceFailure);
-			}
-
-			this->metaMgr.fullSubtree.assign((XMP_Uns32)fullMetaSize, 0);
-			fileRef->Seek(boxPos, kXMP_SeekFromStart);
-			fileRef->Read(&this->metaMgr.fullSubtree[0], (XMP_Uns32)fullMetaSize);
-
-			this->metaBoxSize = (XMP_Uns32)fullMetaSize;
-			metaFound = true;
-			if (xmpUuidFound && moovFound) break;	// Exit the loop when both are found.
-
-		}
-#endif
 		else if ( (! xmpUuidFound) && (currBox.boxType == ISOMedia::k_uuid) && ( memcmp( currBox.idUUID, ISOMedia::k_xmpUUID, 16 ) == 0 ) ) {
 
 			XMP_Uns64 fullUuidSize = currBox.headerSize + currBox.contentSize;
@@ -2697,9 +2076,6 @@ void MPEG4_MetaHandler::ProcessXMP()
 		XMPFileHandler::NotifyClient(&parent->errorCallback, kXMPErrSev_FileFatal, error);
 	}
 	this->moovMgr.ParseMemoryTree ( this->fileMode );
-#if AdobePrivate
-	this->metaMgr.ParseMetaMemoryTree();
-#endif
 	if ( (this->xmpBoxPos == 0) || (! haveISOFile) ) {
 
 		// Look for the QuickTime moov/uuid/XMP_ box.
@@ -2729,218 +2105,49 @@ void MPEG4_MetaHandler::ProcessXMP()
 
 	// Import the non-XMP items. Do the imports in reverse priority order, last import wins!
 
-	MOOV_Manager::BoxInfo mvhdInfo;
-	MOOV_Manager::BoxRef  mvhdRef = this->moovMgr.GetBox ( "moov/mvhd", &mvhdInfo );
-	bool mvhdFound = ((mvhdRef != 0) && (mvhdInfo.contentSize != 0));
+	if ( !xmpOnly ) {
+		MOOV_Manager::BoxInfo mvhdInfo;
+		MOOV_Manager::BoxRef  mvhdRef = this->moovMgr.GetBox ( "moov/mvhd", &mvhdInfo );
+		bool mvhdFound = ((mvhdRef != 0) && (mvhdInfo.contentSize != 0));
 
-	MOOV_Manager::BoxInfo udtaInfo;
-	MOOV_Manager::BoxRef  udtaRef = this->moovMgr.GetBox ( "moov/udta", &udtaInfo );
-	std::vector<MOOV_Manager::BoxInfo> cprtBoxes;
-#if AdobePrivate
-	MOOV_Manager::BoxInfo gpsBoxInfo;
-	bool gpsFound=false;
-#endif
-
-	if ( udtaRef != 0 ) {
-		for ( XMP_Uns32 i = 0; i < udtaInfo.childCount; ++i ) {
-			MOOV_Manager::BoxInfo currInfo;
-			MOOV_Manager::BoxRef  currRef = this->moovMgr.GetNthChild ( udtaRef, i, &currInfo );
-			if ( currRef == 0 ) break;	// Sanity check, should not happen.
-#if AdobePrivate
-			if (currInfo.boxType == ISOMedia::kISO_GPS) {
-				gpsBoxInfo = currInfo;
-				gpsFound = true;
-				continue;
-			}	
-#endif
-			if ( currInfo.boxType != ISOMedia::k_cprt ) continue;
-			cprtBoxes.push_back ( currInfo );
+		MOOV_Manager::BoxInfo udtaInfo;
+		MOOV_Manager::BoxRef  udtaRef = this->moovMgr.GetBox ( "moov/udta", &udtaInfo );
+		std::vector<MOOV_Manager::BoxInfo> cprtBoxes;
+		if ( udtaRef != 0 ) {
+			for ( XMP_Uns32 i = 0; i < udtaInfo.childCount; ++i ) {
+				MOOV_Manager::BoxInfo currInfo;
+				MOOV_Manager::BoxRef  currRef = this->moovMgr.GetNthChild ( udtaRef, i, &currInfo );
+				if ( currRef == 0 ) break;	// Sanity check, should not happen.
+				if ( currInfo.boxType != ISOMedia::k_cprt ) continue;
+				cprtBoxes.push_back ( currInfo );
+			}
 		}
-	}
-	bool cprtFound = (! cprtBoxes.empty());
-	
+		bool cprtFound = (! cprtBoxes.empty());
 
-	bool tradQTFound = this->tradQTMgr.ParseCachedBoxes ( this->moovMgr );
 
-#if AdobePrivate
-	bool qtMetaBoxFound = this->tradQTMgr.ParseMetaBox(this->moovMgr); //to parse metadata present in moov/meta box(currently on CreationDate)
-#if EnableITunesMetadata
-	bool iTunesFound = this->iTunesMgr.ParseCachedBoxes ( this->moovMgr );
-#endif
-#endif
+		bool tradQTFound = this->tradQTMgr.ParseCachedBoxes ( this->moovMgr );
 
-	bool tmcdFound = this->ParseTimecodeTrack();
+		bool tmcdFound = this->ParseTimecodeTrack();
 
-#if AdobePrivate
-	bool semiProXMLFound = this->ParseAndValidateSemiProXML();
-#endif
-	if ( this->fileMode == MOOV_Manager::kFileIsNormalISO ) {
+		if ( this->fileMode == MOOV_Manager::kFileIsNormalISO ) {
 
-#if AdobePrivate
-#if EnableQuickTimeMetadata
-		if ( tradQTFound ) this->containsXMP |= ImportQuickTimeItems ( this->tradQTMgr, &this->xmpObj );
-#endif
-#endif
-		if ( mvhdFound )   this->containsXMP |= ImportMVHDItems ( mvhdInfo, &this->xmpObj );
-		if ( cprtFound )   this->containsXMP |= ImportISOCopyrights ( cprtBoxes, &this->xmpObj );
-		if ( tmcdFound )   this->containsXMP |= ImportTimecodeItems ( this->tmcdInfo, this->tradQTMgr, &this->xmpObj );
-#if AdobePrivate
-#if EnableITunesMetadata
-		if ( iTunesFound ) this->containsXMP |= ImportITunesItems ( this->iTunesMgr, &this->xmpObj );
-#endif
-#endif
-#if AdobePrivate
-		if (gpsFound)		this->containsXMP |= ImportGPSForNormalISO( gpsBoxInfo, &this->xmpObj );
+			if ( mvhdFound )   this->containsXMP |= ImportMVHDItems ( mvhdInfo, &this->xmpObj );
+			if ( cprtFound )   this->containsXMP |= ImportISOCopyrights ( cprtBoxes, &this->xmpObj );
+			if ( tmcdFound )   this->containsXMP |= ImportTimecodeItems ( this->tmcdInfo, this->tradQTMgr, &this->xmpObj );
+		} else {	// This is a QuickTime file, either traditional or modern.
 
-		if (semiProXMLFound) this->containsXMP |= this->semiProXml.ImportXMLProperties(&this->xmpObj);
-#endif
-
-	} else {	// This is a QuickTime file, either traditional or modern.
-
-		if ( mvhdFound )   this->containsXMP |= ImportMVHDItems ( mvhdInfo, &this->xmpObj );
-		if ( cprtFound )   this->containsXMP |= ImportISOCopyrights ( cprtBoxes, &this->xmpObj );
-#if AdobePrivate
-#if EnableITunesMetadata
-		if ( iTunesFound ) this->containsXMP |= ImportITunesItems ( this->iTunesMgr, &this->xmpObj );
-#endif
-#endif
-#if AdobePrivate
-	if (qtMetaBoxFound) this->containsXMP |= ImportQTMetaBoxItems(this->tradQTMgr, &this->xmpObj, semiProXMLFound); //to import metadata present in moov/meta box(currently on CreationDate)
-#if EnableQuickTimeMetadata
-		if ( tradQTFound ) this->containsXMP |= ImportQuickTimeItems ( this->tradQTMgr, &this->xmpObj );
-#endif
-#endif
-
-		if ( tmcdFound | tradQTFound ) {
-			// Some of the timecode items are in the .../udta/... set but handled by ImportTimecodeItems.
-			this->containsXMP |= ImportTimecodeItems ( this->tmcdInfo, this->tradQTMgr, &this->xmpObj );
-		}
-
-		this->containsXMP |= ImportCr8rItems ( this->moovMgr, &this->xmpObj );
-#if AdobePrivate
-		if (semiProXMLFound) this->containsXMP |= this->semiProXml.ImportXMLProperties(&this->xmpObj);
-#endif
-
-	}
-    
-#if AdobePrivate
-    XMP_Int32 transfmMatrix[9];
-    bool videEnabledTrackFound = this->ParseVideoTrack ( transfmMatrix );
-    if( videEnabledTrackFound ) {
-        this->containsXMP |= ImportVideoEnabledTrackItems ( transfmMatrix , &this->xmpObj );
-    }
-#endif
-
-}	// MPEG4_MetaHandler::ProcessXMP
-
-#if AdobePrivate
-// =================================================================================================
-// MPEG4_MetaHandler::ParseVideoTrack
-// =====================================
-
-#define k_vide 0x76696465UL
-#define TKHD_TRACK_ENABLED_FLAG 0x00000001
-
-bool MPEG4_MetaHandler::ParseVideoTrack ( XMP_Int32 * matrix )
-{
-	// Find a 'trak' box with a handler type of 'vide'.
-
-	MOOV_Manager::BoxInfo moovInfo;
-	MOOV_Manager::BoxRef  moovRef = this->moovMgr.GetBox ( "moov" , &moovInfo );
-	XMP_Assert ( moovRef != 0 );
-
-	MOOV_Manager::BoxInfo trakInfo;
-	MOOV_Manager::BoxRef  trakRef = NULL;
-
-	size_t i = 0;
-	for( ; i < moovInfo.childCount; ++i ) {
-
-		trakRef = moovMgr.GetNthChild ( moovRef , i , &trakInfo );
-		if( trakRef == 0 ) return 0;	// Sanity check, should not happen.
-		if( trakInfo.boxType != ISOMedia::k_trak ) continue;
-
-		MOOV_Manager::BoxRef  innerRef;
-		MOOV_Manager::BoxInfo innerInfo;
-
-		innerRef = moovMgr.GetTypeChild ( trakRef , ISOMedia::k_mdia , &innerInfo );
-		if( innerRef == 0 ) continue;
-
-		innerRef = moovMgr.GetTypeChild ( innerRef , ISOMedia::k_hdlr , &innerInfo );
-		if( (innerRef == 0) || (innerInfo.contentSize < sizeof ( MOOV_Manager::Content_hdlr )) ) continue;
-
-		const MOOV_Manager::Content_hdlr * hdlr = (MOOV_Manager::Content_hdlr*) innerInfo.content;
-		
-        MOOV_Manager::BoxInfo tkhdBoxInfo;
-		if( hdlr->versionFlags != 0 ) continue;
-		
-        if( GetUns32BE ( &hdlr->handlerType ) == k_vide )
-		{
-			//Parse tkhd box
-			innerRef = moovMgr.GetTypeChild ( trakRef , ISOMedia::k_tkhd , &tkhdBoxInfo );
-			if( innerRef == 0 ) continue;
-			
-            //check for version
-			if( tkhdBoxInfo.contentSize < 4 ) continue;	// Just enough to check the version/flags at first.
-		
-			XMP_Uns8 tkhdVersion = *tkhdBoxInfo.content;
-			if( tkhdVersion > 1 ) continue;
-			
-			if( tkhdVersion == 0 ) {
-				
-				if( tkhdBoxInfo.contentSize < sizeof ( MOOV_Manager::Content_tkhd_0 ) ) continue;
-				MOOV_Manager::Content_tkhd_0 * tkhdRaw_0 = (MOOV_Manager::Content_tkhd_0*) tkhdBoxInfo.content;
-				
-                //check for flags , find the first video enabled track
-				if( !(GetUns32BE(&tkhdRaw_0->vFlags) & TKHD_TRACK_ENABLED_FLAG) ) continue; //if track is not enabled
-				memcpy ( matrix , tkhdRaw_0->matrix , 36 );
-				
-			} else {
-				XMP_Assert ( tkhdVersion == 1 );
-				if( tkhdBoxInfo.contentSize < sizeof ( MOOV_Manager::Content_tkhd_1 ) ) continue;
-				MOOV_Manager::Content_tkhd_1 * tkhdRaw_1 = (MOOV_Manager::Content_tkhd_1*) tkhdBoxInfo.content;
-				
-				if( !(GetUns32BE(&tkhdRaw_1->vFlags) & TKHD_TRACK_ENABLED_FLAG) ) continue; //if track is not enabled
-				memcpy ( matrix , tkhdRaw_1->matrix , 36 );
+			if ( mvhdFound )   this->containsXMP |= ImportMVHDItems ( mvhdInfo, &this->xmpObj );
+			if ( cprtFound )   this->containsXMP |= ImportISOCopyrights ( cprtBoxes, &this->xmpObj );
+			if ( tmcdFound | tradQTFound ) {
+				// Some of the timecode items are in the .../udta/... set but handled by ImportTimecodeItems.
+				this->containsXMP |= ImportTimecodeItems ( this->tmcdInfo, this->tradQTMgr, &this->xmpObj );
 			}
 
-			break; 
+			this->containsXMP |= ImportCr8rItems ( this->moovMgr, &this->xmpObj );
 		}
 	}
 
-	if( i == moovInfo.childCount ) return false;
-
-	return true;
-} // MPEG4_MetaHandler::ParseVideoTrack
-
-
-bool MPEG4_MetaHandler::ParseAndValidateSemiProXML()
-{
-	if (this->fileMode == MOOV_Manager::kFileIsNormalISO) {
-		Meta_Manager::BoxInfo xmlInfo;
-		Meta_Manager::BoxRef  xmlRef = this->metaMgr.GetBox("meta/xml ", &xmlInfo);  //space is required after xml to keep the size equal to 4
-		if (xmlRef == 0)
-			return false;
-		XMP_Assert(xmlInfo.boxType == ISOMedia::k_xml);
-		if (xmlInfo.contentSize <= 4) // Just enough to check the version/flags at first.
-			return false;	
-		
-		return this->semiProXml.ValidateXML(xmlInfo.content + 4, xmlInfo.contentSize - 4);
-	}
-	else if (this->fileMode == MOOV_Manager::kFileIsModernQT)
-	{
-		std::string data;
-		XMP_Uns32 index;
-		bool found = tradQTMgr.FindMetaAtom("com.panasonic.Semi-Pro.metadata.xml", data, index);
-		if (!found)
-			return false;
-			
-	    return this->semiProXml.ValidateXML(data.c_str(), (XMP_Uns32)data.size());
-	
-	}
-	return false;
-}
-
-#endif
+}	// MPEG4_MetaHandler::ProcessXMP
 
 // =================================================================================================
 // MPEG4_MetaHandler::ParseTimecodeTrack
@@ -3650,12 +2857,6 @@ void MPEG4_MetaHandler::UpdateFile ( bool doSafeUpdate )
 
 	ExportMVHDItems ( this->xmpObj, &this->moovMgr , haveISOFile);
 	ExportISOCopyrights ( this->xmpObj, &this->moovMgr );
-#if AdobePrivate
-#if EnableITunesMetadata
-	ExportITunesItems ( this->xmpObj, &this->iTunesMgr, &this->moovMgr,
-		this->parent ? (&this->parent->errorCallback) : NULL );
-#endif
-#endif
 	ExportQuickTimeItems ( this->xmpObj, &this->tradQTMgr, &this->moovMgr );
 #if 0
 	ExportQTMetaBoxItems (this->xmpObj, &this->tradQTMgr, &this->moovMgr); //to export metadata present in moov/meta box(currently on CreationDate)
@@ -3678,58 +2879,8 @@ void MPEG4_MetaHandler::UpdateFile ( bool doSafeUpdate )
 			updateXMPPacket = true;
 		}
 
-#if AdobePrivate
-		XMP_Uns32 index;
-
-		if (!mvhdFound && this->tradQTMgr.FindMetaAtom("com.apple.quicktime.creationdate", propValue, index)) {
-			this->xmpObj.DeleteProperty(kXMP_NS_XMP, "CreateDate");
-			updateXMPPacket = true;
-		}
-		if (this->tradQTMgr.FindMetaAtom("com.apple.quicktime.location.ISO6709", propValue, index)) {
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSLatitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSLongitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSAltitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSAltitudeRef");
-			updateXMPPacket = true;
-		}
-
-		//never write tiff orientation for qt files
-		this->xmpObj.DeleteProperty ( kXMP_NS_TIFF , "Orientation" );
-		updateXMPPacket = true;
-
-#endif
-		
 	}
 	else {
-#if AdobePrivate
-		MOOV_Manager::BoxInfo udtaInfo;
-		MOOV_Manager::BoxRef  udtaRef = this->moovMgr.GetBox("moov/udta", &udtaInfo);
-		
-		MOOV_Manager::BoxInfo gpsBoxInfo;
-		bool gpsFound = false;
-
-		if (udtaRef != 0) {
-			for (XMP_Uns32 i = 0; i < udtaInfo.childCount; ++i) {
-				MOOV_Manager::BoxInfo currInfo;
-				MOOV_Manager::BoxRef  currRef = this->moovMgr.GetNthChild(udtaRef, i, &currInfo);
-				if (currRef == 0) break;	// Sanity check, should not happen.
-
-				if (currInfo.boxType == ISOMedia::kISO_GPS) {
-					gpsBoxInfo = currInfo;
-					gpsFound = true;
-					break;
-				}
-
-			}
-		}
-		if (gpsFound) {
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSLatitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSLongitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSAltitude");
-			this->xmpObj.DeleteProperty(kXMP_NS_EXIF, "GPSAltitudeRef");
-			updateXMPPacket = true;
-		}
-#endif
 	}
 
 	if (updateXMPPacket) {
@@ -3768,12 +2919,6 @@ void MPEG4_MetaHandler::UpdateFile ( bool doSafeUpdate )
 	// Try to update the XMP in-place if that is all that changed, or if it is in a preferred 'uuid' box.
 	// The XMP has already been serialized by common code to the appropriate length. Otherwise, update
 	// the 'moov'/'udta'/'XMP_' box in the MOOV_Manager, or the 'uuid' XMP box in the file.
-
-	#if AdobePrivate
-	// ! The order of processing is carefully chosen to work smoothly with AME's creation of new
-	// ! MPEG-4 files. They start as (moov, free, mdat), we want them to become (moov, XMP, free, mdat).
-	// workaround bugfix #2604185
-	#endif
 
 	bool useUuidXMP = (this->fileMode == MOOV_Manager::kFileIsNormalISO);
 	bool inPlaceXMP = (this->xmpPacket.size() == (size_t)this->packetInfo.length) &&

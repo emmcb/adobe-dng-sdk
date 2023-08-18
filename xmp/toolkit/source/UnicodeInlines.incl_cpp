@@ -9,25 +9,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-28-05 AWL 3.2-001 Remove BIB.
-// 01-07-05 AWL 3.1.1-104 [1129616] Fix SetObjectName to verify that the string is UTF-8.
-// 12-09-04 AWl 3.1.1-099 [1041438] Add parsing and serialization support for UTF-16 and UTF-32.
-// 10-12-04 AWL 3.1.1-084 [616293] Add value and name checking to SetProperty.
-// =================================================================================================
-#endif // AdobePrivate
-
 #include "source/UnicodeConversions.hpp"
 
 // =================================================================================================

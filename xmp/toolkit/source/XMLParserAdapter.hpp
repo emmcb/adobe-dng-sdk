@@ -6,47 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-//
-// 01-16-08 AWL 4.2-c035 Add XML_Node::SetAttrValue.
-// 12-18-07 AWL 4.2-c034 Add XML_Node::IsEmptyLeafNode and XML_Node::GetAttrValue.
-// 12-10-07 AWL 4.2-c033 Save prefix length in XML_Node, change XML_Node::GetNamedElement to take URI and local name.
-// 12-07-07 AWL 4.2-c032 Add serialization and tree dump for the exposed Expat parser.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-//
-// 08-16-06 AWL 4.1-c015 [1312441,1340116] Change the parsing code to tolerate ISO Latin-1 input. At
-//				the same time, get rid of the ugly hackery that tries to deal with unescaped ASCII
-//				control characters. Also get rid of the check and complaint about parsing into an
-//				empty object. This is predominantly what people want, so clear the XMPMeta object.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 04-06-05 AWL 3.2-013 [0509601] Normalize "single value" alt-text arrays. Improve the way the root
-//				XML node is found and extract the previous toolkit version number.
-// 03-31-05 AWL 3.2-007 Fix parsing for UTF-16 and UTF-32.
-// 02-03-05 AWL Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 #include "public/include/XMP_Const.h"

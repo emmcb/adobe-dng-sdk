@@ -7,53 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  SKP Sunil Kishor Pathak
-//	HK  Honey Kansal
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-05-15 AB  5.6-f129 [3913583] For 50P and 59.94P, The Frame number for starttimecode should be written half to actual frame number in the XML file because NRT XML can store frame number value only between 00-29.
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-// 01-16-13 HK  5.6-f022 Implemented IsMetadataWritable API for XDCAM-EX, P2, CanonXF and AVCHD formats.
-// 01-03-13 HK  5.6-f016 [3435383] Added GetAssociatedResources API for P2 format.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 10-03-12 HK  5.5-f042 [3217688] A red X appears on the thumbnail in Panasonic P2 Viewer after updating the P2 media's metadata.
-// 09-28-12 AWL 5.5-f039 Add LocateMetadataFiles, correct handler flags.
-//
-// 09-30-11 AWL 5.4-f016 Add P2 and SonyHDV support for GetFileModDate.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 08-11-09 AWL 5.0-f061 Integrate P2 and AVCHD changes from Peter Lee.
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-//
-// 03-31-08 AWL 4.2.2-f103 [1741470] Integrate P2 bug fixes.
-//
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
-//				handlers they must use the parent pointer in the XMPFileHandler base class.
-// 12-31-07 AWL 4.2-f052 Integrate P2 and XDCAM handler changes from Peter Lee and Gerry Miller.
-// 12-10-07 AWL 4.2-f044 Add P2 legacy digest and legacy .XML file update. Fix namespace handling.
-// 11-30-07 AWL 4.2-f042 Add skeleton of legacy reconciliation with .XML file.
-// 11-29-07 AWL 4.2-f041 First working version P2 handler in NewHandlers, XMP-only, no legacy.
-// 11-28-07 AWL 4.2-f040 Introduce empty P2 handler in NewHandlers.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

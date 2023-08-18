@@ -7,123 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  FNO Frank Nocke
-//  PKG Praveen Kumar Goyal
-//  JKR Jens Krueger
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 01-16-14 IJS 5.6-f088 Generic Handling Feature - Adding support for kXMPFiles_OpenUseGenericHandler OpenFile() flag.
-// 08-13-13 IJS 5.6-f076 [3206367,3206363] Enabling Error Notifications for Bad file format exceptions in MPEG4_Handler.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 12-21-12 IJS 5.6-f008 Added GetAssociatedResources and IsWritable APIs 
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 06-08-12 JKR	5.5-f016 Introduced EnablePluginManager preprocessor define to disable plugins for iOS
-// 07-05-12 AWL 5.5-f015 [2999627] Improve ID3 genre handling.
-
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-18-09 AWL 5.0-f046 Minor tweaks from code review.
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 05-27-09 AWL 5.0-f041 Remove XMPMeta::SendAssertNotify.
-// 05-21-09 AWL 5.0-f040 Revamp glue again to pass SetClientString with each function.
-// 05-19-09 AWL 5.0-f039 First part of threading improvements, revamp the client glue.
-// 05-14-09 AWL 5.0-f038 Improve the call tracing mechanism.
-// 04-03-09 AWL 5.0-f032 Fix Terminate to be tolerant of too many calls (count going negative).
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-//
-// 10-xx-08 AWL 4.4-f0xx MWG compliance changes, remove native thumbnail support.
-//
-// 04-11-08 FNO 4.2.2-f104 [1720135] Integrate large ucf support. LFA_Routines to source/LargeFileAccess.
-//
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 01-22-08 FNO 4.2-f061 [1580732] XMPFiles should not write XMP into Camera Raw files.
-// 01-22-08 AWL 4.2-f060 Fix SplitLeafName to tolerate partial paths.
-// 01-21-08 AWL 4.2-f058 Global tweak to have the handler's packetInfo always refer to the file.
-// 12-06-07 AWL 4.2-f043 Add basic XDCAM handler.
-// 11-28-07 AWL 4.2-f039 Add folder utils and implement TryFolderHandlers.
-// 11-16-07 AWL 4.2-f037 Introduce basic infrastructure for "directory oriented" handlers.
-// 11-13-07 FNO 4.2-f034 Made XIO::Move() more flexible to support same and different file as target.
-// 11-08-07 FNO 4.2-f033 Added XMP_Validate() macro.
-// 10-25-07 FNO 4.2-f031 Added XIO::Move() to move data within a file.
-// 10-16-07 FNO 4.2-f028 UCF read-only in NewHandlers(not final), added LFA_Read* convenience routines to XMPFiles
-// 10-10-07 AWL 4.2-f027 Add handler method GetSerializeOptions. Introduce FillPacketInfo to replace
-//				GetPacketCharForm, GetPacketRWMode, and GetPacketPadSize. And tolerate no wrapper.
-// 07-17-07 AWL 4.2-f025 Change Mac to use pthread synchronization, needed for 64-bit builds.
-// 01-26-07 AWL 4.2-f013 [1471566] Repair the lost use of XMPMeta::SendAssertNotify for XMPFiles asserts.
-//
-// 11-28-06 AWL 4.1-f077 [1378220] Add conditional code to gather top level performance data.
-// 11-09-06 AWL 4.1-f064 [1417587] Fix memory leaks associated with IPTC_Support's DisposeLooseValue.
-//				It was being called for zero length values whose address was past the allocation.
-//				Add hooks to find sources of leaks again in the future.
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-// 11-01-06 AWL 4.1-f057 Move include of XMPFiles_ChangeLog.hpp from XMPFiles_Impl.hpp to XMPFiles.cpp.
-//				This stops the full rebuilds from each update to the change log.
-// 10-12-06 AWL 4.1-f041 [1235816] Use the new/delete from XMPCore in DLL builds.
-// 09-15-06 AWL 4.1-f035 Revamp the MPEG handler to be platform neutral.
-// 09-14-06 AWL Add MakeUns64XX routines. (No build number increment.)
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 06-16-06 AWL 4.0-f012 Make XMP_ENTER_WRAPPER check sXMPFilesInitCount in debug builds.
-// 05-19-06 AWL 4.0-f007 Package I/O buffer info into a struct, change I/O macros to functions.
-//				This will make it reasonable to pass the buffer state among layered functions.
-// 05-18-06 AWL 4.0-f005 Add support for JPEG/Exif thumbnails.
-// 05-01-06 AWL 4.0-f003 Revamp the embedded, Mac PList, and Windows Property info.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 11-07-05 AWL 1.3-008 Fix converting form of GetUns32LE and GetUns16LE.
-// 08-22-05 AWL 1.3-002 Use XMP's mem procs.
-//
-// 04-13-05 AWL 1.1-052 Add tweaks to the CheckProc needed by the MDKit-based JPEG/TIFF/PSD handler.
-//
-// 02-07-05 AWL 1.0-046 [1137383] Add LFA_Create, LFA_Rename, and LFA_Delete. Don't use C stdio routines,
-//				they don't handle UTF-8 properly on Windows!
-// 01-26-05 AWL 1.0-040 [1142011] Bump copyright to 2005.
-// 01-26-05 AWL 1.0-039 [1141684] Use XMPMeta::SendAssertNotify for XMPFiles asserts.
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-// 12-15-04 AWL 1.0-021 [1088863] Improve crash-safe update.
-// 10-08-04 AWL 1.0-010 Add thread locking.
-// 10-07-04 AWL 1.0-009 Add first cut of support for crash safe file update.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-//
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 07-09-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 #include "public/include/XMP_Const.h"
@@ -174,29 +59,6 @@ typedef std::vector<XMP_Uns8> RawDataBlock;
 
 extern bool ignoreLocalText;
 
-#if AdobePrivate
-
-	#ifndef XMP_StaticBuild
-		#define XMP_StaticBuild 0
-	#endif
-	
-	#ifndef XMPFilesForACR	// ACR should change this to define XMPFilesForACR as 1.
-		#define XMPFilesForACR 0
-	#endif
-
-	#if XMPFilesForACR
-		#define EnablePhotoHandlers 1
-		#define EnableDynamicMediaHandlers 0
-		#define EnableMiscHandlers 0
-		#define EnablePacketScanning 0
-	#endif
-
-	#ifndef EnableGenericHandling
-		#define EnableGenericHandling 1
-	#endif
-	#define GenericHandlingAlwaysOn 0
-#endif
-
 #ifndef EnablePhotoHandlers
 	#define EnablePhotoHandlers 1
 #endif
@@ -222,15 +84,6 @@ extern bool ignoreLocalText;
 #endif
 
 extern XMP_Int32 sXMPFilesInitCount;
-
-#if AdobePrivate
-	#if ! XMP_StaticBuild
-		extern XMP_AllocateProc sXMP_MemAlloc;
-		extern XMP_DeleteProc   sXMP_MemFree;
-		#define malloc(size) (*sXMP_MemAlloc) ( size )
-		#define free(addr)   (*sXMP_MemFree) ( addr )
-	#endif
-#endif
 
 #ifndef GatherPerformanceData
 	#define GatherPerformanceData 0
@@ -352,28 +205,6 @@ static inline void MakeUpperCase ( std::string * str )
 #define XMP_LitMatch(s,l)		(strcmp((s),(l)) == 0)
 #define XMP_LitNMatch(s,l,n)	(strncmp((s),(l),(n)) == 0)
 
-#if AdobePrivate
-struct AlbumArt
-{
-	XMP_BinaryData imageData;
-
-	XMP_Uns32 imageDataLength;
-
-	XMP_Uns8 usageType;
-
-	XMP_Uns8 formatType;
-
-	XMP_StringPtr description;
-
-	XMP_StringLen descLength;
-
-	XMP_Uns8 encodingType;
-
-	AlbumArt() : imageData( NULL ), imageDataLength( 0 ), usageType( kXMPFiles_AlbumArt_Use_None ), formatType( kXMPFiles_AlbumArt_NoFormat ),
-		description( NULL ), descLength( 0 ), encodingType( kXMPFiles_AlbumArt_Enc_Unknown ) {}
-};
-#endif
-
 // =================================================================================================
 // Support for call tracing
 // ========================
@@ -468,9 +299,6 @@ public:
 
 	virtual void CacheFileData() = 0;
 	virtual void ProcessXMP();		// The default implementation just parses the XMP.
-#if AdobePrivate
-	virtual bool GetAlbumArtworks();	// The default implementation will return false without exception
-#endif
 	virtual XMP_OptionBits GetSerializeOptions();	// The default is compact.
 
 	virtual void UpdateFile ( bool doSafeUpdate ) = 0;
@@ -499,10 +327,6 @@ public:
 	XMP_PacketInfo			packetInfo;	// ! This is always info about the packet in the file, if any!
 	std::string				xmpPacket;	// ! This is the current XMP, updated by XMPFiles::PutXMP.
 	SXMPMeta				xmpObj;
-#if AdobePrivate
-	std::vector<AlbumArt>	albumArtVector;	// Vector to get and update album arts in a file. Could be embedded into the specific handler.
-											// Will be taken care later.
-#endif
 };	// XMPFileHandler
 
 typedef XMPFileHandler * (* XMPFileHandlerCTor) ( XMPFiles * parent );

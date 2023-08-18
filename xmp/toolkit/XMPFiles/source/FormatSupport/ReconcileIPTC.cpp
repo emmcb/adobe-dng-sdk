@@ -4,76 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	FNO Frank Nocke
-//	ADC Amandeep Chawla
-//	SKP Sunil Kishor Pathak
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 11-05-14 SKP 5.6-f121 Implemented MWG spec to read IPTC irrespective of IIM digest matching or not.
-// 03-06-14 ADC 5.6-f095 Reverting changes done via CL # 155650 (MWG specification related).
-//
-// 10-18-11 AWL 5.4-f024 [3002257] Make the IPTC Manager tolerant of out of order IIM records.
-//
-// 01-28-11	AWL	5.3-f024 [2796677] Fix export to PSIR 1034 to follow missing/false/true model of xmpRights:Marked.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-//
-// 12-22-09 AWL 5.0-f125 [2508484] Don't create Exif DateTimeDigitized or IIM DigitalDateCreated to
-//				avoid unnecessary PSD full rewrite due to new mapping with xmp:CreateDate.
-// 12-18-09 AWL 5.0-f124 [2505903] Redo the date/time fix to separate Exif DateTimeOriginal and IPTC DateCreated.
-// 12-18-08 AWL 5.0-f010 [1932925] Fix TIFF handler to ignore trailing zero bytes for LONG tag 33723.
-//				Don't parse read-only IPTC if the digest matches, always parse for update.
-// 11-18-08 AWL 5.0-f008 Fix server mode to not delete XMP for non-ASCII input that is ignored.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-// 10-31-08 AWL 5.0-f002 MWG compliance changes: Fix Exif Artist and date/time mapping bugs.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 02-25-08 FNO 4.2-f084 Integrate minor tweaks for Solaris.
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-// 01-16-07 AWL 4.2-f009 [1457497] Fix PSD handler to do in-place update of XMP at the right offset.
-//				Improve ExportIPTC_DateCreated to not create the IPTC time (2:60) unless necessary.
-//
-// 11-30-06 AWL 4.1-f080 [1432298] Preserve UTF-8 characters when truncating values for the IIM limits.
-//				If the truncation would be in the middle of a multi-byte character, back up to the
-//				beginning of that character.
-// 11-16-06 AWL 4.1-f070 [1423378] Fix legacy import/export to catch per-property exceptions and keep going.
-// 11-15-06 AWL 4.1-f068 [1418029] Update the IPTC legacy support to match the IPTC4XMP specification.
-// 11-10-06 AWL 4.1-f066 [1417221] Tweak the "legacy digest missing" logic to import legacy values
-//				that do not have corresponding XMP.
-// 11-09-06 AWL 4.1-f065 [1409584] Add support for storing IPTC using UTF-8. To simplify this, the
-//				only recognized DataSets are now 1:90, 2:0, and the "classic Protoshop" items that
-//				are mapped to XMP.
-// 11-01-06 AWL 4.1-f060 [1409613] Be more lenient about ill-formed IPTC dates.
-// 10-13-06 AWL 4.1-f042 [1388170] Behave the same as Photoshop when the legacy digest is missing.
-//				In this case take the XMP as-is. This accomodates XMP-only editors.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 04-21-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

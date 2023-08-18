@@ -7,38 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//	IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent first.
-//
-// 03-13-14 IJS 5.6-f097 Fix the break after 5.6-f096.
-// 10-03-12 IJS 5.5-f040 Reverting IOBuffer Changes because of perf issues on large PS files.
-// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
-// 09-13-11	AWL	5.5-f029 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-//
-// 08-26-10 AWL 5.2-f008 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.2-f006 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.2-f005 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.2-f004 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.2-f003 Integrate I/O revamp to main.
-//
-// =================================================================================================
-#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

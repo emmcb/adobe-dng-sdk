@@ -4,44 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//	PW  Patrick Wollek
-//	IJS Inder Jeet Singh
-//	JKR Jens Krueger
-//	AB  Amit Bhatti
-//  AJ  Abhishek Jindal
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-06-15 AJ  5.6-f131 Fixing warnings due to implicit typecasting
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 05-06-13 IJS 5.6-f058 Refactoring the GetXMPStandard code as per review comments
-// 04-26-13 IJS 5.6-f056 Make API to access overridden file handler available for public SDK
-// 03-02-13 ADC 5.6-f044 Incorporating Review comments for support for preloading plugins based on handler flags.
-// 02-18-13 JKR 5.6-f037 New plugin entry point InitializePlugin2() which call SetupPlugin().
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "HostAPI.h"
 #include "PluginManager.h"

@@ -23,6 +23,3 @@ _WXMPFiles_SetErrorCallback_1
 _WXMPFiles_ResetErrorCallbackLimit_1
 _WXMPFiles_GetAssociatedResources_1
 _WXMPFiles_IsMetadataWritable_1
-_WXMPFiles_GetAlbumArts_1
-_WXMPFiles_PutAlbumArts_1
-

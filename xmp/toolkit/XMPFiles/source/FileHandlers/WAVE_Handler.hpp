@@ -4,36 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef __WAVE_Handler_hpp__
 #define __WAVE_Handler_hpp__	1
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	SAM Samy Makki
-//  IJS Inder Jeet Singh
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// 09-20-12 IJS 5.5-f035 Add Progress Notification flag to MPEG-4,PSD,AIFF,WAVE,ASF,TIFF,FLV and PS Handlers.
-// 08-03-11 AWL 5.4-f004 Add support for the AES cart chunk in WAV files for real.
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							Adding new WAVE handler based on new IFF common code
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

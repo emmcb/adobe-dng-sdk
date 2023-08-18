@@ -4,28 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-09-12 IJS 5.5-f043 Reverting IOBuffer Changes because of perf issues in large PS files.
-// 10-03-12 IJS 5.5-f041 [3170225] No reconciliation for Date fields if the native date is invalid in PS.
-// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
-// 08-28-12 IJS 5.5-f023 Added Support methods used by Post Script handler when parsing PS files.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "XMPFiles/source/FormatSupport/PostScript_Support.hpp"
 #include "XMP.hpp"
@@ -1046,7 +1026,6 @@ std::string PostScript_Support::ConvertToDate(const char* inString)
 						{
 							break;
 						}
-						
 					}
 				}
 			}

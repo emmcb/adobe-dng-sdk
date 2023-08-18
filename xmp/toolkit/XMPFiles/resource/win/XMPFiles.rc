@@ -10,7 +10,6 @@
 
 #include "../../../build/XMP_BuildInfo.h"
 #include "../../../public/include/XMP_Version.h"
-#include "../../source/XMPFiles_ChangeLog.hpp"
 
 // Defines must be set in project settings: Resources/Preprocessor Definitions
 #if NDEBUG	
@@ -31,13 +30,11 @@
 	#define BINTYPE "32"
 #endif
 
-#define kEngVersion XMPFILES_API_VERSION_STRING "-f" kXMPFiles_EngString " ( "  BINTYPE " bit " kDebugSuffix ")"
-#define kBuildInfo  BUILDVERSIONSTR ", " BUILDDATESTR
-#define	kFileVersion MAKESTR(XMPFILES_API_VERSION.kXMPFiles_EngBuild.BUILDID)
+#define kEngVersion XMPFILES_API_VERSION_STRING " ( "  BINTYPE " bit " kDebugSuffix ")"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION XMPFILES_API_VERSION_MAJOR,XMPFILES_API_VERSION_MINOR,kXMPFiles_EngBuild,BUILDID
- PRODUCTVERSION XMPFILES_API_VERSION_MAJOR,XMPFILES_API_VERSION_MINOR,kXMPFiles_EngBuild
+ FILEVERSION XMPFILES_API_VERSION_MAJOR,XMPFILES_API_VERSION_MINOR
+ PRODUCTVERSION XMPFILES_API_VERSION_MAJOR,XMPFILES_API_VERSION_MINOR
  FILEFLAGSMASK 0x3FL
  FILEOS 0x4L
  FILETYPE 0x2L
@@ -46,21 +43,16 @@ BEGIN
     BLOCK "StringFileInfo"
     BEGIN
         BLOCK "080004b0"
-        BEGIN
-            VALUE "Company", "Adobe Inc\0"
-            VALUE "CompanyName", "Adobe Inc\0"                
+        BEGIN             
         	VALUE "Configuration", kConfig "\0"
-        	VALUE "FileDescription", "Adobe XMP Files " kEngVersion "\0"
-            VALUE "FileVersion", kFileVersion "\0"
-            VALUE "InternalName", "AdobeXMPFiles\0"
+        	VALUE "FileDescription", "XMP Files " kEngVersion "\0"
+            VALUE "FileVersion", kEngVersion  "\0"
+            VALUE "InternalName", "XMPFiles\0"
             VALUE "LegalCopyright", kXMP_CopyrightStr "\0"
-            VALUE "OriginalFilename", "AdobeXMPFiles.dll\0"
-            VALUE "ProductName", "Adobe XMP Files " BUILDDATESTR "\0"
-            VALUE "ProductVersion", BUILDVERSIONSTR "\0"
+            VALUE "OriginalFilename", "XMPFiles.dll\0"
+            VALUE "ProductName", "XMP Files\0"
+            VALUE "ProductVersion", XMPFILES_API_VERSION_STRING "\0"
 			VALUE "BinType", BINTYPE "\0"
-    		VALUE "BuildDate", BUILDDATESTR "\0"
-			VALUE "BuildVersion", BUILDVERSIONSTR "\0"
-			VALUE "BuildID", BUILDIDSTR "\0"
         END
     END
     BLOCK "VarFileInfo"

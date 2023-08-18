@@ -4,37 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef _ChunkPath_h_
 #define _ChunkPath_h_
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JEH Joerg Ehrlich
-//	PW	Patrick Wollek
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// 08-03-11 AWL 5.4-f004 Add support for the AES cart chunk in WAV files for real.
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							New WAVE Handler and Common code refactoring
-//							[2732321] WAV/AIFF: An update causes the file to grow unproportional to the added data
-// 07-28-10	JEH	5.2-f001 Initial creation of new AIFF handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include "public/include/XMP_Const.h"
@@ -70,10 +44,7 @@ enum {
 	kChunk_LIST = 0x4C495354,
 
 	// other relevant chunks
-	kChunk_XMP  	= 0x5F504D58, // "_PMX"
-	kChunk_WebP_XMP = 0x584D5020, // "XMP"
-	kChunk_EXIF  	= 0x45584946, // "EXIF"
-	kChunk_VP8X  	= 0x56503858, // "VP8X"
+	kChunk_XMP  = 0x5F504D58, // "_PMX"
 
 	kChunk_data	= 0x64617461,
 
@@ -105,7 +76,6 @@ enum {
 	kType_AIFC = 0x41494643,
 	kType_INFO = 0x494E464F,
 	kType_Tdat = 0x54646174,
-	kType_WebP = 0x57454250,
 
 	// AIFF
 	kType_XMP  = 0x584D5020,

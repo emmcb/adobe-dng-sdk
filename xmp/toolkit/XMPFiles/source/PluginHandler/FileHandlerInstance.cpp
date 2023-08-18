@@ -4,44 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-09-15 AJ  5.6-f132 Fixing some more warnings due to implicit typecasting
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-28-13 IJS 5.6-f063 Improved error handling in ImportToXMPString call chain.
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 01-11-13 IJS 5.6-f020 Reworked GetFileModDate, GetAssociatedResources and IsMetadataWritable APIs.
-//                       Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 01-02-13 ADC 5.6-f012 Catching error from FillMetadataFiles and returning false.
-// 12-21-12 IJS 5.6-f009 Added FillAssociatedResources support in plugins 
-// 12-17-12 ADC 5.6-f004 Bumping version of XMPFiles Plug-in API to 2.
-//
-// 12-10-12 IJS 5.5-f059 Adding Serialized versions for importToXMP and exportFromXMP Plug-in APIs.
-// 11-05-12 ADC 5.5-f056 XMP Plug-ins support for LocateMetadataFiles API.
-//
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "FileHandlerInstance.h"
 #if EnablePluginManager
@@ -59,8 +23,9 @@ XMPFileHandler( _parent ), mObject( object ), mHandler( handler )
 FileHandlerInstance::~FileHandlerInstance()
 {
 	WXMP_Error error;
-    PluginManager::removeHandlerInstance( this->mObject );
-	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc( this->mObject, &error );
+
+	PluginManager::removeHandlerInstance(this->mObject);
+	mHandler->getModule()->getPluginAPIs()->mTerminateSessionProc(this->mObject, &error);
 	CheckError( error );
 }
 

@@ -4,45 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	FNO Frank Nocke
-//	SAM Samy Makki
-//	PW	Patrick Wollek
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 07-05-12 AWL 5.5-f015 [2999627] Improve ID3 genre handling.
-//
-// 12-02-11 AWL 5.4-f042 Separate ID3_Support header and code.
-// 09-20-11 AWL 5.4-f011 Fix bugs left in ID3 v2.2 support.
-// 09-14-11 AWL 5.4-f010 Finish adding support for ID3 v2.2.
-// 09-06-11 AWL 5.4-f009 Add support for ID3 v2.2 to ID3_Support.hpp.
-//
-// 11-02-10	PW	5.3-f016 [2551447] MP3 handler accepts files with non-standard Frame IDs now.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 02-05-10 AWL 5.1-f003 Fix build warnings from Visual Studio.
-//
-// 10-29-09 SAM 5.0-f095 5.0-f079 Fixing encoding of WCOP tag, it has no encoding byte.
-// 09-10-09 FNO 5.0-f079 Add ID3v1 and ID3v1.1 support to MP3 handler.
-// 11-17-08 FNO 5.0-f006 Move MP3 handler CS5 rewrite from NewHandlers to regular handlers.
-// 10-08-08 FNO 4.4.0 Full rewrite of MP3 handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 
@@ -579,14 +542,6 @@ XMP_Int64 ID3v2Frame::read ( XMP_IO* file, XMP_Uns8 majorVersion )
 		file->Seek ( start, kXMP_SeekFromStart );	// Zero ID must mean nothing but padding.
 		return 0;
 	}
-
-#if AdobePrivate
-	/*	***	TO DO:
-		Ideally, encoding flag should be checked for 0xFF ( $11111111 ) not 0xEE. Can't have any good reason to check it for 0xEE.
-		If any encoding flag bit is set then it shows that frame is not readable.
-		Currently skipping it for future.
-	*/
-#endif
 
 	this->flags = GetUns16BE ( &this->fields[o_flags] );
 	XMP_Validate ( (0 == (this->flags & 0xEE)), "invalid lower bits in frame flags", kXMPErr_BadFileFormat );

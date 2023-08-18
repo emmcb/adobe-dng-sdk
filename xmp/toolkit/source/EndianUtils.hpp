@@ -2,36 +2,13 @@
 #define __EndianUtils_hpp__ 1
 
 // =================================================================================================
-// ADOBE SYSTEMS INCORPORATED
-// Copyright 2006 Adobe Systems Incorporated
+// Copyright Adobe
+// Copyright 2006 Adobe
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  HK  Honey Kansal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-//
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-//
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-//
-// 04-14-06 AWL Extract as separate file from TIFF_Support.cpp.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 #include "public/include/XMP_Const.h"
@@ -72,8 +49,6 @@
 		#elif __GNUC__ && (__sparc__)
 			#define kBigEndianHost 1
 			#define kLittleEndianHost 0
-		 #elif __EMSCRIPTEN__
-			#define kBigEndianHost 0
 		#else
 			#error "Must define kBigEndianHost as 0 or 1 in the makefile."
 		#endif
@@ -112,7 +87,7 @@ typedef void (*PutDouble_Proc) ( double value, void* addr );
 	#define DefineAndGetValue(type,addr)	type value = *((type*)addr)
 	#define DefineAndSetValue(type,addr)	*((type*)addr) = value
 	#define DefineFlipAndSet(type,x,addr)	type* uPtr = (type*) addr; *uPtr = Flip##x ( *uPtr )
-#endif //#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM || XMP_ANDROID_ARM || XMP_ANDROID_ARM
+#endif //#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM || XMP_ANDROID_ARM
 
 // -------------------------------------------------------------------------------------------------
 

@@ -7,56 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 12-04-13 HK  5.6-f085 [3677602] Fixing Unicode conversion issues on IOS.
-// 12-03-09 AWL 5.0-f120 [2499192] Add special case support for exif:ISOSpeedRatings over 65535.
-// 10-08-09 AWL 5.0-f086 [2410350] Tweak MWG policy for better backwards compatibility.
-// 04-20-09 AWL 5.0-f033 [2307195] Add language parameter for Mac text conversions.
-// 03-10-09 AWL 5.0-f027 Initial integration of QuickTime support into MPEG-4 handler.
-// 12-18-08 AWL 5.0-f010 [1932925] Fix TIFF handler to ignore trailing zero bytes for LONG tag 33723.
-//				Don't parse read-only IPTC if the digest matches, always parse for update.
-// 11-18-08 AWL 5.0-f008 Fix server mode to not delete XMP for non-ASCII input that is ignored.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-// 10-31-08 AWL 5.0-f002 MWG compliance changes: Fix Exif Artist and date/time mapping bugs.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-//
-// 11-10-06 AWL 4.1-f066 [1417221] Tweak the "legacy digest missing" logic to import legacy values
-//				that do not have corresponding XMP.
-// 11-01-06 AWL 4.1-f059 [1409577] Fix JPEG and PSD legacy import to better match Photoshop. There
-//				are different JPEG/PSD/TIFF file policies for TIFF tags 270 (dc:description), 315
-//				(dc:creator), and 33432 (dc:rights).
-// 10-18-06 AWL 4.1-f046 [1395599] Add ISO Latin-1 conversions, change ID3 support to use it.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 04-21-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

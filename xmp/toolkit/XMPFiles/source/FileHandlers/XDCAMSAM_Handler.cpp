@@ -4,27 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-17-15 AB  5.6-f135 Fixing XDCAM issue related with release configuration.
-// 02-06-15 AB  5.6-f130 Redesign XDCAM Handler by dividing it into 2 child handlers XDCAMFAM_Handler and XDCAMSAM_Handler and making it more consistent as per latest spec.
-//						 More history could be found at XDCAM_Handler.cpp.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -184,11 +165,6 @@ void XDCAMSAM_MetaHandler::SetPathVariables ( const std::string & clientPath )
 		// XNP sidecar file will be ..PROAV//CLPR//clipName//clipNameM01.XMP
 		size_t length = leafName.length();
 
-#if AdobePrivate 
-		// We don't support Alias.XML in SAM because we don't have latest spec about Alias.XML in SAM
-		// But its existance in SAM is cleared in Latest spec in Professional Memory XDCAM 2011 while comparing it with Disk
-#endif
-
 		XMP_Assert ( IsDigit( leafName.at( length - 2 ) ) && IsDigit( leafName.at( length - 1 ) ) );
 		// Last 3rd character of file will inform us about its type
 		const char fileType = leafName.at( length - 3 );
@@ -281,9 +257,6 @@ void XDCAMSAM_MetaHandler::FillAssociatedResources(  std::vector<std::string> * 
 	PackageFormat_Support::AddResourceIfExists(resourceList, this->sidecarPath);
 	
 	// Add the Edit lists that refer this clip
-#if AdobePrivate
-	// Arbitrary file name for Edit not covered as No spec correctly says about Alias.XML file in SAM
-#endif
 	std::vector<std::string> editInfoList;
 	if( GetEditInfoFiles ( editInfoList ) )
 	{

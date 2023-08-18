@@ -10,7 +10,6 @@
 
 #include "../../../build/XMP_BuildInfo.h"
 #include "../../../public/include/XMP_Version.h"
-#include "../../source/XMPCore_ChangeLog.hpp"
 
 // Defines must be set in project settings: Resources/Preprocessor Definitions
 #if DEBUG
@@ -27,13 +26,11 @@
 	#define BINTYPE "32"
 #endif
 
-#define kEngVersion XMPCORE_API_VERSION_STRING "-c" kXMPCore_EngString " ( "  BINTYPE " bit " kDebugSuffix ")"
-#define kBuildInfo  BUILDVERSIONSTR ", " BUILDDATESTR
-#define	kFileVersion MAKESTR(XMPCORE_API_VERSION.kXMPCore_EngBuild.BUILDID)
+#define kEngVersion XMPCORE_API_VERSION_STRING  " ( "  BINTYPE " bit " kDebugSuffix ")"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION XMPCORE_API_VERSION_MAJOR,XMPCORE_API_VERSION_MINOR,kXMPCore_EngBuild,BUILDID
- PRODUCTVERSION XMPCORE_API_VERSION_MAJOR,XMPCORE_API_VERSION_MINOR,kXMPCore_EngBuild
+ FILEVERSION XMPCORE_API_VERSION_MAJOR,XMPCORE_API_VERSION_MINOR
+ PRODUCTVERSION XMPCORE_API_VERSION_MAJOR,XMPCORE_API_VERSION_MINOR
  FILEFLAGSMASK 0x3FL
  FILEOS 0x4L
  FILETYPE 0x2L
@@ -43,20 +40,15 @@ BEGIN
     BEGIN
         BLOCK "080004b0"
         BEGIN
-            VALUE "Company", "Adobe Inc\0"
-            VALUE "CompanyName", "Adobe Inc\0"
         	VALUE "Configuration", kConfig "\0"
-            VALUE "FileDescription", "Adobe XMP Core " kEngVersion "\0"
-            VALUE "FileVersion", kFileVersion "\0"
-            VALUE "InternalName", "AdobeXMPCore\0"
+            VALUE "FileDescription", "XMP Core " kEngVersion "\0"
+            VALUE "FileVersion", kEngVersion  "\0"
+            VALUE "InternalName", "XMPCore\0"
             VALUE "LegalCopyright", kXMP_CopyrightStr "\0"
-            VALUE "OriginalFilename", "AdobeXMP.dll\0"
-            VALUE "ProductName", "Adobe XMP Core " BUILDDATESTR "\0"
-            VALUE "ProductVersion", BUILDVERSIONSTR "\0"
+            VALUE "OriginalFilename", "XMPCore.dll\0"
+            VALUE "ProductName", "XMP Core\0"
+            VALUE "ProductVersion", XMPCORE_API_VERSION_STRING "\0"
 			VALUE "BinType", BINTYPE "\0"
-			VALUE "BuildDate", BUILDDATESTR "\0"
-	        VALUE "BuildVersion", BUILDVERSIONSTR "\0"
-			VALUE "BuildID", BUILDIDSTR "\0"
         END
     END
     BLOCK "VarFileInfo"

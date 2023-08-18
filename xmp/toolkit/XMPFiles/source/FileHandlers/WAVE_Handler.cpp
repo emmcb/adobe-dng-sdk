@@ -4,35 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	SAM Samy Makki
-//  IJS Inder Jeet Singh
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// 09-20-12 IJS 5.5-f036 [3333897]Progress Notifications change to add some work ( for File Handlers
-//						  incapable of kXMPFiles_CanRewrite ) inside XMPFiles::CloseFile.
-// 09-04-12 IJS 5.5-f025 Add file update progress tracking to the AIFF and WAVE handler.
-// 11-22-11 SAM 5.4-f039 [3014738] RIFF: always read/write the last chunk if there are duplicates
-// 08-03-11 AWL 5.4-f004 Add support for the AES cart chunk in WAV files for real.
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							Adding new WAVE handler based on new IFF common code
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

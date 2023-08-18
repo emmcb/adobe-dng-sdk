@@ -7,27 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-09-12 IJS 5.5-f043 Reverting IOBuffer Changes because of perf issues in large PS files.
-// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
-// 08-28-12 IJS 5.5-f023 Added Support methods used by Post Script handler when parsing PS files.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	
 
@@ -166,7 +147,7 @@ static const std::string kPS_XMPHintMainLast="%ADO_ContainsXMP: MainLast\n";
 // embedd xpacket in EPS files.the xpacket is written inbetween kEPS_Injectdata1 and kEPS_Injectdata2.
 // The tokens kPS_Injectdata1 and kPS_Injectdata2 are used to embedd xpacket in DSC compliant PS files
 // The code inside the tokens is taken from examples in XMP Spec part 3 
-// section 2.6.2 PS, EPS (PostScript® and Encapsulated PostScript)
+// section 2.6.2 PS, EPS (PostScript and Encapsulated PostScript)
 static const std::string kEPS_Injectdata1="\n/currentdistillerparams where\n"
 "{pop currentdistillerparams /CoreDistVersion get 5000 lt} {true} ifelse\n"
 "{userdict /EPSHandler1_pdfmark /cleartomark load put\n"

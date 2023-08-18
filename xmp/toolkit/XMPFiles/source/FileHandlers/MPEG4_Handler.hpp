@@ -7,43 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-21-14 AB  5.6.f120 [3836549] Making kXMPFiles_OptimizeFileLayout public for XMP SDK.
-// 09-20-12 IJS 5.5-f035 Add Progress Notification flag to MPEG-4,PSD,AIFF,WAVE,ASF,TIFF,FLV and PS Handlers.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 10-06-09 AWL 5.0-f083 Add MPEG-4 support for kXMPFiles_OptimizeFileLayout.
-// 09-24-09 AWL 5.0-f081 Revamp MPEG-4 handler to keep the entire 'moov' subtree in memory.
-// 08-24-09 AWL 5.0-f069 Add support for QuickTime timecode information.
-// 03-10-09 AWL 5.0-f027 Initial integration of QuickTime support into MPEG-4 handler.
-//
-// 01-21-08 AWL 4.2-f058 Global tweak to have the handler's packetInfo always refer to the file.
-// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
-//				handlers they must use the parent pointer in the XMPFileHandler base class.
-// 01-15-08 AWL 4.2-f056 [1665011] Fix assertions failures in MPEG-4.
-// 12-21-07 AWL 4.2-f049 First working version of MPEG-4 handler, still under NewHandlers.
-// 11-13-07 AWL 4.2-f035 Add MPEG-4 skeleton handler. Rename MPEG handler to MPEG-2.
-// 09-15-06 ALB Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "XMPFiles/source/XMPFiles_Impl.hpp"
 
@@ -110,19 +75,9 @@ private:
 
 	MPEG4_MetaHandler() : fileMode(0), havePreferredXMP(false),
 						  xmpBoxPos(0), moovBoxPos(0), xmpBoxSize(0), moovBoxSize(0)
-#if AdobePrivate
-	, metaBoxSize(0)
-#endif
 	{};	// Hidden on purpose.
 
-#if AdobePrivate
-	bool ParseAndValidateSemiProXML();
-#endif
-
 	bool ParseTimecodeTrack();
-#if AdobePrivate
-	bool ParseVideoTrack ( XMP_Int32 * matrix  );
-#endif
 	void UpdateTopLevelBox ( XMP_Uns64 oldOffset, XMP_Uns32 oldSize, const XMP_Uns8 * newBox, XMP_Uns32 newSize );
 
 	void OptimizeFileLayout();
@@ -133,26 +88,12 @@ private:
 	XMP_Uns64 moovBoxPos;	// The file offset of the 'moov' box (the size field, not the content).
 	XMP_Uns32 xmpBoxSize, moovBoxSize;	// The full size of the boxes, not just the content.
 	
-#if AdobePrivate
-	XMP_Uns32  metaBoxSize;
-#endif
-
 	MOOV_Manager moovMgr;
 
-#if AdobePrivate
-	Meta_Manager metaMgr;
-
-#if EnableITunesMetadata
-	iTunes_Manager iTunesMgr;
-#endif
-#endif
 	TradQT_Manager tradQTMgr;
 
 	TimecodeTrackInfo tmcdInfo;
 
-#if AdobePrivate
-	ISOMedia::SemiProXMLMeta	semiProXml;
-#endif
 };	// MPEG4_MetaHandler
 
 // =================================================================================================

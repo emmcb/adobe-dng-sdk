@@ -4,82 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  GEM Gerry Miller
-//  AWL Alan Lillich
-//  JEH Joerg Ehrlich
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	HK	Honey Kansal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-// 02-08-13 HK  5.6-f032 Rework for SonyHDV and XDCAM-EX spanning support in GetAssociatedResources() API.
-// 01-29-13 HK  5.6-f027 [3491927] Support spanning for XDCAM-EX GetAssociatedResources() API.
-// 01-22-13 HK  5.6-f025 Rework of GetAssociatedResources() API done for XDACM-EX and P2 formats.
-// 01-16-13 HK 5.6-f022 Implemented IsMetadataWritable API for XDCAM-EX, P2, CanonXF and AVCHD formats.
-// 01-10-13 HK 5.6-f019 Worked on comments in review#1094601:"Added GetAssociatedResources API for XDCAM-EX format."
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 01-04-13 HK 5.6-f017 [3435502] For XDCAM_EX folder format, GetAssociatedResources API should also return the path to the folder "ClipName/TAKR".
-// 01-02-13 HK 5.6-f013 Create PackageFormat_Support namespace to have common code for folder based handlers.
-// 01-02-13 HK 5.6-f010 [3429813] Added GetAssociatedResources API for XDCAM-EX format.
-// 12-13-12 IJS 5.6-f003 [3424244] Fixed initialization of XDCAMEX Handler which was causing a crash.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 09-19-12 AWL 5.5-f033 [3211021] Fix the folder handlers complain about read-only XMP files when opening for update.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-// 01-16-12	JEH	5.5-f004 [3081444] Fix GetFileModDate for XDCAM_EX
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 10-21-11 AWL 5.4-f027 [2891842] Fix case sensitivity in Canon XF and XDCAM EX handlers.
-// 09-30-11 AWL 5.4-f017 Add XDCAM (EX/FAM/SAM) support for GetFileModDate.
-//
-// 11-24-10	AWL	5.3-f020 [2755623,2755632] Add XDCAM fixes for non-XMP metadata problems.
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 03-03-08 AWL 4.2-f088 [1704032] Fix references to legacy .XML file in the XDCAM handlers.
-// 02-28-08 AWL 4.2-f087 [1704032] Fix P2 and XDCAM code to check for NULL pointers from XML tree methods.
-//				Fix SelectSmartHandler to differentiate file-oriented and folder-oriented cases, the
-//				check procs have different parameters.
-// 02-25-08 AWL 4.2-f083 [1692876] Fix XDCAMEX_CheckFormat to be case insensitive for BPAV.
-// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
-//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
-// 02-20-08 AWL 4.2-f080 [1692876] Fix XDCAMEX_CheckFormat to handle both logical and full file paths
-//				properly. It was appending an extra "/BPAV" component to full file paths.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
-// 01-11-08 GEM Add basic XDCAMEX handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

@@ -4,62 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//  HK  Honey Kansal
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-// 06-18-13 ADC 5.6-f068 [3556901] Save Metadata for some JPGs fails.
-//
-// 12-19-11 AWL 5.4-f043 [1274437] Make the Exif processing tolerant of numeric tags with unexpected type.
-// 12-01-11 AWL 5.4-f041 [2715712] Ignore a bad IFD offset for the GPS and Interoperability IFDs.
-// 10-11-11 AWL 5.4-f020 [2918493] Make the TIFF support ignore tags with bad info instead of throwing an exception.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-//
-// 06-28-10 AWL 5.1-f011 [2610127] Fix TIFF parsing length checks to be more accurate and robust.
-//
-// 11-20-09 AWL 5.0-f118 [2418287] Trim padding from Nikon full Exif APP1.
-// 08-25-09 AWL 5.0-f072 [2369357] Fix TIFF_MemoryReader to be more robust for bad files.
-//
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 01-30-08 AWL 4.2-f066 [1648922] Fix TIFF_MemoryReader to not assume pointers are 32-bit.
-//
-// 11-30-06 AWL 4.1-f078 [1432498] Fix the JPEG thumbnail recognition broken in 4.1-f075.
-// 11-27-06 AWL 4.1-f075 [1429154] Make the TIFF parser tolerate no IFDs and empty IFDs. Both are
-//				formally invalid, but there are real world instances that we need to accept.
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-// 08-24-06 AWL 4.1-f030 Fix problems with the TIFF condensed rewrite code. This lets the JPEG save
-//				logic work properly when the TIFF appends cause it to exceed 64K.
-//
-// 06-07-06 AWL 4.0-f010 Improve the Unicode conversions.
-// 04-20-06 AWL Change GetIFD to return a map instead of a vector.
-// 04-19-06 AWL Change GetTag_ASCII to return ptr/size pair instead of std::string.
-// 04-14-06 AWL Split from TIFF_Support.cpp.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-27-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

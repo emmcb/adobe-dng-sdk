@@ -1,7 +1,7 @@
 ; Declares the entry points for the DLL.
-; Highest index: 27, WXMPFiles_PutAlbumArts_1
+; Highest index: 25, WXMPFiles_IsMetadataWritable_1
 
-LIBRARY   AdobeXMPFiles
+LIBRARY   XMPFiles
 
 EXPORTS
 
@@ -36,5 +36,4 @@ EXPORTS
 
 		WXMPFiles_GetAssociatedResources_1     @24
 		WXMPFiles_IsMetadataWritable_1         @25
-		WXMPFiles_GetAlbumArts_1			   @26
-		WXMPFiles_PutAlbumArts_1			   @27
+		

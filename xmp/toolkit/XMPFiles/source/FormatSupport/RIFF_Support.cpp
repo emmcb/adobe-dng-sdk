@@ -4,54 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 12-15-09 AWL 5.0-f122 [2500563] Force WAV text chunks to have even size.
-// 11-19-09 AWL 5.0-f117 [2480909] Fix AVI problems with LIST:INFO placement.
-// 11-17-09 SAM 5.0-f113 [2457482] Ignore reading cr8r and prml chunks with wrong size.
-// 11-16-09 AWL 5.0-f111 [2457482] Finish support to read and write Cr8r chunk in AVI and WAV.
-// 11-06-09 FNO 5.0-f105 [2473381] Fixed Cr8r,PrmL,TDat last-chunk-creation.
-// 11-06-09 FNO 5.0-f103 [2457482] Cr8r,PrmL read support.
-// 11-03-09 FNO 5.0-f097 RIFF: Minor functional optimizations, comments, indentation, cleanup.
-// 10-30-09 FNO 5.0-f096 [2465689] Fix avi indices. Metadata export re-enabled.
-// 10-26-09 FNO 5.0-f094 [2435625] RIFF: Prevent breaking index chunks.
-// 10-23-09 FNO 5.0-f092 RIFF: Substantial rewrite of chunk logic to prepare for index adjustments.
-// 10-14-09 FNO 5.0-f088 Fix x64 compiler warnings in RIFF handler.
-// 10-13-09 FNO 5.0-f087 [2414649] Fix "Bad Assert error".
-// 08-22-09 FNO 5.0-f073 [2389942]ServerMode: XMP props are not preserved if nothing is imported.
-// 08-21-09 FNO 5.0-f068 RIFF-Handler: Fix leak un invalid odd-byte umid.
-// 08-21-09 FNO 5.0-f067 RIFF-Handler: Fix leak when encountering invalid umid.
-// 08-20-09 FNO 5.0-f066 RIFF-Handler: Edge case: First chunk is JUNK.
-// 08-20-09 FNO 5.0-f065 RIFF-Handler: Fix three minor bugs found in code review.
-// 08-19-09 FNO 5.0-f064 RIFF-Handler: Add bext chunk write support.
-// 08-18-09 FNO 5.0-c050f63 RIFF-Handler: Add full bext chunk read support.
-// 07-29-09 FNO 5.0-f058 [2389942] XMP props not properly preserved in ServerMode.
-// 07-27-09 FNO 5.0-f057 Implement ServerMode, reconciliation precedence, prior digests.
-// 07-16-09 FNO 5.0-f056 [2376832] JUNK padding chunks... now also fixed for WAV(DISP chunk). Code simplified.
-// 07-15-09 FNO 5.0-f055 [2376832] JUNK padding chunks are not used effectivly. File grows.
-// 07-13-09 FNO 5.0-f054 Store XMP and Legacy redundantly (instead of non-redundantly).
-// 07-10-09 FNO 5.0-f052 Move RIFF (AVI/WAV) handler from NewHandlers to regular Handlers.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -248,7 +202,7 @@ static std::string nativePropertyToUTF8 ( XMP_StringPtr cstring, XMP_StringLen m
 	{
 		if ( ! ignoreLocalText )
 		{
-			#if ! ( UNIX_ENV  || WEB_ENV )// n/a anyway, since always ignoreLocalText on Unix
+			#if ! UNIX_ENV // n/a anyway, since always ignoreLocalText on Unix
 				ReconcileUtils::LocalToUTF8( cstring, size, &utf8 );
 			#endif
 		}

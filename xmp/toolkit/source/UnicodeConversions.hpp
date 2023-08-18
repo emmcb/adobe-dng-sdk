@@ -6,32 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 06-07-06 AWL 4.0-c007-f010 Improve the Unicode conversions.
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-28-05 AWL 3.2-001 Remove BIB.
-// 02-02-05 AWL 3.1.1-110 [1145657] Add UTF8_to_UTF16 and UTF8_to_UTF16 to convert std::string values.
-// 12-09-04 AWl 3.1.1-099 [1041438] Add parsing and serialization support for UTF-16 and UTF-32.
-// 12-06-04 AWL Cleanup for toolkit builds.
-// 11-30-04 AWL Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include <string>
 

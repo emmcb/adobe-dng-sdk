@@ -7,66 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//	IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 01-30-13 IJS 5.6-f029 Removed LocateMetadataFiles API from XMPFiles
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 12-21-12 IJS 5.6-f008 Added GetAssociatedResources and IsWritable APIs 
-//
-// 09-28-12 AWL 5.5-f039 Add LocateMetadataFiles.
-// 09-28-12 ADC 5.5-f038 Implement public API and glue layer for XMPFiles error notifications.
-// 06-20-12 AWL 5.5-f018 Add outer layers for XMPFiles progress notifications, no handlers use it yet.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 05-21-09 AWL 5.0-f040 Revamp glue again to pass SetClientString with each function.
-// 05-19-09 AWL 5.0-f039 First part of threading improvements, revamp the client glue.
-// 05-12-09 AWL 5.0-f037 Finish deprecated function removal.
-//
-// 02-11-08 AWL 4.2-f071 Enable SXMPFiles::CheckFileFormat, the leaks were not real.
-// 01-28-08 AWL 4.2-f062 Add public CheckFileFormat and CheckPackageFormat functions.
-// 01-11-07 AWL 4.2-f007 [1454747] Change QuickTime init/term calls to handle main and background thread issues.
-//
-// 07-17-06 AWL [1333591] Remove the assignment in GetXMP to clear the client XMP, go back to using
-//				SXMPUtils::RemoveProperties. (Which is what DocMetaLib did.)
-// 05-30-06 AWL Change the "opening constructor" to throw if OpenFile returns false.
-// 05-19-06 AWL 4.0-f006 Change XMPFiles::OpenFile to return bool, don't throw if smart handler not
-//				found when kXMPFiles_OpenUseSmartHandler is passed.
-// 04-07-06 AWL 4.0-f002 Add XMPFiles::GetThumbnail. Change XMPFiles::OpenFile to close the disk file
-//				early for read-only access. Change XMPFileHandler::ExtractXMP to CacheFileData.
-// 03-24-06 AWL 4.0 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 07-21-05 AWL 1.3-001 Extract code from TXMPFiles.incl_cpp.
-//
-// 06-03-05 AWL 1.2-060 [1157869] Make sure destructors deallocate everything and clear pointers.
-//
-// 10-08-04 AWL 1.0-010 Add thread locking.
-// 10-07-04 AWL 1.0-008 Add missing SetAbortProc in WXMPFiles.cpp and export lists.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-//
-// 08-23-04 AWL Add GetVersion.
-// 08-20-04 AWL Add handlerFlags output to GetFileInfo.
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 06-23-04 AWL Started first draft.
-// =================================================================================================
-#endif // AdobePrivate
-
 //  ================================================================================================
 /// \file TXMPFiles.incl_cpp
 /// \brief The implementation of the TXMPFiles template class.
@@ -126,45 +66,6 @@ SetClientStringVector ( void * clientPtr, XMP_StringPtr * arrayPtr, XMP_Uns32 st
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-XMP_MethodIntro(TXMPFiles,void)::
-PushArtInfo1 (  void * clientPtr, XMP_Uns32 imageLength,
-					XMP_StringPtr description, XMP_StringLen descLen,
-					XMP_Uns8 usageType, XMP_Uns8 formatType,
-					XMP_Uns8 encodingType, XMP_BinaryData imageData )
-{
-	std::vector<SXMPAlbumArt>* clientVec = (std::vector<SXMPAlbumArt>*) clientPtr;
-	tStringObj strDesc;
-	strDesc.assign( description, descLen );
-	if ( imageLength != 0 && imageData != NULL )
-		clientVec->push_back ( SXMPAlbumArt ( imageLength, imageData, true, usageType, formatType, strDesc, encodingType) );	
-	else
-		clientVec->push_back ( SXMPAlbumArt ( imageLength, imageData, false, usageType, formatType, strDesc, encodingType) );
-}
-
-// -------------------------------------------------------------------------------------------------
-
-XMP_MethodIntro(TXMPFiles,void)::
-GetArtInfo1 (   void * clientPtr, XMP_Uns32 indexVector, XMP_Uns32 * imageLength,
-				XMP_StringPtr * description, XMP_StringLen * descLen,
-				XMP_Uns8 * usageType, XMP_Uns8 * formatType,
-				XMP_Uns8 * encodingType, XMP_BinaryData * imageData )
-{
-	std::vector<SXMPAlbumArt>* clientVec = (std::vector<SXMPAlbumArt>*) clientPtr;
-	if ( indexVector < clientVec->size() )
-	{
-		*imageLength = clientVec->at(indexVector).GetImageData(imageData);
-		*description = clientVec->at(indexVector).description.c_str();
-		*descLen = (XMP_Uns32)clientVec->at(indexVector).description.length();
-		*usageType = clientVec->at(indexVector).usageType;
-		*formatType = clientVec->at(indexVector).formatType;
-		*encodingType = clientVec->at(indexVector).encodingType;
-	}	
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
 
 XMP_MethodIntro(TXMPFiles,void)::
 GetVersionInfo ( XMP_VersionInfo * versionInfo )
@@ -424,27 +325,6 @@ OpenFile ( const tStringObj & filePath,
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-XMP_MethodIntro(TXMPFiles,bool)::
-GetAlbumArts ( std::vector<SXMPAlbumArt> * albumArtVector )
-{
-	albumArtVector->clear();
-	WrapCheckBool ( ok, zXMPFiles_GetAlbumArts_1( albumArtVector, PushArtInfo1 ) );
-	return ok;
-}
-
-// -------------------------------------------------------------------------------------------------
-
-XMP_MethodIntro(TXMPFiles,bool)::
-PutAlbumArts ( const std::vector<SXMPAlbumArt> & albumArtVector )
-{
-	WrapCheckBool ( ok, zXMPFiles_PutAlbumArts_1( (void *)&albumArtVector, static_cast< XMP_Uns32 >( albumArtVector.size() ), GetArtInfo1 ) );
-	return ok;
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
 
 #if XMP_StaticBuild	// ! Client XMP_IO objects can only be used in static builds.
 XMP_MethodIntro(TXMPFiles,bool)::

@@ -7,79 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	FNO Frank Nocke
-//	IJS Inder Jeet Singh
-//	ADC Amandeep Chawla
-//  HK  Honey Kansal
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-// 06-18-13 ADC 5.6-f068 [3556901] Save Metadata for some JPGs fails.
-//
-// 09-14-11	AWL	5.5-f030 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-// 09-04-12 IJS 5.5-f028 Add file update progress tracking to the TIFF handler.
-//
-// 12-19-11 AWL 5.4-f043 [1274437] Make the Exif processing tolerant of numeric tags with unexpected type.
-// 07-27-11 AWL 5.4-f002 Add support for new and modified Exif 2.3 tags.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 01-07-09 AWL 5.0-f017 [1937288] Fix import and export of exif:UserComment. Fix deletion of entire IFD.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 03-03-08 AWL 4.2-f090 [1706551] Fix empty XMP and legacy handling for JPEG, PSD, and TIFF.
-// 02-25-08 FNO 4.2-f084 Integrate minor tweaks for Solaris.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 01-30-08 AWL 4.2-f066 [1648922] Fix TIFF_MemoryReader to not assume pointers are 32-bit.
-// 01-30-08 AWL 4.2-f064 [1643402] Don't write IIM or PSIR blocks into DNG files.
-//
-// 11-27-06 AWL 4.1-f075 [1429154] Make the TIFF parser tolerate no IFDs and empty IFDs. Both are
-//				formally invalid, but there are real world instances that we need to accept.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-// 08-24-06 AWL 4.1-f030 Fix problems with the TIFF condensed rewrite code. This lets the JPEG save
-//				logic work properly when the TIFF appends cause it to exceed 64K.
-// 08-18-06 AWL 4.1-f026 [1352603] Add support for rewriting a full TIFF memory stream. This handles
-//				edit-by-append overflow of the Exif in JPEG files. And as a side effect adds support
-//				for wack-o JPEG files that have no initial Exif section. Fix related bugs in the
-//				JPEG handler for writing files that have no Exif/PSIR/IPTC.
-//
-// 06-09-06 AWL 4.0-f011 Add hackery to support TIFF files written by Photoshop 6.
-// 06-07-06 AWL 4.0-f010 Improve the Unicode conversions.
-// 05-22-06 AWL Collapse the derived class tree to just a memory reader and general manager.
-// 04-20-06 AWL Change GetIFD to return a map instead of a vector.
-// 04-19-06 AWL Change GetTag_ASCII to return ptr/size pair instead of std::string.
-// 04-13-06 AWL Start real work. Document the class layout, implement TIFF_MemoryReader.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-27-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 
@@ -168,10 +97,9 @@ enum {	// Constants for the type field of a tag, as defined by TIFF.
 
 static const size_t kTIFF_TypeSizes[]    = { 0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8, 4 };
 
-/*increasing the size of the array by 1 to fix CT-4170441*/
-static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 , 0};
-static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 , 0};
-static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 , 0};
+static const bool kTIFF_IsIntegerType[]  = { 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0 ,0 };
+static const bool kTIFF_IsRationalType[] = { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0 ,0 };
+static const bool kTIFF_IsFloatType[]    = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 ,0 };
 
 static const char * kTIFF_TypeNames[] = { "ShortOrLong", "BYTE", "ASCII", "SHORT", "LONG", "RATIONAL",
 										  "SBYTE", "UNDEFINED", "SSHORT", "SLONG", "SRATIONAL",
@@ -263,9 +191,9 @@ enum {
 	kTIFF_RelatedSoundFile = 40964,
 	kTIFF_DateTimeOriginal = 36867,
 	kTIFF_DateTimeDigitized = 36868,
-    kTIFF_OffsetTime = 36880,
-    kTIFF_OffsetTimeOriginal = 36881,
-    kTIFF_OffsetTimeDigitized = 36882,
+	kTIFF_OffsetTime = 36880,
+	kTIFF_OffsetTimeOriginal = 36881,
+	kTIFF_OffsetTimeDigitized = 36882,
 	kTIFF_SubSecTime = 37520,
 	kTIFF_SubSecTimeOriginal = 37521,
 	kTIFF_SubSecTimeDigitized = 37522,
@@ -439,9 +367,9 @@ static const XMP_Uns16 sKnownExifIFDTags[] =
 	kTIFF_ExifVersion,					// 36864
 	kTIFF_DateTimeOriginal,				// 36867
 	kTIFF_DateTimeDigitized,			// 36868
-    kTIFF_OffsetTime,                   // 36880
-    kTIFF_OffsetTimeOriginal,           // 36881
-    kTIFF_OffsetTimeDigitized,          // 36882
+	kTIFF_OffsetTime,                   // 36880
+	kTIFF_OffsetTimeOriginal,           // 36881
+	kTIFF_OffsetTimeDigitized,          // 36882
 	kTIFF_ComponentsConfiguration,		// 37121
 	kTIFF_CompressedBitsPerPixel,		// 37122
 	kTIFF_ShutterSpeedValue,			// 37377
@@ -594,7 +522,8 @@ public:
 	bool IsBigEndian() const { return this->bigEndian; };
 	bool IsLittleEndian() const { return (! this->bigEndian); };
 	bool IsNativeEndian() const { return this->nativeEndian; };
-    bool IsCheckTagLength () const { return this->checkTagLength; }
+	bool IsCheckTagLength () const { return this->checkTagLength; }
+
 
 	// ---------------------------------------------------------------------------------------------
 	// The TIFF_Manager only keeps explicit knowledge of up to 4 IFDs:
@@ -640,10 +569,9 @@ public:
 	// new tag will have type short or long.
 
 	virtual bool GetTag_Integer ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_Uns32* data ) const = 0;
-    
-    virtual XMP_Uns32 GetTiffLength () const = 0;
-    
-    virtual XMP_Uns8* GetTiffStream () const = 0;
+	virtual XMP_Uns32 GetTiffLength() const = 0;
+
+	virtual XMP_Uns8 *GetTiffStream() const = 0;
 
 	void SetTag_Integer ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_Uns32 data );
 
@@ -758,7 +686,7 @@ public:
 protected:
 
 	bool bigEndian, nativeEndian;
-    bool checkTagLength { false };
+	bool checkTagLength { false }; 
 
 	XMP_Uns32 CheckTIFFHeader ( const XMP_Uns8* tiffPtr, XMP_Uns32 length );
 		// The pointer is to a buffer of the first 8 bytes. The length is the overall length, used
@@ -820,10 +748,9 @@ public:
 	bool GetTag_ASCII ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_StringPtr* dataPtr, XMP_StringLen* dataLen ) const;
 
 	bool GetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, std::string* utf8Str ) const;
-    
-    XMP_Uns32 GetTiffLength () const { return tiffLength; }
-    
-    XMP_Uns8* GetTiffStream () const { return tiffStream; }
+	XMP_Uns32 GetTiffLength() const { return tiffLength; }
+
+	XMP_Uns8 *GetTiffStream() const { return tiffStream; }
 
 	void SetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, const std::string& utf8Str, XMP_Uns8 encoding ) { NotAppropriate(); };
 
@@ -839,7 +766,7 @@ public:
 	XMP_Uns32 UpdateMemoryStream ( void** dataPtr, bool condenseStream = false ) { if ( dataPtr != 0 ) *dataPtr = tiffStream; return tiffLength; };
 	void      UpdateFileStream   ( XMP_IO* fileRef, XMP_ProgressTracker* progressTracker ) { NotAppropriate(); };
 
-	TIFF_MemoryReader() : ownedStream(false), tiffStream(0), tiffLength(0) {
+	TIFF_MemoryReader() : ownedStream(false), tiffStream(0), tiffLength(0) { 
         checkTagLength = true;
     };
 
@@ -935,12 +862,11 @@ public:
 	bool GetTag_ASCII ( XMP_Uns8 ifd, XMP_Uns16 id, XMP_StringPtr* dataPtr, XMP_StringLen* dataLen ) const;
 
 	bool GetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, std::string* utf8Str ) const;
+	XMP_Uns32 GetTiffLength() const { return tiffLength; }
 
-    XMP_Uns32 GetTiffLength () const { return tiffLength; }
-    
-    XMP_Uns8* GetTiffStream () const { return memStream; }
-    
-    void SetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, const std::string& utf8Str, XMP_Uns8 encoding );
+	XMP_Uns8 *GetTiffStream() const { return memStream; }
+
+	void SetTag_EncodedString ( XMP_Uns8 ifd, XMP_Uns16 id, const std::string& utf8Str, XMP_Uns8 encoding );
 
 	bool IsChanged() { return this->changed; };
 

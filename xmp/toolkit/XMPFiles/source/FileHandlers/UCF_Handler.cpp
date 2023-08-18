@@ -4,42 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // ===============================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  FNO Frank Nocke
-//	JEH	Joerg Ehrlich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 06-28-12 JEH	5.5-f020 Adding acceptance for mimetypes of Adobe Touch Apps: Collage, Ideas, Proto
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 07-01-09 JEH 5.0-f051 Fix wrong deallocation of variable mimetype in CheckFormat
-// 06-12-09 FNO 5.0-f044 [2277195] Add XMP Support for UCF(based) .idap and .icap CS5 file formats.
-// 07-03-08 FNO 4.4-f002 [1832465] enabling CS4 InCopy extensions (UCF+XML).
-// 04-11-08 FNO 4.2.2-f104 [1720135] Integrate large ucf (zip-64) support. LFA_Routines to source/LargeFileAccess.cpp|hpp.
-// 03-27-08 FNO 4.2-f097 UCF handler: tolerate extranous \0xA on mimetype [16980028].
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 10-16-07 FNO 4.2-f028 UCF read-only in NewHandlers(not final), added LFA_Read* convenience routines to XMPFiles
-// 10-09-07 FNO 4.2-f026 Added UCF draft to NewHandlers.
-// 09-17-07 FNO initial creation in new handlers
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -522,8 +488,9 @@ void UCF_MetaHandler::CacheFileData()
 					}
 
 					have = CHUNK - strm.avail_out;
-					if ((bytesWritten + have) > sizeUncompressed)
+					if ((bytesWritten + have) > sizeUncompressed){
 						XMP_Throw("UCF Bad XMP block", kXMPErr_BadBlockFormat);
+					}
 					memcpy( (unsigned char*) packetStr + bytesWritten , out , have );
 					bytesWritten += have;
 
@@ -621,10 +588,9 @@ void UCF_MetaHandler::UpdateFile ( bool doSafeUpdate )
 		unsigned int have;
 		z_stream strm;
 		unsigned char out[CHUNK];
-        /* initilalisation for fix to CT-4170441*/
-        strm.total_out = 0;
-        strm.total_in = 0;
-
+		/* initilalisation for fix to CTECHXMP-4170441*/
+		strm.total_out = 0;
+		strm.total_in = 0;
 
 		/* allocate deflate state */
 		strm.zalloc = Z_NULL; strm.zfree = Z_NULL; strm.opaque = Z_NULL;
@@ -652,10 +618,9 @@ void UCF_MetaHandler::UpdateFile ( bool doSafeUpdate )
 		XMP_Enforce(strm.avail_in == 0);		// all input will be used
 		(void)deflateEnd(&strm);				//clean up (do prior to checks)
 
-        finalPacketStr = compressedPacket.c_str();
-        finalPacketLen = (XMP_StringLen)compressedPacket.size();
+		finalPacketStr = compressedPacket.c_str();
+		finalPacketLen = (XMP_StringLen)compressedPacket.size();
 	}
-
 
 	PutUns32LE ( uncomprPacketLen,	&xmpFileHeader.fields[FileHeader::o_sizeUncompressed] );
 	PutUns32LE ( finalPacketLen,	&xmpFileHeader.fields[FileHeader::o_sizeCompressed]   );

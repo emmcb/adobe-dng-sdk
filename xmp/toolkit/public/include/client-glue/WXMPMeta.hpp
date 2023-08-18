@@ -6,9 +6,7 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "client-glue/WXMP_Common.hpp"
@@ -36,14 +34,8 @@ static inline XMP_Bool WrapErrorNotify ( XMPMeta_ErrorCallbackProc proc, void * 
 #define zXMPMeta_GetVersionInfo_1(info) \
     WXMPMeta_GetVersionInfo_1 ( info /* no wResult */ )
 
-#if ! AdobePrivate
 #define zXMPMeta_Initialize_1() \
     WXMPMeta_Initialize_1 ( &wResult )
-#else
-#define zXMPMeta_Initialize_1(AllocateProc,DeleteProc) \
-    WXMPMeta_Initialize_1 ( AllocateProc, DeleteProc, &wResult )
-#endif
-
 #define zXMPMeta_Terminate_1() \
     WXMPMeta_Terminate_1 ( /* no wResult */ )
 
@@ -56,24 +48,9 @@ static inline XMP_Bool WrapErrorNotify ( XMPMeta_ErrorCallbackProc proc, void * 
 #define zXMPMeta_SetGlobalOptions_1(options) \
     WXMPMeta_SetGlobalOptions_1 ( options, &wResult )
 
-#if AdobePrivate
-#define zXMPMeta_GetMemProcs_1(AllocateProc,DeleteProc) \
-    WXMPMeta_GetMemProcs_1 ( AllocateProc, DeleteProc, &wResult )
-
-#define zXMPMeta_RegisterAssertNotify_1(notifyProc,refCon) \
-    WXMPMeta_RegisterAssertNotify_1 ( 0 /* old callback wrapper */, notifyProc, refCon, &wResult )
-
-#define zXMPMeta_UnregisterAssertNotify_1(notifyProc) \
-    WXMPMeta_UnregisterAssertNotify_1 ( notifyProc, &wResult )
-#endif
-
 #define zXMPMeta_DumpNamespaces_1(outProc,refCon) \
     WXMPMeta_DumpNamespaces_1 ( outProc, refCon, &wResult )
 
-#if AdobePrivate
-#define zXMPMeta_DumpPropertyTraits_1(outProc,refCon) \
-    WXMPMeta_DumpPropertyTraits_1 ( outProc, refCon, &wResult )
-#endif
 #define zXMPMeta_Use_CPP_DOM_APIs_1(useNewCoreAPIs) \
 	WXMPMeta_Use_CPP_DOM_APIs_1( useNewCoreAPIs, &wResult )
 #define zXMPMeta_RegisterNamespace_1(namespaceURI,suggestedPrefix,actualPrefix,SetClientString) \
@@ -91,11 +68,6 @@ static inline XMP_Bool WrapErrorNotify ( XMPMeta_ErrorCallbackProc proc, void * 
 #define zXMPMeta_GetIXMPMetadata_1() \
 	WXMPMeta_GetIXMPMetadata_1( this->xmpRef, &wResult )
 
-#if AdobePrivate
-#define zXMPMeta_RegisterPropertyTraits_1(schemaNS,propName,options) \
-    WXMPMeta_RegisterPropertyTraits_1 ( schemaNS, propName, options, &wResult )
-
-#endif
 #define zXMPMeta_GetProperty_1(schemaNS,propName,propValue,options,SetClientString) \
     WXMPMeta_GetProperty_1 ( this->xmpRef, schemaNS, propName, propValue, options, SetClientString, &wResult )
 
@@ -209,10 +181,6 @@ static inline XMP_Bool WrapErrorNotify ( XMPMeta_ErrorCallbackProc proc, void * 
 #define zXMPMeta_CountArrayItems_1(schemaNS,arrayName) \
     WXMPMeta_CountArrayItems_1 ( this->xmpRef, schemaNS, arrayName, &wResult )
 
-#if AdobePrivate
-#define zXMPMeta_MarkStaleProperties_1(options) \
-    WXMPMeta_MarkStaleProperties_1 ( this->xmpRef, options, &wResult )
-#endif
 #define zXMPMeta_DumpObject_1(outProc,refCon) \
     WXMPMeta_DumpObject_1 ( this->xmpRef, outProc, refCon, &wResult )
 
@@ -236,16 +204,8 @@ static inline XMP_Bool WrapErrorNotify ( XMPMeta_ErrorCallbackProc proc, void * 
 extern void
 XMP_PUBLIC WXMPMeta_GetVersionInfo_1 ( XMP_VersionInfo * info );
 
-#if ! AdobePrivate
 extern void
 XMP_PUBLIC WXMPMeta_Initialize_1 ( WXMP_Result * wResult );
-#else
-extern void
-XMP_PUBLIC WXMPMeta_Initialize_1 ( XMP_AllocateProc AllocateProc,
-                        XMP_DeleteProc   DeleteProc,
-                        WXMP_Result *    wResult );
-#endif
-
 extern void
 XMP_PUBLIC WXMPMeta_Terminate_1();
 
@@ -269,25 +229,6 @@ extern void
 XMP_PUBLIC WXMPMeta_SetGlobalOptions_1 ( XMP_OptionBits options,
                               WXMP_Result *  wResult );
 
-#if AdobePrivate
-extern void
-XMP_PUBLIC WXMPMeta_GetMemProcs_1 ( XMP_AllocateProc * AllocateProc,
-                         XMP_DeleteProc *   DeleteProc,
-                         WXMP_Result *      wResult );
-
-// -------------------------------------------------------------------------------------------------
-
-extern void
-XMP_PUBLIC WXMPMeta_RegisterAssertNotify_1 ( void * ignoredOldParam,
-                                  XMP_AssertNotifyProc  notifyProc,
-                                  void *                refCon,
-                                  WXMP_Result *         wResult );
-
-extern void
-XMP_PUBLIC WXMPMeta_UnregisterAssertNotify_1 ( XMP_AssertNotifyProc notifyProc,
-                                    WXMP_Result *        wResult );
-#endif
-
 // -------------------------------------------------------------------------------------------------
 
 extern void
@@ -298,13 +239,6 @@ XMP_PUBLIC WXMPMeta_DumpNamespaces_1 ( XMP_TextOutputProc outProc,
 extern void
 XMP_PUBLIC WXMPMeta_Use_CPP_DOM_APIs_1( XMP_Bool useNewCoreAPIs,
 										WXMP_Result * wResult );
-
-#if AdobePrivate
-extern void
-XMP_PUBLIC WXMPMeta_DumpPropertyTraits_1 ( XMP_TextOutputProc outProc,
-                                void *             refCon,
-                                WXMP_Result *      wResult );
-#endif
 
 // -------------------------------------------------------------------------------------------------
 
@@ -332,15 +266,6 @@ XMP_PUBLIC WXMPMeta_DeleteNamespace_1 ( XMP_StringPtr namespaceURI,
                              WXMP_Result * wResult );
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-extern void
-XMP_PUBLIC WXMPMeta_RegisterPropertyTraits_1 ( XMP_StringPtr  schemaNS,
-                                    XMP_StringPtr  propName,
-                                    XMP_OptionBits options,
-                                    WXMP_Result *  wResult );
-// -------------------------------------------------------------------------------------------------
-#endif
 
 extern void
 XMP_PUBLIC WXMPMeta_GetIXMPMetadata_1(XMPMetaRef	  xmpObjRef,
@@ -652,13 +577,6 @@ XMP_PUBLIC WXMPMeta_CountArrayItems_1 ( XMPMetaRef    xmpRef,
                              XMP_StringPtr schemaNS,
                              XMP_StringPtr arrayName,
                              WXMP_Result * wResult ) /* const */ ;
-
-#if AdobePrivate
-extern void
-XMP_PUBLIC WXMPMeta_MarkStaleProperties_1 ( XMPMetaRef     xmpRef,
-                                 XMP_OptionBits options,
-                                 WXMP_Result *  wResult );
-#endif
 
 extern void
 XMP_PUBLIC WXMPMeta_DumpObject_1 ( XMPMetaRef         xmpRef,

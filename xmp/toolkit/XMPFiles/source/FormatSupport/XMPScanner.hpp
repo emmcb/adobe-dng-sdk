@@ -6,34 +6,11 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm/dd/yy who Description of changes, most recent on top.
-//
-// 11-28-07 FNO 4.2-f038 Made MOV-handler and other exclusions/changes needed for x64 windows.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 05-26-04 AWL 3.1-043 Switch to Bravo integer types.
-// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
-// 03-01-04 AWL Adapt from old XMLPacketScanner. Simplify and add large file support.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 
@@ -179,7 +156,7 @@ private:	// XMPScanner
 	public:
 
 		SnipInfo	fInfo;							// The public info about this snip.
-		std::unique_ptr<PacketMachine>	fMachine;	// The state machine for "active" snips.
+		std::auto_ptr<PacketMachine>	fMachine;	// The state machine for "active" snips.
 		
 		InternalSnip ( XMP_Int64 offset, XMP_Int64 length );
 		InternalSnip ( const InternalSnip & );

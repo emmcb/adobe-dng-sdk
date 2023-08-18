@@ -4,88 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	IJS Inder Jeet Singh
-//	ADC Amandeep Chawla
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 06-18-13 ADC 5.6-f068 [3556901] Save Metadata for some JPGs fails.
-//
-// 09-14-11	AWL	5.5-f030 Remove IOBuffer from the JPEG, TIFF, and PSD handlers.
-// 09-04-12 IJS 5.5-f028 Add file update progress tracking to the TIFF handler.
-// 06-14-12 AWL 5.5-f017 [2943495] Fix the TIFFFileWriter code to compact Exif that grows beyond 64KB.
-//
-// 12-19-11 AWL 5.4-f043 [1274437] Make the Exif processing tolerant of numeric tags with unexpected type.
-// 12-01-11 AWL 5.4-f041 [2715712] Ignore a bad IFD offset for the GPS and Interoperability IFDs.
-// 10-11-11 AWL 5.4-f020 [2918493] Make the TIFF support ignore tags with bad info instead of throwing an exception.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 06-28-10 AWL 5.1-f011 [2610127] Fix TIFF parsing length checks to be more accurate and robust.
-//
-// 01-08-09 AWL 5.0-f018 Fix regression introduced in f017.
-// 01-07-09 AWL 5.0-f017 [1937288] Fix import and export of exif:UserComment. Fix deletion of entire IFD.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-//
-// 03-03-08 AWL 4.2-f090 [1706551] Fix empty XMP and legacy handling for JPEG, PSD, and TIFF.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-//
-// 11-30-06 AWL 4.1-f081 [1432641] The fixes for bug 1429154 (XMPFiles 4.1-f075) broke the handling
-//				of TIFF files larger than 128K. A header consistency check is using an I/O buffer
-//				size for the total file size.
-// 11-30-06 AWL 4.1-f078 [1432498] Fix the JPEG thumbnail recognition broken in 4.1-f075.
-// 11-27-06 AWL 4.1-f075 [1429154] Make the TIFF parser tolerate no IFDs and empty IFDs. Both are
-//				formally invalid, but there are real world instances that we need to accept.
-// 11-07-06 AWL 4.1-f061 [1415778] Fix assert in creation of Exif legacy in JPEG. The Exif IFD "pointer"
-//				(tag 34665) in the primary IFD isn't being created early enough.
-// 10-31-06 AWL 4.1-f056 [1410712] Fix a bug in TIFF_FileWriter::UpdateMemoryStream - it was wrongly
-//				trying to create an empty TIFF stream when one didn't exist before and still didn't.
-//				Also fix JPEG_MetaHandler::WriteFile to not write empty TIFF or PSIR sections.
-// 09-14-06 AWL 4.1-f034 Finish the support for XMP-only in-place updates for JPEG/TIFF/PSD.
-// 08-29-06 AWL 4.1-f031 Have the SetXyz functions for TIFF, PSIR, and IPTC simply return if the
-//				existing value matches the new value. This will be needed to implement the minimal
-//				in-place update logic in the handlers. Undo the similar checks made in ReconcileTIFF.
-// 08-24-06 AWL 4.1-f030 Fix problems with the TIFF condensed rewrite code. This lets the JPEG save
-//				logic work properly when the TIFF appends cause it to exceed 64K.
-// 08-18-06 AWL 4.1-f026 [1352603] Add support for rewriting a full TIFF memory stream. This handles
-//				edit-by-append overflow of the Exif in JPEG files. And as a side effect adds support
-//				for wack-o JPEG files that have no initial Exif section. Fix related bugs in the
-//				JPEG handler for writing files that have no Exif/PSIR/IPTC.
-// 08-18-06 AWL 4.1-f025 Fix problems in ReconcileTIFF.cpp that caused the TIFF to always grow. Fix
-//				bugs in TIFF_FileWriter.cpp with setting proper offsets for changed tags.
-// 08-02-06 AWL 4.1-f022 Fix uninitialized "ok" variable in TIFF_FileWriter::ProcessPShop6IFD for case
-//				of flipping special tables.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 06-09-06 AWL 4.0-f011 Add hackery to support TIFF files written by Photoshop 6.
-// 06-07-06 AWL 4.0-f010 Improve the Unicode conversions.
-// 05-22-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"
@@ -1077,7 +997,7 @@ void* TIFF_FileWriter::CopyTagToMainIFD ( const TagInfo & ps6Tag, InternalIFDInf
 	newTag.changed = true;	// ! See comments with ProcessPShop6IFD.
 	XMP_Assert ( (newTag.origDataLen == 0) && (newTag.origDataOffset == 0) );
 
-    mainIFD->changed = true;
+	mainIFD->changed = true;
 
 	return newPos->second.dataPtr;	// ! Return the address within the map entry for small values.
 
@@ -1588,7 +1508,8 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 				if ( (appendAll | currTag.changed) && (currTag.dataLen > 4) ) {
 
 					XMP_Uns32 valueOffset = this->GetUns32 ( &currTag.smallValue );
-                    bool inplaceUpdate = (currTag.dataLen <= currTag.origDataLen) && (! appendAll);
+					bool inplaceUpdate = (currTag.dataLen <= currTag.origDataLen) && (! appendAll);
+
 					if ( inplaceUpdate ) {
 						XMP_Assert ( valueOffset == currTag.origDataOffset );
 					} else {
@@ -1599,9 +1520,10 @@ void TIFF_FileWriter::UpdateMemByAppend ( XMP_Uns8** newStream_out, XMP_Uns32* n
 					XMP_Assert ( valueOffset <= newLength );	// Provably true, valueOffset is in the old span, newLength is the new bigger span.
 					if ( currTag.dataLen > (newLength - valueOffset) ) XMP_Throw ( "Buffer overrun", kXMPErr_InternalFailure );
 					memcpy ( (newStream + valueOffset), currTag.dataPtr, currTag.dataLen );	// AUDIT: Protected by the above check.
-                    if ( !inplaceUpdate && ((currTag.dataLen & 1) != 0) ) {
-                        newStream[valueOffset+currTag.dataLen] = 0;
-                    }
+					if ( !inplaceUpdate && ((currTag.dataLen & 1) != 0) ) {
+						newStream[valueOffset+currTag.dataLen] = 0;
+
+					}
 
 				}
 

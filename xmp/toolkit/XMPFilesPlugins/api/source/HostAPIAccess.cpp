@@ -4,36 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JKR Jens Krueger
-//	IJS Inder Jeet Singh
-//	ADC Amandeep Chawla
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-28-13 IJS 5.6-f063 [3565164]Fixed the Plug-in version incompatibility with CS6
-// 05-13-13 ADC 5.6-f060 Removing usage of bool in APIs exposed at DLL boundaries.
-// 05-06-13 IJS 5.6-f058 Refactoring the GetXMPStandard code as per review comments
-// 04-26-13 IJS 5.6-f056 Make API to access overridden file handler available for public SDK
-// 02-18-13 JKR 5.6-f037 New plugin entry point InitializePlugin2() which call SetupPlugin().
-// 02-11-13 JKR 5.6-f033 Reworked plugin versioning to be able to load all supported older and newer plugins.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "HostAPIAccess.h"
 #include "PluginUtils.h"
@@ -105,15 +77,6 @@ bool SetHostAPI( HostAPIRef hostAPI )
 	{
 		sHostAPI = hostAPI;
 		sHostAPIVersion = hostAPI->mVersion;
-#if AdobePrivate
-		// Needed only in AdobePrivate as StandardHandler was only available to 
-		// adobe plug-ins in previous releases.Therefore to support clients that
-		// already use this API suite it is fetched from the host every time.
-		if ( sHostAPIVersion >= 4 )
-		{
-			valid = SetStandardHandlerAPIAccess();
-		}
-#endif // AdobePrivate
 	}
 	
 	return valid;

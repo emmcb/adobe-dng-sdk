@@ -4,42 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-09-15 AJ  5.6-f132 Fixing some more warnings due to implicit typecasting
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 05-06-13 IJS 5.6-f058 Refactoring the GetXMPStandard code as per review comments
-// 04-26-13 IJS 5.6-f056 Make API to access overridden file handler available for public SDK
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 01-11-13 IJS 5.6-f020 Reworked GetFileModDate, GetAssociatedResources and IsMetadataWritable APIs.
-//						 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 12-21-12 IJS 5.6-f009 Added FillAssociatedResources support in plugins 
-// 12-19-12 IJS 5.6-f007 Removing #if  DISABLE_SERIALIZED_IMPORT_EXPORT 
-// 12-19-12 IJS 5.6-f005 Making the importToXMP and exportFromXMP as public Plug-in methods
-//
-// 12-10-12 IJS 5.5-f059 Adding Serialized versions for importToXMP and exportFromXMP Plug-in APIs.
-// 11-05-12 ADC 5.5-f056 XMP Plug-ins support for LocateMetadataFiles API.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "PluginBase.h"
 #include "PluginUtils.h"
@@ -165,25 +131,7 @@ void PluginBase::FillAssociatedResources( std::vector<std::string> * resourceLis
 }
 
 // ============================================================================
-#if AdobePrivate
-
-void PluginBase::importToXMP( XMPMetaRef xmp ) 
-{
-	SXMPMeta meta( xmp );
-	this->importToXMP( meta );
-}
-
-#endif 
 // ============================================================================
-#if AdobePrivate
-
-void PluginBase::exportFromXMP( XMPMetaRef xmp ) 
-{
-	SXMPMeta meta( xmp );
-	this->exportFromXMP( meta );
-}
-
-#endif
 // ============================================================================
 
 void PluginBase::importToXMP( XMP_StringPtr* xmpStr, XMP_StringPtr* packetPtr , XMP_PacketInfo * packetInfo ) 
@@ -195,17 +143,6 @@ void PluginBase::importToXMP( XMP_StringPtr* xmpStr, XMP_StringPtr* packetPtr , 
 
 void PluginBase::importToXMP( XMP_StringPtr* xmpStr ) 
 {
-#if AdobePrivate
-	std::string xmp( *xmpStr );
-	SXMPMeta meta( xmp.c_str(),static_cast<XMP_StringLen>(xmp.length()) );
-	this->importToXMP( meta );
-	xmp.resize(0);
-	meta.SerializeToBuffer(&xmp, kXMP_NoOptions, 0);
-	XMP_Uns32 length = (XMP_Uns32)xmp.size() + 1 ;
-	StringPtr bufferPtr = HostStringCreateBuffer( length );
-	memcpy( bufferPtr, xmp.c_str(), length );
-	*xmpStr = bufferPtr; // callee function should free the memory.
-#else
 	// To be implemented by the Plug-In Developer
 	// Generally a Plugin developer should follow the following steps
 	// when implementing this function
@@ -214,24 +151,17 @@ void PluginBase::importToXMP( XMP_StringPtr* xmpStr )
 	// c) Serialize the XMP object to a dynamic buffer.
 	//    Dynamic buffer is allocated using HostAPI HostStringCreateBuffer
 	// d) Copy the dynamic buffer address to xmpStr
-#endif 
 }
 
 // ============================================================================
 
 void PluginBase::exportFromXMP( XMP_StringPtr xmpStr ) 
 {
-#if AdobePrivate
-	std::string buffer(xmpStr);
-	SXMPMeta meta( buffer.c_str(),static_cast<XMP_StringLen>(buffer.length()) );
-	this->exportFromXMP( meta );
-#else
 	// To be implemented by the Plug-In Developer
 	// Generally a Plugin developer should follow the following steps
 	// when implementing this function
 	// a) Create a XMP object from serialized XMP packet.
 	// b) Export the data from XMP object to non-XMP Content.
-#endif 
 }
 
 
@@ -299,24 +229,6 @@ bool PluginBase::checkFormatStandard( const std::string* path /*= NULL*/ )
 }
 
 // ============================================================================
-
-#if AdobePrivate
-
-bool PluginBase::getXMPStandard( XMPMetaRef xmp, const std::string* path /*= NULL*/, bool* containsXMP /*= NULL*/ )
-{
-	const StringPtr _path	= (const StringPtr)( path == NULL ? this->getPath().c_str() : path->c_str() );
-
-	std::string xmpStr;
-	bool ret = GetXMPStandard( this, this->getFormat(), _path, xmpStr, containsXMP );
-
-	SXMPMeta meta(xmp);
-	meta.ParseFromBuffer( xmpStr.c_str(), static_cast<XMP_StringLen>(xmpStr.length()) );
-
-	return ret;
-}
-
-// ============================================================================
-#endif
 
 bool PluginBase::getXMPStandard( std::string& xmpStr, const std::string* path /*= NULL*/, bool* containsXMP /*= NULL*/ )
 {

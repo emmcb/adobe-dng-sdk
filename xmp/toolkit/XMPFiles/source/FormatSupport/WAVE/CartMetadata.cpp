@@ -4,30 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PW Patrick Wollek
-//	SAM Samy Makki
-//	JEH	Joerg Ehrlich
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-04-12	JEH	5.5-f002 [3073402] Make Cart chunk parsing tolerant if chunk size is too small
-//
-// 10-19-11 SAM 5.4-f025 [2984517] Adding mapping from/to Cart PostTimer Array for WAVE
-// 08-02-11 AWL 5.4-f003 Add support for the AES cart chunk in WAV files.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

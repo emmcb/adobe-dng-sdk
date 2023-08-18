@@ -6,29 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-21-13 ADC 5.6-f047 [3526905] In MAC and Linux, progress notifications are not returned to the registered callbacks as per the set time-interval.
-// 03-13-13 ADC 5.6-f046 Remove deprecated OSX APIs from XMP toolkit code.
-//
-// 09-21-06 AWL Initial creation.
-//
-// =================================================================================================
-#endif
 
 #include "public/include/XMP_Environment.h"
 

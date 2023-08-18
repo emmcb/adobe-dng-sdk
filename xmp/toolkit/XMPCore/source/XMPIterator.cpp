@@ -3,67 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-09-15 AJ  5.6-c038 Fixing some more warnings due to implicit typecasting
-// 07-01-10 AWL 5.1-c008 [2584090] Change SXMPIterator to return leaf URI when kXMP_IterJustLeafName is used.
-// 02-05-10 AWL 5.1-c002 Fix build warnings from Xcode 3.2.
-//
-// 06-15-09 AWL 5.0-c036 Mark critical locking variables volatile, fix all namespace table usage to be clean.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-//
-// 03-30-07 AWL 4.2-c014 [1519329] Tolerate unknown namespaces in XMPIterator.cpp, AddSchemaAliases.
-//				Add  PDF/X-ID to the set of standard namespaces.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-25-06 AWL 3.3-012 VC8 does not allow string.assign(0,0). Set "missing" output pointers to ""
-//						instead of 0. This might only affect XMPIterator::Next, when the propPath
-//						or value are not returned.
-// 01-25-06 AWL 3.3-011 Fix iterator compare mistake in DumpNamespaces, detected by VC8. Replace
-//						null iterator notion, VC8 complains about compares to default iterator.
-// 01-24-06 AWL 3.3-010 Fix null iterator constant for VC8 strictness. Turn off snprintf warning.
-// 05-16-05 AWL 3.3-100 Complete the deBIBification, integrate the internal and SDK source. Bump the
-//              version to 3.3 and build to 100, well ahead of main's latest 3.3-009.
-//
-// 02-14-05 AWL 3.2-003 Add thread locks.
-// 02-11-05 AWL 3.2-002 Add client reference counting.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-// 07-29-04 AWL 3.1-071 [1014855] Normalize iterator root path by expanding and recompressing.
-// 05-05-04 AWL 3.1-039 Yet more cleanup from -036 and -038. When doing the FileInfo-like manual
-//				recursion (kXMP_IterJustChildren | kXMP_IterIncludeAliases), don't include those
-//				namespaces that have no actual properties and no aliases to actual properties.
-// 05-05-04 AWL [1016162] Fix a regression in iterators introduced in 3.1-036. The "manual recursion"
-//				test now visits the schema nodes too many times.
-// 05-03-04 AWL [1014252] Fix iteration with aliases to include schema that only contain aliases
-//				(no actual/physical children).
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers.
-// 04-16-04 AWL Fix a problem in iterators rooted at an alias, MakeFullPath is using the base name.
-//				Remove MakeFullPath, just use the input path. This might not be in the canonical
-//				form, and might use things like field selectors, but saves the work of building the
-//				path and adjusting for aliases.
-// 04-14-04 AWL Fix problems in iterators using kXMP_IterJustChildren.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message.
-// 05-03-03	AWL	Initial start on the new implementation.
-//
-// =================================================================================================
-#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 

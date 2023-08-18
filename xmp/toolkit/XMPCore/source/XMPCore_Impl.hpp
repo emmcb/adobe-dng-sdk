@@ -6,91 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 07-31-14 ADC 5.6-c022 [3790748] PDFLChef crashes/hangs indefinitely on main branch due to xmp library.
-// 07-10-14 ADC 5.6-c015 Refactoring, partial documentation and bug fixes of XMPCommon and XMPCore C++ APIs.
-//
-// 08-14-12 AWL 5.5-c009 Add XMPCore error notifications for RDF parsing errors.
-//
-// 07-01-10 AWL 5.1-c008 Add XMP_Node::GetLocalURI.
-//
-// 10-22-09 AWL 5.0-c056 [2422169,2422172] Fix ApplyTemplate to not add empty array items or struct fields.
-// 06-18-09 AWL 5.0-c037 Minor tweaks from code review.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 05-21-09 AWL 5.0-c032 Revamp glue again to pass SetClientString with each function.
-// 05-19-09 AWL 5.0-c031 First part of threading improvements, revamp the client glue.
-// 05-14-09 AWL 5.0-c030 Improve the call tracing mechanism.
-// 04-03-09 AWL 5.0-c022 Change PlainXMP to TransformXMP.
-//
-// 07-01-08 AWL 4.3-c060 Hide all uses of PlainXMP.
-//
-// 02-05-08 AWL 4.2-c038 Use client memory routines for malloc/free also, so that leak checking works.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-// 11-07-07 AWL 4.2-c025 More progress implementing XMPDocOps.
-// 10-31-07 AWL 4.2-c023 Add new class XMPDocOps.
-// 08-24-07 AWL 4.2-c019 Remove support for ancient CXMP_* init/term routines and non-public (AXE) expat.
-// 07-17-07 AWL 4.2-c018 Change Mac to use pthread synchronization, needed for 64-bit builds.
-//
-// 10-17-06 AWL 4.1-c026 To be on the safe side, don't try to delete null children or qualifiers.
-// 10-12-06 AWL 4.1-c021 [1235816] Remove the new/delete overrides from static builds.
-//
-// 06-16-06 AWL 4.0-c008 Make XMP_ENTER_WRAPPER check sXMPInitCount in debug builds.
-// 05-01-06 AWL 4.0-c005 Revamp the embedded, Mac PList, and WIndows Property info.
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 02-03-06 AWL 3.3-013 Add exception tracing to the XMP_Impl support macros. Rearrange XMP_Impl.hpp
-//				to be make it easier to find things.
-// 01-25-06 AWL 3.3-011 Fix iterator compare mistake in DumpNamespaces, detected by VC8. Replace
-//						null iterator notion, VC8 complains about compares to default iterator.
-// 01-24-06 AWL 3.3-010 Fix null iterator constant for VC8 strictness.
-// 08-08-05 AWL 3.3-004 Change ResolveAlias to allow general alias path.
-//
-// 06-03-05 AWL 3.2-107 Make the XMP_Node and XML_Node destructors be virtual.
-// 05-16-05 AWL 3.2-100 Complete the deBIBification, integrate the internal and SDK source.
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 04-01-05 AWL 3.2-010 Add leafOptions parameter to FindNode, used when creating new nodes.
-// 04-01-05 AWL 3.2-009 [0621112,1033629] Add thread locks for UNIX.
-// 03-17-05 AWL 3.2-006 Revise Plain XMP parsing and serialization for latest proposal.
-// 02-16-05 AWL 3.2-005 Add first cut of Plain XMP parsing and serialization.
-// 02-14-05 AWL 3.2-003 Add thread locks.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 01-25-05 AWL 3.1.1-106 [1141007] Add XMPMeta::RegisterAssertNotify.
-// 11-04-04 AWL 3.1.1-090 [1014853] Add XMPUtils::RemoveMultiValueInfo. Fix AppendProperties to call
-//				RemoveMultiValueInfo, i.e. to mimic a user edit.
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-//
-// 07-29-04 AWL 3.1-071 [1014855] Normalize iterator root path by expanding and recompressing.
-// 07-13-04 AWL 3.1-058 [1014255] Remove empty schema nodes.
-// 06-23-04 AWL 3.1-048 Mac side of BIB threading fixes. Mainly #define BIB_MULTI_THREAD.
-//
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers. Clean up memory leaks.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message.
-// 02-17-04 AWL Add CompareSubtrees.
-// 02-10-04 AWL Add ConjureUUID.
-// 01-17-04 AWL Move into new Perforce depot, cosmetic cleanup.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 #include "public/include/XMP_Const.h"
@@ -141,12 +58,10 @@ typedef XMP_AliasMap::const_iterator	XMP_cAliasMapPos;
 
 extern XMP_Int32 sXMP_InitCount;
 
-#if !AdobePrivate
 typedef void * (*XMP_AllocateProc) (size_t size);
 
 typedef void(*XMP_DeleteProc)   (void * ptr);
 
-#endif
 #if ! XMP_StaticBuild
 
 	extern XMP_AllocateProc sXMP_MemAlloc;
@@ -170,12 +85,6 @@ extern XMP_ReadWriteLock * sDefaultNamespacePrefixMapLock;
 
 #define WtoXMPDocOps_Ptr(docRef)	((XMPDocOps*)(docRef))
 
-#if AdobePrivate
-	extern XMP_AssertNotifyProc sAssertNotify;
-	extern void *               sAssertRefCon;
-#endif
-
-
 // **** see CTECHXMP-4169947 ***//
 
 //extern void *			voidVoidPtr;	// Used to backfill null output parameters.
@@ -190,11 +99,6 @@ extern XMP_ReadWriteLock * sDefaultNamespacePrefixMapLock;
 //extern XMP_DateTime		voidDateTime;
 //extern WXMP_Result		void_wResult;
 
-//#if AdobePrivate
-//	extern XMP_DerivedDocInfo	voidDocInfo;
-//	extern XMP_EmbeddedDocInfo	voidEmbeddedInfo;
-//	extern XMP_PacketInfo       voidPacketInfo;
-//#endif
 
 #define kHexDigits "0123456789ABCDEF"
 
@@ -220,16 +124,8 @@ extern XMP_ReadWriteLock * sDefaultNamespacePrefixMapLock;
 						          (XMP_API_VERSION_MINOR << 16) |	\
 						          (XMP_API_VERSION_MICRO << 8) )
 
-#if AdobePrivate
-	#define kXMPCoreName   "Adobe XMP Core"
-	#define kXMPCore_BasicVersion   XMPCORE_API_VERSION_STRING "-c" kXMPCore_EngString " " BUILDVERSIONSTR
-	#define kXMPCore_VersionString	kXMPCoreName " " kXMPCore_BasicVersion
-	#define kXMPCore_VersionMessage	kXMPCore_VersionString ", " BUILDDATESTR kXMPCore_DebugString
-#else
 	#define kXMPCoreName "XMP Core"
 	#define kXMPCore_VersionMessage	kXMPCoreName " " XMPCORE_API_VERSION_STRING
-#endif
-
 // =================================================================================================
 // Support for call tracing
 

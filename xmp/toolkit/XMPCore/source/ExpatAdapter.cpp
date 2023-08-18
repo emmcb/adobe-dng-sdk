@@ -3,63 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//   AJ Abhishek Jindal
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 08-10-12 AWL 5.5-c008 Change XMPCore XML parsing error notifications to be recoverable.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-//
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 04-03-09 AWL 5.0-c022 Change PlainXMP to TransformXMP.
-//
-// 08-06-08 AWL Add disabled conditional code for limiting XML entity usage.
-// 07-01-08 AWL 4.3-c060 Hide all uses of PlainXMP.
-//
-// 12-10-07 AWL 4.2-c033 Save prefix length in XML_Node, change XML_Node::GetNamedElement to take URI and local name.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-// 01-10-07 AWL 4.2-c005 Change ExpatAdapter::ParseBuffer to not include the detailed message for now.
-//
-// 08-16-06 AWL 4.1-c015 [1312441,1340116] Change the parsing code to tolerate ISO Latin-1 input. At
-//				the same time, get rid of the ugly hackery that tries to deal with unescaped ASCII
-//				control characters. Also get rid of the check and complaint about parsing into an
-//				empty object. This is predominantly what people want, so clear the XMPMeta object.
-//
-// 07-18-06 AWL 4.0-c011 [1269158] Cleanup bad dc: namespace URI when parsing. Early versions of
-//				Flash put XMP in SWF files using "http://purl.org/dc/1.1/", the proper URI is
-//				"http://purl.org/dc/elements/1.1/".
-// 06-27-06 AWL 4.0-c009 Changes for Acrobat security audit.
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-24-06 AWL 3.3-010 Turn off snprintf warning.
-// 10-13-05 AWL 3.3-007 [1247060,1246288,1246286] Fix handling of special rdf: attributes, allow and
-//				ignore inner XML processing instructions, add Expat handler for CDATA sections.
-// 04-06-05 AWL 3.2-013 [0509601] Normalize "single value" alt-text arrays. Improve the way the root
-//				XML node is found and extract the previous toolkit version number.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 03-31-05 AWL 3.2-007 Fix parsing for UTF-16 and UTF-32.
-//
-// 02-03-05 AWL Initial creation.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first #include!
 #include "XMPCore/source/XMPCore_Impl.hpp"
@@ -67,12 +12,7 @@
 #include "source/ExpatAdapter.hpp"
 #include "XMPCore/source/XMPMeta.hpp"
 
-#if AdobePrivate
-#include "XMPCore/third-party/expat/public/lib/expat.h"
-#else
 #include "third-party/expat/lib/expat.h"
-#endif
-
 #include <string.h>
 
 using namespace std;
@@ -416,18 +356,10 @@ static void StartElementHandler ( void * userData, XMP_StringPtr name, XMP_Strin
 	parentNode->content.push_back ( elemNode );
 	thiz->parseStack.push_back ( elemNode );
 	
-#if AdobePrivate
-	if ( (elemNode->name == "rdf:RDF") || (elemNode->name == "txmp:XMP_Packet") ) {
-		thiz->rootNode = elemNode;
-		++thiz->rootCount;
-	}
-#else
 	if ( elemNode->name == "rdf:RDF" ) {
 		thiz->rootNode = elemNode;
 		++thiz->rootCount;
 	}
-#endif
-
 	#if XMP_DebugBuild
 		++thiz->elemNesting;
 	#endif

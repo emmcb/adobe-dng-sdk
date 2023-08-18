@@ -4,87 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  FNO Frank Nocke
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	HK  Honey Kansal
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-05-15 AB  5.6-f129 [3913583] For 50P and 59.94P, The Frame number for starttimecode should be written half to actual frame number in the XML file because NRT XML can store frame number value only between 00-29.
-// 03-19-14 IJS 5.6-f098 [3709896] P2 Handler Modified to support spanned clip.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-// 01-22-13 HK  5.6-f025 Rework of GetAssociatedResources() API done for XDACM-EX and P2 formats.
-// 01-16-13 HK 5.6-f022 Implemented IsMetadataWritable API for XDCAM-EX, P2, CanonXF and AVCHD formats.
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 01-03-13 HK  5.6-f016 [3435383] Added GetAssociatedResources API for P2 format.
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 10-03-12 HK  5.5-f042 [3217688] A red X appears on the thumbnail in Panasonic P2 Viewer after updating the P2 media's metadata.
-// 09-19-12 AWL 5.5-f033 [3211021] Fix the folder handlers complain about read-only XMP files when opening for update.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 09-30-11 AWL 5.4-f016 Add P2 and SonyHDV support for GetFileModDate.
-//
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 09-30-09 SAM 5.0-f082 [2424740] Integrate P2 fixes from Peter Lee (Framesize and Par columns for AVC-Intra clips).
-// 08-25-09 AWL 5.0-f071 [2412960] Fix P2, AVCHD, and ASF handlers to create dc:creator as an ordered array.
-// 08-11-09 AWL 5.0-f061 Integrate P2 and AVCHD changes from Peter Lee.
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 03-30-09 AWL 5.0-f031 [1830967,1891113,1891119] Minor P2 fixes for native tag imports.
-// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 05-29-08 FNO 4.2.2-f120 [1806526] Report image width and pixel aspect ratio correctly for P2 HD formats.
-// 05-28-08 FNO 4.2.2-f119 [1799268] Be lenient on files/folders in P2.
-// 03-31-08 AWL 4.2.2-f103 [1741470] Integrate P2 bug fixes.
-// 03-31-08 AWL 4.2.2-f100 [1736560] Fix P2 handler to read dc:title using GetLocalizedText.
-// 02-28-08 AWL 4.2-f087 [1704032] Fix P2 and XDCAM code to check for 0 pointers from XML tree methods.
-//				Fix SelectSmartHandler to differentiate file-oriented and folder-oriented cases, the
-//				check procs have different parameters.
-// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
-//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
-//				handlers they must use the parent pointer in the XMPFileHandler base class.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-// 01-01-08 AWL 4.2-f053 Move the legacy digests for P2 and XDCAM to the xmp:NativeDigests struct.
-// 12-31-07 AWL 4.2-f052 Integrate P2 and XDCAM handler changes from Peter Lee and Gerry Miller.
-// 12-13-07 AWL 4.2-f047 Fix P2 handler to set containsXMP when legacy is imported.
-// 12-10-07 AWL 4.2-f044 Add P2 legacy digest and legacy .XML file update. Fix namespace handling.
-// 11-30-07 AWL 4.2-f042 Add skeleton of legacy reconciliation with .XML file.
-// 11-29-07 AWL 4.2-f041 First working version P2 handler in NewHandlers, XMP-only, no legacy.
-// 11-28-07 AWL 4.2-f040 Introduce empty P2 handler in NewHandlers.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -1388,25 +1309,25 @@ void P2_MetaHandler::UpdateFile ( bool doSafeUpdate )
 				p2Clip = this->p2ClipManager.GetManagedClip();
 				if( p2Clip->GetP2RootNode() != 0 )
 				{
-					XMP_StringPtr p2NS = p2Clip->GetP2RootNode()->ns.c_str();
-					XML_NodePtr legacyVideoContext = p2Clip->GetEssenceListNode();
-					if (legacyVideoContext != 0)
-					{
-						legacyVideoContext = legacyVideoContext->GetNamedElement(p2NS, "Video");
-						XML_NodePtr legacyProp = legacyVideoContext->GetNamedElement(p2NS, "StartTimecode");
-						if ((legacyProp != 0) && legacyProp->IsLeafContentNode())
-						{
-							AdjustTimeCode( xmpStartTimeCode, true );
-							if (xmpStartTimeCode != legacyProp->GetLeafContentValue())
-							{
-								legacyProp->SetLeafContentValue(xmpStartTimeCode.c_str());
-								updateLegacyXML = true;
-							}
-						}
-					}
-				}
-			}
-		}
+				    XMP_StringPtr p2NS = p2Clip->GetP2RootNode()->ns.c_str();
+				    XML_NodePtr legacyVideoContext = p2Clip->GetEssenceListNode();
+				    if (legacyVideoContext != 0)
+				   {
+					   legacyVideoContext = legacyVideoContext->GetNamedElement(p2NS, "Video");
+					    XML_NodePtr legacyProp = legacyVideoContext->GetNamedElement(p2NS, "StartTimecode");
+					    if ((legacyProp != 0) && legacyProp->IsLeafContentNode())
+					    {
+						    AdjustTimeCode( xmpStartTimeCode, true );
+						    if (xmpStartTimeCode != legacyProp->GetLeafContentValue())
+						    {
+							   legacyProp->SetLeafContentValue(xmpStartTimeCode.c_str());
+							   updateLegacyXML = true;
+						    }
+					    }
+				   }
+			    }
+		    }
+	    }
 
 		std::string newDigest;
 		this->p2ClipManager.GetManagedClip()->CreateDigest ( &newDigest );

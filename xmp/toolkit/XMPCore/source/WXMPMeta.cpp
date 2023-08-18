@@ -3,9 +3,7 @@
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
@@ -53,7 +51,6 @@ WXMPMeta_GetVersionInfo_1 ( XMP_VersionInfo * info )
 
 // -------------------------------------------------------------------------------------------------
 
-#if ! AdobePrivate
 /* class static */ void
 WXMPMeta_Initialize_1 ( WXMP_Result * wResult )
 {
@@ -63,25 +60,6 @@ WXMPMeta_Initialize_1 ( WXMP_Result * wResult )
 
 	XMP_EXIT
 }
-#else
-/* class static */ void
-WXMPMeta_Initialize_1 ( XMP_AllocateProc AllocateProc,
-                        XMP_DeleteProc   DeleteProc,
-                        WXMP_Result *    wResult )
-{
-	XMP_ENTER_NoLock ( "WXMPMeta_Initialize_1" )
-	
-		if ( ((AllocateProc == 0) && (DeleteProc != 0)) ||
-		     ((AllocateProc != 0) && (DeleteProc == 0)) ) {
-			XMP_Throw ( "The allocate/delete functions must be provided together or not at all", kXMPErr_BadParam );
-		}
-
-		wResult->int32Result = XMPMeta::Initialize ( AllocateProc, DeleteProc );
-
-	XMP_EXIT
-}
-#endif
-
 // -------------------------------------------------------------------------------------------------
 
 /* class static */ void
@@ -186,60 +164,6 @@ WXMPMeta_SetGlobalOptions_1 ( XMP_OptionBits options,
 
 	XMP_EXIT
 }
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-
-/* class static */ void
-WXMPMeta_GetMemProcs_1 ( XMP_AllocateProc * AllocateProc,
-                         XMP_DeleteProc *   DeleteProc,
-                         WXMP_Result *      wResult )
-{
-	XMP_ENTER_Static ( "WXMPMeta_GetMemProcs_1" )
-
-		if ( (AllocateProc == 0) || (DeleteProc == 0) ) XMP_Throw ( "Null output pointer", kXMPErr_BadParam );
-		
-		#if XMP_StaticBuild
-			XMP_Throw ( "XMP memory procs are only supported in DLL builds", kXMPErr_Unavailable );
-		#else
-			*AllocateProc = sXMP_MemAlloc;
-			*DeleteProc   = sXMP_MemFree;
-		#endif
-
-	XMP_EXIT
-}
-
-// -------------------------------------------------------------------------------------------------
-
-/* class static */ void
-WXMPMeta_RegisterAssertNotify_1 ( void * ignoredOldParam,
-								  XMP_AssertNotifyProc	notifyProc,
-								  void *				refCon,
-								  WXMP_Result *			wResult )
-{
-	XMP_ENTER_Static ( "WXMPMeta_RegisterAssertNotify_1" )
-
-		IgnoreParam (ignoredOldParam);
-		if ( notifyProc == 0 ) XMP_Throw ( "Null client notify routine", kXMPErr_BadParam );
-
-		XMPMeta::RegisterAssertNotify ( notifyProc, refCon );
-
-	XMP_EXIT
-}
-
-// -------------------------------------------------------------------------------------------------
-
-/* class static */ void
-WXMPMeta_UnregisterAssertNotify_1 ( XMP_AssertNotifyProc notifyProc,
-									WXMP_Result *		 wResult )
-{
-	XMP_ENTER_Static ( "WXMPMeta_UnregisterAssertNotify_1" )
-
-		XMPMeta::UnregisterAssertNotify ( notifyProc );
-
-	XMP_EXIT
-}
-#endif
-
 // -------------------------------------------------------------------------------------------------
 
 /* class static */ void
@@ -258,25 +182,6 @@ WXMPMeta_DumpNamespaces_1 ( XMP_TextOutputProc outProc,
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-/* class static */ void
-WXMPMeta_DumpPropertyTraits_1 ( XMP_TextOutputProc outProc,
-								void *			   refCon,
-								WXMP_Result *	   wResult )
-{
-	XMP_ENTER_Static ( "WXMPMeta_DumpPropertyTraits_1" )
-
-		if ( outProc == 0 ) XMP_Throw ( "Null client output routine", kXMPErr_BadParam );
-		
-		XMP_Status status = XMPMeta::DumpPropertyTraits ( outProc, refCon );
-		wResult->int32Result = status;
-
-	XMP_EXIT
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
 
 /* class static */ void
 WXMPMeta_RegisterNamespace_1 ( XMP_StringPtr namespaceURI,
@@ -361,26 +266,6 @@ WXMPMeta_DeleteNamespace_1 ( XMP_StringPtr namespaceURI,
 
 	XMP_EXIT
 }
-
-#if AdobePrivate
-// -------------------------------------------------------------------------------------------------
-
-/* class static */ void
-WXMPMeta_RegisterPropertyTraits_1 ( XMP_StringPtr  schemaNS,
-									XMP_StringPtr  propName,
-									XMP_OptionBits options,
-									WXMP_Result *  wResult )
-{
-	XMP_ENTER_Static ( "WXMPMeta_RegisterPropertyTraits_1" )
-
-		if ( (schemaNS == 0) || (*schemaNS == 0) ) XMP_Throw ( "Empty schema namespace URI", kXMPErr_BadSchema );
-		if ( (propName == 0) || (*propName == 0) ) XMP_Throw ( "Empty property name", kXMPErr_BadXPath );
-
-		XMPMeta::RegisterPropertyTraits ( schemaNS, propName, options );
-
-	XMP_EXIT
-}
-#endif
 
 // =================================================================================================
 // Class Method Wrappers
@@ -1239,22 +1124,6 @@ WXMPMeta_CountArrayItems_1 ( XMPMetaRef	   xmpObjRef,
 }
 
 // -------------------------------------------------------------------------------------------------
-
-#if AdobePrivate
-void
-WXMPMeta_MarkStaleProperties_1 ( XMPMetaRef		xmpObjRef,
-								 XMP_OptionBits options,
-								 WXMP_Result *	wResult )
-{
-	XMP_ENTER_ObjWrite ( XMPMeta, "WXMPMeta_MarkStaleProperties_1" )
-
-		thiz->MarkStaleProperties ( options );
-		
-	XMP_EXIT
-}
-
-// -------------------------------------------------------------------------------------------------
-#endif
 
 void
 WXMPMeta_GetObjectName_1 ( XMPMetaRef	 xmpObjRef,

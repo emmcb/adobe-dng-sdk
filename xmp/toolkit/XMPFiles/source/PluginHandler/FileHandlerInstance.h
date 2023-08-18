@@ -4,38 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 01-11-13 IJS 5.6-f020 Added IsMetadataWritable Plugin API in the Plugin Architechture.Bumped the Plugin API to version 3.
-// 12-21-12 IJS 5.6-f009 Added FillAssociatedResources support in plugins 
-//
-// 11-05-12 ADC 5.5-f056 XMP Plug-ins support for LocateMetadataFiles API.
-//
-// 09-25-11 PW  5.4-f013 Add support to access replaced file handler
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef PLUGINHANDLERINSTANCE_H
 #define PLUGINHANDLERINSTANCE_H

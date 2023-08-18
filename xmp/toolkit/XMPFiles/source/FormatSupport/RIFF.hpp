@@ -7,42 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 12-15-09 AWL 5.0-f122 [2500563] Force WAV text chunks to have even size.
-// 11-12-09 AWL 5.0-f108 [2476274] Remove internal limit of chunk size, accept any well-formed chunk.
-// 11-06-09 FNO 5.0-f103 [2457482] Cr8r,PrmL read support.
-// 11-05-09 FNO 5.0-f102 JUNK-Optimization II (64k buffer).
-// 11-05-09 FNO 5.0-f101 JUNK-Optimization (in response to code review).
-// 11-03-09 FNO 5.0-f097 RIFF: Minor functional optimizations, comments, indentation, cleanup.
-// 10-30-09 FNO 5.0-f096 [2465689] Fix avi indices. Metadata export re-enabled.
-// 10-26-09 FNO 5.0-f094 [2435625] RIFF: Prevent breaking index chunks.
-// 10-23-09 FNO 5.0-f092 RIFF: Substantial rewrite of chunk logic to prepare for index adjustments.
-// 08-18-09 FNO 5.0-c050f63 RIFF-Handler: Add full bext chunk read support.
-// 07-16-09 FNO 5.0-f056 [2376832] JUNK padding chunks... now also fixed for WAV(DISP chunk). Code simplified.
-// 07-15-09 FNO 5.0-f055 [2376832] JUNK padding chunks are not used effectivly. File grows.
-// 07-10-09 FNO 5.0-f052 Move RIFF (AVI/WAV) handler from NewHandlers to regular Handlers.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

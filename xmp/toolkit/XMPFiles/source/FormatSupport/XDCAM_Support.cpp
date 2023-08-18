@@ -4,37 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	GEM Gerry Miller
-//	AWL Alan Lillich
-//  FNO Frank Nocke
-//  SAM Samy Makki
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-28-13 SAM 5.6-f50 [3528952] Fixed crash for some special SxS clips.
-// 11-24-10	AWL	5.3-f020 [2755623,2755632] Add XDCAM fixes for non-XMP metadata problems.
-//
-// 09-03-09 FNO 5.0-f078 [2419851] Enhance XDCAM metadata support (Fix provided by GEM).
-//
-// 02-28-08 AWL 4.2-f087 [1704032] Fix P2 and XDCAM code to check for NULL pointers from XML tree methods.
-//				Fix SelectSmartHandler to differentiate file-oriented and folder-oriented cases, the
-//				check procs have different parameters.
-// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
-// 01-11-08 GEM First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

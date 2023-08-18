@@ -4,113 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	JEH	Joerg Ehrlich
-//	HK  Honey Kansal
-//	ADC Amandeep Chawla
-//	SKP Sunil Kishor Pathak
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 11-05-14 SKP 5.6-f121 Implemented MWG spec to read IPTC irrespective of IIM digest matching or not.
-// 03-06-14 ADC 5.6-f095 Reverting changes done via CL # 155650 (MWG specification related).
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-// 12-19-11 AWL 5.4-f043 [1274437] Make the Exif processing tolerant of numeric tags with unexpected type.
-// 11-04-11 AWL 5.4-f034 [3015824,2731561] Be tolerant of ill-formed but understandable GPS values.
-// 07-27-11 AWL 5.4-f002 Add support for new and modified Exif 2.3 tags.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-//
-// 07-01-10 AWL 5.1-f013 [2646065] Fix import and export of Exif GPSVersionID.
-// 06-29-10 AWL 5.1-f012 [2447801] Make sure TrimTrailingSpaces is used for all Exif text imports.
-// 06-24-10 AWL 5.1-f010 [2589499] Fix OECF and SFR import to not leave partial table on errors.
-// 06-18-10 AWL 5.1-f009 [2539648] Fix Exif Artist handling of embedded commas and semicolons.
-// 05-20-10 JEH 5.1-f006 Fix import of exif:GPSVersionID, import of exif:GPSTimeStamp also tolerates hyphens and
-//				import of GPS coordinates tolerates zero denominators
-// 02-05-10 AWL 5.1-f003 Fix build warnings from Visual Studio.
-// 02-05-10 AWL 5.1-f002 Fix build warnings from Xcode 3.2.
-//
-// 12-22-09 AWL 5.0-f125 [2508484] Don't create Exif DateTimeDigitized or IIM DigitalDateCreated to
-//				avoid unnecessary PSD full rewrite due to new mapping with xmp:CreateDate.
-// 12-18-09 AWL 5.0-f124 [2505903] Redo the date/time fix to separate Exif DateTimeOriginal and IPTC DateCreated.
-// 12-15-09 AWL 5.0-f123 [2505903] Add special handling for date-only photoshop:DateCreated to preserve Exif.
-// 12-03-09 AWL 5.0-f120 [2499192] Add special case support for exif:ISOSpeedRatings over 65535.
-// 10-26-09 AWL 5.0-f093 [1572075] Minor suggested changes from Hubert Figure.
-// 10-08-09 AWL 5.0-f086 [2410350] Tweak MWG policy for better backwards compatibility.
-// 10-06-09 AWL 5.0-f084 [2426060,2434421,2424514] Fix TrimTrailingSpaces in ReconcileTIFF.cpp to handle all
-//				blank input. Fix Mac script conversions to use the right script. Fix MPEG-4 imports
-//				to not let one failure abort all. Fix TIFF handler to keep the XMP the same size if possible.
-// 08-31-09 AWL 5.0-f077 [2416566] Add special case fixup of negative GPSAltitude in Exif.
-// 08-27-09 AWL 5.0-f075 [2336123] Make TIFF importing be lenient about expected array sizes.
-// 08-10-09 AWL 5.0-f060 Assume denominator of 1 if XMP for rational Exif has just an integer.
-// 08-07-09 AWL 5.0-f059 Add additional TIFF and Exif "inject-only" tags for Bridge.
-// 04-21-09 AWL 5.0-f034 [2271936] Import and export Exif date/time values with spaces for missing parts.
-// 02-17-09 FNO 5.0-c010 [1647989] "type-patch.diff" replacing long/int with safer XMP_ type counterparts.
-// 01-07-09 AWL 5.0-f017 [1937288] Fix import and export of exif:UserComment. Fix deletion of entire IFD.
-// 01-06-09 AWL 5.0-f015 [1937288] Do delete all of tiff: and exif: on import, saving new writebacks.
-//				Change import of Exif RelatedSoundFile to accept any length.
-// 01-05-09 AWL 5.0-f013 [1937288] Don't delete all of tiff: and exif: on import, just the digests.
-// 01-05-09 AWL 5.0-f012 [1937288] Export Exif GPSTimeStamp (plus date), GPSAltitude (plus ref).
-// 11-21-08 AWL 5.0-f009 Fix TIFF imports to check for empty string after calling TrimTrailingSpaces.
-// 11-18-08 AWL 5.0-f008 Fix server mode to not delete XMP for non-ASCII input that is ignored.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-// 10-31-08 AWL 5.0-f002 MWG compliance changes: Fix Exif Artist and date/time mapping bugs.
-//
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-// 10-14-08 AWL 4.4-f014 MWG compliance changes: simplified block selection.
-// 10-13-08 AWL 4.4-f012 Add support for zone-less times.
-//
-// 06-24-08 AWL 4.3-f125 [1830156] Make sure exif:UserComment is a LangAlt.
-//
-// 04-22-08 AWL 4.2.2-f109 [1740071] Use Exif DateTimeOriginal to set a missing xmp:CreateDate.
-//
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 02-15-08 AWL 4.2-f076 More changes to generic UNIX builds for XMPFiles.
-// 02-13-08 AWL 4.2-f073 [1538320] Add GPS Latitude and Longitude to the Exif writeback set.
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-//
-// 11-16-06 AWL 4.1-f070 [1423378] Fix legacy import/export to catch per-property exceptions and keep going.
-// 11-10-06 AWL 4.1-f066 [1417221] Tweak the "legacy digest missing" logic to import legacy values
-//				that do not have corresponding XMP.
-// 11-01-06 AWL 4.1-f059 [1409577] Fix JPEG and PSD legacy import to better match Photoshop. There
-//				are different JPEG/PSD/TIFF file policies for TIFF tags 270 (dc:description), 315
-//				(dc:creator), and 33432 (dc:rights).
-// 10-30-06 AWL 4.1-f052 [1333769] Add DateTimeOriginal and DateTimeDigitized to the Exif writeback tags.
-//				Also fix a bug where fractional Exif seconds were not output correctly. This affects the
-//				TIFF DateTime/SubSecTime (tags 306/37520, xmp:ModifyDate) in addition to the new ones.
-// 10-13-06 AWL 4.1-f042 [1388170] Behave the same as Photoshop when the legacy digest is missing.
-//				In this case take the XMP as-is. This accomodates XMP-only editors.
-// 09-21-06 AWL 4.1-f037 [1378220,1367149] Fix the legacy metadata output to allow proper detection
-//				of XMP-only changes and thus take advantage of an in-place XMP update for unsafe
-//				saves. Fix the PSIR 1034 copyright flag handling to match Photoshop. Add CR<->LF
-//				normalization hackery to match Photoshop.
-// 08-29-06 AWL 4.1-f031 Have the SetXyz functions for TIFF, PSIR, and IPTC simply return if the
-//				existing value matches the new value. This will be needed to implement the minimal
-//				in-place update logic in the handlers. Undo the similar checks made in ReconcileTIFF.
-// 08-18-06 AWL 4.1-f025 Fix problems in ReconcileTIFF.cpp that caused the TIFF to always grow. Fix
-//				bugs in TIFF_FileWriter.cpp with setting proper offsets for changed tags.
-//
-// 07-10-06 AWL 4.0-f014 Initial version of new read-write JPEG handler and underpinnings. Reasonably
-//				but not thoroughly tested, still within NewHandlers conditional.
-// 06-07-06 AWL 4.0-f010 Improve the Unicode conversions.
-//
-// 04-21-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"
@@ -221,7 +116,7 @@ static const TIFF_MappingToXMP sExifIFDMappings[] = {
 	{ /* 40964 */ kTIFF_RelatedSoundFile,          kTIFF_ASCIIType,       kAnyCount, kExport_Always,     kXMP_NS_EXIF,  "RelatedSoundFile" },	// ! Exif spec says count of 13.
 	{ /* 36867 */ kTIFF_DateTimeOriginal,          kTIFF_ASCIIType,       20,        kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 36868 */ kTIFF_DateTimeDigitized,         kTIFF_ASCIIType,       20,        kExport_Always,     "", "" },	// ! Has a special mapping.
-	{ /* 36880 */ kTIFF_OffsetTime,         	   kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
+	{ /* 36880 */ kTIFF_OffsetTime,                kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 36881 */ kTIFF_OffsetTimeOriginal,        kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 36882 */ kTIFF_OffsetTimeDigitized,       kTIFF_ASCIIType,       7,         kExport_Always,     "", "" },	// ! Has a special mapping.
 	{ /* 42016 */ kTIFF_ImageUniqueID,             kTIFF_ASCIIType,       33,        kExport_InjectOnly, kXMP_NS_EXIF,  "ImageUniqueID" },
@@ -1358,15 +1253,15 @@ ImportTIFF_StandardMappings ( XMP_Uns8 ifd, const TIFF_Manager & tiff, SXMPMeta 
 			
 			bool found = tiff.GetTag ( ifd, mapInfo.id, &tagInfo );
 			if ( ! found ) continue;
-
-            /* tag length need to be checked in case of TIFF_MemoryReader, as a possible case
+			/* tag length need to be checked in case of TIFF_MemoryReader, as a possible case
              the data length value might be changed (flippig because of endianess) by next overlapping IFD leading to crash.
-             To avoid that, rechecking the datalen just before its access.*/
+             To avoid that, rechecking the datalen just before its access. Fixing CTECHXMP-4170409*/
             if(tiff.IsCheckTagLength() &&
                tagInfo.dataLen > tiff.GetTiffLength() - ((XMP_Uns8*)tagInfo.dataPtr - tiff.GetTiffStream())) {
                     continue;    // Bad Tag
                 }
             
+
 			XMP_Assert ( tagInfo.type != kTIFF_UndefinedType );	// These must have a special mapping.
 			if ( tagInfo.type == kTIFF_UndefinedType ) continue;
 			if ( ! ImportTIFF_CheckStandardMapping ( tagInfo, mapInfo ) ) continue;
@@ -1408,11 +1303,11 @@ ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateI
 	XMP_Uns16 secID = 0, offsetID = 0;
 	switch ( dateInfo.id ) {
 		case kTIFF_DateTime          : secID = kTIFF_SubSecTime;
-            							offsetID = kTIFF_OffsetTime; break;
+									    offsetID = kTIFF_OffsetTime; break;
 		case kTIFF_DateTimeOriginal  : secID = kTIFF_SubSecTimeOriginal;
-            							offsetID = kTIFF_OffsetTimeOriginal; break;
+										offsetID = kTIFF_OffsetTimeOriginal; break;
 		case kTIFF_DateTimeDigitized : secID = kTIFF_SubSecTimeDigitized;
-            							offsetID = kTIFF_OffsetTimeDigitized; break;
+										offsetID = kTIFF_OffsetTimeDigitized; break;
 	}
 	
 	try {	// Don't let errors with one stop the others.
@@ -1453,33 +1348,32 @@ ImportTIFF_Date ( const TIFF_Manager & tiff, const TIFF_Manager::TagInfo & dateI
 			for ( ; digits < 9; ++digits ) binValue.nanoSecond *= 10;
 			if ( binValue.nanoSecond != 0 ) binValue.hasTime = true;
 		}
+		// The offset time tags were added to EXIF spec 2.3.1., therefore we not
+		// supporting read/write in older versions
+		// We need EXIF spec version to figure out the same.
 
-        // The offset time tags were added to EXIF spec 2.3.1., therefore we not
-        // supporting read/write in older versions
-        // We need EXIF spec version to figure out the same.
-        
-        bool haveOldExif = true;    // Default to old Exif if no version tag.
-        TIFF_Manager::TagInfo tagInfo;
-        bool foundExif = tiff.GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
-        if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
-            haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
-        }
-        
-        if (!haveOldExif)
-        {
-        	TIFF_Manager::TagInfo timezoneInfo;
-            found = tiff.GetTag ( kTIFF_ExifIFD, offsetID, &timezoneInfo );
-            if ( found && (timezoneInfo.type == kTIFF_ASCIIType) && (timezoneInfo.count == 7) ) {
-                const char * timezoneStr = (const char *) timezoneInfo.dataPtr;
-                if ( (timezoneStr[0] == '+')  || (timezoneStr[0] == '-')  || (timezoneStr[3] == ':') ) {
-                    binValue.tzSign     = (timezoneStr[0] == '-') ? -1 : 1;
-                    binValue.tzHour      = GatherInt ( &timezoneStr[1], 2 );
-                    binValue.tzMinute   = GatherInt ( &timezoneStr[4], 2 );
-                    binValue.hasTimeZone = true;
-                }
-            }
-        }
-        xmp->SetProperty_Date ( xmpNS, xmpProp, binValue );
+		bool haveOldExif = true;    // Default to old Exif if no version tag.
+		TIFF_Manager::TagInfo tagInfo;
+		bool foundExif = tiff.GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
+		if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
+			haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
+		}
+
+		if (!haveOldExif)
+		{
+			TIFF_Manager::TagInfo timezoneInfo;
+			found = tiff.GetTag ( kTIFF_ExifIFD, offsetID, &timezoneInfo );
+			if ( found && (timezoneInfo.type == kTIFF_ASCIIType) && (timezoneInfo.count == 7) ) {
+				const char * timezoneStr = (const char *) timezoneInfo.dataPtr;
+				if ( (timezoneStr[0] == '+')  || (timezoneStr[0] == '-')  || (timezoneStr[3] == ':') ) {
+					binValue.tzSign     = (timezoneStr[0] == '-') ? -1 : 1;
+					binValue.tzHour      = GatherInt ( &timezoneStr[1], 2 );
+					binValue.tzMinute   = GatherInt ( &timezoneStr[4], 2 );
+					binValue.hasTimeZone = true;
+				}
+			}
+		}
+		xmp->SetProperty_Date ( xmpNS, xmpProp, binValue );
 
 	} catch ( ... ) {
 		// Do nothing, let other imports proceed.
@@ -2842,12 +2736,19 @@ static void
 ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp, TIFF_Manager * tiff, XMP_Uns16 mainID )
 {
 	XMP_Uns8 mainIFD = kTIFF_ExifIFD;
-    XMP_Uns16 fracID=0;
-    XMP_Uns16 offsetID=0;
+	XMP_Uns16 fracID=0;
+	XMP_Uns16 offsetID=0;
 	switch ( mainID ) {
-        case kTIFF_DateTime : mainIFD = kTIFF_PrimaryIFD; fracID = kTIFF_SubSecTime; offsetID = kTIFF_OffsetTime;	break;
-        case kTIFF_DateTimeOriginal  : fracID = kTIFF_SubSecTimeOriginal; offsetID = kTIFF_OffsetTimeOriginal;	break;
-        case kTIFF_DateTimeDigitized : fracID = kTIFF_SubSecTimeDigitized; offsetID = kTIFF_OffsetTimeDigitized;	break;
+		case kTIFF_DateTime : mainIFD = kTIFF_PrimaryIFD; 
+		                      fracID = kTIFF_SubSecTime; 
+		                      offsetID = kTIFF_OffsetTime; 
+							  break;
+		case kTIFF_DateTimeOriginal  : fracID = kTIFF_SubSecTimeOriginal; 
+		                               offsetID = kTIFF_OffsetTimeOriginal;	
+									   break;
+		case kTIFF_DateTimeDigitized : fracID = kTIFF_SubSecTimeDigitized; 
+		                               offsetID = kTIFF_OffsetTimeDigitized;	
+									   break;
 	}
 
 	try {	// Don't let errors with one stop the others.
@@ -2857,7 +2758,7 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		if ( ! foundXMP ) {
 			tiff->DeleteTag ( mainIFD, mainID );
 			tiff->DeleteTag ( kTIFF_ExifIFD, fracID );	// ! The subseconds are always in the Exif IFD.
-            tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );    // ! The offsetTime are always in the Exif IFD.
+			tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );// ! The offsetTime are always in the Exif IFD.
 			return;
 		}
 
@@ -2902,53 +2803,53 @@ ExportTIFF_Date ( const SXMPMeta & xmp, const char * xmpNS, const char * xmpProp
 		if ( xmpBin.nanoSecond == 0 ) {
 		
 			tiff->DeleteTag ( kTIFF_ExifIFD, fracID );
-		
-		} else {
-
-			snprintf ( buffer, sizeof(buffer), "%09d", xmpBin.nanoSecond );	// AUDIT: Use of sizeof(buffer) is safe.
-			for ( size_t i = strlen(buffer)-1; i > 0; --i ) {
-				if ( buffer[i] != '0' ) break;
-				buffer[i] = 0;	// Strip trailing zero digits.
-			}
-
-			tiff->SetTag_ASCII ( kTIFF_ExifIFD, fracID, buffer );	// ! The subseconds are always in the Exif IFD.
-
 		}
-        
-        bool haveOldExif = true;    // Default to old Exif if no version tag.
-        TIFF_Manager::TagInfo tagInfo;
-        bool foundExif = tiff->GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
-        if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
-            haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
-        }
-        if (!haveOldExif)
-        {
-            // The offset time tags were added to EXIF spec 2.3.1., therefore we are not
-            // supporting read/write in older versions
-            // We need EXIF spec version to figure out the same.
-            
-            if ( xmpBin.hasTimeZone == 0 || (xmpBin.tzSign != -1 && xmpBin.tzSign != 1) ){
-            
-                tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );
-            
-            } else {
-                char tzSign = '+';
-                if(xmpBin.tzSign == -1)
-                    tzSign = '-';
-                
-                char offsetBuffer[7];
-                snprintf ( offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d",    // AUDIT: Use of sizeof(offsetBuffer) is safe.
-                tzSign, xmpBin.tzHour, xmpBin.tzMinute );
+		else
+		{
+			snprintf(buffer, sizeof(buffer), "%09d", xmpBin.nanoSecond); // AUDIT: Use of sizeof(buffer) is safe.
+			for (size_t i = strlen(buffer) - 1; i > 0; --i)
+			{
+				if (buffer[i] != '0')
+					break;
+				buffer[i] = 0; // Strip trailing zero digits.
+			}
+			tiff->SetTag_ASCII(kTIFF_ExifIFD, fracID, buffer); // ! The subseconds are always in the Exif IFD.
+		}
 
-                tiff->SetTag_ASCII ( kTIFF_ExifIFD, offsetID, offsetBuffer );    // ! The OffsetTime are always in the Exif IFD.
-            }
+		bool haveOldExif = true;    // Default to old Exif if no version tag.
+		TIFF_Manager::TagInfo tagInfo;
+		bool foundExif = tiff->GetTag ( kTIFF_ExifIFD, kTIFF_ExifVersion, &tagInfo );
+		if ( foundExif && (tagInfo.type == kTIFF_UndefinedType) && (tagInfo.count == 4) ) {
+			haveOldExif = (strncmp ( (char*)tagInfo.dataPtr, "0231", 4 ) < 0);
+		}
+		if (!haveOldExif)
+		{
+			// The offset time tags were added to EXIF spec 2.3.1., therefore we are not
+			// supporting read/write in older versions
+			// We need EXIF spec version to figure out the same.
 
-        }
+			if ( xmpBin.hasTimeZone == 0 || (xmpBin.tzSign != -1 && xmpBin.tzSign != 1) ){
+
+				tiff->DeleteTag ( kTIFF_ExifIFD, offsetID );
+
+			}else
+			{
+				char tzSign = '+';
+				if (xmpBin.tzSign == -1)
+					tzSign = '-';
+
+				char offsetBuffer[7];
+				snprintf(offsetBuffer, sizeof(offsetBuffer), "%c%02d:%02d", // AUDIT: Use of sizeof(offsetBuffer) is safe.
+						 tzSign, xmpBin.tzHour, xmpBin.tzMinute);
+
+				tiff->SetTag_ASCII(kTIFF_ExifIFD, offsetID, offsetBuffer); // ! The OffsetTime are always in the Exif IFD.
+			}
+		}
 
 	} catch ( ... ) {
 		// Do nothing, let other exports proceed.
 		// ? Notify client?
-	}
+	 }
 
 }	// ExportTIFF_Date
 

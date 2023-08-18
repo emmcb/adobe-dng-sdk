@@ -4,32 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef _ValueObject_h_
 #define _ValueObject_h_
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PW	Patrick Wolleck
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-23-15 ADC 5.6-f142 Adding support for parsing and serializing TRACK_LIST tag in iXML block.
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							New design for Reconciliation code
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

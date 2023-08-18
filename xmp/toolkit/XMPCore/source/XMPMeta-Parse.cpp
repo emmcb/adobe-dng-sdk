@@ -3,158 +3,11 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-09-15 AJ  5.6-c038 Fixing some more warnings due to implicit typecasting
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 07-10-14 ADC 5.6-c015 Refactoring, partial documentation and bug fixes of XMPCommon and XMPCore C++ APIs.
-//
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 09-21-12 AWL 5.5-c011 Remove Transform XMP.
-// 08-14-12 AWL 5.5-c009 Add XMPCore error notifications for RDF parsing errors.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-// 08-03-12 AWL 5.5-c006 Remove defunct XMPMeta prevTkVer data member.
-//
-// 07-21-09 AWL 5.0-c047 Add XMPUtils::ApplyTemplate.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 04-03-09 AWL 5.0-c022 Change PlainXMP to TransformXMP.
-//
-// 07-01-08 AWL 4.3-c060 Hide all uses of PlainXMP.
-// 06-24-08 AWL 4.3-c059 [1830156] Make sure exif:UserComment is a LangAlt.
-//
-// 01-25-08 AWL 4.2-c037 Change all xap* namespace prefixes to xmp*.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-// 02-12-07 AWL 4.2-c010 [1482676] Remove TouchUpOneSchema from XMPMeta-Parse.cpp. Replace the loop
-//				calling it with individual special cases. Some of the touchups can create or delete
-//				schema, making the loop misbehave - at worst referenece beyond the end of the vector.
-//
-// 11-16-06 AWL 4.1-c025 [1423378] Add logic to TouchUpDataModel to repair bad AltText arrays. A
-//				common problem is clients not creating the xml:lang qualifiers.
-// 10-13-06 AWL 4.1-c022 [1386343] Add parsing special case to migrate xmpDM:copyright to dc:rights.
-// 08-22-06 AWL 4.1-c018 [1312441,1340116] Fix another Latin-1 mistake, an infinite loop in edge
-//				cases of escape checking. This is stressed and exposed by single byte parsing, but
-//				could in theory occur "in the wild" with the right buffer boundaries.
-// 08-21-06 AWL 4.1-c017 [1312441,1340116] Fix a bug in the Latin-1 changes: Regression testing
-//				found an off-by-one error where the byte after a UTF-8 character is ignored.
-// 08-16-06 AWL 4.1-c015 [1312441,1340116] Change the parsing code to tolerate ISO Latin-1 input. At
-//				the same time, get rid of the ugly hackery that tries to deal with unescaped ASCII
-//				control characters. Also get rid of the check and complaint about parsing into an
-//				empty object. This is predominantly what people want, so clear the XMPMeta object.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-24-06 AWL 3.3-010 Turn off snprintf warning.
-// 10-13-05 AWL 3.3-008 [1247154] Fix incorrect dc:subject array type.
-//
-// 06-07-05 AWL 3.2-112 Serialize empty packets nicely.
-// 06-06-05 AWL 3.2-111 [0536565] Fix the compact serialization of empty structs.
-// 06-03-05 AWL 3.2-109 [0467370] Parse failures must leave the XMP object empty, ready for another parse.
-// 06-03-05 AWL 3.2-108 Output empty element in RDF for an empty array, e.g. <rdf:Seq/>.
-// 06-02-05 AWL 3.2-105 [1016912] Use empty element form when rdf:Description has only attribute content.
-// 06-01-05 AWL 3.2-105 [1110051] Add delete-existing option for SetProperty.
-// 06-01-05 AWL 3.2-103 [0509601,1204017] Fix SetLocalizedText to find and set a matching "real"
-//				language value when the specific_lang parameter is "x-default".
-// 05-27-05 AWL 3.2-102 Move the setting of the alloc/free procs to the top of XMPMeta::Initialize.
-// 05-16-05 AWL 3.2-100 Complete the deBIBification, integrate the internal and SDK source. Bump the
-//              version to 3.3 and build to 100, well ahead of main's latest 3.3-009.
-//
-// 05-02-05 AWL 3.2-019 Add the Dynamic Media namespace, kXMP_NS_DM, "http://ns.adobe.com/xmp/1.0/DynamicMedia/".
-// 04-14-05 AWL 3.2-018 Move the padding param, add overloads to simplify use of SerializeToBuffer.
-// 04-13-05 AWL 3.2-017 Improve the documentation and behavior of Get/SetLocalizedText.
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-08-05 AWL 3.2-015 Undo unnecessary constant changes in XMP_Const.h - keep compatibility over
-//				"perfection" so that SDK and internal code are easier to merge.
-// 04-07-05 AWL 3.2-014 Fix SetLocalizedText to set the alt-text bit for empty alt array. This became
-//				broken in the changes for 3.2-010 (SDK) and 3.3-003 (main). Don't throw an exception
-//				if x:xmpmeta is missing and kXMP_RequireXMPMeta is used. Old code ignored that
-//				candidate. This changed in the previous build's root node lookup changes.
-// 04-06-05 AWL 3.2-013 [0509601] Normalize "single value" alt-text arrays. Improve the way the root
-//				XML node is found and extract the previous toolkit version number.
-// 04-05-05 AWL 3.2-012 [1172565] Move instance ID from rdf:about to xmpMM:InstanceID.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 04-01-05 AWL 3.2-010 Add leafOptions parameter to FindNode, used when creating new nodes.
-// 03-17-05 AWL 3.2-006 Revise Plain XMP parsing and serialization for latest proposal.
-// 02-16-05 AWL 3.2-005 Add first cut of Plain XMP parsing and serialization.
-// 02-14-05 AWL 3.2-003 Add thread locks.
-// 02-11-05 AWL 3.2-002 Add client reference counting.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 02-02-05 AWL 3.1.1-110 [1145657] Fix XMPMeta::SerializeToBuffer to do an exact size UTF-16 or UTF-32
-//				packet correctly. It was doing UTF-8 of the exact size, then converting.
-// 01-26-05 AWL 3.1.1-107 [1141684] Add XMPMeta::UnregisterAssertNotify and XMPMeta::SendAssertNotify.
-// 01-25-05 AWL 3.1.1-106 [1141007] Add XMPMeta::RegisterAssertNotify.
-// 01-17-05 AWL 3.1.1-105 [1135773] Delete empty schema in addition to removing the pointer from the
-//				tree node's child vector. This bug was introduced in the -101 changes.
-// 01-07-05 AWL 3.1.1-104 [1129616] Fix SetObjectName to verify that the string is UTF-8.
-// 12-14-04 AWL 3.1.1-101 [1085740] Delete empty schema nodes in CleanupParsedAliases.
-// 12-14-04 AWL 3.1.1-100 [1022350,1075328] Add more namespaces and internal/external properties.
-// 12-09-04 AWl 3.1.1-099 [1041438] Add parsing and serialization support for UTF-16 and UTF-32.
-// 11-05-04 AWL 3.1.1-093 [1037508] Touch up exif:GPSTimeStamp values that have zero for the date.
-// 11-05-04 AWL 3.1.1-092 [1106408] Add new IPTC namespace.
-// 10-29-04 AWL 3.1.1-089 [1099634] Fix ParseFromBuffer to properly handle a partial escape followed
-//				by another escape. E.g. "blah blah &#" then "xA;&#xA; blah blah".
-// 10-20-04 AWL 3.1.1-085 [1084185] Fix XMP_InternalRef to not depend on BIBContainerBase layout.
-// 10-12-04 AWL 3.1.1-084 [0616293] Add value checking to SetNodeValue, prefix checking to RegisterNamespace.
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-// 10-05-04 AWL 3.1.1-082 [1061778] Use recursive form of BIB mutex.
-//
-// 08-27-04 AWL 3.1-079 Remove overly aggressive option checks in SerializeAsRDF.
-// 08-27-04 AWL 3.1-078 Add EXIF_Aux and CameraRaw namespaces.
-// 08-23-04 AWL 3.1-076 Add kXMP_NS_PSAlbum as a predefined namespace.
-// 08-04-04 AWL 3.1-073 [1050719] Fix handling of an empty default namespace declaration.
-// 07-28-04 AWL 3.1-069 [1043286] Preflight parse buffers for ASCII controls.
-// 07-26-04 AWL 3.1-068 [1046381,1046384] Fix XMPUtils::ConvertToXyz to throw instead of assert for
-//				null or empty string. Fix XMPMeta::GetProperty_Xyz to make sure property is simple.
-// 07-21-04 AWL 3.1-067 [1044036] Increase fudge factor for output reserve in SerializeToBuffer.
-// 07-15-04 AWL 3.1-066 [1015904] Fix Get/SetLocalizedText to allow empty alt arrays.
-// 07-14-04 AWL 3.1-062 [1026373] Strip old iX:changes elements during parsing.
-// 07-14-04 AWL 3.1-059 [0658992] Fix SetQualifier to throw if property does not exist.
-// 07-13-04 AWL 3.1-058 [1014255] Remove empty schema nodes.
-// 07-13-04 AWL 3.1-057 [1006568] Check all XPath components for valid namespace prefixes.
-// 07-09-04 AWL 3.1-053 [1037918] Use double escaping for ASCII controls other than tab, lf, and cr.
-// 06-10-04 AWL 3.1-047 Fix more HPUX and AIX compilation errors and warnings.
-// 06-04-04 AWL 3.1-046 Fix HPUX compilation errors and warnings.
-//
-// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
-// 05-14-04 AWL [1016811,1018220] Fix escaping bugs in serialization.
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers. Properly delete partial tree when parse
-//				errors throw an exception. Clean up memory leaks.
-// 04-19-04 AWL [1010249] Don't write a final newline after the packet trailer, the packet must end
-//			    at the '>' of the trailer.
-// 04-16-04 AWL Fix major bogosity in IsAttrQualifier XMPMeta.cpp.
-// 04-16-04 AWL Inflate serialization size estimate to accommodate anticipated character entities,
-//              e.g. &#xA; for newlines. There can be a lot in the base 64 encoding of a thumbnail.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message. Have GetProperty
-//				and friends throw an exception if the schema namespace is not registered.
-// 03-04-04 AWL Add hacks to handle the DC singleton denormalization of the XMP from Acrobat 5.
-// 02-19-04 AWL Add the new "transient" standard namespace.
-// 02-06-04 AWL Register a couple of missing standard namespaces.
-// 01-29-04 AWL Add AppendArrayItem.
-// 01-26-04 AWL Revamp expanded XPath handling to work better for aliases.
-// 04-24-03	AWL	Initial start on the new implementation.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 
@@ -264,15 +117,6 @@ static const char * kReplaceLatin1[128] =
 static const XML_Node * PickBestRoot ( const XML_Node & xmlParent, XMP_OptionBits options )
 {
 
-#if AdobePrivate
-	// Look among this parent's content for txmp:XMP_Packet or x:xmpmeta. The recursion for
-	// x:xmpmeta is broader than the strictly defined choice, but gives us smaller code.
-	for ( size_t childNum = 0, childLim = xmlParent.content.size(); childNum < childLim; ++childNum ) {
-		const XML_Node * childNode = xmlParent.content[childNum];
-		if ( childNode->kind != kElemNode ) continue;
-		if ( (childNode->name == "x:xmpmeta") || (childNode->name == "x:xapmeta") ) return PickBestRoot ( *childNode, 0 );
-	}
-#else
 	// Look among this parent's content for x:xmpmeta. The recursion for x:xmpmeta is broader than
 	// the strictly defined choice, but gives us smaller code.
 	for ( size_t childNum = 0, childLim = xmlParent.content.size(); childNum < childLim; ++childNum ) {
@@ -280,8 +124,6 @@ static const XML_Node * PickBestRoot ( const XML_Node & xmlParent, XMP_OptionBit
 		if ( childNode->kind != kElemNode ) continue;
 		if ( (childNode->name == "x:xmpmeta") || (childNode->name == "x:xapmeta") ) return PickBestRoot ( *childNode, 0 );
 	}
-#endif
-
 	// Look among this parent's content for a bare rdf:RDF if that is allowed.
 	if ( ! (options & kXMP_RequireXMPMeta) ) {
 		for ( size_t childNum = 0, childLim = xmlParent.content.size(); childNum < childLim; ++childNum ) {

@@ -4,36 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history 
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	FNO Frank Nocke
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-13-12	AWL	5.5-f010 Improve redundant PSIR handling.
-//
-// 08-18-10 AWL 5.3-f002 Don't include XIO.hpp in any headers, only .cpp files.
-//
-// 02-25-08 FNO 4.2-f084 Integrate minor tweaks for Solaris
-// 01-07-08 AWL 4.2-f054 Fix some of the easy 64-bit compile warnings.
-// 01-10-07 AWL 4.2-f006 [1454756] Change PSIR_Support to handle any resource type, not just "8BIM".
-//
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-//
-// 04-19-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

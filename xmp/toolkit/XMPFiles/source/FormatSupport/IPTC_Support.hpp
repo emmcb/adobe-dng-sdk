@@ -7,53 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-19-15 AB  5.6-f141 [3675137] Fixing memory leak due to zero length data in IPTC_Support.
-//
-// 10-18-11 AWL 5.4-f024 [3002257] Make the IPTC Manager tolerant of out of order IIM records.
-//
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-//
-// 10-30-08 AWL 4.4-f016 MWG compliance changes: Always write IIM using UTF-8.
-// 10-23-08 AWL 4.4-f015 MWG compliance changes: Don't keep device properties in the file's XMP;
-//				mapping changes for 3-way properties, especially description and date/time.
-//
-// 02-18-08 AWL 4.2-f077 More changes to generic UNIX builds for XMPFiles.
-// 02-23-07 AWL 4.2-f020 [1493588] Add support for IPTC that has a 1:90 DataSet specifying UTF-8.
-// 12-07-06 AWL 4.2-f003 [1435660] Disable the lossless IPTC support (IPTC as UTF-8).
-//
-// 11-15-06 AWL 4.1-f068 [1418029] Update the IPTC legacy support to match the IPTC4XMP specification.
-// 11-09-06 AWL 4.1-f065 [1409584] Add support for storing IPTC using UTF-8. To simplify this, the
-//				only recognized DataSets are now 1:90, 2:0, and the "classic Protoshop" items that
-//				are mapped to XMP.
-// 11-09-06 AWL 4.1-f064 [1417587] Fix memory leaks associated with IPTC_Support's DisposeLooseValue.
-//				It was being called for zero length values whose address was past the allocation.
-//				Add hooks to find sources of leaks again in the future.
-// 11-08-06 AWL 4.1-f062 Consolidate the endian conversion routines in EndianUtils.hpp.
-//
-// 04-19-06 AWL Revamp following the pattern of TIFF_Support and PSIR_Support.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 01-27-06 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

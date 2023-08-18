@@ -11,42 +11,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-// AWL Alan Lillich
-//
-// mm/dd/yy who Description of changes, most recent on top
-//
-// 05-21-09 AWL 5.0-c032 Revamp glue again to pass SetClientString with each function.
-//
-// 08-02-07 AWL 4.2 Incorporate major revamp to doxygen comments.
-//
-// 03-24-06 AWL 4.0 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 05-16-05 AWL 3.3-100 Complete the deBIBification, integrate the internal and SDK source. Bump the
-//              version to 3.3 and build to 100, well ahead of main's latest 3.3-009.
-//
-// 04-26-05 AWL Fix Doxygen warnings.
-// 04-19-05 AWL Improve Doxygen comments for SDK.
-// 02-11-05 AWL 3.2-002 Add client reference counting.
-// 01-28-05 AWL Remove BIB.
-//
-// 01/17/04 AWL Move into new Perforce depot, cosmetic cleanup.
-// 05/09/03 AWL Remove HasMore, make Next return a found/not-found status.
-// 03/03/03 AWL Add Doxygen comments.
-// 10/29/02 AWL Started first draft.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 // =================================================================================================
 /// \file TXMPIterator.hpp

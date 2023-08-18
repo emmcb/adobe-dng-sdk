@@ -4,51 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//
-//	AWL Alan Lillich
-//	JEH Joerg Ehrlich
-//	ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 04-30-14 IJS 5.6-f106 [3735490] Modified  GetPreservedPathName to get the correct preserved folder and file names 
-//												if  unicode characters are present in the path.
-// 04-24-14 ADC 5.6-f104 Reverting back to the old strategy of creating a file in the folder in case we need to check writable.
-// 04-23-14 ADC 5.6-f103 Fixing issue with OpenFolder function in case of Unicode Characters.
-// 04-22-14 ADC 5.6-f102 Fixing issue with non NTFS shared folders on Windows.
-// 03-13-14 IJS 5.6-f097 Fix the break after 5.6-f096.
-// 03-12-14 IJS 5.6-f096 [3714412] Proxy and High Res Clip in XDCAM FAM should open the same XMP.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-//
-// 10-30-12 ADC 5.5-f053 Supporting long file paths on windows
-// 09-17-12 AWL 5.5-f031 Refine the Host_IO exceptions for permission errors and disk full writes.
-// 01-16-12	JEH	5.5-f005 [3081446] Fix OpenFolder utility on Win to cope with trailing slashes.
-//
-// 09-23-11 AWL 5.4-f012 Add GetFileModDate.
-//
-// 10-21-10	AWL	5.3-f013 Host_IO tweaks as a result of unit testing, for real this time.
-//
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// =================================================================================================
-#endif
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

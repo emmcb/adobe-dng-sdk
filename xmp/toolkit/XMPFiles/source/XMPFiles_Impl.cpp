@@ -4,119 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  FNO Frank Nocke
-//  JEH Joerg Ehrlich
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-31-15 AB  5.6-f147 Adding support for 3gp and 3g2 formats as well as adding more brands for mp4.
-// 03-05-15 AB  5.6-f138 Removing SVG format from packet scanner as smart handler has been provided for handling SVG files.
-// 03-04-15 AB  5.5-f136 First checkin of SVG Handler.
-// 08-13-13 IJS 5.6-f076 [3206367,3206363] Enabling Error Notifications for Bad file format exceptions in MPEG4_Handler.
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 01-11-13 IJS 5.6-f020 Reworked GetFileModDate, GetAssociatedResources and IsMetadataWritable APIs.
-// 12-21-12 IJS 5.6-f008 Added GetAssociatedResources and IsWritable APIs 
-//
-// 11-01-12 IJS 5.5-f055 Changes done to support R3D Plugin Handler
-// 10-10-12 ADC 5.5-f046 Fixing compile time issues which creeped into while doing merging of my changelist.
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-//
-// 09-23-11 AWL 5.4-f012 Add GetFileModeDate.
-//
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 02-05-10 AWL 5.1-f002 Fix build warnings from Xcode 3.2.
-//
-// 08-11-09 AWL 5.0-f061 Add "r3d" (Red) to rejected file list.
-// 06-12-09 FNO 5.0-f044 [2277195] Add XMP Support for UCF(based) .idap and .icap CS5 file formats.
-// 06-11-09 AWL 5.0-f043 Finish threading revamp, implement friendly reader/writer locking.
-// 05-07-09 FNO 5.0-f036 Start combined RIFF(AVI/WAV) Handler rewrite.
-// 12-19-08 FNO 5.0-f011 [1913500] Add seven more known camera raw extensions to list.
-// 11-13-08 AWL 5.0-f004 Add server mode support that ignores local text. Enable all handlers except
-//				MOV for generic UNIX - that will be handled as part of the rewrite.
-// 11-05-08 FNO 5.0-f003 [1913500] Add Lecia's .RWL extension to hard coded lists of RAW file extensions.
-//
-// 10-xx-08 AWL 4.4-f0xx MWG compliance changes, remove native thumbnail support.
-// 07-17-08 FNO 4.4-f007 [1841019] better fix to also detect rsrcFork-free files under 10.4.
-// 07-09-08 FNO 4.4-f005 [1841019] better fix. leniency on CatalogInfo for non-MacOS file systems.
-// 07-04-08 FNO 4.4-f004 [1841019] further refinement of fix. affects mac only.
-// 07-04-08 FNO 4.4-f003 [1841019] leniency on CatalogInfo for non-MacOS file systems. affects mac only.
-// 07-03-08 FNO 4.4-f002 [1832465] enabling CS4 InCopy extensions (UCF+XML).
-// 05-23-08 FNO 4.2.2-f118 [1799808] Added raw extension .3fr to kKnownRejectedFiles.
-// 05-19-08 JEH 4.2.2-f114 [1786791] Activating packet scanner for AEP and AEPX files
-// 04-11-08 FNO 4.2.2-f104 [1720135] Integrate large ucf (zip-64) support. LFA_Routines to source/LargeFileAccess.cpp|hpp.
-// 03-05-08 FNO 4.2-f091 Fix temp file user rights on Linux.
-// 02-22-08 FNO 4.2-f081 UCF-handler: Add accepted xfl, pdfxml extensions, rejected air.
-// 02-19-08 AWL 4.2-f078 Don't try to muck with ownership when creating temp files.
-// 02-11-08 AWL 4.2-f072 Add 3 more MPEG-4 standard file extensions.
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 01-22-08 FNO 4.2-f061 [1580732] XMPFiles should not write XMP into Camera Raw files.
-// 11-29-07 AWL 4.2-f041 First working version P2 handler in NewHandlers, XMP-only, no legacy.
-// 11-28-07 AWL Fix Windows compile problems in f039.
-// 11-28-07 AWL 4.2-f039 Add folder utils and implement TryFolderHandlers.
-// 11-13-07 FNO 4.2-f034 Made XIO::Move() more flexible to support same and different file as target.
-// 10-25-07 FNO 4.2-f031 Added XIO::Move() to move data within a file
-// 10-16-07 FNO 4.2-f028 UCF read-only in NewHandlers(not final), added LFA_Read* convenience routines to XMPFiles
-// 10-10-07 AWL 4.2-f027 Add handler method GetSerializeOptions. Introduce FillPacketInfo to replace
-//				GetPacketCharForm, GetPacketRWMode, and GetPacketPadSize. And tolerate no wrapper.
-// 10-09-07 FNO 4.2-f026 Added UCF draft to NewHandlers.
-// 07-17-07 AWL 4.2-f025 Change Mac to use pthread synchronization, needed for 64-bit builds.
-// 05-30-07 AWL 4.2-f024 Change operator new override to not throw for 0 length request, gcc on AIX
-//				returns a null pointer for 0 length.
-// 04-18-07 AWL 4.2-f022 Add dng to kFileExtMap, mapping to the TIFF handler.
-// 12-20-06 AWL 4.2-f004 [1446159] Change the Mac version of LFA_Seek to support seeks past EOF with
-//				implicit file growth. Fix an MP3 growth problem introduced with ID3_Support.cpp #5.
-//				LFA_Write got changed to LFA_Seek in the loop of OffsetAudioData.
-//
-// 11-10-06 AWL 4.1-f067 [1419025] Change the form of temp file names so that Bridge does not try to
-//				process them. Use a prefix of "._nn_" instead of "_nn" between the base and extension.
-// 11-09-06 AWL 4.1-f064 [1417587] Fix memory leaks associated with IPTC_Support's DisposeLooseValue.
-//				It was being called for zero length values whose address was past the allocation.
-//				Add hooks to find sources of leaks again in the future.
-// 09-15-06 AWL 4.1-f035 Revamp the MPEG handler to be platform neutral.
-//
-// 05-18-06 AWL 4.0-f005 Add support for JPEG/Exif thumbnails.
-// 05-01-06 AWL 4.0-f003 Revamp the embedded, Mac PList, and Windows Property info.
-// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 08-22-05 AWL 1.3-002 Use XMP's mem procs.
-//
-// 02-07-05 AWL 1.0-046 [1137383] Add LFA_Create, LFA_Rename, and LFA_Delete. Don't use C stdio routines,
-//				they don't handle UTF-8 properly on Windows!
-// 01-28-05 AWL 1.0-043 [1137383] Fix the Windows version of LFA_Open to properly handle UTF-8.
-// 01-06-05 AWL 1.0-027 [1014854] Cleanup handling for UTF-16 and UTF-32. This involves some general
-//				changes to the separation of work between the common code and handlers, making the
-//				storage of the SXMPMeta object and packet string more visible.
-// 12-15-04 AWL 1.0-021 [1088863] Improve crash-safe update.
-// 10-08-04 AWL 1.0-010 Add thread locking.
-// 10-07-04 AWL 1.0-009 Add first cut of support for crash safe file update.
-// 09-23-04 AWL 1.0-007 Use the XMP toolkit's build number and timestamp. Add current position
-//				result to LFA_Seek. Add SetAbortProc and abort checking.
-// 08-13-04 AWL Checkpoint, almost full implementation, compiles.
-// 07-09-04 AWL First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -149,10 +38,6 @@ using namespace std;
 	#if ! ANDROID_ENV
 		#error "ANDROID_ENV must be defined so that \"#if ANDROID_ENV\" is true"
 	#endif
-#elif defined ( WEB_ENV )
-    #if ! WEB_ENV
-        #error "WEB_ENV must be defined so that \"#if WEB_ENV\" is true"
-    #endif
 #endif
 
 // =================================================================================================
@@ -267,7 +152,6 @@ const FileExtMapping kFileExtMap[] =
 	  { "idml", kXMP_UCFFile },
 	  { "idap", kXMP_UCFFile },
 	  { "icap", kXMP_UCFFile },
-	  { "webp", kXMP_WebPFile },
 	  { "", 0 } };	// ! Must be last as a sentinel.
 
 // Files known to contain XMP but have no smart handling, here or elsewhere.
@@ -295,9 +179,6 @@ const char * kKnownScannedFiles[] =
 // Extensions that XMPFiles never handles.
 const char * kKnownRejectedFiles[] =
 	{
-	#if AdobePrivate
-	// See http://sol.corp.adobe.com/twiki/bin/view/Photoshop/CRExtensions for reference.
-	#endif
 		// RAW files
 		"cr2", "erf", "fff", "dcr", "kdc", "mos", "mfw", "mef",
 		"raw", "nef", "orf", "pef", "arw", "sr2", "srf", "sti",
@@ -309,48 +190,6 @@ const char * kKnownRejectedFiles[] =
 	  0 };	// ! Keep a 0 sentinel at the end.
 
 // =================================================================================================
-
-#if AdobePrivate
-	#if ! XMP_StaticBuild
-
-		#undef malloc
-		#undef free
-
-		XMP_AllocateProc sXMP_MemAlloc = malloc;
-		XMP_DeleteProc   sXMP_MemFree  = free;
-
-//******* SEE : CTECHXMP-4169971 *************//
-#if 0
-		#define malloc(size) (*sXMP_MemAlloc) ( size )
-		#define free(addr)   (*sXMP_MemFree) ( addr )
-
-		void * operator new ( size_t len ) throw ( std::bad_alloc )
-		{
-			void * mem = (*sXMP_MemAlloc) ( len );
-			if ( (mem == 0) && (len != 0) ) throw std::bad_alloc();
-			return mem;
-		}
-
-		void * operator new[] ( size_t len ) throw ( std::bad_alloc )
-		{
-			void * mem = (*sXMP_MemAlloc) ( len );
-			if ( (mem == 0) && (len != 0) ) throw std::bad_alloc();
-			return mem;
-		}
-
-		void operator delete ( void * ptr ) throw()
-		{
-			if ( ptr != 0 ) (*sXMP_MemFree) ( ptr );
-		}
-
-		void operator delete[] ( void * ptr ) throw()
-		{
-			if ( ptr != 0 ) (*sXMP_MemFree) ( ptr );
-		}
-#endif
-
-	#endif
-#endif
 
 // =================================================================================================
 
@@ -633,20 +472,6 @@ bool XMPFileHandler::IsMetadataWritable ( )
 	}
 	return false;
 }
-
-#if AdobePrivate
-// =================================================================================================
-// XMPFileHandler::GetAlbumArtworks
-// ==========================
-//
-// This base implementation will just return false. If the derived handler does support the album art then it
-// must have its own implementation of GetAlbumArtworks.
-
-bool XMPFileHandler::GetAlbumArtworks()
-{
-	return false;
-}
-#endif
 
 // =================================================================================================
 // XMPFileHandler::ProcessXMP

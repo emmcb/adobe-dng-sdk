@@ -3,124 +3,8 @@
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//	JEH Joerg Ehrlich
-//	ADC Amandeep Chawla
-//  AJ  Abhishek Jindal
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 03-27-15 AJ  5.6-c068 Checking in complete implementation of XMPUtils with the new Core APIs
-// 09-03-15 AJ  5.6-c045 Get/SetBulkMarkers with the new DOM APIs and some bug fixes for the same
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 12-21-14 AJ  5.6-c031 Routed XMPDocOps to new DOM APIs.
-// 07-11-14 ADC 5.6-c018 Fixing issues related to Linux build.
-// 07-10-14 ADC 5.6-c015 Refactoring, partial documentation and bug fixes of XMPCommon and XMPCore C++ APIs.
-//
-// 07-02-13 ADC 5.5-c020 Corrected the left Trimming of the value before passing onto
-//						 GetProperty_Int, GetProperty_Int64 and GetProperty_Float.
-//
-// 12-14-11 AWL 5.3-c011 [2810247] Fix lurking bugs in XMPUtils::ConvertToFloat.
-//
-// 07-01-09 JEH 5.0-c042 Fix wrong property name for extended XMP in JPEG utils.
-// 06-18-09 AWL 5.0-c037 Minor tweaks from code review.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 05-27-09 AWL 5.0-c033 Remove XMPMeta::SendAssertNotify.
-// 05-05-09 AWL 5.0-c028 [2317800] Fix GatherInt in XMPUtils.cpp to check for overflow.
-// 01-22-09 FNO 5.0-c004 Fix broken Linux/Solaris build in regard to previous change.
-// 12-18-08 AWL 5.0-c002 [1912198] Allow "+00:00" and "-00:00" timezones, e.g. local time in England.
-//
-// 10-13-08 AWL 4.4-c009 Add support for zone-less times. Get rid of old XMPUtils forms of DocOps.
-//
-// 02-14-08 AWL 4.2-c039 [1610768] Use %lld format for ConvertFromInt64. Use sscanf with appropeiate
-//				format for ConvertFromInt and ConvertFromInt64.
-// 01-22-08 AWL 4.2-c036 Add fixes and comments for the Acrobat security review.
-// 11-02-07 AWL 4.2-c024 Start implementing XMPDocOps.
-// 01-25-07 AWL 4.2-c008 [1470354] Change SXMPUtils::PackageForJPEG to use a standard XMP limit of 65000.
-//
-// 08-11-06 AWL 4.1-c015 Workaround a map ordering bug in Xcode 2.3 in order to properly pick the
-//				largest estimated property in MoveLargestProperty.
-// 08-02-06 AWL 4.1-c013 Update the Unlimited JPEG implementation for the latest partitioning policy.
-//
-// 05-16-06 AWL 4.0-c006 Add SXMPUtils::PackageForJPEG and SXMPUtils::MergeFromJPEG.
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 03-21-06 AWL 3.3-016 [1269463] Silently correct bad date values to avoid killing clients that
-//				are not catching exceptions. The long term mainline fix will be an error callback.
-// 01-24-06 AWL 3.3-010 Turn off snprintf warning. Use VC8 thread safe versions of gmtime and localtime.
-// 07-15-05 AWL 3.3-001 [1214033] Bump version to 3.3, the SDK is out. Put back missing multi-file utils.
-//
-// 06-07-05 AWL 3.2-114 [1206111] Improve the 3.2-104 fix so that ConvertToDate will tolerate "1:2:3".
-// 06-01-05 AWL 3.2-104 [0528667] Fix ConvertToDate to tolerate a string like "hh:mm:ss".
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize xml:lang values so that compares are in effect case
-//				insensitive as required by RFC 3066. Change parsing and serializing to force the
-//				x-default item to be first.
-// 04-01-05 AWL 3.2-010 Add leafOptions parameter to FindNode, used when creating new nodes.
-// 02-14-05 AWL 3.2-004 [1125901] Fix overrun problem in XMPUtils::DecodeFromBase64.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 01-27-05 AWL 3.1.1-109 [1140533] Fix XMPUtils::SetTimeZone to workaround a bug in Apple's mktime.
-// 01-07-05 AWL 3.1.1-103 [1115333] Some versions of mktime barf on years before 1970.
-// 12-14-04 AWL 3.1.1-100 [1022350,1075328] Add more namespaces and internal/external properties.
-// 11-08-04 AWL 3.1.1-096 [0664438] Add checks in OpenWorkingDocument and SaveWorkingDocument to
-//				remove the transient schema (xmpx:) used in the File Info multi-file support.
-// 11-08-04 AWL 3.1.1-095 [0663706] Allow null or empty MIME string in SetMIMEMapping - deletes mapping.
-// 11-08-04 AWL 3.1.1-094 [0660881] Preserve qualifiers on existing values in SeparateArrayItems.
-// 11-04-04 AWL 3.1.1-090 [1014853] Add XMPUtils::RemoveMultiValueInfo. Fix AppendProperties to call
-//				RemoveMultiValueInfo, i.e. to mimic a user edit.
-// 10-28-04 AWL 3.1.1-088 [1060796] Fix SetTimeZone to use appropriate date so that daylight savings
-//				time is taken into account, use thread safe time functions, use difftime for offset.
-// 10-21-04 AWL 3.1.1-087 [1070165,1096322] Fix SetTimeZone to set tzSign to zero for GMT.
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-// 09-23-04 AWL 3.1.1-080 [1058198,1061778] Fix bugs in CollectMultiFileXMP. Set version to 3.1.1
-//				for Cookie Dough, Gordon branch (Acrobat 7) is 3.1.
-//
-// 08-18-04 AWL 3.1-075 Add HasContainedDoc.
-// 08-04-04 AWL 3.1-072 [1010361] Handle bad times from Photoshop 8 that have a zero date and no time zone.
-// 07-29-04 AWL 3.1-070 [1024539] Fix CatenateArrayItems to verify the separator string.
-// 07-26-04 AWL 3.1-068 [1046381,1046384] Fix XMPUtils::ConvertToXyz to throw instead of assert for
-//				null or empty string. Fix XMPMeta::GetProperty_Xyz to make sure property is simple.
-// 07-14-04 AWL 3.1-063 [1013976] Fix DistributeMultiFileXMP to clear NewImplicit bit on schema node.
-// 07-14-04 AWL 3.1-061 [0664349] Fix SetResourceRef to tolerate null refXMP parameter.
-// 07-14-04 AWL 3.1-059 [0657909] Require registered namespaces in path composition routines.
-// 07-13-04 AWL 3.1-058 [1014255] Remove empty schema nodes.
-// 07-12-04 AWL 3.1-054 [1028368] Fix DecodeFromBase64 to properly handle embedded whitespace.
-//
-// 06-15-04 AWL Add DiffSchema field to the DifferingProperties array elements.
-// 05-06-05 AWL Move GetMainPacket and UpdateMainPacket PacketAccess.cpp.
-// 05-04-04 AWL [1014856] Fix XMPUtils::RemoveProperties to handle a property name at any level, not
-//				just top level. At the same time add optional removal of aliases.
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers. Clean up memory leaks.
-// 04-23-04 AWL [1014270] Fix ConvertToDate and internal callers to handle date properties with
-//				empty values, don't assert in ConvertToDate.
-// 04-19-04 AWL [1010249] Fix UpdateMainPacket to actually write the file.
-// 04-08-04 AWL Have GetDateRange and GetMergedListPath also resolve aliases before lookup.
-// 03-29-04 AWL Add Q&D versions of GetMainPacket and UpdateMainPacket.
-// 03-24-04 AWL Improve error checking in time utils. Have CurrentDateTime return local time.
-// 03-23-04 AWL Have IsPropertyMultiValued resolve aliases before lookup.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message.
-// 03-15-04 AWL Fix mixup of sConvertedPath and sConvertedValue in ConvertFromInt and ConvertFromFloat.
-// 03-10-04 AWL Fix bug in IsPropertyMultiValued, bad walk through existing properties.
-// 03-08-04 AWL Fix bugs in IsPropertyMultiValued, GetDateRange, and GetMergedListPath.
-// 02-17-04 AWL Add multi-file utilities. Rename CreateXyzDocument to InitializeXyzDocument.
-// 02-09-04 AWL Start adding the new Document Operation utilities.
-// 05-24-03 AWL Initial start on the new implementation.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 #include "XMPCore/source/XMPCore_Impl.hpp"
@@ -1637,13 +1521,7 @@ static void FormatFullDateTime ( XMP_DateTime & tempDate, char * buffer, size_t 
 
 	AdjustTimeOverflow ( &tempDate );	// Make sure all time parts are in range.
 
-	if ( (tempDate.second == 0) && (tempDate.nanoSecond == 0) ) {
-
-		// Output YYYY-MM-DDThh:mmTZD.
-		snprintf ( buffer, bufferLen, "%.4d-%02d-%02dT%02d:%02d",	// AUDIT: Callers pass sizeof(buffer).
-				   tempDate.year, tempDate.month, tempDate.day, tempDate.hour, tempDate.minute );
-
-	} else if ( tempDate.nanoSecond == 0  ) {
+	if ( tempDate.nanoSecond == 0  ) {
 
 		// Output YYYY-MM-DDThh:mm:ssTZD.
 		snprintf ( buffer, bufferLen, "%.4d-%02d-%02dT%02d:%02d:%02d",	// AUDIT: Callers pass sizeof(buffer).

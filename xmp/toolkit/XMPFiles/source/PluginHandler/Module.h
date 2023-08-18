@@ -4,29 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-27-13 ADC 5.6-f043 Adding support for preloading plugins based on handler flags. PDF Handler will support preloading.
-// 01-02-13 ADC 5.6-f011 Allowing multiple different plugins to be loaded simultaneously.
-//
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef MODULE_H
 #define MODULE_H

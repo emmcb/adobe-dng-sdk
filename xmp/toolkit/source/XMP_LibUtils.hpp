@@ -6,52 +6,8 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  JEH Joerg Ehrlich
-//  SAM Samy Makki
-//  ADC Amandeep Chawla
-//  HK  Honey Kansal
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who M.m-bbb Description of changes, most recent on top.
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 02-21-14 ADC 5.6-c001 XMPCommon Framework and XMPCore new APIs ported to Mac Environment.
-//
-// 01-03-14 HK  5.6-f087 [3688857] Fixing data alignment issues on ARM processor.
-// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
-//
-// 10-10-12 ADC 5.5-c012 Changed internal implementation of common error notification infrastructure.
-// 08-08-12 AWL 5.5-c007 XMPCore error notifications for one case of XML parsing, no existing test failures.
-//
-// 02-02-11	SAM	5.3-f026 Adding XMP_Throw_Verbose macro for Debug only in order to 
-//						 add internal error codes to the message.
-// 02-05-10 AWL 5.1-c002 Fix build warnings from Xcode 3.2.
-//
-// 07-03-09 JEH 5.0-c043 Fix Vista RWLock section
-// 06-23-09 AWL 5.0-c040-f049 Add hack to revert to global DLL locking.
-// 06-23-09 AWL 5.0-c039-f048 Fix atomic increment and decrement to be optional, not on Solaris.
-// 06-22-09 AWL 5.0-c038-f047 Fix locking code to use atomic increment and decrement.
-// 06-18-09 AWL 5.0-c037-f046 Minor tweaks from code review.
-// 06-15-09 AWL 5.0-c036 Mark critical locking variables volatile, fix all namespace table usage to be clean.
-// 06-12-09 AWL 5.0-c035-f045 Simplify the multiple lock permutations.
-// 06-11-09 AWL 5.0-c034-f043 Finish threading revamp, implement friendly reader/writer locking.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! Must be the first include.
 #include "public/include/XMP_Const.h"
@@ -195,10 +151,6 @@ struct ErrorCallbackBox
 #define _NotifyMsg(n,c,f,l)	#n " failed: " #c " in " f " at line " _MakeStr(l)
 #define _ExplicitMsg(msg,c,e) #e " " #msg ": " #c
 
-#if AdobePrivate
-	extern "C" void XMP_PUBLIC XMP_GetAssertNotify ( XMP_AssertNotifyProc* notifyProc, void** refCon );
-#endif
-
 #define XMP_Validate(c,msg,e)									\
 	if ( ! (c) ) {												\
 		const char * validate_msg = _ExplicitMsg ( msg, c, e );	\
@@ -217,57 +169,15 @@ struct ErrorCallbackBox
 #if ! XMP_DebugBuild
 	#define XMP_Assert(c)	((void) 0)
 #else
-	#if ! AdobePrivate
 		#define XMP_Assert(c)	assert ( c )
-	#else
-		#define XMP_Assert(c)																		\
-			if ( ! (c) ) {																			\
-				XMP_AssertNotifyProc notifyProc;													\
-				void * _refCon;																		\
-				XMP_GetAssertNotify ( &notifyProc, &_refCon );										\
-				if ( notifyProc == 0 ) {															\
-					assert ( c );																	\
-					analysis_assume(c);	/* To reduce security warnings from static analysis in VS */\
-				} else {																			\
-					const char * assert_msg = _NotifyMsg ( XMP_Assert, (c), __FILE__, __LINE__ );	\
-					(*notifyProc) ( _refCon, assert_msg );											\
-					XMP_Throw ( assert_msg , kXMPErr_AssertFailure );								\
-				}																					\
-			}
-	#endif
 #endif
 
-#if ! AdobePrivate
 	#define XMP_Enforce(c)																	\
 		if ( ! (c) ) {																		\
 			const char * assert_msg = _NotifyMsg ( XMP_Enforce, (c), __FILE__, __LINE__ );	\
 			XMP_Throw ( assert_msg , kXMPErr_EnforceFailure );								\
 		}
-#else
-	#define XMP_Enforce(c)																	\
-		if ( ! (c) ) {																		\
-			XMP_AssertNotifyProc notifyProc;												\
-			void * refCon;																	\
-			XMP_GetAssertNotify ( &notifyProc, &refCon );									\
-			const char * assert_msg = _NotifyMsg ( XMP_Enforce, (c), __FILE__, __LINE__ );	\
-			if ( notifyProc != 0 ) (*notifyProc) ( refCon, assert_msg );					\
-			XMP_Throw ( assert_msg, kXMPErr_EnforceFailure );								\
-		}
-#endif
-
-#if ! AdobePrivate
 	#define XMP_Enforce_NoThrow(c)
-#else
-	#define XMP_Enforce_NoThrow(c)																	\
-		if ( ! (c) ) {																		\
-			XMP_AssertNotifyProc notifyProc;												\
-			void * refCon;																	\
-			XMP_GetAssertNotify ( &notifyProc, &refCon );									\
-			const char * assert_msg = _NotifyMsg ( XMP_Enforce, (c), __FILE__, __LINE__ );	\
-			if ( notifyProc != 0 ) (*notifyProc) ( refCon, assert_msg );					\
-		}
-#endif
-
 // =================================================================================================
 // Thread synchronization locks
 // ============================

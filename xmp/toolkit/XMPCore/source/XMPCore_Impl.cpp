@@ -3,99 +3,14 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//   AJ Abhishek Jindal
-//
-// mm-dd-yy who Description of changes, most recent on top.
-//
-// 02-06-15 AJ  5.6-c037 Fixing warnings due to implicit typecasting
-// 12-01-14 ADC 5.6-c029 Fixing issue with XMPCore static builds after changes related to
-//						 routing public exposed APIs through new DOM APIs.
-// 07-31-14 ADC 5.6-c022 [3790748] PDFLChef crashes/hangs indefinitely on main branch due to xmp library.
-//
-// 03-22-13 ADC 5.5-c016 Removing test code which got submitted by mistake.
-//
-// 12-12-11 AWL 5.3-c010 [3017939,3060455] Undo erroneous changes from misleading static analysis
-//				complaints that are breaking data structures and causing heap corruption.
-//
-// 10-27-09 AWL 5.0-c058 [2461780] Additional work in ApplyTemplate to avoid empty arrays and structs.
-// 10-22-09 AWL 5.0-c056 [2422169,2422172] Fix ApplyTemplate to not add empty array items or struct fields.
-// 06-15-09 AWL 5.0-c036 Mark critical locking variables volatile, fix all namespace table usage to be clean.
-// 06-11-09 AWL 5.0-c034 Finish threading revamp, implement friendly reader/writer locking.
-// 05-21-09 AWL 5.0-c032 Revamp glue again to pass SetClientString with each function.
-// 05-19-09 AWL 5.0-c031 First part of threading improvements, revamp the client glue.
-//
-// 02-05-08 AWL 4.2-f068 Use client memory routines for malloc/free also, so that leak checking works.
-// 02-05-08 AWL 4.2-c038 Use client memory routines for malloc/free also, so that leak checking works.
-// 11-30-07 AWL 4.2-c027 Expose XML_Node and ExpatAdapter so that XMPFiles can use them.
-// 07-17-07 AWL 4.2-c018 Change Mac to use pthread synchronization, needed for 64-bit builds.
-// 05-30-07 AWL 4.2-c017 Change operator new override to not throw for 0 length request, gcc on AIX
-//				returns a null pointer for 0 length.
-//
-// 10-12-06 AWL 4.1-c021 [1235816] Remove the new/delete overrides from static builds.
-// 09-21-06 AWL 4.1-c020 [1382367] Fix NormalizeLangArray to detect an item with no qualifiers.
-//
-// 03-24-06 AWL 4.0-c001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
-//
-// 02-03-06 AWL 3.3-013 Add exception tracing to the XMP_Impl support macros. Rearrange XMP_Impl.hpp
-//				to be make it easier to find things.
-// 01-25-06 AWL 3.3-011 Fix iterator compare mistake in DumpNamespaces, detected by VC8. Replace
-//						null iterator notion, VC8 complains about compares to default iterator.
-// 01-24-06 AWL 3.3-010 Fix null iterator constant for VC8 strictness.
-// 08-08-05 AWL 3.3-004 Change ResolveAlias to allow general alias path.
-//
-// 06-06-05 AWL 3.2-110 [1205650] Fix bug in FindNode introduced in the 3.2-105 edits.
-// 06-01-05 AWL 3.2-105 [1110051] Add delete-existing option for SetProperty.
-// 04-13-05 AWL 3.2-017 Improve the documentation and behavior of Get/SetLocalizedText.
-// 04-11-05 AWL 3.2-016 Add AdobePrivate conditionals where appropriate.
-// 04-05-05 AWL 3.2-011 [0532345] Normalize "single value" alt-text arrays. Improve the way the root
-//				XML node is found and extract the previous toolkit version number.
-// 04-01-05 AWL 3.2-010 Add leafOptions parameter to FindNode, used when creating new nodes.
-// 04-01-05 AWL 3.2-009 [0621112,1033629] Add thread locks for UNIX.
-// 03-17-05 AWL 3.2-006 Revise Plain XMP parsing and serialization for latest proposal.
-// 02-14-05 AWL 3.2-003 Add thread locks.
-// 01-28-05 AWL 3.2-001 Remove BIB.
-//
-// 11-04-04 AWL 3.1.1-090 [1014853] Add XMPUtils::RemoveMultiValueInfo. Fix AppendProperties to call
-//				RemoveMultiValueInfo, i.e. to mimic a user edit.
-// 10-12-04 AWL 3.1.1-084 [0616293] Add name checking to VerifyQualName.
-// 10-06-04 AWL 3.1.1-083 [1061778] Add lock tracing under TraceXMPLocking.
-//
-// 07-15-04 AWL 3.1-064 [1016805] Get rid of kXMP_PropValueIsXML.
-// 07-13-04 AWL 3.1-058 [1014255] Remove empty schema nodes.
-// 07-13-04 AWL 3.1-057 [1006568] Check all XPath components for valid namespace prefixes.
-// 06-10-04 AWL 3.1-047 Fix more HPUX and AIX compilation errors and warnings.
-//
-// 04-30-04 AWL Add new & delete operators that call BIBMemory functions. Change static objects that
-//				require allocation to explicit pointers.
-// 03-17-04 AWL Cleanup error exceptions, make sure all have a reasonable message. Change schema
-//				checks in VerifyXPathRoot to require a URI, don't allow just a prefix.
-// 02-17-04 AWL Add CompareSubtrees.
-// 01-28-04 AWL Extract common routines from XMPMeta.cpp.
-//
-// =================================================================================================
-#endif /* AdobePrivate */
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include!
 #include "public/include/XMP_Version.h"
 #include "XMPCore/source/XMPCore_Impl.hpp"
 #include "XMPCore/source/XMPMeta.hpp"	// *** For use of GetNamespacePrefix in FindSchemaNode.
 #include "source/UnicodeInlines.incl_cpp"
-#if AdobePrivate
-#include "XMPCore/XMPCoreDefines.h"
-#endif
 #include <algorithm>
 
 using namespace std;
@@ -140,10 +55,6 @@ using namespace std;
     #if ! ANDROID_ENV
         #error "ANDROID_ENV must be defined so that \"#if ANDROID_ENV\" is true"
     #endif
-#elif defined ( WEB_ENV )
-    #if ! WEB_ENV
-        #error "WEB_ENV must be defined so that \"#if WEB_ENV\" is true"
-    #endif
 #endif
 
 // =================================================================================================
@@ -173,11 +84,6 @@ XMP_ReadWriteLock * sDefaultNamespacePrefixMapLock = 0;
 //XMP_DateTime		voidDateTime;
 //WXMP_Result 		void_wResult;
 
-//#if AdobePrivate
-//	XMP_DerivedDocInfo	voidDocInfo;
-//	XMP_EmbeddedDocInfo	voidEmbeddedInfo;
-//	XMP_PacketInfo      voidPacketInfo;
-//#endif
 
 
 	#if ENABLE_CPP_DOM_MODEL
@@ -188,12 +94,9 @@ XMP_ReadWriteLock * sDefaultNamespacePrefixMapLock = 0;
 
 		#undef malloc
 		#undef free
-#if !AdobePrivate
 		typedef void * (*XMP_AllocateProc) (size_t size);
 
 		typedef void(*XMP_DeleteProc)   (void * ptr);
-
-#endif
 
 	XMP_AllocateProc sXMP_MemAlloc = malloc;
 	XMP_DeleteProc   sXMP_MemFree  = free;

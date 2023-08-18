@@ -4,31 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  ADC	Amandeep Chawla
-//	ANS	Ankita Sharma
-//
-// mm-dd-yy who Description of changes, most recent first.
-//
-// 03-24-15 ADC 5.6-f145 Changing the mapping of iXML->TRACK to xmpDM:shotNumber in place of xmpDM:trackNumber.
-// 03-23-15 ADC 5.6-f142 Adding support for parsing and serializing TRACK_LIST tag in iXML block.
-// 08-14-14 ADC 5.6-f114 Timecode computation from iXML information for wave file.
-// 08-04-14 ANS 5.6-f111 Ignoring non-integral values for nodes in iXML chunk in WAV files
-// 08-03-14 ADC 5.6-f108 Fixing debug asserts in case of any node is empty in iXML packet.
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// =================================================================================================
-#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

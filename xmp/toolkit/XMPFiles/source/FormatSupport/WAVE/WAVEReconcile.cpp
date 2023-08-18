@@ -4,49 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	SAM Samy Makki
-//	JEH	Joerg Ehrlich
-//	ADC	Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-24-15 ADC 5.6-f145 Changing the mapping of iXML->TRACK to xmpDM:shotNumber in place of xmpDM:trackNumber.
-// 03-24-15 ADC 5.6-f144 Adding support for reconciliation of iXML's TRACK_LIST in Wave files.
-// 01-28-15 SKP 5.6-f125 Ported XMPToolkit on gcc 4.8.2
-// 08-27-14 ADC 5.6-f118 [3813039] [iXML] : Parse and map iXML <CIRCLED> property to xmpDM:good.
-// 08-27-14 ADC 5.6-f117 [3812401] [iXML] : Fix issue with mapping of timecode rate from 24000/1001 to 23976Timecode.
-// 08-19-14 ADC 5.6-f115 Fixing multiple issues with iXML support.
-// 08-14-14 ADC 5.6-f114 Timecode computation from iXML information for wave file.
-// 08-08-14 ADC 5.6-f113 Fixing test cases failure after last checkin.
-// 08-07-14 ADC 5.6-f112 [3800239] [iXML] : Retain xmpDM mappings for iXML node properties to ensure backward compatibility.
-// 08-03-14 ADC 5.6-f109 Fixing test case failure on Mac.
-// 07-31-14 ADC 5.6-f107 iXML Support for Wave Files.
-//
-// 11-16-11 SAM 5.4-f036 [2954004] Lurking bugs in WAV handler
-// 10-19-11 SAM 5.4-f026 Integrated missing bugfix from winwood branch:
-//						[2977170,2810640] Audition 4 is overwriting the "Name" field from files created in previous versions of Audition
-// 10-19-11 SAM 5.4-f025 [2984517] Adding mapping from/to Cart PostTimer Array for WAVE
-// 08-11-11 AWL 5.4-f005 Fix regression in WAV import and export caused by cart chunk typo.
-// 08-02-11 AWL 5.4-f003 Add support for the AES cart chunk in WAV files.
-//
-// 12-07-10 PW  5.3-f021 export to local encoding: [2753033] BWF: On Wave format only: Double byte characters such as Japanese in BWF fields becomes ? marks when reopens the file after save
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							Adding new WAVE handler based on new IFF common code
-//							Adjusting legacy mappings for ISRC and ITCH to transient listinfo namespace
-// 11-24-10 PW  5.0-f019 [2753033] BWF: On Wave format only: Double byte characters such as Japanese in BWF fields becomes ? marks when reopens the file after save
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 #include "public/include/XMP_Const.h"

@@ -3,27 +3,8 @@
 // All Rights Reserved.
 // NOTICE: Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying
-// it. If you have received this file from a source other than Adobe,
-// then your use, modification, or distribution of it requires the prior
-// written permission of Adobe.
+// it.  
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	SKP Sunil Kishor Pathak
-//   AJ Abhishek Jindal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 02-06-15 AJ  Fixing warnings due to implicit typecasting
-// 07-01-13 SKP First draft.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include <stddef.h>	/* Include standard ANSI C stuff: size_t, NULL etc */
 #include <string.h> /* memmove etc. defined here */
@@ -58,7 +39,7 @@ CONDITIONAL_STATIC SafeInt32 strcpy_safe(char *dest, size_t size, const char *sr
 {
 
 	if (dest && src && size > 0)
-	{
+	{	
 		char* p = dest;
 		size_t available = size;
 		while((*p++ = *src++) != '\0' && --available > 0)
@@ -105,10 +86,10 @@ CONDITIONAL_STATIC SafeInt32 strncpy_safe(char *dest, size_t size, const char *s
 			//Buffer overflow. Returns ERROR_SAFE_BUFFER_OVERFLOW
 			return ERROR_SAFE_BUFFER_OVERFLOW;
 		}
-
+		
 		return 0;
 	}
-	else{
+	else{	
 		if(dest)
 			*dest = '\0';
 		return ERROR_SAFE_INVALID_PARAM;
@@ -160,7 +141,7 @@ CONDITIONAL_STATIC SafeInt32 strncat_safe(char *s1, size_t s1max, const char *s2
 	{
 		char* dest = s1;
 		size_t available = s1max;
-
+		
 		while(available > 0 && *dest != '\0')
 		{
 			dest++;
@@ -210,7 +191,7 @@ CONDITIONAL_STATIC char *strchr_safe(const char *s, size_t maxSize, char c)
 	{
 		return (char *)s;
 	}
-
+	
 	return NULL;
 }
 
@@ -233,11 +214,11 @@ CONDITIONAL_STATIC char * strtok_safe(char* strToken, size_t maxSize, const char
 	{
 		return NULL;
 	}
-
+	
 	if( !strToken)
 	{
 		// We got NULL input, so we get our last position from context.
-		strToken = *context;
+		strToken = *context;	
 	}
 	/* pass all characters that are present in the delimiter string */
 	while(*strToken && strchr_safe(strDelimit, (size_t)-1, *strToken))
@@ -259,7 +240,7 @@ CONDITIONAL_STATIC char * strtok_safe(char* strToken, size_t maxSize, const char
 		return start;
 	}
 
-	// No remaining tokens. Set the context pointer to the original terminating null
+	// No remaining tokens. Set the context pointer to the original terminating null 
 	// of strToken and return null.
 	*context = strToken;
 	return NULL;
@@ -295,7 +276,7 @@ CONDITIONAL_STATIC SafeInt32 vsprintf_safe(char* buffer, size_t size, const char
 		SafeInt32 numBytes = vsnprintf(buffer, count, format, argp);
 		if(numBytes >= count)
 		{
-			/* If number of bytes written is greater than count, the buffer is too small,
+			/* If number of bytes written is greater than count, the buffer is too small, 
 			   vsnprintf truncates the buffer and null terminates it.*/
 			return ERROR_SAFE_BUFFER_OVERFLOW;
 		}
@@ -398,13 +379,13 @@ CONDITIONAL_STATIC SafeInt32 wprintf_safe(const wchar_t *format, ...)
 
 #if (defined(_WIN32) || defined(_WIN64)) && defined __STDC_WANT_SECURE_LIB__
 
-CONDITIONAL_STATIC SafeInt32 splitpath_safe(const char* path, char* drive, size_t driveSize, char* dir,
+CONDITIONAL_STATIC SafeInt32 splitpath_safe(const char* path, char* drive, size_t driveSize, char* dir, 
 							  size_t dirSize, char* fname, size_t fnameSize, char* ext, size_t extSize)
 {
 	return _splitpath_s(path, drive, driveSize, dir, dirSize, fname, fnameSize, ext, extSize);
 }
 
-CONDITIONAL_STATIC SafeInt32 makepath_safe(char* path, size_t size, const char* drive, const char* dir,
+CONDITIONAL_STATIC SafeInt32 makepath_safe(char* path, size_t size, const char* drive, const char* dir, 
 							 const char* fname, const char* ext)
 {
 	return _makepath_s(path, size, drive, dir, fname, ext);
@@ -447,19 +428,19 @@ static SafeInt32 _xtox_safe(unsigned long val, char *buf, size_t size, int radix
 	else
 		num = val;
 	for(len = 2; num; num/= radix) len++; /* quick log_base */
-
+	
 	if(size <= 0 || size < len)
 	{
 		buf[0]='\0';
 		return ERROR_SAFE_BUFFER_OVERFLOW;
 	}
 	/* parameters are valid */
-
+	
 	int strIndex = 0;
 	if(isNeg)
 		val = (unsigned long)(-(long)val);
-
-
+	
+	
 	do
 	{
 		unsigned curDigit = (unsigned) val % radix;
@@ -467,14 +448,14 @@ static SafeInt32 _xtox_safe(unsigned long val, char *buf, size_t size, int radix
 			buf[strIndex++] = curDigit + 'a' - 10;
 		else
 			buf[strIndex++] = curDigit + '0';
-
+		
 		val /= radix;
 	}while(val);
-
+	
 	if(isNeg)
 		buf[strIndex++] = '-';
 	buf[strIndex++] = 0;
-
+	
 	/* Now reverse the string */
 	reverse_string_safe(buf, size);
 	return 0;
@@ -497,18 +478,18 @@ static SafeInt32 _x64tox_safe(SafeUns64 val, char *buf, size_t size, int radix, 
 	else
 		num = val;
 	for(len = 2; num; num/= radix) len++; /* quick log_base */
-
+	
 	if(size <= 0 || size < len)
 	{
 		buf[0]='\0';
 		return ERROR_SAFE_BUFFER_OVERFLOW;
 	}
 	/* parameters are valid */
-
+	
 	int strIndex = 0;
 	if(isNeg)
 		val = (SafeUns64)(-(SafeInt64)val);
-
+	
 	do
 	{
 		unsigned curDigit = (unsigned) val % radix;
@@ -516,14 +497,14 @@ static SafeInt32 _x64tox_safe(SafeUns64 val, char *buf, size_t size, int radix, 
 			buf[strIndex++] = curDigit + 'a' - 10;
 		else
 			buf[strIndex++] = curDigit + '0';
-
+		
 		val /= radix;
 	}while(val);
-
+	
 	if(isNeg)
 		buf[strIndex++] = '-';
 	buf[strIndex++] = 0;
-
+	
 	/* Now reverse the string */
 	reverse_string_safe(buf, size);
 	return 0;
@@ -633,7 +614,7 @@ CONDITIONAL_STATIC char * gets_safe(char* buffer, size_t size)
 		else
 			*pointer = '\0';
 		return buffer;
-	}
+	}		
 	else
 	{
 		return NULL;

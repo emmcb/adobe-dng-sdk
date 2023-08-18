@@ -1,77 +1,89 @@
-#************************************************************************
+# =================================================================================================
+# ADOBE SYSTEMS INCORPORATED
+# Copyright 2013 Adobe Systems Incorporated
+# All Rights Reserved
 #
-# ADOBE CONFIDENTIAL
-# ___________________
-#
-#  Copyright 2008 Adobe Systems Incorporated
-#  All Rights Reserved.
-#
-# NOTICE:  All information contained herein is, and remains
-# the property of Adobe Systems Incorporated and its suppliers,
-# if any.  The intellectual and technical concepts contained
-# herein are proprietary to Adobe Systems Incorporated and its
-# suppliers and are protected by trade secret or copyright law.
-# Dissemination of this information or reproduction of this material
-# is strictly forbidden unless prior written permission is obtained
-# from Adobe Systems Incorporated.
-#**************************************************************************/
+# NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
+# of the Adobe license agreement accompanying it.
+# =================================================================================================
+
+arch=$(shell getconf LONG_BIT)
+toolchain=ToolchainGCC.cmake
 
 # Default target executed when no arguments are given to make.
 default_target: all
 
 #******************************************************************************************************************/
-# you can specifie which toolchain file is used to genereate the cmake project for the specific branch
-# example $make toolchain=ToolchainRelEng.cmake  creates all cmakeTarget with the given toolchain file
+# you can specify which toolchain file is used to genereate the cmake project for the specific branch
 #******************************************************************************************************************/
 
 # Export for cmake binaries
 
 # target to generate make files using cmake
-RelEng :	
-	./cmake_all.command ${arch} ${stage} ${toolchain} Clean
+DynamicRelease32:
+ifeq ($(arch),32)
+	./cmake.command 32 Dynamic Release ${toolchain} Clean
+	${MAKE} -C ./gcc/dynamic/i80386linux/Release/ 
+endif
 
-RelEngAll :
-	./cmake_all.command 32 Debug ${toolchain} Clean
-	./cmake_all.command 32 Release ${toolchain} Clean
-	./cmake_all.command 64 Debug ${toolchain} Clean
-	./cmake_all.command 64 Release ${toolchain} Clean
-	
-RelEng32:
-	./cmake_all.command 32 Debug ${toolchain} Clean
-	./cmake_all.command 32 Release ${toolchain} Clean
+DynamicDebug32:
+ifeq ($(arch),32)
+	./cmake.command 32 Dynamic Debug ${toolchain} Clean
+	${MAKE} -C ./gcc/dynamic/i80386linux/Debug/ 
+endif
 
-RelEng64:
-	./cmake_all.command 64 Debug ${toolchain} Clean
-	./cmake_all.command 64 Release ${toolchain} Clean
+StaticRelease32:
+ifeq ($(arch),32)
+	./cmake.command 32 Static Release ${toolchain} Clean
+	${MAKE} -C ./gcc/static/i80386linux/Release/ 
+endif
 
-StaticRelEng64:
-	./cmake_all.command 64 Release Static ${toolchain} Clean
+StaticDebug32:
+ifeq ($(arch),32)
+	./cmake.command 32 Static Debug ${toolchain} Clean
+	${MAKE} -C ./gcc/static/i80386linux/Debug/ 
+endif
 
-StaticRelEng32:
-	./cmake_all.command 32 Release Static ${toolchain} Clean
+DynamicRelease64:
+ifeq ($(arch),64)
+	./cmake.command 64 Dynamic Release ${toolchain} Clean
+	${MAKE} -C ./gcc/dynamic/i80386linux_64/Release/ 
+endif
 
-all :
-	./cmake_all.command 32 Debug  Clean
-	./cmake_all.command 32 Release  Clean
-	./cmake_all.command 64 Debug  Clean
-	./cmake_all.command 64 Release  Clean
+DynamicDebug64:
+ifeq ($(arch),64)
+	./cmake.command 64 Dynamic Debug ${toolchain} Clean
+	${MAKE} -C ./gcc/dynamic/i80386linux_64/Debug/ 
+endif
 
-#invokes shell scrip to delete all cmake generated files
+StaticRelease64:
+ifeq ($(arch),64)
+	./cmake.command 64 Static Release ${toolchain} Clean
+	${MAKE} -C ./gcc/static/i80386linux_64/Release/ 
+endif
+
+StaticDebug64:
+ifeq ($(arch),64)
+	./cmake.command 64 Static Debug ${toolchain} Clean
+	${MAKE} -C ./gcc/static/i80386linux_64/Debug/ 
+endif
+
+StaticAll: StaticRelease32 StaticDebug32 StaticRelease64 StaticDebug64
+
+DynamicAll: DynamicRelease32 DynamicDebug32 DynamicRelease64 DynamicDebug64
+
+DebugAll: DynamicDebug32 DynamicDebug64 StaticDebug32 StaticDebug64
+
+ReleaseAll: DynamicRelease32 DynamicRelease64 StaticRelease32 StaticRelease64
+
+all: DynamicAll StaticAll
+
 clean:
-	./removeCMakeFiles.sh
+	test -d gcc && rm -rf gcc; \
+	test -d ../XMPCore/build/gcc && rm -rf ../XMPCore/build/gcc; \
+	test -d ../XMPFiles/build/gcc && rm -rf ../XMPFiles/build/gcc; \
+	test -d ../public/libraries/i80386linux && rm -rf ../public/libraries/i80386linux; \
+	test -d ../public/libraries/i80386linux_x64 && rm -rf ../public/libraries/i80386linux_x64; \
+	echo "Clean Success"  
 
-build32debug:
-	./build_xmp_linux.sh 32 Debug
-	
-build32release:
-	./build_xmp_linux.sh 32 Release
-
-build64release:
-	./build_xmp_linux.sh 64 Release
-	
-build64debug:
-	./build_xmp_linux.sh 64 Debug
-
-buildxmpall: build32debug build32release build64release build64debug
-
-	
+rebuild: clean all

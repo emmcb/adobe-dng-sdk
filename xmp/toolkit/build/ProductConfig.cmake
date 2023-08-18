@@ -1,12 +1,10 @@
-# =================================================================================================
-# Copyright 2020 Adobe
-# All Rights Reserved.
-# NOTICE: Adobe permits you to use, modify, and distribute this file in
-# accordance with the terms of the Adobe license agreement accompanying
-# it. If you have received this file from a source other than Adobe,
-# then your use, modification, or distribution of it requires the prior
-# written permission of Adobe. 
-# =================================================================================================
+#// =================================================================================================
+#// Copyright 2020 Adobe
+#// All Rights Reserved.
+#// NOTICE: Adobe permits you to use, modify, and distribute this file in
+#// accordance with the terms of the Adobe license agreement accompanying
+#// it. 
+#// =================================================================================================
 
 # ==============================================================================
 # define minimum cmake version
@@ -20,10 +18,10 @@ endif(ANDROID)
 # ==============================================================================
 # Product Config for XMP Toolkit
 # ==============================================================================
+
 if (UNIX)
 	if (APPLE)
 		set(XMP_ENABLE_SECURE_SETTINGS "ON")
-		
 		if (APPLE_IOS)
 			set(XMP_PLATFORM_SHORT "ios")
 			if(XMP_BUILD_STATIC)
@@ -42,11 +40,8 @@ if (UNIX)
 		else ()
 			set(XMP_PLATFORM_SHORT "mac")
 			if(CMAKE_CL_64)
-				set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "Build architectures for OSX" FORCE)
+				set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)" CACHE STRING "Build architectures for OSX" FORCE)
 				add_definitions(-DXMP_64=1)
-			else(CMAKE_CL_64)
-				set(CMAKE_OSX_ARCHITECTURES "i386" CACHE STRING "Build architectures for OSX" FORCE)
-				add_definitions(-DXMP_64=0)
 			endif(CMAKE_CL_64)
 
 			# is SDK and deployment target set?
@@ -54,13 +49,8 @@ if (UNIX)
 				# no, so default to CS6 settings
 				#set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "4.2")
 				set(XMP_OSX_SDK		10.13)
-				set(XMP_OSX_TARGET	10.14)
+				set(XMP_OSX_TARGET	10.11)
 			endif()
-
-			if (APPLE_UNIVERSAL)
-				set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
-		   	endif(APPLE_UNIVERSAL)
-            set(CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
 
 			add_definitions(-DMAC_ENV=1)
 
@@ -86,25 +76,12 @@ if (UNIX)
 		else()
 			if(CMAKE_CL_64)
 				set(XMP_BITDEPTH		"64")
-				if(APPLE_UNIVERSAL)
-					set(XMP_CPU_FOLDERNAME	"xcode12/universal")
-				elseif(CMAKE_LIBCPP)
-					set(XMP_CPU_FOLDERNAME	"intel_64_libcpp")
-				else()
-					set(XMP_CPU_FOLDERNAME	"intel_64")
-				endif()
-			else()
-				set(XMP_BITDEPTH		"32")
-				if(APPLE_UNIVERSAL)
-					set(XMP_CPU_FOLDERNAME	"xcode12/universal_32")
-				elseif(CMAKE_LIBCPP)
-					set(XMP_CPU_FOLDERNAME	"intel_libcpp")
-				else()
-					set(XMP_CPU_FOLDERNAME	"intel")
+				if(CMAKE_LIBCPP)
+					set(XMP_CPU_FOLDERNAME	"universal")
 				endif()
 			endif()
 		endif()
-
+		
 		# XMP_PLATFORM_FOLDER is used in OUTPUT_DIR and Debug/Release get automatically added for VS/XCode projects
 		if(APPLE_IOS)
 		    set(XMP_PLATFORM_FOLDER "ios/${XMP_CPU_FOLDERNAME}")
@@ -142,35 +119,19 @@ if (UNIX)
 				if(CENTOS)	
 					set(XMP_PLATFORM_FOLDER "i80386linux_x64_centos") # add XMP_BUILDMODE_DIR to follow what other platforms do
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
-				elseif(XMPWASM)
-                    add_definitions(-DWEB_ENV=1)
-                    if(ENABLE_EXCEP_HANDLING)
-                    	set(XMP_PLATFORM_FOLDER "web/web64/no_throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                        add_compile_options(-s DISABLE_EXCEPTION_CATCHING=0)
-					else()
-                    	set(XMP_PLATFORM_FOLDER "web/web64/throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-					endif()
 				else()
-					set(XMP_PLATFORM_FOLDER "i80386linux_x64") # add XMP_BUILDMODE_DIR to follow what other platforms do
-					set(XMP_GCC_LIBPATH /user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/lib64)
+				set(XMP_PLATFORM_FOLDER "i80386linux_x64") # add XMP_BUILDMODE_DIR to follow what other platforms do
+				set(XMP_GCC_LIBPATH /user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/lib64)
 				endif()	
 			else()
 				set(XMP_EXTRA_LINK_FLAGS "-m32 -mtune=i686")
 				if(CENTOS)	
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
 					set(XMP_PLATFORM_FOLDER "i80386linux_centos") # add XMP_BUILDMODE_DIR to follow what other platforms do
-				elseif(XMPWASM)
-					add_definitions(-DWEB_ENV=1)
-                    if(ENABLE_EXCEP_HANDLING)
-                       set(XMP_PLATFORM_FOLDER "web/web32/no_throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                       add_compile_options(-s DISABLE_EXCEPTION_CATCHING=0)
-                    else()
-                        set(XMP_PLATFORM_FOLDER "web/web32/throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                    endif()
 				else()
-					set(XMP_PLATFORM_FOLDER "i80386linux") # add XMP_BUILDMODE_DIR to follow what other platforms do
-					set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.8.2/linux3.10_32/lib)
-				endif()	
+				set(XMP_PLATFORM_FOLDER "i80386linux") # add XMP_BUILDMODE_DIR to follow what other platforms do
+				set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.8.2/linux3.10_32/lib)
+			endif()
 			endif()
 		else()
 			# running toolchain
@@ -181,17 +142,9 @@ if (UNIX)
 				if(CENTOS)	
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
 					set(XMP_PLATFORM_FOLDER "i80386linux_x64_centos") # add XMP_BUILDMODE_DIR to follow what other platforms do
-				elseif(XMPWASM)
-     				add_definitions(-DWEB_ENV=1)
-         			if(ENABLE_EXCEP_HANDLING)
-                        set(XMP_PLATFORM_FOLDER "web/web64/no_throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                        add_compile_options(-s DISABLE_EXCEPTION_CATCHING=0)
-                    else()
-                        set(XMP_PLATFORM_FOLDER "web/web64/throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                    endif()
 				else()
-					set(XMP_PLATFORM_FOLDER "i80386linux_x64") # add XMP_BUILDMODE_DIR to follow what other platforms do
-					set(XMP_GCC_LIBPATH /user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/lib64)
+				set(XMP_PLATFORM_FOLDER "i80386linux_x64") # add XMP_BUILDMODE_DIR to follow what other platforms do
+				set(XMP_GCC_LIBPATH /user/unicore/i80386linux_x64/compiler/gcc4.8.2/linux3.10_64/lib64)
 				endif()	
 			else()
                	set(XMP_EXTRA_COMPILE_FLAGS "-m32 -mtune=i686")
@@ -199,18 +152,10 @@ if (UNIX)
 				if(CENTOS)	
 					set(XMP_GCC_LIBPATH /opt/llvm/lib)
 					set(XMP_PLATFORM_FOLDER "i80386linux_centos") # add XMP_BUILDMODE_DIR to follow what other platforms do
-				elseif(XMPWASM)
-     				add_definitions(-DWEB_ENV=1)
-                    if(ENABLE_EXCEP_HANDLING)
-                      set(XMP_PLATFORM_FOLDER "web/web32/no_throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                      add_compile_options(-s DISABLE_EXCEPTION_CATCHING=0)
-                    else()
-                       set(XMP_PLATFORM_FOLDER "web/web32/throw/static") # add XMP_BUILDMODE_DIR to follow what other platforms do
-                    endif()
 				else()
-					set(XMP_PLATFORM_FOLDER "i80386linux") # add XMP_BUILDMODE_DIR to follow what other platforms do
-					set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.8.2/linux3.10_32/lib)
-				endif()
+				set(XMP_PLATFORM_FOLDER "i80386linux") # add XMP_BUILDMODE_DIR to follow what other platforms do
+				set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.8.2/linux3.10_32/lib)
+			endif()
 			endif()
 
 			set(XMP_EXTRA_BUILDMACHINE	"Cross compiling")
@@ -225,7 +170,7 @@ if (UNIX)
 		#set(CMAKE_CXX_COMPILER "/user/unicore/i80386linux/compiler/gcc4.4.4/linux2.6_32/bin/gcc")
 		#set(XMP_GCC_LIBPATH /user/unicore/i80386linux/compiler/gcc4.4.4/linux2.6_32/lib)
 
-   		set(XMP_PLATFORM_LINK "-z defs -Xlinker -Bsymbolic -Wl,--no-undefined  ${XMP_EXTRA_LINK_FLAGS} ${XMP_TOOLCHAIN_LINK_FLAGS} -lrt -Wl,--no-as-needed -ldl -lpthread -fPIC ${XMP_GCC_LIBPATH}/libssp.a")
+   		set(XMP_PLATFORM_LINK "-z defs -Xlinker -Bsymbolic -Wl,--no-undefined  ${XMP_EXTRA_LINK_FLAGS} ${XMP_TOOLCHAIN_LINK_FLAGS} -lrt -Wl,--no-as-needed -ldl -lpthread ${XMP_GCC_LIBPATH}/libssp.a")
 if(CENTOS)
 		set(XMP_PLATFORM_LINK " -lc++abi ${XMP_PLATFORM_LINK}")
 endif()
@@ -248,7 +193,7 @@ else ()
 		if(${CMAKE_ARCH} MATCHES "ARM64")
 			set(XMP_PLATFORM_FOLDER "windows_arm64")
 		else()
-			set(XMP_PLATFORM_FOLDER "windows_x64") # leave XMP_BUILDMODE_DIR away, since CMAKE_CFG_INTDIR gets added by CMake automatically
+		set(XMP_PLATFORM_FOLDER "windows_x64") # leave XMP_BUILDMODE_DIR away, since CMAKE_CFG_INTDIR gets added by CMake automatically
 		endif()
 	else(CMAKE_CL_64)
 		set(XMP_PLATFORM_FOLDER "windows") # leave XMP_BUILDMODE_DIR away, since CMAKE_CFG_INTDIR gets added by CMake automatically
@@ -263,8 +208,8 @@ else ()
 		set(XMP_SHARED_COMPILE_RELEASE_FLAGS "/O1 /Ob2 /Os /Oy- /GL /FD ")
 	endif()
 	
-	set(XMP_SHARED_COMPILE_DEBUG_FLAGS "${XMP_SHARED_COMPILE_DEBUG_FLAGS} /MTd")
-	set(XMP_SHARED_COMPILE_RELEASE_FLAGS "${XMP_SHARED_COMPILE_RELEASE_FLAGS} /MT")
+	set(XMP_SHARED_COMPILE_DEBUG_FLAGS "${XMP_SHARED_COMPILE_DEBUG_FLAGS} /MDd")
+	set(XMP_SHARED_COMPILE_RELEASE_FLAGS "${XMP_SHARED_COMPILE_RELEASE_FLAGS} /MD")
 
 	set(XMP_PLATFORM_LINK_WIN "${XMP_WIN32_LINK_EXTRAFLAGS} /MAP")
 endif ()

@@ -4,31 +4,11 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 #ifndef _WAVEBEHAVIOR_h_
 #define _WAVEBEHAVIOR_h_
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	SAM Samy Makki
-//	PW	Patrick Wollek
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 10-26-10 PW  5.3-f015 Integration from winwood
-//							Adding new WAVE handler based on new IFF common code
-//							[2732321] WAV/AIFF: An update causes the file to grow unproportional to the added data
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

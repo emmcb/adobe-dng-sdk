@@ -7,46 +7,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	JPM James Mork
-//	AWL Alan Lillich
-//  SKP Sunil Kishor Pathak
-//  IJS Inder Jeet Singh
-//	HK  Honey Kansal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-16-13 HK 5.6-f022 Implemented IsMetadataWritable API for XDCAM-EX, P2, CanonXF and AVCHD formats.
-// 01-03-13 IJS 5.6-f014 [3429815] Added GetAssociatedResources API for AVCHD format.
-//
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 09-29-11 AWL 5.4-f015 Add AVCHD support for GetFileModDate.
-//
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 08-11-09 AWL 5.0-f061 Integrate P2 and AVCHD changes from Peter Lee.
-// 01-29-09 AWL 5.0-f022 [1699977] Fixes for UNIX file case sensitivity.
-//
-// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
-//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
-// 01-24-08 JPM Add initial AVCHD handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! This must be the first include.
 

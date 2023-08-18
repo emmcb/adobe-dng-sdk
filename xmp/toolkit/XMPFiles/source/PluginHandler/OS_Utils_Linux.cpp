@@ -4,30 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	PKG Praveen Kumar Goyal
-//	ADC Amandeep Chawla
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 03-02-13 ADC 5.6-f045 Incorporating Review comments for [3496361] Plugin Multi-threading.
-// 02-19-13 ADC 5.6-f039 [3496361] Plugin Multi-threading: Either crash or memory leak is there when multiple plugins are tried to be loaded simultaneously.
-//                       Fixed crash on Linux.
-//
-// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "ModuleUtils.h"
 #include "source/UnicodeConversions.hpp"

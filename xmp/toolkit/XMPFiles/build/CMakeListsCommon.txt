@@ -34,9 +34,6 @@ source_group("Header Files\\Internal Headers\\Format Support\\IFF" FILES ${INTER
 file (GLOB INTERNAL_HEADER_FORMATSUPPORT_WAVE ${SOURCE_ROOT}/FormatSupport/WAVE/*.h)
 source_group("Header Files\\Internal Headers\\Format Support\\WAVE" FILES ${INTERNAL_HEADER_FORMATSUPPORT_WAVE})
 
-file (GLOB INTERNAL_HEADER_FORMATSUPPORT_WEBP ${SOURCE_ROOT}/FormatSupport/WebP/*.h)
-source_group("Header Files\\Internal Headers\\Format Support\\WebP" FILES ${INTERNAL_HEADER_FORMATSUPPORT_WEBP})
-
 file (GLOB INTERNAL_HEADER_FORMATSUPPORT ${SOURCE_ROOT}/FormatSupport/*.hpp)
 
 list (REMOVE_ITEM INTERNAL_HEADER_FORMATSUPPORT
@@ -140,9 +137,6 @@ source_group("Source Files\\Format Support\\IFF" FILES ${SOURCEFILES_FORMATSUPPO
 file (GLOB SOURCEFILES_FORMATSUPPORT_WAVE ${SOURCE_ROOT}/FormatSupport/WAVE/*.cpp)
 source_group("Source Files\\Format Support\\WAVE" FILES ${SOURCEFILES_FORMATSUPPORT_WAVE})
 
-file (GLOB SOURCEFILES_FORMATSUPPORT_WEBP ${SOURCE_ROOT}/FormatSupport/WebP/*.cpp)
-source_group("Source Files\\Format Support\\WebP" FILES ${SOURCEFILES_FORMATSUPPORT_WEBP})
-
 file (GLOB SOURCEFILES_FORMATSUPPORT ${SOURCE_ROOT}/FormatSupport/*.cpp)
 
 source_group("Source Files\\Format Support" FILES ${SOURCEFILES_FORMATSUPPORT})
@@ -172,7 +166,7 @@ endif()
 
 #Core & Common public source files
 #if(NOT ANDROID)
-if (INCLUDE_CPP_DOM_SOURCE AND NOT ${XMP_BUILD_STATIC})
+if (INCLUDE_CPP_DOM_SOURCE)
 file (GLOB PUBLIC_XMPCOMMON_CLIENTGLUE_FILES ${XMPROOT_DIR}/public/include/XMPCommon/source/*.*)
 source_group("Source Files\\Public\\XMPCommon" FILES ${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES})
 
@@ -202,7 +196,6 @@ list(APPEND SOURCE_FILES
 	${INTERNAL_HEADER_FORMATSUPPORT_AIFF}
 	${INTERNAL_HEADER_FORMATSUPPORT_IFF}
 	${INTERNAL_HEADER_FORMATSUPPORT_WAVE}
-	${INTERNAL_HEADER_FORMATSUPPORT_WEBP}
 	${INTERNAL_HEADER_FORMATSUPPORT}
 	${INTERNAL_HEADER_PLUGINHANDLER}
 	${PUBLIC_HEADER_CLIENTGLUE}
@@ -216,7 +209,6 @@ list(APPEND SOURCE_FILES
 	${SOURCEFILES_FORMATSUPPORT_AIFF}
 	${SOURCEFILES_FORMATSUPPORT_IFF}
 	${SOURCEFILES_FORMATSUPPORT_WAVE}
-	${SOURCEFILES_FORMATSUPPORT_WEBP}
 	${SOURCEFILES_FORMATSUPPORT}
 	${SOURCEFILES_PLUGINHANDLER}
 	${PUBLIC_XMPCOMMON_CLIENTGLUE_FILES}
@@ -234,10 +226,6 @@ include_directories(${TP_EXPAT_PATH})
 include_directories(${XMPROOT_DIR}/third-party/expat/public/lib)
 include_directories(${XMPROOT_DIR}/XMPFilesPlugins/api/source)
 include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
-
-if(XMPWASM)
-	include_directories(${XMPROOT_DIR}/XMPWasm/include)
-endif()
 
 #additional link directory
 link_directories(${OUTPUT_DIR})
@@ -320,18 +308,6 @@ AddMacFramework(${TARGET_NAME} FRAMEWORK_LIST)
 
 if(UNIX)
 	if (NOT APPLE)
-		#Parse major and minor library versio from XMP_Version.h and set SOVERSION property CTECHXMP-4170461
-		file(READ "${XMPROOT_DIR}/public/include/XMP_Version.h" XMP_VERSION_DATA)
-    		string(REGEX MATCH "XMPFILES_API_VERSION_MAJOR  ([0-9]*)" _ ${XMP_VERSION_DATA})
-    		set(VERSION_MAJOR "${CMAKE_MATCH_1}")
-    
-    		string(REGEX MATCH "XMPFILES_API_VERSION_MINOR  ([0-9]*)" _ ${XMP_VERSION_DATA})
-    		set(VERSION_MINOR "${CMAKE_MATCH_1}")
-    
-    		set(SO_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
-    
-    		set_target_properties(${TARGET_NAME} PROPERTIES SOVERSION ${SO_VERSION})
-
 		SetPlatformLinkFlags(${TARGET_NAME} "-Xlinker --version-script -Xlinker \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.exp\"" "")
 	else()
 		if(APPLE_IOS AND NOT XMP_BUILD_STATIC)
@@ -361,7 +337,7 @@ SetOutputPath(${OUTPUT_DIR} 0)
 
 if(UNIX AND NOT ANDROID)
 	#hack for unix to rename the output static library. cmake add lib and extenstion as .a, rename it
-	if (NOT APPLE AND NOT XMPWASM)
+	if (NOT APPLE)
 		if (${XMP_BUILD_STATIC})
 			add_custom_command (TARGET ${TARGET_NAME}
 				POST_BUILD

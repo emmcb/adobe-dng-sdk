@@ -4,38 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//	AWL Alan Lillich
-//  IJS Inder Jeet Singh
-//	AB  Amit Bhatti
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
-//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
-//						 New plugin handler for MPEG4 with Exif support.
-// 09-03-14 AB  5.6-f119 Adding support of UUID atom in MPEG4 Handler.
-//
-// 09-21-12 IJS 5.5-f037 [3300999] Ignore timecode Sample if the Data refernces in timecode track of a QT file are external.
-// 11-11-11 AWL 5.4-f035 [2945829] Include QuickTime starting offset in the timecode string.
-//
-// 02-05-10 AWL 5.1-f003 Fix build warnings from Visual Studio.
-//
-// 10-06-09 AWL 5.0-f083 Add MPEG-4 support for kXMPFiles_OptimizeFileLayout.
-// 09-24-09 AWL 5.0-f081 Revamp MPEG-4 handler to keep the entire 'moov' subtree in memory.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #ifndef TraceParseMoovTree
 #define TraceParseMoovTree 0
@@ -186,33 +156,9 @@ void MOOV_Manager::ParseNestedBoxes ( BoxNode * parentNode, const std::string & 
 					  parentPath.c_str(), &be32, newChild->offset, newChild->contentSize, addr32, newChild );
 		#endif
 		
-#if AdobePrivate
-#if EnableITunesMetadata
-		// Ignore 'meta' boxes in QT files, except for the (hopefully) iTunes moov/udta/meta box.
-		if ( ignoreMetaBoxes && (isoInfo.boxType == ISOMedia::k_meta) && (parentPath != "moov/udta") && (parentPath != "moov/meta") ) continue;
-#else
-		// Ignore 'meta' boxes in QT files.
-		if ( ignoreMetaBoxes && (isoInfo.boxType == ISOMedia::k_meta) ) continue;
-#endif
-#endif
-		
 		const char * pathSuffix = 0;	// Set to non-zero for boxes of interest.
 		char buffer[6];	buffer[0] = 0;
 		
-#if AdobePrivate
-#if EnableITunesMetadata
-		if ( parentPath == "moov/udta/meta/ilst") {	// Want all of the iTunes 'ilst' children.
-			buffer[0] = '/';
-			PutUns32BE ( isoInfo.boxType, &buffer[1] );
-			buffer[5] = 0;
-			pathSuffix = &buffer[0];
-		} else { 
-#endif
-		if (parentPath == "moov/meta/ilst") {
-				sprintf(buffer, "/%d", isoInfo.boxType);
-				pathSuffix = buffer;
-			}
-#endif
 			switch ( isoInfo.boxType ) {	// Want these boxes regardless of parent.
 				case ISOMedia::k_udta : pathSuffix = "/udta"; break;
 				case ISOMedia::k_meta : pathSuffix = "/meta"; break;
@@ -223,20 +169,7 @@ void MOOV_Manager::ParseNestedBoxes ( BoxNode * parentNode, const std::string & 
 				case ISOMedia::k_minf : pathSuffix = "/minf"; break;
 				case ISOMedia::k_dinf : pathSuffix = "/dinf"; break;
 				case ISOMedia::k_stbl : pathSuffix = "/stbl"; break;
-#if AdobePrivate
-				case ISOMedia::k_uuid :				// Only some UUID atom with specific ID could act as parent and rest would be treated as Child atom
-					if( memcmp ( isoInfo.idUUID, ISOMedia::k_canonUUID, 16 ) == 0 )
-						pathSuffix = "/uuid";
-					break;
-				case ISOMedia::k_CNTH : pathSuffix = "/CNTH"; break;		// CNTH is the parent atom of CNDA atom
-#endif
 			}
-#if AdobePrivate
-#if EnableITunesMetadata
-		}
-#endif
-#endif
-		
 		if ( pathSuffix != 0 ) {
 			this->ParseNestedBoxes ( newChild, (parentPath + pathSuffix), ignoreMetaBoxes );
 		}
@@ -297,14 +230,6 @@ XMP_Uns32 MOOV_Manager::NewSubtreeSize ( const BoxNode & node, const std::string
 	if( node.boxType == ISOMedia::k_uuid )
 		subtreeSize += 16;				// id of uuid is 16 bytes long
 	if ( (node.boxType == ISOMedia::k_free) || (node.boxType == ISOMedia::k_wide) ) {
-#if AdobePrivate
-#if EnableITunesMetadata
-		// Keep 'free' and 'wide' boxes that are children of the iTunes 'ilst' box.
-		if ( parentPath != "/moov/udta/meta/ilst" && parentPath != "/moov/meta") return 0;	// ! Need the leading '/'.
-#else
-		return 0;
-#endif
-#endif
 	}
 
 	for ( size_t i = 0, limit = node.children.size(); i < limit; ++i ) {
@@ -341,14 +266,6 @@ XMP_Uns8 * MOOV_Manager::AppendNewSubtree ( const BoxNode & node, const std::str
 											XMP_Uns8 * newPtr, XMP_Uns8 * newEnd )
 {
 	if ( (node.boxType == ISOMedia::k_free) || (node.boxType == ISOMedia::k_wide) ) {
-#if AdobePrivate
-#if EnableITunesMetadata
-		// Keep 'free' and 'wide' boxes that are children of the iTunes 'ilst' box.
-		if ( parentPath != "/moov/udta/meta/ilst" && parentPath != "/moov/meta") return newPtr;	// ! Need the leading '/'.
-#else
-		return newPtr;
-#endif
-#endif
 	}
 	
 	/*XMP_Assert ( (node.boxType != ISOMedia::k_meta) ? (node.children.empty() || (node.contentSize == 0)) :

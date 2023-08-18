@@ -4,78 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  JPM James Mork
-//  AWL Alan Lillich
-//  SKP Sunil Kishor Pathak
-//  ADC Amandeep Chawla
-//  IJS Inder Jeet Singh
-//	HK  Honey Kansal
-//
-// mm-dd-yy who Description of changes, most recent on top
-//
-// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
-//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
-// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
-//						 [3534631] Optimize GetAssociated Resources for RED_Handler
-// 03-25-13 IJS 5.6-f049 Fixed the code to initailize the AVCHD_LegacyMetadata structure when calling from FillMetadataResources.
-//						 Fixed code to ignore maker's private data if it is not that of panasonic when reading Playlist Extension Data.
-// 01-16-13 HK  5.6-f022 Implemented IsMetadataWritable API for XDCAM-EX, P2, CanonXF and AVCHD formats.
-// 01-07-13 IJS 5.6-f018 Changed name of API IsWritable to IsMetadataWritable.
-//                       Added root Path folder as associated Resource for folder based Formats.
-// 01-03-13 IJS 5.6-f014 [3429815] Added GetAssociatedResources API for AVCHD format.
-//
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
-// 09-19-12 AWL 5.5-f033 [3211021] Fix the folder handlers complain about read-only XMP files when opening for update.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
-// 10-21-11 AWL 5.4-f028 [2774374] Integrate DMO edits for AVCHD problem with the .MPL and .CPI files.
-// 09-29-11 AWL 5.4-f015 Add AVCHD support for GetFileModDate.
-//
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// 04-30-10 AWL 5.1-f005 Add AVCHD MakerModelCode constants from Peer Lee.
-//
-// 09-30-09 SAM 5.0-f082 [2424996], [2443226] Integrate AVCHD fixes from Peter Lee (progressive Framerates and
-//						spanned clips)
-// 08-25-09 AWL 5.0-f071 [2412960] Fix P2, AVCHD, and ASF handlers to create dc:creator as an ordered array.
-// 08-11-09 AWL 5.0-f061 Integrate P2 and AVCHD changes from Peter Lee.
-// 01-29-09 AWL 5.0-f022 [1699977] Fixes for UNIX file case sensitivity.
-// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
-//
-// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
-//
-// 06-05-08 AWL 4.2.2-f123 [1816329] Remove code setting xmpDM:videoPixelAspectRatio.
-// 04-14-08 AWL 4.2.2-f106 [1741260] Integrate updates to AVCHD, AVI, MOV, Sony HDV, and WAV.
-// 04-10-08 AWL 4.2.2-f105 [1741255] Fix double negative in AVCHD file checks.
-// 03-31-08 AWL 4.2.2-f101 [1741255] Fix AVCHD handler to use MovieObj.bdm.
-//
-// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
-//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
-// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
-//				generic UNIX builds for XMPFiles.
-// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
-// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
-// 01-24-08 JPM Add initial AVCHD handler.
-//
-// =================================================================================================
-#endif // AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

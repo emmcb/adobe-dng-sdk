@@ -4,44 +4,8 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
-
-#if AdobePrivate
-// =================================================================================================
-// Change history
-// ==============
-//
-// Writers:
-//  AWL Alan Lillich
-//  ADC Amandeep Chawla
-//  SKP Sunil Kishor Pahtak
-//
-// mm-dd-yy who Description of changes, most recent first.
-//
-// 01-31-15 SKP 5.6-f127 Fixing build break on UNIX
-// 11-01-12 ADC 5.5-f054 [3352773] XMPFiles::CloseFile() does not throw a WriteError when the file being updated is no longer available.
-// 10-16-12 ADC 5.5-f050 [3347167] XMPFiles::OpenFile() does not throw any exception when a file does not exist at the specified 
-//						 location and the flag 'kXMP_UnknownFile' is passed to the function.
-// 10-11-12 ADC 5.5-f048 Write and Truncate function calls on readonly files should throw file permission errors.
-// 10-10-12 ADC 5.5-f047 Fixing compile time issues on Mac and Linux where references to temporary object are not allowed.
-// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
-// 06-22-12 AWL 5.5-f019 Add file update progress tracking to the MPEG-4 handler.
-// 06-20-12 AWL 5.5-f018 Add outer layers for XMPFiles progress notifications, no handlers use it yet.
-// 02-02-12	AWL	5.5-f008 [3093755] Fix ASF handler truncation when updating with an almost full disk.
-// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
-//
-// 10-21-10	AWL	5.3-f014 Host_IO-UNIX and XMPFiles_IO tweaks as a result of unit testing.
-// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
-// 08-20-10 AWL 5.3-f005 Fix XMPFiles_IO::Truncate to make sure the I/O pointer is unmoved.
-// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
-// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
-// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
-//
-// =================================================================================================
-#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 

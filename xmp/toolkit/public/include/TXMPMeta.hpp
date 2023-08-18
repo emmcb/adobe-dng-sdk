@@ -16,9 +16,7 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. If you have received this file from a source other 
-// than Adobe, then your use, modification, or distribution of it requires the prior written permission
-// of Adobe.
+// of the Adobe license agreement accompanying it. 
 // =================================================================================================
 
 // =================================================================================================
@@ -85,7 +83,6 @@ public:
     // ---------------------------------------------------------------------------------------------
     /// @brief \c Initialize() explicitly initializes the XMP Toolkit before use. */
 
-#if ! AdobePrivate
     /// Initializes the XMP Toolkit.
     ///
     /// Call this function before making any other calls to the \c TXMPMeta functions, except
@@ -95,37 +92,6 @@ public:
     ///
     /// @return True on success. */
     static bool Initialize();
-#else
-	
-	//******* DEPRECATED *************************//
-	//******* SEE : CTECHXMP-4169971 *************//
-	
-	
-    /// @brief Internal. Initializes the XMP Toolkit with an optional memory allocation mechanism.
-    /// The parameters must be either both null (0), or both non-null.
-    ///
-    /// @param AllocateProc	 An optional memory allocation procedure. If provided, the \c DeleteProc
-    /// must also be provided.
-    ///
-    /// @param DeleteProc An optional memory deallocation procedure. If provided, the \c AllocateProc
-    /// must also be provided.
-    ///
-    /// @return True on success.
-
-    static bool Initialize ( XMP_AllocateProc AllocateProc = 0,
-                 			 XMP_DeleteProc   DeleteProc = 0 );
-
-
-#if ENABLE_CPP_DOM_MODEL
-	// ---------------------------------------------------------------------------------------------
-	/// @brief \c Use_CPP_DOM_APIs() when passed true, will rout the SXMPMeta functions to their 
-	///  implementation done using new XMP Core APIs.
-	/// When false is passed to Use_CPP_DOM_APIs(), the SXMPMeta functions are routed to the old XMP Core APIs
-	/// Use_CPP_DOM_APIs() should be always called before the use of a SXMPMeta object, otherwise an exception might be thrown.
-	/// This function is static; make the call directly from the concrete class (\c SXMPMeta).
-	static void Use_CPP_DOM_APIs(XMP_Bool useNewCoreAPIs);
-#endif
-#endif
     // ---------------------------------------------------------------------------------------------
     /// @brief \c Terminate() explicitly terminates usage of the XMP Toolkit.
     ///
@@ -244,63 +210,7 @@ public:
 
     static void SetGlobalOptions ( XMP_OptionBits options );
 
-#if AdobePrivate
-	
-	//******* DEPRECATED *************************//
-	//******* SEE : CTECHXMP-4169971 *************//
-	
-    /// @brief Internal. Retrieves the internal memory allocation routines used by XMP.
-    ///
-    /// These are either standard C \c malloc() and \c free(), or the procedures passed to
-    /// \c TXMPMeta::Initialize(). This is not intended as a general client utility. It is a utility
-    /// for DLLs layered on top of XMP, so they can use the same client-provided memory routines, if
-    /// any.
-    ///
-    /// This function is static; you can make the call from the class without instantiating it.
-    ///
-    /// @param AllocateProc [out] A buffer in which to return the memory allocation function.
-    ///
-    /// @param DeleteProc [out] A buffer in which to return the memory de-allocation function.
-
-    static void GetMemProcs ( XMP_AllocateProc * AllocateProc,
-                  			  XMP_DeleteProc *   DeleteProc );
-#endif
-
     /// @}
-
-#if AdobePrivate
-    // ---------------------------------------------------------------------------------------------
-	/// \deprecated Assert failure notifications is deprecated, users are encouraged to use Error Notification mechanism.
-    //
-    /// \name Assert failure notifications
-    /// @{
-
-    // ---------------------------------------------------------------------------------------------
-    /// @brief Internal. Registers a callback function to provide user notification of debugging
-    /// assertion failures.
-    ///
-    /// See the \c XMP_AssertNotifyProc declaration in  \c XMP_Const.h for more information.
-    ///
-    /// This function is static; make the call directly from the concrete class (\c SXMPMeta).
-    ///
-    /// @param	notifyProc	The client-provided callback function.
-    ///
-    /// @param clientData A	pointer to client-defined data to pass to the callback procedure.
-
-    static void RegisterAssertNotify ( XMP_AssertNotifyProc notifyProc,
-                           			   void *               clientData );
-
-    // ---------------------------------------------------------------------------------------------
-    /// @brief Internal. Unregisters a notification function if it is the active one.
-    ///
-    /// This function is static; make the call directly from the concrete class (\c SXMPMeta).
-    ///
-    /// @param notifyProc The callback to unregister, or null to unregister any active notification function.
-
-    static void UnregisterAssertNotify ( XMP_AssertNotifyProc notifyProc );
-
-    /// @}
-#endif
 
     // ---------------------------------------------------------------------------------------------
     /// \name Internal data structure dump utilities
@@ -328,25 +238,6 @@ public:
     static XMP_Status DumpNamespaces ( XMP_TextOutputProc outProc,
                      				   void *             clientData );
 
-	#if AdobePrivate
-    // ---------------------------------------------------------------------------------------------
-    /// \deprecated Internal. <b>Not implemented.</b>
-    /// @brief Dumps the list of registered property traits to standard output, for debugging.
-    ///
-    /// Invokes a client-defined callback for each line of output.
-    ///
-    /// This function is static; make the call directly from the concrete class (\c SXMPMeta).
-    ///
-    /// @param outProc The client-defined procedure to handle each line of output.
-    ///
-    /// @param clientData A pointer to client-defined data to pass to the handler.
-    ///
-    /// @return	A success-fail status value, returned from the handler. Zero is success, failure
-    /// values are client-defined.
-
-    static XMP_Status DumpPropertyTraits ( XMP_TextOutputProc outProc,
-                                          void *             clientData ) __AVAILABILITY_INTERNAL_DEPRECATED_XMP;
-	#endif
     /// @}
 
     // ---------------------------------------------------------------------------------------------
@@ -435,25 +326,6 @@ public:
     static void DeleteNamespace ( XMP_StringPtr namespaceURI );
 
     /// @}
-
-	#if AdobePrivate
-    // ---------------------------------------------------------------------------------------------
-    /// \deprecated <b>Not implemented.</b>
-    /// \brief Registers special traits for a property.
-    ///
-    /// A property can have a variety of special traits
-    ///
-    /// \param schemaNS The namespace URI for the property. Must not be null or the empty string.
-    ///
-    /// \param propName The name of the property. Can be a general path expression, must not be null
-    /// or the empty string.
-    ///
-    /// \param options Flags for the traits to be applied to this property.
-
-    static void RegisterPropertyTraits ( XMP_StringPtr  schemaNS,
-										 XMP_StringPtr  propName,
-                                        XMP_OptionBits options ) __AVAILABILITY_INTERNAL_DEPRECATED_XMP;
-	#endif
 
     // =============================================================================================
     // Basic property manipulation functions
@@ -1647,24 +1519,6 @@ public:
 							 XMP_OptionBits options = 0,
 							 XMP_StringLen  padding = 0 ) const;
 
-#if AdobePrivate
-    void
-    SerializeToBuffer ( tStringObj *   rdfString,  // Obsolete form, padding is poorly placed.
-                        XMP_OptionBits options,
-                        XMP_StringPtr  newline,
-                        XMP_StringPtr  indent,
-                        XMP_Index      baseIndent,
-                        XMP_StringLen  padding ) const;
-
-#if ENABLE_CPP_DOM_MODEL
-	// ---------------------------------------------------------------------------------------------
-	/// @brief \c GetIMetadata() returns the  shared pointer of the IXMPMetadata object present inside the XMPMeta object
-	///in case the client has chosen to set the Use_CPP_DOM_APIs flag as true
-	///if Use_CPP_DOM_APIs is passed false, null is returned with an error message "Not Available"
-	AdobeXMPCore::spIMetadata GetIMetadata();
-#endif
-#endif
-
     /// @}
     // =============================================================================================
     // Miscellaneous Member Functions
@@ -1819,13 +1673,6 @@ public:
     // ---------------------------------------------------------------------------------------------
     /// \brief Not implemented
     void SetObjectOptions ( XMP_OptionBits options );
-
-	#if AdobePrivate
-    // ---------------------------------------------------------------------------------------------
-    /// \deprecated <b>Not implemented</b>
-    /// @brief Not implemented
-    void  MarkStaleProperties ( XMP_OptionBits options = 0 ) __AVAILABILITY_INTERNAL_DEPRECATED_XMP;
-	#endif
 
     /// @}
 
