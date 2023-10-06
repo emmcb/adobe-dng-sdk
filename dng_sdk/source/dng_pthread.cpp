@@ -18,7 +18,7 @@
 
 /*****************************************************************************/
 
-#if qWinOS
+#if defined(_MSC_VER)
 
 #pragma warning(disable : 4786)
 
@@ -51,7 +51,7 @@
 
 /*****************************************************************************/
 
-#if qWinOS
+#if defined(_MSC_VER)
 
 /*****************************************************************************/
 
@@ -1270,7 +1270,7 @@ int dng_pthread_now (struct timespec *now)
 	if (now == NULL)
 		return -1; // EINVAL
 		
-	#if qWinOS
+	#if defined(_MSC_VER)
 
 	FILETIME ft;
 	::GetSystemTimeAsFileTime(&ft);

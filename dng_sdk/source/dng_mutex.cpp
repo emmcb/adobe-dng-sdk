@@ -111,7 +111,7 @@ dng_mutex::dng_mutex (const char *mutexName, uint32 mutexLevel)
 	
 	#if qDNGThreadSafe
 
-	#if qWinOS
+	#if defined(_MSC_VER)
 	
 	// Win is already a recursive mutex by default
 	if (pthread_mutex_init (&fPthreadMutex, NULL) != 0)

@@ -599,6 +599,13 @@
 #define _Deref_inout_z_bytecap_c_(size)
 #define _Deref_inout_z_
 
+#elif !defined(_MSC_VER) /* Not defined for mingw platform */
+
+#define _Check_return_opt_
+#define _Check_return_wat_
+
+#define _Deref_prepost_opt_z_
+
 #endif
 
 #endif //_H_SuppressSAL
