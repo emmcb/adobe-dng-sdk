@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(adobe-dng-sdk)
 
 option(BUILD_DNG_VALIDATE "Enable dng_validate command line tool" ${PROJECT_IS_TOP_LEVEL})
+option(DNG_THREAD_SAFE "Enable thread-safe support in the DNG SDK" ON)
 option(DNG_WITH_JPEG "Enable JPEG support in the DNG SDK" ON)
 option(DNG_WITH_XMP "Enable XMP support in the DNG SDK" ON)
 
@@ -179,7 +180,6 @@ foreach(TARGET IN ITEMS ${TARGETS})
         ${SRC_DIR}/dng_pixel_buffer.cpp
         ${SRC_DIR}/dng_point.cpp
         ${SRC_DIR}/dng_preview.cpp
-        ${SRC_DIR}/dng_pthread.cpp
         ${SRC_DIR}/dng_rational.cpp
         ${SRC_DIR}/dng_read_image.cpp
         ${SRC_DIR}/dng_rect.cpp
@@ -218,6 +218,13 @@ foreach(TARGET IN ITEMS ${TARGETS})
         ${TARGET} PUBLIC $<$<PLATFORM_ID:Darwin>:qMacOS=1> $<$<PLATFORM_ID:Linux>:qLinux=1>
                          $<$<PLATFORM_ID:Windows>:qWinOS=1>
     )
+
+    if(DNG_THREAD_SAFE)
+        target_sources(${TARGET} PRIVATE ${SRC_DIR}/dng_pthread.cpp)
+        target_compile_definitions(${TARGET} PUBLIC qDNGThreadSafe=1)
+    else()
+        target_compile_definitions(${TARGET} PUBLIC qDNGThreadSafe=0)
+    endif()
 
     if(DNG_WITH_JPEG)
         target_sources(${TARGET} PRIVATE ${SRC_DIR}/dng_jpeg_memory_source.cpp)
