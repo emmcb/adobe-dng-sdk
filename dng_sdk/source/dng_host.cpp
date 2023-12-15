@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2006-2019 Adobe Systems Incorporated
+// Copyright 2006-2023 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -14,7 +14,9 @@
 #include "dng_exceptions.h"
 #include "dng_exif.h"
 #include "dng_gain_map.h"
+#include "dng_globals.h"
 #include "dng_ifd.h"
+#include "dng_jxl.h"
 #include "dng_lens_correction.h"
 #include "dng_memory.h"
 #include "dng_misc_opcodes.h"
@@ -576,6 +578,17 @@ dng_opcode * dng_host::Make_dng_opcode (uint32 opcodeID,
 	return result;
 	
 	}
+
+/*****************************************************************************/
+
+dng_rgb_to_rgb_table_data *
+dng_host::Make_dng_rgb_to_rgb_table_data (const dng_rgb_table &table)
+	{
+	
+	return new dng_rgb_to_rgb_table_data (*this,
+										  table);
+	
+	}
 		
 /*****************************************************************************/
 
@@ -604,5 +617,156 @@ void dng_host::ResampleImage (const dng_image &srcImage,
 					 dng_resample_bicubic::Get ());
 	
 	}
+
+/*****************************************************************************/
+
+#if qDNGSupportJXL
+
+/*****************************************************************************/
+
+void dng_host::SetJXLEncodeSettings (const dng_jxl_encode_settings &settings)
+	{
+	
+	fJXLEncodeSettings.reset (new dng_jxl_encode_settings (settings));
+	
+	}
+
+/*****************************************************************************/
+
+dng_jxl_encode_settings *
+dng_host::MakeJXLEncodeSettings (const dng_negative &negative,
+								 const dng_image &image,
+								 const uint32 subFileType,
+								 const bool isProxy) const
+	{
+	
+	AutoPtr<dng_jxl_encode_settings> settings (new dng_jxl_encode_settings);
+
+	const bool isFloat = (image.PixelType () == ttFloat);
+
+	if (isProxy)
+		{
+	
+		settings->SetEffort (7);
+
+		if (subFileType == sfGainMap)
+			{
+			
+			settings->SetDistance (isFloat ? 3.0f : 1.0f);
+			
+			}
+
+		else if (isFloat)
+			{
+
+			settings->SetDistance (3.0f);
+
+			}
+
+		else
+			{
+
+			// Need a higher quality for raw proxies than non-raw proxies,
+			// since users often perform much greater color changes. Also, if
+			// we are targeting a "large" size proxy (larger than 5 MP), or
+			// this is a full size proxy, then use a higher quality.
+
+			bool useHigherQuality =
+				((uint64) image.Width  () *
+				 (uint64) image.Height () > 5000000 ||
+				 image.Bounds ().Size () == negative.OriginalDefaultFinalSize ());
+
+			settings->SetDistance (useHigherQuality ? 0.5f : 1.0f);
+
+			}
+
+		}
+
+	else
+		{
+
+		// Not proxy.
+		
+		if (subFileType == sfTransparencyMask)
+			{
+
+			// Fast lossless.
+
+			settings->SetDistance (0.0f);
+			settings->SetEffort (1);
+
+			}
+
+		else if (subFileType == sfDepthMap ||
+				 subFileType == sfSemanticMask)
+			{
+			
+			// Smaller lossless.
+
+			settings->SetDistance (0.0f);
+			settings->SetEffort (3);
+
+			}
+
+		else if (subFileType == sfMainImage ||
+				 subFileType == sfEnhancedImage)
+			{
+			
+			// High-quality lossy.
+
+			// Note that Enhanced images currently are computed and stored in
+			// linear space (do not take advantage of gamma encodings such as
+			// MapPolynomial) and therefore we need to be conservative with
+			// lossy compression settings. See CR-4203530.
+
+			settings->SetDistance (0.01f);
+			settings->SetEffort (7);
+
+			}
+
+		else if (subFileType == sfGainMap)
+			{
+			
+			settings->SetDistance (1.0f);
+			settings->SetEffort (7);
+
+			}
+
+		else if (subFileType == sfPreviewMask ||
+				 subFileType == sfPreviewImage ||
+				 subFileType == sfPreviewDepthMap ||
+				 subFileType == sfPreviewSemanticMask ||
+				 subFileType == sfAltPreviewImage)
+			{
+			
+			// Smaller lossy.
+
+			settings->SetDistance (2.0f);
+			settings->SetEffort (7);
+
+			}
+
+		#if qDNGValidate
+		
+		if (gVerbose)
+			{
+			
+			printf ("Using JXL distance=%.2f, effort=%u for IFD type %u\n",
+					float (settings->Distance ()),
+					unsigned (settings->Effort ()),
+					unsigned (subFileType));
+			}
+		
+		#endif	// qDNGValidate
+		
+		}
+
+	return settings.Release ();
+	
+	}
+
+/*****************************************************************************/
+
+#endif	// qDNGSupportJXL
 
 /*****************************************************************************/

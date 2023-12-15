@@ -1,5 +1,5 @@
 ARCHS                                 = $(ARCHS_STANDARD_64_BIT)
-MACOSX_DEPLOYMENT_TARGET[arch=x86_64] = 10.15
+MACOSX_DEPLOYMENT_TARGET[arch=x86_64] = 11.0
 MACOSX_DEPLOYMENT_TARGET[arch=arm64]  = 11.0
 ONLY_ACTIVE_ARCH                      = YES
 SDKROOT                               = macosx

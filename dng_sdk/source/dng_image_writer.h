@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2006-2019 Adobe Systems Incorporated
+// Copyright 2006-2023 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -150,6 +150,40 @@ class tag_data_ptr: public tiff_tag
 			
 		virtual void Put (dng_stream &stream) const;
 		
+	};
+		
+/******************************************************************************/
+
+class tag_owned_data_ptr: public tag_data_ptr
+	{
+	
+	protected:
+	
+		const_dng_memory_block_sptr fBlock;
+		
+	public:
+	
+		tag_owned_data_ptr (uint16 code,
+							uint16 type,
+							uint32 count,
+							const_dng_memory_block_sptr block)
+				
+			:	tag_data_ptr (code,
+							  type,
+							  count,
+							  block ? block->Buffer () : nullptr)
+			
+			,	fBlock (block)
+			
+			{
+			}
+			
+		void SetBlock (const_dng_memory_block_sptr block)
+			{
+			fBlock = block;
+			SetData (block ? block->Buffer () : nullptr);
+			}
+			
 	};
 		
 /******************************************************************************/
@@ -747,6 +781,9 @@ class dng_basic_tag_set: private dng_uncopyable
 		tag_uint16_ptr fSampleFormat;
 		
 		tag_uint16 fRowInterleaveFactor;
+		#if qDNGSupportColumnInterleaveFactor
+		tag_uint16 fColumnInterleaveFactor;
+		#endif
 		
 		uint16 fSubTileBlockSizeData [2];
 		
@@ -776,6 +813,11 @@ class dng_basic_tag_set: private dng_uncopyable
 		bool WritingStrips () const
 			{
 			return fStrips;
+			}
+			
+		uint16 Compression () const
+			{
+			return fCompression.Get ();
 			}
 			
 	};
@@ -1091,6 +1133,7 @@ class dng_metadata_subset
 			kMask_Caption	 = 0x00000100,
 			kMask_Title		 = 0x00000200,
 			kMask_Regions	 = 0x00000400,		// Includes face info
+			kMask_ExifDate	 = 0x00000800,
 
 			kMask_Other		 = 0x80000000,
 			
@@ -1176,7 +1219,9 @@ enum
 	kMetadataSubset_AllExceptCameraRawInfoAndLocation =
 		dng_metadata_subset::kMask_All -
 		dng_metadata_subset::kMask_CameraRaw -
-		dng_metadata_subset::kMask_Location
+		dng_metadata_subset::kMask_Location,
+
+	kMetadataSubset_ExifDate = dng_metadata_subset::kMask_ExifDate
 
 	};
  
@@ -1189,7 +1234,7 @@ class dng_image_writer
 	{
 	
 	friend class dng_jpeg_image;
-	friend class dng_jpeg_image_encode_task;
+	friend class dng_lossy_image_encode_task;
 	friend class dng_write_tiles_task;
 	
 	protected:
@@ -1219,7 +1264,8 @@ class dng_image_writer
 								 dng_basic_tag_set &basic,
 								 dng_stream &stream,
 								 const dng_image &image,
-								 uint32 fakeChannels = 1);
+								 uint32 fakeChannels = 1,
+								 dng_fingerprint *outDigest = nullptr);
 							
 		/// Write a dng_image to a dng_stream in TIFF format.
 		/// \param host Host interface used for progress updates, abort testing, buffer allocation, etc.
@@ -1234,7 +1280,7 @@ class dng_image_writer
 		/// \param thumbnail If non-NULL, will be stored in TIFF as preview image.
 		/// \param imageResources If non-NULL, will image resources be stored in TIFF as well.
 		/// \param metadataSubset The subset of metadata (e.g., copyright only) to include in the TIFF.
-		/// \param hasTransparency Does the image change a transparancy channel?
+		/// \param hasTransparency Does the image change a transparency channel?
 		/// \param allowBigTIFF Automatically write BigTIFF format if required?
 
 		void WriteTIFF (dng_host &host,
@@ -1249,7 +1295,8 @@ class dng_image_writer
 						const dng_memory_block *imageResources = NULL,
 						dng_metadata_subset metadataSubset = kMetadataSubset_All,
 						bool hasTransparency = false,
-						bool allowBigTIFF = true);
+						bool allowBigTIFF = true,
+						const dng_image *gainMapImage = nullptr);
 								
 		/// Write a dng_image to a dng_stream in TIFF format.
 		/// \param host Host interface used for progress updates, abort testing, buffer allocation, etc.
@@ -1265,7 +1312,7 @@ class dng_image_writer
 		/// \param thumbnail If non-NULL, will be stored in TIFF as preview image.
 		/// \param imageResources If non-NULL, will image resources be stored in TIFF as well.
 		/// \param metadataSubset The subset of metadata (e.g., copyright only) to include in the TIFF.
-		/// \param hasTransparency Does the image change a transparancy channel?
+		/// \param hasTransparency Does the image change a transparency channel?
 		/// \param allowBigTIFF Automatically write BigTIFF format if required?
 
 		virtual void WriteTIFFWithProfile (dng_host &host,
@@ -1281,7 +1328,8 @@ class dng_image_writer
 										   const dng_memory_block *imageResources = NULL,
 										   dng_metadata_subset metadataSubset = kMetadataSubset_All,
 										   bool hasTransparency = false,
-										   bool allowBigTIFF = true);
+										   bool allowBigTIFF = true,
+										   const dng_image *gainMapImage = nullptr);
 								
 		/// Write a dng_image to a dng_stream in DNG format.
 		/// \param host Host interface used for progress updates, abort testing, buffer allocation, etc.
@@ -1290,6 +1338,8 @@ class dng_image_writer
 		/// \param previewList List of previews (not counting thumbnail) to write to the file. Defaults to empty.
 		/// \param maxBackwardVersion The DNG file should be readable by readers at least back to this version.
 		/// \param uncompressed True to force uncompressed images. Otherwise use normal compression.
+		/// \param gainMapImage Optional gain map image.
+		/// \param gainMapLossyCompressed Optional lossy compressed gain map image.
 
 		void WriteDNG (dng_host &host,
 					   dng_stream &stream,
@@ -1297,7 +1347,9 @@ class dng_image_writer
 					   const dng_preview_list *previewList = NULL,
 					   uint32 maxBackwardVersion = dngVersion_SaveDefault,
 					   bool uncompressed = false,
-					   bool allowBigTIFF = true);
+					   bool allowBigTIFF = true,
+					   const dng_image *gainMapImage = nullptr,
+					   const dng_lossy_compressed_image *gainMapLossyCompressed = nullptr);
 							   
 		/// Write a dng_image to a dng_stream in DNG format.
 		/// \param host Host interface used for progress updates, abort testing, buffer allocation, etc.
@@ -1307,6 +1359,8 @@ class dng_image_writer
 		/// \param previewList List of previews (not counting thumbnail) to write to the file. Defaults to empty.
 		/// \param maxBackwardVersion The DNG file should be readable by readers at least back to this version.
 		/// \param uncompressed True to force uncompressed images. Otherwise use normal compression.
+		/// \param gainMapImage Optional gain map image.
+		/// \param gainMapLossyCompressed Optional lossy compressed gain map image.
 
 		virtual void WriteDNGWithMetadata (dng_host &host,
 										   dng_stream &stream,
@@ -1315,7 +1369,9 @@ class dng_image_writer
 										   const dng_preview_list *previewList = NULL,
 										   uint32 maxBackwardVersion = dngVersion_SaveDefault,
 										   bool uncompressed = false,
-										   bool allowBigTIFF = true);
+										   bool allowBigTIFF = true,
+										   const dng_image *gainMapImage = nullptr,
+										   const dng_lossy_compressed_image *gainMapLossyCompressed = nullptr);
 
 		/// Resolve metadata conflicts and apply metadata policies in keeping
 		/// with Metadata Working Group (MWG) guidelines.
@@ -1376,7 +1432,8 @@ class dng_image_writer
 								   uint32 tilesDown,
 								   uint32 tilesAcross,
 								   uint32 compressedSize,
-								   const dng_safe_uint32 &uncompressedSize);
+								   const dng_safe_uint32 &uncompressedSize,
+								   dng_fingerprint *outDigest);
 
 	};
 
@@ -1419,6 +1476,10 @@ class dng_write_tiles_task : public dng_area_task,
 		bool fTaskFailed;
 
 		uint32 fWriteTileIndex;
+
+		const bool fNeedDigest;
+
+		mutable dng_md5_printer fOverallPrinter;
 		
 	public:
 	
@@ -1432,11 +1493,14 @@ class dng_write_tiles_task : public dng_area_task,
 							  uint32 tilesDown,
 							  uint32 tilesAcross,
 							  uint32 compressedSize,
-							  uint32 uncompressedSize);
+							  uint32 uncompressedSize,
+							  bool needDigest);
 
 		void Process (uint32 threadIndex,
 					  const dng_rect &tile,
 					  dng_abort_sniffer *sniffer);
+
+		const dng_fingerprint & ResultDigest () const;
 
 	protected:
 

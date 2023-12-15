@@ -82,6 +82,12 @@ static dng_string gDumpDepthMap;
 static dng_string gDumpTIF;
 static dng_string gDumpDNG;
 
+static dng_string gCameraProfileName;
+
+#if qDNGSupportJXL
+static bool gPreferJXL = false;
+#endif
+
 /*****************************************************************************/
 
 static dng_error_code dng_validate (const char *filename)
@@ -292,6 +298,19 @@ static dng_error_code dng_validate (const char *filename)
 			negative->ResizeDepthToMatchStage3 (host);
 
 			}
+
+		// Resize semantic masks to match stage 3.
+
+		negative->ResizeSemanticMasksToMatchStage3 (host);
+
+		// Set JPEG XL compression preference.
+		
+		#if qDNGSupportJXL
+			
+		if (gPreferJXL)
+			host.SetPreferCompressJXL (true);
+
+		#endif	// qDNGSupportJXL
 			
 		// Convert to proxy, if requested.
 		
@@ -301,7 +320,7 @@ static dng_error_code dng_validate (const char *filename)
 			dng_timer timer ("ConvertToProxy time");
 			
 			dng_image_writer writer;
-			
+
 			negative->ConvertToProxy (host,
 									  writer,
 									  gProxyDNGSize);
@@ -507,7 +526,7 @@ static dng_error_code dng_validate (const char *filename)
 								 stream2,
 								 *negative.Get (),
 								 &previewList,
-								 dngVersion_Current,
+								 dngVersion_SaveDefault,
 								 false);
 
 				}
@@ -527,6 +546,15 @@ static dng_error_code dng_validate (const char *filename)
 			
 			render.SetFinalSpace	 (*gFinalSpace	 );
 			render.SetFinalPixelType (gFinalPixelType);
+
+			if (gCameraProfileName.NotEmpty ())
+				{
+
+				dng_camera_profile_id profileID (gCameraProfileName);
+			
+				render.SetCameraProfileID (profileID);
+
+				}
 			
 			if (host.MinimumSize ())
 				{
@@ -573,6 +601,20 @@ static dng_error_code dng_validate (const char *filename)
 			dng_file_stream stream2 (gDumpTIF.Get (), true);
 			
 				{
+
+				const dng_camera_profile *profilePtr = nullptr;
+
+				dng_camera_profile profile;
+				
+				if (!negative->IsMonochrome ())
+					{
+				
+					const auto &profileID = render.CameraProfileID ();
+
+					if (negative->GetProfileByID (profileID, profile))
+						profilePtr = &profile;
+
+					}
 				
 				dng_timer timer ("Write TIFF time");
 			
@@ -585,7 +627,7 @@ static dng_error_code dng_validate (const char *filename)
 															 : piBlackIsZero,
 								  ccUncompressed,
 								  &negative->Metadata (),
-								  &render.FinalSpace ());
+								  &render.FinalSpace (profilePtr));
 								  
 				}
 				
@@ -640,29 +682,36 @@ int main (int argc, char *argv [])
 					 "Usage:  %s [options] file1 file2 ...\n"
 					 "\n"
 					 "Valid options:\n"
-					 "-v					Verbose mode\n"
-					 "-d <num>				Dump line limit (implies -v)\n"
-					 "-b4					Use four-color Bayer interpolation\n"
-					 "-s <num>				Use this sample of multi-sample CFAs\n"
-					 "-ignoreEnhanced		Ignore the enhanced image IFD\n"
-					 "-size <num>			Preferred preview image size\n"
-					 "-min <num>			Minimum preview image size\n"
-					 "-max <num>			Maximum preview image size\n"
-					 "-proxy <num>			Target size for proxy DNG\n"
-					 "-cs1					Color space: \"sRGB\" (default)\n"
-					 "-cs2					Color space: \"Adobe RGB\"\n"
-					 "-cs3					Color space: \"ProPhoto RGB\"\n"
-					 "-cs4					Color space: \"ColorMatch RGB\"\n"
-					 "-cs5					Color space: \"Gray Gamma 1.8\"\n"
-					 "-cs6					Color space: \"Gray Gamma 2.2\"\n"
-					 "-16					16-bits/channel output\n"
-					 "-1 <file>				Write stage 1 image to \"<file>.tif\"\n"
-					 "-2 <file>				Write stage 2 image to \"<file>.tif\"\n"
-					 "-3 <file>				Write stage 3 image to \"<file>.tif\"\n"
-					 "-transparency <file>	Write transparency mask to \"<file>.tif\"\n"
-					 "-depthMap <file>		Write depth map to \"<file>.tif\"\n"
-					 "-tif <file>			Write TIF image to \"<file>.tif\"\n"
-					 "-dng <file>			Write DNG image to \"<file>.dng\"\n"
+					 "-v                    Verbose mode\n"
+					 "-d <num>              Dump line limit (implies -v)\n"
+					 "-b4                   Use four-color Bayer interpolation\n"
+					 "-s <num>              Use this sample of multi-sample CFAs\n"
+					 "-ignoreEnhanced       Ignore the enhanced image IFD\n"
+					 "-size <num>           Preferred preview image size\n"
+					 "-min <num>            Minimum preview image size\n"
+					 "-max <num>            Maximum preview image size\n"
+					 "-proxy <num>          Target size for proxy DNG\n"
+					 #if qDNGSupportJXL
+					 "-preferJXL            Prefer JPEG XL for lossy compressed DNG\n"
+					 #endif
+					 "-cs1                  Color space: \"sRGB\" (default)\n"
+					 "-cs2                  Color space: \"Adobe RGB\"\n"
+					 "-cs3                  Color space: \"ProPhoto RGB\"\n"
+					 "-cs4                  Color space: \"ColorMatch RGB\"\n"
+					 "-cs5                  Color space: \"Gray Gamma 1.8\"\n"
+					 "-cs6                  Color space: \"Gray Gamma 2.2\"\n"
+					 "-csP3                 Color space: \"Display P3\"\n"
+					 "-cs2020               Color space: \"Rec. 2020 / BT.2100\"\n"
+					 "-16                   16-bits/channel output\n"
+					 "-32                   32-bits/channel floating-point output\n"
+					 "-profile <name>       Name of camera profile to use for rendering\n"
+					 "-1 <file>             Write stage 1 image to \"<file>.tif\"\n"
+					 "-2 <file>             Write stage 2 image to \"<file>.tif\"\n"
+					 "-3 <file>             Write stage 3 image to \"<file>.tif\"\n"
+					 "-transparency <file>  Write transparency mask to \"<file>.tif\"\n"
+					 "-depthMap <file>      Write depth map to \"<file>.tif\"\n"
+					 "-tif <file>           Write TIF image to \"<file>.tif\"\n"
+					 "-dng <file>           Write DNG image to \"<file>.dng\"\n"
 					 "\n",
 					 argv [0]);
 					 
@@ -794,6 +843,15 @@ int main (int argc, char *argv [])
 
 				}
 					
+			#if qDNGSupportJXL
+			
+			else if (option.Matches ("preferJXL", true))
+				{
+				gPreferJXL = true;
+				}
+			
+			#endif	// qDNGSu,
+					
 			else if (option.Matches ("cs1", true))
 				{
 				
@@ -836,10 +894,31 @@ int main (int argc, char *argv [])
 				
 				}
 					
+			else if (option.Matches ("csP3", true))
+				{
+				
+				gFinalSpace = &dng_space_DisplayP3::Get ();
+				
+				}
+					
+			else if (option.Matches ("cs2020", true))
+				{
+				
+				gFinalSpace = &dng_space_Rec2020::Get ();
+				
+				}
+					
 			else if (option.Matches ("16"))
 				{
 				
 				gFinalPixelType = ttShort;
+				
+				}
+					
+			else if (option.Matches ("32"))
+				{
+				
+				gFinalPixelType = ttFloat;
 				
 				}
 					
@@ -908,6 +987,24 @@ int main (int argc, char *argv [])
 				if (!gDumpStage3.EndsWith (".tif"))
 					{
 					gDumpStage3.Append (".tif");
+					}
+				
+				}
+				
+			else if (option.Matches ("profile"))
+				{
+
+				gCameraProfileName.Clear ();
+				
+				if (index + 1 < argc)
+					{
+					gCameraProfileName.Set (argv [++index]);
+					}
+					
+				if (gCameraProfileName.IsEmpty () || gCameraProfileName.StartsWith ("-"))
+					{
+					fprintf (stderr, "*** Missing profile name after -profile\n");
+					return 1;
 					}
 				
 				}

@@ -346,6 +346,9 @@
     <ClCompile Include="..\..\..\source\dng_xy_coord.cpp">
       <Filter>dng_sdk</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\source\dng_jxl.cpp">
+      <Filter>dng_sdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\libjpeg\jconfig.h">
@@ -598,6 +601,9 @@
       <Filter>dng_sdk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\dng_xy_coord.h">
+      <Filter>dng_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\dng_jxl.h">
       <Filter>dng_sdk</Filter>
     </ClInclude>
   </ItemGroup>

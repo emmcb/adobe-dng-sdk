@@ -6,7 +6,7 @@ You may also obtain the Adobe XMP SDK from:
 
 https://www.adobe.com/devnet/xmp.html
 
-In either case, you will need to obtain some additional public (non-Adobe) source code for the expat and zlib libraries.
+XMP also uses additional public source code for the expat and zlib libraries.
 
 For expat, see this document: xmp/toolkit/XMPCore/third-party/expat/ReadMe.txt
 
@@ -14,9 +14,9 @@ For zlib, see this document: xmp/toolkit/third-party/zlib/ReadMe.txt
 
 ----------------------------------------------------------------------
 
-To build XMPCore and XMPFiles using the include XMP SDK:
+To build XMPCore and XMPFiles manually using the included XMP SDK:
 
-The following steps have been tested with Xcode 12 and 13 on macOS and Visual Studio 2019 on Windows.
+The following steps have been tested with Xcode 12 thru 14 on macOS and Visual Studio 2019 and 2022 on Windows.
 
 macOS:
 

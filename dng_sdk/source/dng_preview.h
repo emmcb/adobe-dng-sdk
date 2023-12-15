@@ -31,6 +31,10 @@ class dng_preview: private dng_uncopyable
 	
 		dng_preview_info fInfo;
 		
+		#if qDNGSupportJXL
+		bool fPreferJXL = false;
+		#endif
+
 	protected:
 	
 		dng_preview ();
@@ -154,6 +158,35 @@ class dng_jpeg_preview: public dng_image_preview
 		virtual uint64 MaxImageDataByteCount () const;
 
 	};
+
+/*****************************************************************************/
+
+#if qDNGSupportJXL
+
+/*****************************************************************************/
+
+class dng_jxl_preview: public dng_image_preview
+	{
+	
+	public:
+	
+		dng_jxl_preview ();
+		
+		void WriteData (dng_host &host,
+						dng_image_writer &writer,
+						dng_basic_tag_set &basic,
+						dng_stream &stream) const override;
+		
+		void FindTileSize (uint32 bytesPerTile)
+			{
+			fIFD.FindTileSize (bytesPerTile);
+			}
+			
+	};
+
+/*****************************************************************************/
+
+#endif	// qDNGSupportJXL
 
 /*****************************************************************************/
 

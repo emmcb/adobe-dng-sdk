@@ -142,6 +142,7 @@ foreach(TARGET IN ITEMS ${TARGETS})
         ${SRC_DIR}/dng_area_task.cpp
         ${SRC_DIR}/dng_bad_pixels.cpp
         ${SRC_DIR}/dng_big_table.cpp
+        ${SRC_DIR}/dng_bmff.cpp
         ${SRC_DIR}/dng_bottlenecks.cpp
         ${SRC_DIR}/dng_camera_profile.cpp
         ${SRC_DIR}/dng_color_space.cpp
@@ -241,6 +242,9 @@ foreach(TARGET IN ITEMS ${TARGETS})
     else()
         target_compile_definitions(${TARGET} PUBLIC qDNGUseXMP=0)
     endif()
+
+    # TODO: detect JXL support
+    target_compile_definitions(${TARGET} PUBLIC qDNGSupportJXL=0)
 
     target_compile_options(${TARGET} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-stringop-overflow>)
 endforeach()

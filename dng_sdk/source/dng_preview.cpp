@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2007-2019 Adobe Systems Incorporated
+// Copyright 2007-2022 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -11,6 +11,7 @@
 #include "dng_assertions.h"
 #include "dng_image.h"
 #include "dng_image_writer.h"
+#include "dng_jxl.h"
 #include "dng_memory.h"
 #include "dng_stream.h"
 #include "dng_tag_codes.h"
@@ -474,6 +475,59 @@ void dng_jpeg_preview::SpoolAdobeThumbnail (dng_stream &stream) const
 		
 /*****************************************************************************/
 
+#if qDNGSupportJXL
+
+/*****************************************************************************/
+
+static void ConfigureIFDforJXLPreview (dng_ifd &info)
+	{
+	
+	info.fCompression = ccJXL;
+	info.fPredictor	  = cpNullPredictor;
+			
+	AutoPtr<dng_jxl_encode_settings> settings (new dng_jxl_encode_settings);
+
+	settings->SetDistance (2.0f);
+
+	info.fJXLEncodeSettings.reset (settings.Release ());
+	
+	}
+
+/*****************************************************************************/
+
+dng_jxl_preview::dng_jxl_preview ()
+	{
+
+	ConfigureIFDforJXLPreview (fIFD);
+	
+	}
+		
+/*****************************************************************************/
+
+void dng_jxl_preview::WriteData (dng_host &host,
+								 dng_image_writer &writer,
+								 dng_basic_tag_set &basic,
+								 dng_stream &stream) const
+	{
+
+	// Store a copy of the preview info so that the writer can get information
+	// about the color space.
+
+	fIFD.fPreviewInfo = this->fInfo;
+
+	dng_image_preview::WriteData (host,
+								  writer,
+								  basic,
+								  stream);
+	
+	}
+
+/*****************************************************************************/
+
+#endif	// qDNGSupportJXL
+
+/*****************************************************************************/
+
 class dng_raw_preview_tag_set: public dng_preview_tag_set
 	{
 	
@@ -617,12 +671,20 @@ dng_basic_tag_set * dng_raw_preview::AddTagSet (dng_tiff_directory &directory) c
 	
 	if (fImage->PixelType () == ttFloat)
 		{
-		
-		fIFD.fCompression = ccDeflate;
-		
-		fIFD.fCompressionQuality = fCompressionQuality;
 
-		fIFD.fPredictor = cpFloatingPoint;
+		#if qDNGSupportJXL
+		if (fPreferJXL)
+			{
+			ConfigureIFDforJXLPreview (fIFD);
+			}
+	
+		else
+		#endif
+			{
+			fIFD.fCompression		 = ccDeflate;
+			fIFD.fCompressionQuality = fCompressionQuality;
+			fIFD.fPredictor			 = cpFloatingPoint;
+			}
 		
 		for (uint32 j = 0; j < fIFD.fSamplesPerPixel; j++)
 			{
@@ -637,9 +699,18 @@ dng_basic_tag_set * dng_raw_preview::AddTagSet (dng_tiff_directory &directory) c
 	else
 		{
 	
-		fIFD.fCompression = ccLossyJPEG;
+		#if qDNGSupportJXL
+		if (fPreferJXL)
+			{
+			ConfigureIFDforJXLPreview (fIFD);
+			}
 		
-		fIFD.fCompressionQuality = fCompressionQuality;
+		else
+		#endif
+			{
+			fIFD.fCompression		 = ccLossyJPEG;
+			fIFD.fCompressionQuality = fCompressionQuality;
+			}
 																	 
 		fIFD.fBitsPerSample [0] = TagTypeSize (fImage->PixelType ()) * 8;
 		
@@ -714,10 +785,22 @@ dng_basic_tag_set * dng_mask_preview::AddTagSet (dng_tiff_directory &directory) 
 	
 	fIFD.fPhotometricInterpretation = piTransparencyMask;
 	
-	fIFD.fCompression = ccDeflate;
-	fIFD.fPredictor	  = cpHorizontalDifference;
+	#if qDNGSupportJXL
+	if (fPreferJXL)
+		{
+		ConfigureIFDforJXLPreview (fIFD);
+		}
 	
-	fIFD.fCompressionQuality = fCompressionQuality;
+	else
+	#endif
+		{
+		
+		fIFD.fCompression = ccDeflate;
+		fIFD.fPredictor	  = cpHorizontalDifference;
+
+		fIFD.fCompressionQuality = fCompressionQuality;
+
+		}
 	
 	fIFD.fBitsPerSample [0] = TagTypeSize (fImage->PixelType ()) * 8;
 	
@@ -767,11 +850,23 @@ dng_basic_tag_set * dng_semantic_mask_preview::AddTagSet (dng_tiff_directory &di
 	fIFD.fSamplesPerPixel = 1;
 	
 	fIFD.fPhotometricInterpretation = piPhotometricMask;
+
+	#if qDNGSupportJXL
+	if (fPreferJXL)
+		{
+		ConfigureIFDforJXLPreview (fIFD);
+		}
 	
-	fIFD.fCompression = ccDeflate;
-	fIFD.fPredictor	  = cpHorizontalDifference;
+	else
+	#endif
+		{
 	
-	fIFD.fCompressionQuality = fCompressionQuality;
+		fIFD.fCompression = ccDeflate;
+		fIFD.fPredictor	  = cpHorizontalDifference;
+
+		fIFD.fCompressionQuality = fCompressionQuality;
+
+		}
 	
 	fIFD.fBitsPerSample [0] = TagTypeSize (fImage->PixelType ()) * 8;
 	
@@ -866,10 +961,22 @@ dng_basic_tag_set * dng_depth_preview::AddTagSet (dng_tiff_directory &directory)
 	
 	fIFD.fPhotometricInterpretation = piDepth;
 	
-	fIFD.fCompression = ccDeflate;
-	fIFD.fPredictor	  = cpHorizontalDifference;
+	#if qDNGSupportJXL
+	if (fPreferJXL)
+		{
+		ConfigureIFDforJXLPreview (fIFD);
+		}
 	
-	fIFD.fCompressionQuality = fCompressionQuality;
+	else
+	#endif
+		{
+		
+		fIFD.fCompression = ccDeflate;
+		fIFD.fPredictor	  = cpHorizontalDifference;
+
+		fIFD.fCompressionQuality = fCompressionQuality;
+
+		}
 	
 	fIFD.fBitsPerSample [0] = TagTypeSize (fImage->PixelType ()) * 8;
 	

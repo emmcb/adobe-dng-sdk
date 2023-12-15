@@ -1477,14 +1477,15 @@ void dng_ifd_updater::UpdateDateTimeTag (dng_file_updater &updater,
 		
 		char buffer [20];
 		
-		sprintf (buffer,
-				 "%04d:%02d:%02d %02d:%02d:%02d",
-				 (int) dt.fYear,
-				 (int) dt.fMonth,
-				 (int) dt.fDay,
-				 (int) dt.fHour,
-				 (int) dt.fMinute,
-				 (int) dt.fSecond);
+		snprintf (buffer,
+				  20,
+				  "%04d:%02d:%02d %02d:%02d:%02d",
+				  (int) dt.fYear,
+				  (int) dt.fMonth,
+				  (int) dt.fDay,
+				  (int) dt.fHour,
+				  (int) dt.fMinute,
+				  (int) dt.fSecond);
 				 
 		UpdateTag (updater,
 				   tagCode,
@@ -2793,9 +2794,9 @@ void dng_file_updater::ApplyZeroRanges ()
 		
 /*****************************************************************************/
 
-static void CleanUpMetadataForUpdate (dng_host &host,
-									  dng_metadata &metadata,
-									  bool isDNG)
+void CleanUpMetadataForUpdate (dng_host &host,
+							   dng_metadata &metadata,
+							   bool wantsIPTC)
 	{
 	
 	if (metadata.GetXMP () && metadata.GetExif ())
@@ -2808,13 +2809,10 @@ static void CleanUpMetadataForUpdate (dng_host &host,
 	
 		newXMP.SyncExif (newEXIF,
 						 metadata.GetOriginalExif (),
-						 true,
+						 false,
 						 true);
 						 
-		// All DNG readers should be able to deal with IPTC data
-		// in XMP, so don't store legacy IPTC.
-		
-		if (isDNG)
+		if (!wantsIPTC)
 			{
 			
 			metadata.ClearIPTC ();
@@ -2871,7 +2869,7 @@ void DNGUpdateMetadata (dng_host &host,
 	
 	CleanUpMetadataForUpdate (host,
 							  *updatedMetadata,
-							  updater.IsDNG ());
+							  !updater.IsDNG ());
 	
 	// Some DNG files do not contain a RawDataUniqueID field,
 	// Add tag with the computed value we are using.

@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2006-2019 Adobe Systems Incorporated
+// Copyright 2006-2023 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -24,6 +24,7 @@
 #include "dng_classes.h"
 #include "dng_fingerprint.h"
 #include "dng_image.h"
+#include "dng_jpeg_image.h"
 #include "dng_linearization_info.h"
 #include "dng_matrix.h"
 #include "dng_memory.h"
@@ -33,6 +34,7 @@
 #include "dng_orientation.h"
 #include "dng_rational.h"
 #include "dng_sdk_limits.h"
+#include "dng_semantic_mask.h"
 #include "dng_string.h"
 #include "dng_tag_types.h"
 #include "dng_tag_values.h"
@@ -287,6 +289,14 @@ class dng_metadata
 		// Big table index for binary blocks embedded in original raw file.
 		
 		dng_big_table_index fBigTableIndex;
+
+		// Image sequence info.
+
+		dng_image_sequence_info fImageSequenceInfo;
+		
+		// Image stats.
+
+		dng_image_stats fImageStats;
 		
 	public:
 
@@ -407,7 +417,8 @@ class dng_metadata
 		dng_memory_block * BuildExifBlock (dng_memory_allocator &allocator,
 										   const dng_resolution *resolution = NULL,
 										   bool includeIPTC = false,
-										   const dng_jpeg_preview *thumbnail = NULL) const;
+										   const dng_jpeg_preview *thumbnail = NULL,
+										   uint32 numLeadingZeroBytes = 0) const;
 												   
 		// API for original EXIF metadata.
 		
@@ -521,6 +532,30 @@ class dng_metadata
 			return fBigTableIndex;
 			}
 			
+		// Routines to access image sequence info.
+
+		void SetImageSequenceInfo (const dng_image_sequence_info &info)
+			{
+			fImageSequenceInfo = info;
+			}
+
+		const dng_image_sequence_info & ImageSequenceInfo () const
+			{
+			return fImageSequenceInfo;
+			}
+		
+		// Routines to access image stats.
+
+		void SetImageStats (const dng_image_stats &stats)
+			{
+			fImageStats = stats;
+			}
+
+		const dng_image_stats & ImageStats () const
+			{
+			return fImageStats;
+			}
+		
 	};
 
 /*****************************************************************************/
@@ -570,52 +605,6 @@ const X & dng_metadata::XMP () const
 /*****************************************************************************/
 
 #endif	// qDNGUseXMP
-
-/*****************************************************************************/
-
-class dng_semantic_mask
-	{
-		
-	public:
-
-		// String identifying the semantics of this mask. Corresponds to
-		// SemanticName tag.
-
-		dng_string fName;
-
-		// String identifying the instance of this mask. Corresponds to
-		// SemanticInstanceID tag.
-
-		dng_string fInstanceID;
-
-		// XMP block. We don't use this for anything at present; just make
-		// sure we preserve it.
-
-		std::shared_ptr<const dng_memory_block> fXMP;
-
-		// The semantic mask. The origin of the image bounds is always (0,0)
-		// by convention.
-
-		std::shared_ptr<const dng_image> fMask;
-
-		// Optional MaskSubArea tag (top, left, bottom, right).
-
-		// [0]: top crop
-		// [1]: left crop
-		
-		// [2]: width full
-		// [3]: height full
-
-		uint32 fMaskSubArea [4] = { 0, 0, 0, 0 };
-
-	public:
-
-		bool IsMaskSubAreaValid () const;
-
-		void CalcMaskSubArea (dng_point &origin,
-							  dng_rect &wholeImageArea) const;
-		
-	};
 
 /*****************************************************************************/
 
@@ -860,7 +849,7 @@ class dng_negative
 		
 		mutable dng_fingerprint fNewRawImageDigest;
 
-		// Raw data unique ID.	This is an unique identifer for the actual
+		// Raw data unique ID.	This is an unique identifier for the actual
 		// raw image data in the file.	It can be used to index into caches
 		// for this data.
 		
@@ -967,6 +956,16 @@ class dng_negative
 		
 		mutable dng_fingerprint fRawJPEGImageDigest;
 		
+		// The raw lossy compressed image that we grabbed, if any.
+		
+		AutoPtr<dng_lossy_compressed_image> fRawLossyCompressedImage;
+		
+		// Keep a separate digest for the (lossy) compressed general image
+		// data, if any. This is used for JPEG XL and possibly for other lossy
+		// codecs in future.
+		
+		mutable dng_fingerprint fRawLossyCompressedImageDigest;
+		
 		// Transparency mask image, if any.
 		
 		AutoPtr<dng_image> fTransparencyMask;
@@ -975,9 +974,13 @@ class dng_negative
 		
 		AutoPtr<dng_image> fRawTransparencyMask;
 		
-		// The bit depth for the raw transparancy mask, if known.
+		// The bit depth for the raw transparency mask, if known.
 		
 		uint32 fRawTransparencyMaskBitDepth;
+		
+		// Lossy compressed transparency mask.
+		
+		AutoPtr<dng_lossy_compressed_image> fRawLossyCompressedTransparencyMask;
 		
 		// We sometimes need to keep of copy of the stage3 image before
 		// flattening the transparency.
@@ -994,6 +997,10 @@ class dng_negative
 		
 		AutoPtr<dng_image> fRawDepthMap;
 		
+		// Lossy compressed depth map.
+		
+		AutoPtr<dng_lossy_compressed_image> fRawLossyCompressedDepthMap;
+		
 		// Depth metadata.
 		
 		uint32		  fDepthFormat;
@@ -1006,6 +1013,10 @@ class dng_negative
 		
 		dng_string fEnhanceParams;
 
+		// The enhanced lossy compressed image that we grabbed, if any.
+		
+		AutoPtr<dng_lossy_compressed_image> fEnhancedLossyCompressedImage;
+		
 		// Semantic masks.
 
 		std::vector<dng_semantic_mask> fSemanticMasks;
@@ -1014,9 +1025,10 @@ class dng_negative
 
 		std::shared_ptr<const dng_gain_table_map> fProfileGainTableMap;
 
-		// RGBTables.
+		// Preferred method for lossy compression. Default value of 0
+		// indicates no preference.
 
-		std::shared_ptr<const dng_masked_rgb_tables> fMaskedRGBTables;
+		uint32 fPreferredLossyCodec = 0;
 
 	public:
 	
@@ -1080,6 +1092,20 @@ class dng_negative
 			return fMetadata.BigTableDictionary ();
 			}
 			
+		// Routines to access image sequence info.
+
+		const dng_image_sequence_info & ImageSequenceInfo () const
+			{
+			return fMetadata.ImageSequenceInfo ();
+			}
+		
+		// Routines to access image stats.
+
+		const dng_image_stats & ImageStats () const
+			{
+			return fMetadata.ImageStats ();
+			}
+		
 		#if qMetadataOnConst
 			
 		const dng_metadata &Metadata () const
@@ -1880,6 +1906,16 @@ class dng_negative
 			return fColorimetricReference;
 			}
 
+		bool IsSceneReferred () const
+			{
+			return fColorimetricReference == crSceneReferred;
+			}
+
+		bool IsOutputReferred () const
+			{
+			return !IsSceneReferred ();
+			}
+
 		// Floating point flag.
 
 		void SetFloatingPoint (bool isFloatingPoint)
@@ -1892,12 +1928,12 @@ class dng_negative
 			return fFloatingPoint;
 			}
 
-		// HDR/NDR.
+		// HDR/SDR. This SDK treats floating-point images as synonymous with
+		// HDR.
 
 		bool IsHighDynamicRange () const
 			{
-			return IsFloatingPoint () &&
-				   ColorimetricReference () == crSceneReferred;
+			return IsFloatingPoint ();
 			}
 
 		bool IsNormalDynamicRange () const
@@ -2054,9 +2090,9 @@ class dng_negative
 			
 		// Camera Profile API for profiles attached to negative:
 		
-		void AddProfile (AutoPtr<dng_camera_profile> &profile);
+		virtual void AddProfile (AutoPtr<dng_camera_profile> &profile);
 		
-		void ClearProfiles ();
+		virtual void ClearProfiles ();
 			
 		uint32 ProfileCount () const;
 		
@@ -2690,6 +2726,33 @@ class dng_negative
 			
 		void FindRawJPEGImageDigest (dng_host &host) const;
 		
+		// API for raw lossy compressed image.
+		
+		const dng_lossy_compressed_image * RawLossyCompressedImage () const;
+
+		void SetRawLossyCompressedImage (AutoPtr<dng_lossy_compressed_image> &image);
+			
+		void ClearRawLossyCompressedImage ();
+			
+		// API for RawLossyCompressedImageDigest:
+		
+		void SetRawLossyCompressedImageDigest (const dng_fingerprint &digest)
+			{
+			fRawLossyCompressedImageDigest = digest;
+			}
+			
+		void ClearRawLossyCompressedImageDigest () const
+			{
+			fRawLossyCompressedImageDigest.Clear ();
+			}
+			
+		const dng_fingerprint & RawLossyCompressedImageDigest () const
+			{
+			return fRawLossyCompressedImageDigest;
+			}
+			
+		void FindRawLossyCompressedImageDigest (dng_host &host) const;
+		
 		// Read the opcode lists.
 		
 		virtual void ReadOpcodeLists (dng_host &host,
@@ -2711,6 +2774,10 @@ class dng_negative
 		// Assign the stage 1 image.
 		
 		void SetStage1Image (AutoPtr<dng_image> &image);
+		
+		// Clear the stage 1 image.
+		
+		void ClearStage1Image ();
 		
 		// Assign the stage 2 image.
 		
@@ -2818,11 +2885,18 @@ class dng_negative
 		void SetTransparencyMask (AutoPtr<dng_image> &image,
 								  uint32 bitDepth = 0);
 		
+		void ClearTransparencyMask ();
+		
 		const dng_image * TransparencyMask () const;
 		
 		const dng_image * RawTransparencyMask () const;
 		
 		uint32 RawTransparencyMaskBitDepth () const;
+		
+		const dng_lossy_compressed_image * RawLossyCompressedTransparencyMask () const
+			{
+			return fRawLossyCompressedTransparencyMask.Get ();
+			}
 		
 		void ReadTransparencyMask (dng_host &host,
 								   dng_stream &stream,
@@ -2870,10 +2944,16 @@ class dng_negative
 			return DepthMap ();
 			}
 		
+		const dng_lossy_compressed_image * RawLossyCompressedDepthMap () const
+			{
+			return fRawLossyCompressedDepthMap.Get ();
+			}
+		
 		void ResetDepthMap ()
 			{
 			fDepthMap.Reset ();
 			fRawDepthMap.Reset ();
+			fRawLossyCompressedDepthMap.Reset ();
 			}
 
 		void ReadDepthMap (dng_host &host,
@@ -2948,6 +3028,18 @@ class dng_negative
 			{
 			fEnhanceParams.Set (s);
 			}
+		
+		// API for enhanced lossy compressed image.
+		
+		const dng_lossy_compressed_image * EnhancedLossyCompressedImage () const
+			{
+			return fEnhancedLossyCompressedImage.Get ();
+			}
+			
+		void SetEnhancedLossyCompressedImage (dng_lossy_compressed_image *image)
+			{
+			fEnhancedLossyCompressedImage.Reset (image);
+			}
 
 		// SemanticMask API:
 
@@ -2969,6 +3061,8 @@ class dng_negative
 		void ReadSemanticMasks (dng_host &host,
 								dng_stream &stream,
 								dng_info &info);
+
+		virtual void ResizeSemanticMasksToMatchStage3 (dng_host &host);
 
 		// ProfileGainTableMap API:
 
@@ -2992,27 +3086,18 @@ class dng_negative
 		void SetProfileGainTableMap
 			(AutoPtr<dng_gain_table_map> &gainTableMap);
 
-		// RGBTables API:
+		// Returns the preferred lossy compression method for this negative; 0
+		// indicates no preference.
 
-		bool HasMaskedRGBTables () const;
-
-		const dng_masked_rgb_tables & MaskedRGBTables () const;
-
-		std::shared_ptr<const dng_masked_rgb_tables> ShareMaskedRGBTables () const
+		uint32 PreferredLossyCodec () const
 			{
-			return fMaskedRGBTables;
+			return fPreferredLossyCodec;
 			}
 
-		// Gives negative shared ownership of maskedRGBTables.
-		
-		void SetMaskedRGBTables
-			(const std::shared_ptr<const dng_masked_rgb_tables> &maskedRGBTables);
-
-		// Transfer ownership of maskedRGBTables to negative. After return,
-		// maskedRGBTables will be nullptr.
-		
-		void SetMaskedRGBTables
-			(AutoPtr<dng_masked_rgb_tables> &maskedRGBTables);
+		void SetPreferredLossyCodec (uint32 method)
+			{
+			fPreferredLossyCodec = method;
+			}
 
 	protected:
 	
@@ -3062,6 +3147,8 @@ class dng_negative
 												dng_camera_profile &foundProfile) const;
 
 		void AdjustSemanticMasksForProxy (dng_host &host,
+										  dng_image_writer &writer,
+										  bool nonFullSizeProxy,
 										  const dng_rect &originalStage3Bounds,
 										  const dng_rect &defaultCropArea);
 

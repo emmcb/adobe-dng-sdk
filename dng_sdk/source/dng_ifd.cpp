@@ -161,6 +161,9 @@ dng_ifd::dng_ifd ()
 	,	fMaskedAreaCount (0)
 	
 	,	fRowInterleaveFactor (1)
+	#if qDNGSupportColumnInterleaveFactor
+	,	fColumnInterleaveFactor (1)
+	#endif
 	
 	,	fSubTileBlockRows (1)
 	,	fSubTileBlockCols (1)
@@ -491,9 +494,10 @@ bool dng_ifd::ParseTag (dng_host &host,
 						
 					char message [256];
 					
-					sprintf (message,
-							 "%s has invalid zero compression code",
-							 LookupParentCode (parentCode));
+					snprintf (message,
+							  256,
+							  "%s has invalid zero compression code",
+							  LookupParentCode (parentCode));
 							 
 					ReportWarning (message);
 								 
@@ -689,12 +693,12 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			if (tagCount <= kMaxTileInfo)
 				{
-				
+
 				for (j = 0; j < tagCount; j++)
 					{
 				
 					fTileByteCount [j] = stream.TagValue_uint64 (tagType);
-					
+
 					}
 					
 				}
@@ -713,6 +717,17 @@ bool dng_ifd::ParseTag (dng_host &host,
 							   tagType,
 							   tagCount);
 							   
+				stream.SetReadPosition (tagOffset);
+				
+				uint64 totalCount = 0ULL;
+				
+				for (j = 0; j < tagCount; j++)
+					totalCount += stream.TagValue_uint64 (tagType);
+
+				printf ("TotalByteCount %u: %llu\n",
+						(unsigned) fNewSubFileType,
+						(unsigned long long) totalCount);
+					
 				}
 				
 			#endif
@@ -967,6 +982,17 @@ bool dng_ifd::ParseTag (dng_host &host,
 							   tagType,
 							   tagCount);
 							   
+				stream.SetReadPosition (tagOffset);
+				
+				uint64 totalCount = 0ULL;
+				
+				for (j = 0; j < tagCount; j++)
+					totalCount += stream.TagValue_uint64 (tagType);
+
+				printf ("TotalByteCount %u: %llu\n",
+						(unsigned) fNewSubFileType,
+						(unsigned long long) totalCount);
+					
 				}
 				
 			#endif
@@ -2294,6 +2320,36 @@ bool dng_ifd::ParseTag (dng_host &host,
 			break;
 			
 			}
+
+		#if qDNGSupportColumnInterleaveFactor
+			
+		case tcColumnInterleaveFactor:
+			{
+			
+			CheckTagType (parentCode, tagCode, tagType, ttShort, ttLong);
+			
+			if (!CheckTagCount (parentCode, tagCode, tagCount, 1))
+				return false;
+			
+			fColumnInterleaveFactor = stream.TagValue_uint32 (tagType);
+
+			#if qDNGValidate
+						
+			if (gVerbose)
+				{
+				
+				printf ("ColumnInterleaveFactor: %u\n",
+						(unsigned) fColumnInterleaveFactor);
+				
+				}
+
+			#endif
+			
+			break;
+			
+			}
+
+		#endif	// qDNGSupportColumnInterleaveFactor
 			
 		case tcSubTileBlockSize:
 			{
@@ -2414,10 +2470,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 						
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed IFDs with NewSubFileType != PreviewImage",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed IFDs with NewSubFileType != PreviewImage",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 						 
 				ReportWarning (message);
 							 
@@ -2460,7 +2517,7 @@ bool dng_ifd::ParseTag (dng_host &host,
 			// thumbnails, previews, etc.) to support legacy DNGs that have
 			// the tag in the wrong IFD, but we'll now issue a warning.
 			// (Turn off the warning for IFD0 since we are writing it
-			// there for backward compatiblity).
+			// there for backward compatibility).
 			
 			if (parentCode != 0)
 				{
@@ -2537,10 +2594,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 						
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed IFDs with NewSubFileType != PreviewImage",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed IFDs with NewSubFileType != PreviewImage",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 						 
 				ReportWarning (message);
 							 
@@ -2583,10 +2641,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 					
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed IFDs with NewSubFileType != EnhancedImage",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed IFDs with NewSubFileType != EnhancedImage",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 					
 				ReportWarning (message);
 					
@@ -2665,7 +2724,7 @@ bool dng_ifd::ParseTag (dng_host &host,
 			// thumbnails, previews, etc.) to support legacy DNGs that have
 			// the tag in the wrong IFD, but we'll now issue a warning.
 			// (Turn off the warning for IFD0 since we are writing it
-			// there for backward compatiblity).
+			// there for backward compatibility).
 			
 			if (parentCode != 0)
 				{
@@ -2693,30 +2752,50 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			}
 
+		// ProfileGainTableMap is specified for Raw IFD.
+		// 
+		// ProfileGainTableMap2 is specified for IFD 0, but this implementation
+		// supports reading the tag from Raw IFD, too.
+
 		case tcProfileGainTableMap:
+		case tcProfileGainTableMap2:
 			{
 
 			if (!CheckTagType (parentCode, tagCode, tagType, ttUndefined))
 				return false;
-			
-			if (parentCode != 0)
+
+			if (tagCode == tcProfileGainTableMap)
+				CheckRawIFD (parentCode, tagCode, fPhotometricInterpretation);
+
+			const bool useVersion2format = (tagCode == tcProfileGainTableMap2);
+
+			std::shared_ptr<dng_gain_table_map> pgtm
+				(dng_gain_table_map::GetStream (host,
+												stream,
+												useVersion2format));
+
+			// If both PGTM and PGTM2 tags are present, then the latter
+			// supersedes the former.
+
+			if (pgtm && (useVersion2format	   ||
+						 !fProfileGainTableMap ||
+						 fProfileGainTableMap_TagVersion == 1))
 				{
 
-				CheckRawIFD (parentCode, tagCode, fPhotometricInterpretation);
-	   
-				}
+				fProfileGainTableMap = pgtm;
 
-			fProfileGainTableMap.reset (dng_gain_table_map::GetStream (host,
-																	   stream));
+				fProfileGainTableMap_TagVersion = useVersion2format ? 2 : 1;
+				
+				}
 
 			#if qDNGValidate
 
-			if (gVerbose)
+			if (pgtm && gVerbose)
 				{
 
 				dng_md5_printer printer;
 				
-				fProfileGainTableMap->AddDigest (printer);
+				pgtm->AddDigest (printer);
 
 				auto digest = printer.Result ();
 
@@ -2724,7 +2803,10 @@ bool dng_ifd::ParseTag (dng_host &host,
 
 				digest.ToUtf8HexString (str);
 
-				printf ("ProfileGainTableMap (digest): %s\n", str);
+				printf ("%s (digest): %s\n", 
+						useVersion2format ? "ProfileGainTableMap2"
+										  : "ProfileGainTableMap",
+						str);
 				
 				}
 
@@ -2732,62 +2814,12 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			if (stream.Position () > tagOffset + (uint64) tagCount)
 				{
-				
-				ThrowBadFormat ("tcProfileGainTableMap parse error");
-				
-				}
-			
-			break;
-			
-			}
 
-		case tcRGBTablesDraft:
-		case tcRGBTables:
-			{
-			
-			if (!CheckTagType (parentCode, tagCode, tagType, ttUndefined))
-				return false;
-			
-			if (parentCode != 0)
-				{
+				if (useVersion2format)
+					ThrowBadFormat ("tcProfileGainTableMap2 parse error");
 
-				CheckMainIFD (parentCode, tagCode, fNewSubFileType);
-	   
-				}
-
-			const bool isDraft = (tagCode == tcRGBTablesDraft);
-
-			fMaskedRGBTables.reset (dng_masked_rgb_tables::GetStream (host,
-																	  stream,
-																	  isDraft));
-
-			#if qDNGValidate
-
-			if (gVerbose && fMaskedRGBTables)
-				{
-
-				dng_md5_printer printer;
-				
-				fMaskedRGBTables->AddDigest (printer);
-
-				const dng_fingerprint &digest = printer.Result ();
-
-				dng_string str = digest.ToUtf8HexString ();
-
-				const char *tagName = isDraft ? "RGBTablesDraft" : "RGBTables";
-
-				printf ("%s (digest): %s\n", tagName, str.Get ());
-
-				fMaskedRGBTables->Dump ();
-				
-				}
-
-			#endif	// qDNGValidate
-			
-			if (stream.Position () > tagOffset + (uint64) tagCount)
-				{
-				
-				ThrowBadFormat ("tcRGBTables parse error");
+				else
+					ThrowBadFormat ("tcProfileGainTableMap parse error");
 				
 				}
 			
@@ -2805,10 +2837,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 					
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 					
 				ReportWarning (message);
 					
@@ -2854,10 +2887,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 					
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 					
 				ReportWarning (message);
 					
@@ -2959,10 +2993,11 @@ bool dng_ifd::ParseTag (dng_host &host,
 					
 				char message [256];
 				
-				sprintf (message,
-						 "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
-						 LookupParentCode (parentCode),
-						 LookupTagCode (parentCode, tagCode));
+				snprintf (message,
+						  256,
+						  "%s %s is not allowed in IFDs with NewSubFileType != SemanticMask",
+						  LookupParentCode (parentCode),
+						  LookupTagCode (parentCode, tagCode));
 					
 				ReportWarning (message);
 					
@@ -2994,6 +3029,27 @@ bool dng_ifd::ParseTag (dng_host &host,
 				
 			#endif	// qDNGValidate
 
+			break;
+			
+			}
+
+		case tcImageStats:
+			{
+
+			if (!CheckTagType (parentCode, tagCode, tagType, ttUndefined))
+				return false;
+			
+			CheckRawIFD (parentCode, tagCode, fPhotometricInterpretation);
+
+			fImageStats.Parse (stream);
+
+			#if qDNGValidate
+
+			if (gVerbose)
+				fImageStats.Dump ();
+				
+			#endif	// qDNGValidate
+			
 			break;
 			
 			}
@@ -3309,6 +3365,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 	bool isEnhancedIFD = (fNewSubFileType == sfEnhancedImage);
 
 	bool isMainOrEnhancedIFD = isMainIFD || isEnhancedIFD;
+
+	bool isGainMapIFD = (fNewSubFileType == sfGainMap);
 	
 	// Check NewSubFileType.
 	
@@ -3334,6 +3392,7 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		fNewSubFileType != sfPreviewDepthMap  &&
 		fNewSubFileType != sfEnhancedImage	  &&
 		fNewSubFileType != sfAltPreviewImage  &&
+		fNewSubFileType != sfGainMap		  &&
 		fNewSubFileType != sfSemanticMask)
 		{
 		
@@ -3481,6 +3540,41 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		
 		}
 
+	else if (fNewSubFileType == sfGainMap)
+		{
+		
+		if (fPhotometricInterpretation != piGainMap)
+			{
+			
+			#if qDNGValidate
+	
+			ReportError ("NewSubFileType Gain Map requires PhotometricInterpretation "
+						 "= Gain Map",
+						 LookupParentCode (parentCode));
+				
+			#endif
+				
+			return false;
+			
+			}
+
+		if (fSamplesPerPixel != 1 &&
+			fSamplesPerPixel != 3)
+			{
+			
+			#if qDNGValidate
+	
+			ReportError ("NewSubFileType requires SamplesPerPixel = 1 or 3",
+						 LookupParentCode (parentCode));
+				
+			#endif
+				
+			return false;
+			
+			}
+		
+		}
+
 	else
 		{
 		
@@ -3530,7 +3624,7 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 				break;
 				
 				}
-				
+
 			case piLinearRaw:
 				break;
 				
@@ -3612,6 +3706,25 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			}
 			
 		}
+
+	// Check ColorimetricReference.
+
+	if (isGainMapIFD &&
+		(shared.fColorimetricReference == crSceneReferred))
+		{
+		
+		#if qDNGValidate
+	
+		ReportError ("Gain Maps can only be used in output-referred images",
+					 LookupParentCode (parentCode));
+						 
+		#endif
+						 
+		return false;
+		
+		}
+
+	// Check floating-point support.
 		
 	if (isFloatingPoint)
 		{
@@ -3623,7 +3736,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			
 			#if qDNGValidate
 	
-			ReportError ("Floating point data requires PhotometricInterpretation CFA or LinearRaw or TransparencyMask",
+			ReportError ("Floating point data requires PhotometricInterpretation "
+						 "CFA or LinearRaw or TransparencyMask",
 						 LookupParentCode (parentCode));
 						 
 			#endif
@@ -3663,6 +3777,15 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			break;
 			}
 			
+		case piGainMap:
+			{
+			minSamplesPerPixel = 1;
+			maxSamplesPerPixel = 3;
+			minBitsPerSample   = 8;
+			maxBitsPerSample   = 32;
+			break;
+			}
+			
 		case piLinearRaw:
 			{
 			minSamplesPerPixel = shared.fCameraProfile.fColorPlanes;
@@ -3692,7 +3815,7 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		minBitsPerSample = 16;
 		maxBitsPerSample = 32;
 		}
-		
+
 	if (fSamplesPerPixel < minSamplesPerPixel ||
 		fSamplesPerPixel > maxSamplesPerPixel)
 		{
@@ -3854,7 +3977,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			{
 			
 			if (fPhotometricInterpretation != piLinearRaw &&
-				fPhotometricInterpretation != piPhotometricMask)
+				fPhotometricInterpretation != piPhotometricMask &&
+				fPhotometricInterpretation != piGainMap)
 				{
 				
 				#if qDNGValidate
@@ -3886,20 +4010,71 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			
 			}
 			
+		#if qDNGSupportJXL
+
+		case ccJXL:
+			{
+			
+			if (fPhotometricInterpretation != piCFA &&
+				fPhotometricInterpretation != piRGB &&
+				fPhotometricInterpretation != piDepth &&
+				fPhotometricInterpretation != piLinearRaw &&
+				fPhotometricInterpretation != piGainMap &&
+				fPhotometricInterpretation != piPhotometricMask &&
+				fPhotometricInterpretation != piTransparencyMask)
+				{
+				
+				#if qDNGValidate
+
+				ReportError ("JXL compression code requires "
+							 "PhotometricInterpretation = CFA, RGB, "
+							 "Depth, LinearRaw, PhotometricMask, or "
+							 "Transparency",
+							 LookupParentCode (parentCode));
+							 
+				#endif
+
+				return false;
+				
+				}
+			
+			if (fBitsPerSample [0] < 8 ||
+				fBitsPerSample [0] > 16)
+				{
+				
+				#if qDNGValidate
+
+				ReportError ("JXL compression is limited to 8 to 16 bits/sample",
+							 LookupParentCode (parentCode));
+							 
+				#endif
+							 
+				return false;
+						 
+				}
+				
+			break;
+			
+			}
+
+		#endif	// qDNGSupportJXL
+			
 		case ccDeflate:
 			{
 			
 			if (!isFloatingPoint &&
+				!isGainMapIFD &&
 				fBitsPerSample [0] != 32 &&
 				fPhotometricInterpretation != piTransparencyMask &&
 				fPhotometricInterpretation != piPhotometricMask &&
+				fPhotometricInterpretation != piGainMap &&
 				fPhotometricInterpretation != piDepth)
 				{
 				
 				#if qDNGValidate
 
 				ReportError ("ZIP compression is limited to floating point, 32-bit integer,"
-							 " transparency masks, semantic masks, and depth maps",
+							 " transparency masks, semantic masks, gain maps, and depth maps",
 							 LookupParentCode (parentCode));
 							 
 				#endif
@@ -4610,6 +4785,46 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			}
 		
 		}
+
+	#if qDNGSupportColumnInterleaveFactor
+		
+	// Check ColumnInterleaveFactor
+		
+	if (fColumnInterleaveFactor != 1)
+		{
+		
+		if (fColumnInterleaveFactor < 1 ||
+			fColumnInterleaveFactor > fImageWidth)
+			{
+
+			#if qDNGValidate
+
+			ReportError ("ColumnInterleaveFactor out of valid range",
+						 LookupParentCode (parentCode));
+						 
+			#endif
+						 
+			return false;
+			
+			}
+		
+		if (shared.fDNGBackwardVersion < dngVersion_1_7_0_0)
+			{
+			
+			#if qDNGValidate
+
+			ReportError ("Non-default ColumnInterleaveFactor tag not allowed in this DNG version",
+						 LookupParentCode (parentCode));
+						 
+			#endif
+						 
+			return false;
+			
+			}
+		
+		}
+
+	#endif	// qDNGSupportColumnInterleaveFactor
 		
 	// Check SubTileBlockSize
 	
@@ -5013,8 +5228,8 @@ bool dng_ifd::CanRead () const
 void dng_ifd::ReadImage (dng_host &host,
 						 dng_stream &stream,
 						 dng_image &image,
-						 dng_jpeg_image *jpegImage,
-						 dng_fingerprint *jpegDigest) const
+						 dng_lossy_compressed_image *lossyImage,
+						 dng_fingerprint *lossyDigest) const
 	{
 	
 	dng_read_image reader;
@@ -5023,8 +5238,8 @@ void dng_ifd::ReadImage (dng_host &host,
 				 *this,
 				 stream,
 				 image,
-				 jpegImage,
-				 jpegDigest);
+				 lossyImage,
+				 lossyDigest);
 					 
 	}
 			

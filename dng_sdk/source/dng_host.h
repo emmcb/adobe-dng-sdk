@@ -21,6 +21,7 @@
 #include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_errors.h"
+#include "dng_flags.h"
 #include "dng_types.h"
 #include "dng_uncopyable.h"
 
@@ -114,6 +115,11 @@ class dng_host: private dng_uncopyable
 
 		bool fPreserveStage2;
 	
+		#if qDNGSupportJXL
+		bool fPreferCompressJXL = false;
+		std::shared_ptr<const dng_jxl_encode_settings> fJXLEncodeSettings;
+		#endif
+		
 	public:
 	
 		/// Allocate a dng_host object, possiblly with custom allocator and sniffer.
@@ -420,11 +426,16 @@ class dng_host: private dng_uncopyable
 											uint32 planes,
 											uint32 pixelType);
 								 
-		/// Factory method for parsing dng_opcode based classs. Can be used to 
+		/// Factory method for parsing dng_opcode based class. Can be used to 
 		/// override opcode implementations.
 		
 		virtual dng_opcode * Make_dng_opcode (uint32 opcodeID,
 											  dng_stream &stream);
+											  
+		/// Factory method for making a dng_rgb_to_rgb_table_data based class.
+		
+		virtual dng_rgb_to_rgb_table_data *
+			Make_dng_rgb_to_rgb_table_data (const dng_rgb_table &table);
 											  
 		/// Factory method to apply a dng_opcode_list. Can be used to override
 		/// opcode list applications.
@@ -454,11 +465,40 @@ class dng_host: private dng_uncopyable
 			{
 			fPreserveStage2 = flag;
 			}
+
+		/// JXL compression API.
+
+		#if qDNGSupportJXL
+
+		virtual bool PreferCompressJXL () const
+			{
+			return fPreferCompressJXL;
+			}
+
+		void SetPreferCompressJXL (bool flag)
+			{
+			fPreferCompressJXL = flag;
+			}
+
+		void SetJXLEncodeSettings (const dng_jxl_encode_settings &settings);
+		
+		const dng_jxl_encode_settings * JXLEncodeSettings () const
+			{
+			return fJXLEncodeSettings.get ();
+			}
+
+		virtual dng_jxl_encode_settings *
+			MakeJXLEncodeSettings (const dng_negative &negative,
+								   const dng_image &image,
+								   uint32 subFileType,
+								   bool isProxy) const;
+		
+		#endif	// qDNGSupportJXL
 		
 	};
 	
 /*****************************************************************************/
 
-#endif
+#endif	//  __dng_host__
 	
 /*****************************************************************************/

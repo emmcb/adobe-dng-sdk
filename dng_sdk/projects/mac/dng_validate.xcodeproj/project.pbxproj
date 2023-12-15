@@ -7,8 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3430D68D28E71CD600F568D5 /* libjxl_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C3513328E71819004B35F8 /* libjxl_debug.a */; };
+		3430D69028E71CE200F568D5 /* libjxl_release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C3513528E71819004B35F8 /* libjxl_release.a */; };
 		344F1F781C49946700955565 /* dng_safe_arithmetic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 344F1F761C49946700955565 /* dng_safe_arithmetic.cpp */; };
 		344F1F791C49946700955565 /* dng_safe_arithmetic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 344F1F761C49946700955565 /* dng_safe_arithmetic.cpp */; };
+		347BAB4228DF7D82006A05CB /* dng_bmff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 347BAB4128DF7D82006A05CB /* dng_bmff.cpp */; };
+		347BAB4328DF7D82006A05CB /* dng_bmff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 347BAB4128DF7D82006A05CB /* dng_bmff.cpp */; };
+		347BAB4628DF7D98006A05CB /* dng_jxl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 347BAB4528DF7D98006A05CB /* dng_jxl.cpp */; };
+		347BAB4728DF7D98006A05CB /* dng_jxl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 347BAB4528DF7D98006A05CB /* dng_jxl.cpp */; };
+		34A04CAA28E740ED00F99BD7 /* libXMPCoreStatic_Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D48CBA28E736A2000B5261 /* libXMPCoreStatic_Release.a */; };
+		34A04CAB28E740F100F99BD7 /* libXMPFilesStatic_Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A04C8928E740A400F99BD7 /* libXMPFilesStatic_Release.a */; };
+		34A04CB028E7410900F99BD7 /* libXMPFilesStatic_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A04C8B28E740A400F99BD7 /* libXMPFilesStatic_Debug.a */; };
+		34A04CB128E7411200F99BD7 /* libXMPCoreStatic_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34D48CBC28E736A2000B5261 /* libXMPCoreStatic_Debug.a */; };
 		34E2339C27AC434700CA8B44 /* dng_jpeg_memory_source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34E2339A27AC434600CA8B44 /* dng_jpeg_memory_source.cpp */; };
 		34E2339D27AC434700CA8B44 /* dng_jpeg_memory_source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34E2339A27AC434600CA8B44 /* dng_jpeg_memory_source.cpp */; };
 		34E237E82757BC7B00DF6EF1 /* dng_big_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C738FAA51BEB1FED00CCC182 /* dng_big_table.cpp */; };
@@ -375,6 +385,107 @@
 		C7E7AC3D0D08463E00D5F031 /* dng_tone_curve.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3852C9FC0BD6F4E20048EA83 /* dng_tone_curve.h */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3430D68928E71CD100F568D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34E22ADD27A31CEC00CA8B44;
+			remoteInfo = jxl_debug;
+		};
+		3430D68E28E71CDE00F568D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34E22AE827A31D6E00CA8B44;
+			remoteInfo = jxl_release;
+		};
+		34A04C8628E740A400F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E7CAAB3CADE14D6C8CE893C7;
+			remoteInfo = XMPFilesStatic;
+		};
+		34A04C8828E740A400F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34D48D3D28E737AB000B5261;
+			remoteInfo = XMPFilesStatic_Release;
+		};
+		34A04C8A28E740A400F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34D48DBA28E738FC000B5261;
+			remoteInfo = XMPFilesStatic_Debug;
+		};
+		34A04C9628E740DE00F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34D48B9028E73164000B5261;
+			remoteInfo = XMPCoreStaticRelease;
+		};
+		34A04CA828E740E400F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34D48CC128E737AB000B5261;
+			remoteInfo = XMPFilesStatic_Release;
+		};
+		34A04CAC28E740F800F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34D48C0528E73511000B5261;
+			remoteInfo = XMPCoreStaticDebug;
+		};
+		34A04CAE28E740FD00F99BD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 34D48D3E28E738FC000B5261;
+			remoteInfo = XMPFilesStatic_Debug;
+		};
+		34C3513228E71819004B35F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34E22ADE27A31CEC00CA8B44;
+			remoteInfo = jxl_debug;
+		};
+		34C3513428E71819004B35F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34E22AEF27A31D6E00CA8B44;
+			remoteInfo = jxl_release;
+		};
+		34D48CB728E736A2000B5261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4FF691C6D8884AD0BC8ED658;
+			remoteInfo = XMPCoreStatic;
+		};
+		34D48CB928E736A2000B5261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34D48C0428E73164000B5261;
+			remoteInfo = XMPCoreStaticRelease;
+		};
+		34D48CBB28E736A2000B5261 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 34D48C7928E73511000B5261;
+			remoteInfo = XMPCoreStaticDebug;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		C7E7AB5C0D08416000D5F031 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -529,8 +640,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XMPFiles64.xcodeproj; path = ../../../xmp/toolkit/XMPFiles/build/CMake64_libcpp_Static/XMPFiles64.xcodeproj; sourceTree = SOURCE_ROOT; };
 		344F1F761C49946700955565 /* dng_safe_arithmetic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dng_safe_arithmetic.cpp; path = ../../source/dng_safe_arithmetic.cpp; sourceTree = "<group>"; };
 		344F1F771C49946700955565 /* dng_safe_arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dng_safe_arithmetic.h; path = ../../source/dng_safe_arithmetic.h; sourceTree = "<group>"; };
+		347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jxl.xcodeproj; path = ../../../libjxl/client_projects/mac/jxl.xcodeproj; sourceTree = SOURCE_ROOT; };
+		347BAB4028DF7D82006A05CB /* dng_bmff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dng_bmff.h; path = ../../source/dng_bmff.h; sourceTree = "<group>"; };
+		347BAB4128DF7D82006A05CB /* dng_bmff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dng_bmff.cpp; path = ../../source/dng_bmff.cpp; sourceTree = "<group>"; };
+		347BAB4428DF7D98006A05CB /* dng_jxl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dng_jxl.h; path = ../../source/dng_jxl.h; sourceTree = "<group>"; };
+		347BAB4528DF7D98006A05CB /* dng_jxl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dng_jxl.cpp; path = ../../source/dng_jxl.cpp; sourceTree = "<group>"; };
 		347D792C1CD7D5C000C28650 /* dngsdkDebug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = dngsdkDebug.xcconfig; path = xcconfig/dngsdkDebug.xcconfig; sourceTree = "<group>"; };
 		347D792D1CD7D5C000C28650 /* dngsdkFlags.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = dngsdkFlags.xcconfig; path = xcconfig/dngsdkFlags.xcconfig; sourceTree = "<group>"; };
 		347D792E1CD7D5C000C28650 /* dngsdkRelease.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = dngsdkRelease.xcconfig; path = xcconfig/dngsdkRelease.xcconfig; sourceTree = "<group>"; };
@@ -541,6 +658,7 @@
 		347D79341CD7D5C000C28650 /* ValidateDebug64.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = ValidateDebug64.xcconfig; path = xcconfig/ValidateDebug64.xcconfig; sourceTree = "<group>"; };
 		347D79361CD7D5C000C28650 /* ValidateRelease64.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = ValidateRelease64.xcconfig; path = xcconfig/ValidateRelease64.xcconfig; sourceTree = "<group>"; };
 		347D79371CD7D5C000C28650 /* xmp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = xmp.xcconfig; path = xcconfig/xmp.xcconfig; sourceTree = "<group>"; };
+		34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XMPCore64.xcodeproj; path = ../../../xmp/toolkit/XMPCore/build/CMake64_libcpp_Static/XMPCore64.xcodeproj; sourceTree = SOURCE_ROOT; };
 		34E2339A27AC434600CA8B44 /* dng_jpeg_memory_source.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dng_jpeg_memory_source.cpp; path = ../../source/dng_jpeg_memory_source.cpp; sourceTree = "<group>"; };
 		34E2339B27AC434600CA8B44 /* dng_jpeg_memory_source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dng_jpeg_memory_source.h; path = ../../source/dng_jpeg_memory_source.h; sourceTree = "<group>"; };
 		34E8842110D1371500062F22 /* dng_ref_counted_block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dng_ref_counted_block.cpp; path = ../../source/dng_ref_counted_block.cpp; sourceTree = SOURCE_ROOT; };
@@ -751,6 +869,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34A04CAB28E740F100F99BD7 /* libXMPFilesStatic_Release.a in Frameworks */,
+				34A04CAA28E740ED00F99BD7 /* libXMPCoreStatic_Release.a in Frameworks */,
+				3430D69028E71CE200F568D5 /* libjxl_release.a in Frameworks */,
 				C7E7AB5A0D08416000D5F031 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,6 +880,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34A04CB128E7411200F99BD7 /* libXMPCoreStatic_Debug.a in Frameworks */,
+				34A04CB028E7410900F99BD7 /* libXMPFilesStatic_Debug.a in Frameworks */,
+				3430D68D28E71CD600F568D5 /* libjxl_debug.a in Frameworks */,
 				C7E7ABFB0D08463E00D5F031 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -769,11 +893,14 @@
 		08FB7794FE84155DC02AAC07 /* dng_validate */ = {
 			isa = PBXGroup;
 			children = (
+				3412115528E72337005A6FF1 /* Subprojects */,
 				347D792B1CD7D5B000C28650 /* xcconfig */,
 				08FB7795FE84155DC02AAC07 /* dng_sdk */,
 				C78B948A157AE50600A4675C /* libjpeg */,
 				C7F6234708DCAA7F004E2E0C /* Frameworks */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
+				34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */,
+				3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */,
 			);
 			name = dng_validate;
 			sourceTree = "<group>";
@@ -795,6 +922,8 @@
 				C78A4B140EB0D76C00B761FA /* dng_bad_pixels.h */,
 				C738FAA51BEB1FED00CCC182 /* dng_big_table.cpp */,
 				C738FAA61BEB1FED00CCC182 /* dng_big_table.h */,
+				347BAB4128DF7D82006A05CB /* dng_bmff.cpp */,
+				347BAB4028DF7D82006A05CB /* dng_bmff.h */,
 				C7FFA57008DCA62C00743F0C /* dng_bottlenecks.cpp */,
 				C7FFA57108DCA62C00743F0C /* dng_bottlenecks.h */,
 				C7F94EF30988387A00BD9F83 /* dng_camera_profile.cpp */,
@@ -841,6 +970,8 @@
 				C7512AF21459CAD600A97398 /* dng_jpeg_image.h */,
 				34E2339A27AC434600CA8B44 /* dng_jpeg_memory_source.cpp */,
 				34E2339B27AC434600CA8B44 /* dng_jpeg_memory_source.h */,
+				347BAB4528DF7D98006A05CB /* dng_jxl.cpp */,
+				347BAB4428DF7D98006A05CB /* dng_jxl.h */,
 				C7A7DE240EB0D8A900B6A136 /* dng_lens_correction.cpp */,
 				C7A7DE250EB0D8A900B6A136 /* dng_lens_correction.h */,
 				C7FFA58A08DCA62C00743F0C /* dng_linearization_info.cpp */,
@@ -945,6 +1076,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3412115528E72337005A6FF1 /* Subprojects */ = {
+			isa = PBXGroup;
+			children = (
+				347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */,
+				34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */,
+				3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */,
+			);
+			name = Subprojects;
+			sourceTree = SOURCE_ROOT;
+		};
 		347D792B1CD7D5B000C28650 /* xcconfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +1103,35 @@
 				347D79371CD7D5C000C28650 /* xmp.xcconfig */,
 			);
 			name = xcconfig;
+			sourceTree = "<group>";
+		};
+		34A04C7728E740A300F99BD7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34A04C8728E740A400F99BD7 /* libXMPFilesStatic$(CONFIGURATION).a */,
+				34A04C8928E740A400F99BD7 /* libXMPFilesStatic_Release.a */,
+				34A04C8B28E740A400F99BD7 /* libXMPFilesStatic_Debug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34C3512E28E71819004B35F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34C3513328E71819004B35F8 /* libjxl_debug.a */,
+				34C3513528E71819004B35F8 /* libjxl_release.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		34D48CAC28E736A2000B5261 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34D48CB828E736A2000B5261 /* libXMPCoreStatic$(CONFIGURATION).a */,
+				34D48CBA28E736A2000B5261 /* libXMPCoreStatic_Release.a */,
+				34D48CBC28E736A2000B5261 /* libXMPCoreStatic_Debug.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		C78B948A157AE50600A4675C /* libjpeg */ = {
@@ -1042,6 +1212,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				34A04CA928E740E400F99BD7 /* PBXTargetDependency */,
+				34A04C9728E740DE00F99BD7 /* PBXTargetDependency */,
+				3430D68F28E71CDE00F568D5 /* PBXTargetDependency */,
 			);
 			name = "dng_validate release";
 			productInstallPath = "$(HOME)/bin";
@@ -1060,6 +1233,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				34A04CAF28E740FD00F99BD7 /* PBXTargetDependency */,
+				34A04CAD28E740F800F99BD7 /* PBXTargetDependency */,
+				3430D68A28E71CD100F568D5 /* PBXTargetDependency */,
 			);
 			name = "dng_validate debug";
 			productInstallPath = "$(HOME)/bin";
@@ -1087,6 +1263,20 @@
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* dng_validate */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 34C3512E28E71819004B35F8 /* Products */;
+					ProjectRef = 347BAB3128DF7CFC006A05CB /* jxl.xcodeproj */;
+				},
+				{
+					ProductGroup = 34D48CAC28E736A2000B5261 /* Products */;
+					ProjectRef = 34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */;
+				},
+				{
+					ProductGroup = 34A04C7728E740A300F99BD7 /* Products */;
+					ProjectRef = 3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C7E7AB1E0D08416000D5F031 /* dng_validate release */,
@@ -1094,6 +1284,67 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		34A04C8728E740A400F99BD7 /* libXMPFilesStatic$(CONFIGURATION).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "libXMPFilesStatic$(CONFIGURATION).a";
+			path = libXMPFilesStaticDebug.a;
+			remoteRef = 34A04C8628E740A400F99BD7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34A04C8928E740A400F99BD7 /* libXMPFilesStatic_Release.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXMPFilesStatic_Release.a;
+			remoteRef = 34A04C8828E740A400F99BD7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34A04C8B28E740A400F99BD7 /* libXMPFilesStatic_Debug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXMPFilesStatic_Debug.a;
+			remoteRef = 34A04C8A28E740A400F99BD7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34C3513328E71819004B35F8 /* libjxl_debug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjxl_debug.a;
+			remoteRef = 34C3513228E71819004B35F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34C3513528E71819004B35F8 /* libjxl_release.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjxl_release.a;
+			remoteRef = 34C3513428E71819004B35F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34D48CB828E736A2000B5261 /* libXMPCoreStatic$(CONFIGURATION).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			name = "libXMPCoreStatic$(CONFIGURATION).a";
+			path = libXMPCoreStaticDebug.a;
+			remoteRef = 34D48CB728E736A2000B5261 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34D48CBA28E736A2000B5261 /* libXMPCoreStatic_Release.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXMPCoreStatic_Release.a;
+			remoteRef = 34D48CB928E736A2000B5261 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34D48CBC28E736A2000B5261 /* libXMPCoreStatic_Debug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXMPCoreStatic_Debug.a;
+			remoteRef = 34D48CBB28E736A2000B5261 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C7E7AB210D08416000D5F031 /* Sources */ = {
@@ -1171,6 +1422,8 @@
 				344F1F781C49946700955565 /* dng_safe_arithmetic.cpp in Sources */,
 				C78B94A7157AF78000A4675C /* jdapistd.c in Sources */,
 				C78B94A9157AF78000A4675C /* jdarith.c in Sources */,
+				347BAB4228DF7D82006A05CB /* dng_bmff.cpp in Sources */,
+				347BAB4628DF7D98006A05CB /* dng_jxl.cpp in Sources */,
 				C78B94AB157AF78000A4675C /* jdatadst.c in Sources */,
 				C78B94AD157AF78000A4675C /* jdatasrc.c in Sources */,
 				C78B94AF157AF78000A4675C /* jdcoefct.c in Sources */,
@@ -1294,6 +1547,8 @@
 				34E237E82757BC7B00DF6EF1 /* dng_big_table.cpp in Sources */,
 				344F1F791C49946700955565 /* dng_safe_arithmetic.cpp in Sources */,
 				C78B94A8157AF78000A4675C /* jdapistd.c in Sources */,
+				347BAB4328DF7D82006A05CB /* dng_bmff.cpp in Sources */,
+				347BAB4728DF7D98006A05CB /* dng_jxl.cpp in Sources */,
 				C78B94AA157AF78000A4675C /* jdarith.c in Sources */,
 				C78B94AC157AF78000A4675C /* jdatadst.c in Sources */,
 				C78B94AE157AF78000A4675C /* jdatasrc.c in Sources */,
@@ -1343,6 +1598,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3430D68A28E71CD100F568D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jxl_debug;
+			targetProxy = 3430D68928E71CD100F568D5 /* PBXContainerItemProxy */;
+		};
+		3430D68F28E71CDE00F568D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jxl_release;
+			targetProxy = 3430D68E28E71CDE00F568D5 /* PBXContainerItemProxy */;
+		};
+		34A04C9728E740DE00F99BD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XMPCoreStaticRelease;
+			targetProxy = 34A04C9628E740DE00F99BD7 /* PBXContainerItemProxy */;
+		};
+		34A04CA928E740E400F99BD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XMPFilesStatic_Release;
+			targetProxy = 34A04CA828E740E400F99BD7 /* PBXContainerItemProxy */;
+		};
+		34A04CAD28E740F800F99BD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XMPCoreStaticDebug;
+			targetProxy = 34A04CAC28E740F800F99BD7 /* PBXContainerItemProxy */;
+		};
+		34A04CAF28E740FD00F99BD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XMPFilesStatic_Debug;
+			targetProxy = 34A04CAE28E740FD00F99BD7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C7A38512098D14F7004375CB /* Default */ = {

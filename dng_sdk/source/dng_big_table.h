@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2015-2021 Adobe Systems Incorporated
+// Copyright 2015-2023 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -15,7 +15,9 @@
 #include "dng_camera_profile.h"
 #include "dng_rect.h"
 #include "dng_safe_arithmetic.h"
+#include "dng_semantic_mask.h"
 #include "dng_tag_types.h"
+#include "dng_tag_values.h"
 
 #include <map>
 #include <memory>
@@ -124,6 +126,14 @@ class dng_big_table
 						 dng_big_table_storage &storage) const;
 
 		#endif	// qDNGUseXMP
+
+		#if qDNGValidate
+
+		// Write uncompressed data to stream; intended for debugging.
+
+		void WriteUncompressedStream (dng_stream &stream) const;
+
+		#endif	// qDNGValidate
 
 	protected:
 	
@@ -856,6 +866,63 @@ class dng_rgb_table : public dng_big_table
 
 /*****************************************************************************/
 
+// Compression info for image tables. This base class implementation uses
+// Lossless JPEG for integer data and Deflate for floating-point data.
+
+class dng_image_table_compression_info
+	{
+
+	public:
+
+		virtual ~dng_image_table_compression_info ();
+		
+		virtual uint32 Type () const
+			{
+			return 0;
+			}
+
+		virtual void Compress (dng_host &host,
+							   dng_stream &stream,
+							   const dng_image &image) const;
+		
+	};
+
+/*****************************************************************************/
+
+#if qDNGSupportJXL
+
+/*****************************************************************************/
+
+// This subclass uses JPEG XL to compress image tables.
+
+class dng_image_table_jxl_compression_info : public dng_image_table_compression_info
+	{
+
+	public:
+
+		AutoPtr<dng_jxl_encode_settings> fEncodeSettings;
+
+	public:
+
+		dng_image_table_jxl_compression_info ();
+
+		uint32 Type () const override
+			{
+			return ccJXL;
+			}
+		
+		void Compress (dng_host &host,
+					   dng_stream &stream,
+					   const dng_image &image) const override;
+		
+	};
+
+/*****************************************************************************/
+
+#endif	// qDNGSupportJXL
+
+/*****************************************************************************/
+
 class dng_image_table : public dng_big_table
 	{
 	
@@ -871,6 +938,15 @@ class dng_image_table : public dng_big_table
 	protected:
 	
 		std::shared_ptr<const dng_image> fImage;
+
+		// For lossy-compressed big table data, we store a copy of the
+		// compressed data to avoid round-trip errors.
+
+		mutable std::shared_ptr<const dng_memory_block> fCompressedData;
+
+		// Compression type -- for information/debugging purposes only.
+		
+		uint32 fCompressionType = 0;
 		
 	public:
 	
@@ -907,15 +983,28 @@ class dng_image_table : public dng_big_table
 			return fImage;
 			};
 			
-		void SetImage (const dng_image *image);
+		void SetImage (const dng_image *image,
+					   const dng_image_table_compression_info *compressionInfo = nullptr);
 
-		void SetImage (const std::shared_ptr<const dng_image> &image);
+		void SetImage (const std::shared_ptr<const dng_image> &image,
+					   const dng_image_table_compression_info *compressionInfo = nullptr);
+
+
+		uint32 CompressionType () const
+			{
+			return fCompressionType;
+			}
 
 	protected:
 
 		virtual dng_host * MakeHost () const;
 
 		virtual dng_fingerprint ComputeFingerprint () const;
+
+		// dng_image_table uses its own (internal) compression method
+		// optimized for image content, e.g., ccDeflate or ccJXL, and
+		// therefore does not use the general, external compression method
+		// provided by the base class.
 		
 		virtual bool UseCompression () const
 			{
@@ -935,6 +1024,15 @@ class dng_image_table : public dng_big_table
 		virtual void SetFlags (uint32 /* flags */)
 			{
 			}
+
+		virtual void CompressImage (const dng_image_table_compression_info &info);
+
+	protected:
+		
+		virtual void
+			PutCompressedStream (dng_stream &stream,
+								 bool forFingerprint,
+								 const dng_image_table_compression_info &info) const;
 
 	};
 	
@@ -1002,6 +1100,11 @@ class dng_masked_rgb_table: private dng_uncopyable
 		const dng_rgb_table & Table () const
 			{
 			return fTable;
+			}
+
+		uint32 PixelType () const
+			{
+			return fPixelType;
 			}
 
 		#if qDNGValidate
@@ -1093,6 +1196,92 @@ class dng_masked_rgb_tables: private dng_uncopyable
 		#if qDNGValidate
 		void Dump () const;
 		#endif
+		
+	};
+
+/*****************************************************************************/
+
+class dng_rgb_to_rgb_table_data
+	{
+
+	public:
+
+		dng_rgb_table fTable;
+
+		bool fNeedMatrix;
+
+		dng_matrix fEncodeMatrix;
+		dng_matrix fDecodeMatrix;
+		
+		AutoPtr<dng_1d_table> fEncodeTable;
+		AutoPtr<dng_1d_table> fDecodeTable;
+
+		AutoPtr<dng_1d_table> fTable1D [3];
+
+	public:
+
+		dng_rgb_to_rgb_table_data (dng_host &host,
+								   const dng_rgb_table &table);
+
+		virtual ~dng_rgb_to_rgb_table_data ();
+
+		virtual void Process_32 (dng_pixel_buffer &buffer,
+								 dng_pixel_buffer *optMaskBuffer, // may be nullptr
+								 uint32 optMaskPlane,
+								 const dng_rect &dstArea,
+								 uint32 bufferStartPlane,
+								 bool needOverrange);
+
+		void AddDigest (dng_md5_printer &printer) const;
+
+	};
+
+/*****************************************************************************/
+
+class dng_masked_rgb_table_render_data
+	{
+
+	public:
+
+		bool fUseSequentialMethod = false;
+		
+		// A vector of paired RGB tables & masks. A given RGB table is meant
+		// to be applied with the corresponding mask.
+
+		std::vector<std::pair<dng_masked_rgb_table_sptr,
+							  dng_semantic_mask> > fMaskedTables;
+
+		// A vector of RGB transform data that is precomputed. This vector has
+		// a one-to-one correspondence with fMaskedTables, above.
+
+		std::vector<dng_rgb_to_rgb_table_data_sptr> fMaskedTableData;
+
+		// Background RGB table and data. Will be left as nullptr if there is
+		// no background table.
+		
+		dng_masked_rgb_table_sptr fBackgroundTable;
+
+		AutoPtr<dng_rgb_to_rgb_table_data> fBackgroundTableData;
+
+		// In the sequential method case, if there is a background table then
+		// this is its index in the fMaskedTables vector. Otherwise this gets
+		// set to fMaskedTables.size () as it may be used in ways that require
+		// to be larger than all other table indices when there is no
+		// background table.
+
+		uint32 fBackgroundTableIndex = 0;
+
+	public:
+
+		void Initialize (const dng_negative &negative,
+						 const dng_camera_profile &profile);
+
+		bool IsNOP () const
+			{
+			return (fMaskedTables.empty () && !fBackgroundTable);
+			}
+
+		void PrepareRGBtoRGBTableData (dng_host &host);
 		
 	};
 

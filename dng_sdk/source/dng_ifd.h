@@ -207,6 +207,9 @@ class dng_ifd
 		dng_rect fMaskedArea [kMaxMaskedAreas];
 		
 		uint32 fRowInterleaveFactor;
+		#if qDNGSupportColumnInterleaveFactor
+		uint32 fColumnInterleaveFactor;
+		#endif
 		
 		uint32 fSubTileBlockRows;
 		uint32 fSubTileBlockCols;
@@ -238,6 +241,11 @@ class dng_ifd
 		uint64 fNextIFD;
 		
 		int32 fCompressionQuality;
+
+		// For JPEG XL (compression type ccJXL), use fJXLEncodeSettings
+		// instead of fCompressionQuality.
+
+		std::shared_ptr<const dng_jxl_encode_settings> fJXLEncodeSettings;
 		
 		bool fPatchFirstJPEGByte;
 
@@ -248,8 +256,10 @@ class dng_ifd
 
 		std::shared_ptr<const dng_gain_table_map> fProfileGainTableMap;
 
-		std::shared_ptr<const dng_masked_rgb_tables> fMaskedRGBTables;
+		uint32 fProfileGainTableMap_TagVersion = 1;
 
+		dng_image_stats fImageStats;
+		
 	public:
 	
 		dng_ifd ();
@@ -310,8 +320,8 @@ class dng_ifd
 		virtual void ReadImage (dng_host &host,
 								dng_stream &stream,
 								dng_image &image,
-								dng_jpeg_image *jpegImage = NULL,
-								dng_fingerprint *jpegDigest = NULL) const;
+								dng_lossy_compressed_image *lossyImage = NULL,
+								dng_fingerprint *lossyDigest = NULL) const;
 			
 	protected:
 							   

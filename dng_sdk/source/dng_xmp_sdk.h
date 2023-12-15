@@ -56,6 +56,10 @@ extern const char *XMP_NS_GPANO;
 
 extern const char *XMP_NS_REGIONS;
 
+extern const char *XMP_NS_HDRGM;
+extern const char *XMP_NS_HDR_META;
+extern const char *XMP_NS_APPLE_HDRGM;
+
 /*****************************************************************************/
 
 class dng_xmp_private;

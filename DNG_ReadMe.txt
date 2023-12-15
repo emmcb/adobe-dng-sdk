@@ -10,18 +10,45 @@ command-line utility named "dng_validate" on macOS and Windows (see
 dng_sdk/projects). These project files have been tested using the
 following compilers:
 
-macOS: Xcode 12.4 thru Xcode 13.1
+  macOS: Xcode 12.4 thru Xcode 14.2
 
-Windows: Visual Studio 2019
+  Windows: Visual Studio 2022 (17.3.5) + clang
+
+    The clang tools are available as an optional component in the
+    Visual Studio installer.
 
 Instructions to build dng_validate:
 
-1. Follow the instructions in JPEG_ReadMe.txt to download and install
-   libjpeg.
+  macOS:
 
-2. Follow the instructions in XMP_ReadMe.txt to download and install
-   external dependencies, then build XMPCore and XMPFiles.
+    - Open dng_sdk/projects/mac/dng_validate.xcodeproj
+    
+    - Select either "dng_validate debug" or "dng_validate release" 
+      from the Scheme dropdown menu
+      
+    - Build
 
-3. macOS: Open dng_sdk/projects/mac/dng_validate.xcodeproj and build.
+  Windows:
 
-   Windows: Open dng_sdk/projects/win/dng_validate.sln and build.
+    - Open dng_sdk/projects/win/dng_validate.sln
+
+    - Select "Validate Debug" or "Validate Release" from the
+      Configuration dropdown menu
+
+    - Build
+
+Dependencies:
+
+This distribution of the SDK includes the following libraries and
+additional dependencies:
+
+  libjpeg for JPEG support
+    - see JPEG_ReadMe.txt for details
+
+  libjxl for JPEG XL support
+    - see JXL_ReadMe.txt for details
+    - includes brotli and highway dependencies
+
+  XMP SDK for XMP support
+    - see XMP_ReadMe.txt for details
+    - includes boost, expat, and zlib dependencies
