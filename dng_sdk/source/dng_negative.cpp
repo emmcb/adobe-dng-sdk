@@ -7675,7 +7675,8 @@ void dng_negative::AdjustSemanticMasksForProxy (dng_host &host,
 			mask.fLossyCompressed.reset ();
 
 			}
-			
+
+		#if qDNGSupportJXL
 		if (host.PreferCompressJXL () && !mask.fLossyCompressed.get ())
 			{
 			
@@ -7691,7 +7692,8 @@ void dng_negative::AdjustSemanticMasksForProxy (dng_host &host,
 			mask.fLossyCompressed.reset (lossyImage.Release ());
 			
 			}
-			
+		#endif
+
 		}
 
 	}
