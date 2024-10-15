@@ -216,8 +216,8 @@ foreach(TARGET IN ITEMS ${TARGETS})
     target_link_libraries(${TARGET} PRIVATE ZLIB::ZLIB)
     target_include_directories(${TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${HDR_DIR}>)
     target_compile_definitions(
-        ${TARGET} PUBLIC $<$<PLATFORM_ID:Darwin>:qMacOS=1> $<$<PLATFORM_ID:Linux>:qLinux=1>
-                         $<$<PLATFORM_ID:Windows>:qWinOS=1>
+        ${TARGET} PUBLIC $<$<PLATFORM_ID:Android>:qAndroid=1> $<$<PLATFORM_ID:Darwin>:qMacOS=1>
+                         $<$<PLATFORM_ID:Linux>:qLinux=1> $<$<PLATFORM_ID:Windows>:qWinOS=1>
     )
 
     if(DNG_THREAD_SAFE)
@@ -247,4 +247,7 @@ foreach(TARGET IN ITEMS ${TARGETS})
     target_compile_definitions(${TARGET} PUBLIC qDNGSupportJXL=0)
 
     target_compile_options(${TARGET} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-stringop-overflow>)
+    if(ANDROID)
+        target_compile_options(${TARGET} PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-expansion-to-defined>)
+    endif()
 endforeach()
