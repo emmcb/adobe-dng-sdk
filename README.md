@@ -16,3 +16,18 @@ FetchContent_MakeAvailable(adobe-dng-sdk)
 
 target_link_libraries(your_target PRIVATE DNG::dng)
 ```
+
+## Building the SDK using the Docker image
+
+The SDK can be built using the provided Docker image, which includes the necessary dependencies. Additionally, the command line tool `dng-validate` can be executed using the is built and can be used to validate DNG files.
+
+```bash
+# building the docker image
+docker compose build
+
+# building the sdk
+docker compose run --rm build
+
+# running dng-validate on a DNG file, path has to be passed relative to ./images directory
+docker compose run --rm dng-validate [<parameters ...>] <dng file>
+```
