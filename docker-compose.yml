@@ -1,0 +1,30 @@
+x-shared-image: &shared-image 
+  emmcb/adobe-dng-sdk:latest
+
+services:
+  # container for building the dng sdk
+  build:
+    image: *shared-image
+    hostname: dng-sdk
+    container_name: dng-sdk-1.7
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    entrypoint: /bin/bash -c
+    working_dir: /app/build
+    command: >
+      "cmake .. -DBUILD_DNG_VALIDATE=ON -DDNG_THREAD_SAFE=ON -DDNG_WITH_JPEG=ON -DDNG_WITH_XMP=ON && make"
+  
+  # container for running the dng-validate tool
+  dng-validate:
+    image: *shared-image
+    hostname: dng-validate
+    container_name: dng-validate-1.7
+    volumes:
+      - .:/app
+      - ${IMAGE_DIR:-./images}:/images
+    working_dir: /images
+    entrypoint: /app/build/dng-validate
+    tty: true
