@@ -1,3 +1,7 @@
+#if AdobePrivate
+// (c) Copyright 1999.  Adobe Systems, Incorporated.  All rights reserved.
+//  $Id: $ 
+#endif
 #ifndef __MD5_h__
 #define __MD5_h__
 

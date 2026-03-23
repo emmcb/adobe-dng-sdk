@@ -4,8 +4,30 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//	PKG Praveen Kumar Goyal
+//	JKR Jens Krueger
+//	ADC Amandeep Chawla
+//
+// mm-dd-yy who Description of changes, most recent on top
+//
+// 02-27-13 ADC 5.6-f043 Adding support for preloading plugins based on handler flags. PDF Handler will support preloading.
+// 02-18-13 JKR 5.6-f036 [3473194] Handler version in plugin manifest file is used to resolve plugin handler conflicts
+//
+// 06-27-11 PKG 5.4-f001 Initial checkin of plugin architecture
+//
+// =================================================================================================
+#endif // AdobePrivate
 
 #ifndef _H_XMPATOMS
 #define _H_XMPATOMS
@@ -83,7 +105,14 @@ enum
 
 #define XMPAtomNull emptyStr_K
 
-typedef std::map<std::string, XMPAtom> XMPAtomsMap;
+struct StringCompare : std::binary_function<const std::string &, const std::string &, bool>
+{
+	bool operator() (const std::string & a, const std::string & b) const
+	{
+		return ( a.compare(b) < 0 );
+	}
+};
+typedef std::map<std::string, XMPAtom,			StringCompare>		XMPAtomsMap;
 
 
 /** @class ResourceParser

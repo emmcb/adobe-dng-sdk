@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<project name="xmp-script-cpp" basedir="." default="win">
+	<!-- root of the branch -->
+	<property name="root" value="${basedir}/../../../.."/>
+	<!-- includes branch specific properties -->
+	<property file="${root}/autobuild/branchbuild.properties"/>
+	<!-- includes agent specific properties -->
+	<property file="build.properties"/>
+	<property file="${root}/../../conf/cruisecontrol/agent/agentbuild.properties"/>
+	<property name="label" value="${ant.project.label}" />
+	<property name="p4.view" value="//metadata/${branchName}/...@${label}"/>
+	<!-- ***** Properties ***** -->
+	<condition 
+		property="platform" 
+		value="windows">
+		<os family="windows"/>
+	</condition>
+	
+	<condition 
+		property="platform" 
+		value="mac">
+		<os family="mac"/>
+	</condition>
+	
+	<!--decide what CPP compiler to use-->
+	<condition 
+		property="CPPCOMPILER" 
+		value="${CPPCOMPILER_V8}"
+		else="${CPPCOMPILER_V9}">
+		<equals arg1="${winCompilerDir}" arg2="vsnet8"/>
+	</condition>
+	
+	<property name="label" value="${ant.project.label}" />
+	<property name="buildversion" value="${label}" />
+	<property name="outputDir" value="${root}/${generalOutputDir}" />
+
+	
+ <!-- targets -->  
+	<target name="win" depends="init,p4sync,build-win,testSuite-win" description="complete build"/>
+	<!-- TODO mac test don't work -->
+	<target name="mac" depends="init,p4sync,build-mac,testSuite-mac" description="complete build"/>
+	
+ <!--,testSuite-win,postcheck-->
+    <target name="init" description="Init process">
+		<delete quiet="true" includeemptydirs="true">
+			<fileset dir="${outputDir}" includes="**/*"/>
+            <!--<fileset dir="${root}/xmp/toolkit/target/${platform}" includes="**/*"/>-->
+        </delete>
+		<mkdir dir="${outputDir}"/>
+    </target>
+	
+	<!-- P4 sync -->
+    <taskdef name="p4sync" classname="org.apache.tools.ant.taskdefs.optional.perforce.P4Sync" />
+    <target name="p4sync">        
+        <p4sync globalopts="-u ${p4.user} -P ${p4.passwd}" view="${p4.view}" />
+    </target>	
+
+
+	<target name="build-win" depends="init" description="Building Windows ...">
+		<exec dir="." executable="cmd" output="${outputDir}/1_build_script.log" failonerror="true">
+			<arg line="/c build_script.bat" />
+			<arg value="${CPPCOMPILER}"/>
+			<arg value="${root}/xmp/toolkit/build/${winCompilerDir}"/>
+			<arg value="${outputDir}"/>
+			<arg value="false"/> <!-- coverage -->
+		</exec>
+	</target>
+	
+	<target name="build-mac" depends="init" description="Building Mac ...">
+		<exec executable="${basedir}/build_script.sh" output="${outputDir}/1_build_script.log" failonerror="true">			
+			<arg value="${macCompilerDir}"/>
+			<arg value="${outputDir}"/>
+		</exec>
+	</target>
+  
+	<target name="testSuite-win" depends="init, build-win" description="Testing Windows ...">
+	    <exec dir="" executable="cmd" output="${outputDir}/3_test_script.log" failonerror="true">
+			<arg line="/c .\test_xmp_script.bat" />
+			<arg value="${outputDir}"/>
+	    </exec>
+		<!-- indicate successful build -->
+		<property name="success" value="true"/>	 <!-- TODO is this really needed? -->
+	</target>
+
+	<target name="testSuite-mac" depends="init, build-mac" description="Testing Macintosh ...">
+     	<exec executable="${basedir}/test_xmp_script_public.sh" output="${outputDir}/3_test_script.log" failonerror="true">
+       		<arg value="${outputDir}" /> 
+     	</exec>
+   </target>
+</project>

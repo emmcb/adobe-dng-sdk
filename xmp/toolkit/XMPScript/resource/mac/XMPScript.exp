@@ -1,0 +1,4 @@
+_ESInitialize
+_ESTerminate
+_ESGetVersion
+_ESFreeMem

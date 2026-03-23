@@ -16,7 +16,6 @@
    - Script code 28 (smEthiopic) is also used for the Inuit encoding in the Inuktitut
      system.
 */
-#if !defined(XMP_MacBuild)
 enum {
   smRoman                       = 0,
   smJapanese                    = 1,
@@ -241,10 +240,5 @@ enum {
   langAfricaans                 = 141,  /* Use langAfrikaans                                */
   langGreekPoly                 = 148   /* Use langGreekAncient*/
 };
-#else
-enum {
-    klangUnspecified               = 32767,
-    klangJapanese                  = 11
-};
-#endif
+
 #endif /* __MacScriptExtracts__ */

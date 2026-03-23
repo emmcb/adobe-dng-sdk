@@ -17,6 +17,8 @@
 
 /*****************************************************************************/
 
+#include "dng_flags.h"
+
 #include "dng_auto_ptr.h"
 #include "dng_classes.h"
 #include "dng_types.h"
@@ -24,6 +26,12 @@
 #include "dng_rational.h"
 #include "dng_uncopyable.h"
 #include "dng_utils.h"
+
+/*****************************************************************************/
+
+#ifndef qDNGStreamCheckForUnflushedStreams
+#define qDNGStreamCheckForUnflushedStreams (qDNGValidate)
+#endif
 
 /*****************************************************************************/
 
@@ -100,7 +108,20 @@ class dng_stream: private dng_uncopyable
 		virtual void DoWrite (const void *data,
 							  uint32 count,
 							  uint64 offset);
-		
+
+		#if qDNGStreamCheckForUnflushedStreams
+
+		// Call this from dtor of derived class for derived classes
+		// which allow for destruction of an UNFLUSHED writable stream.
+		// This helps with fBufferDirty check in dtor.
+
+		void DestructionOfUnflushedInstancesIsAllowed ()
+			{
+			fBufferDirty = false;
+			}
+
+		#endif
+
 	public:
 	
 		/// Construct a stream with initial data.
@@ -252,6 +273,8 @@ class dng_stream: private dng_uncopyable
 		
 		void Get (void *data, uint32 count, uint32 maxOverRead=0);
 
+		void Get (dng_fingerprint &digest);
+
 		/// Seek to a new position in stream for writing.
 		
 		void SetWritePosition (uint64 offset);
@@ -270,6 +293,24 @@ class dng_stream: private dng_uncopyable
 		/// \param count Bytes of in data.
 
 		void Put (const void *data, uint32 count);
+
+		/// Write data to stream, performing 4-byte aligned swapping if
+		/// needed. If byte-swapping is not needed, this routine is equivalent
+		/// to Put.
+		/// \param data Buffer of data to write to stream.
+		/// \param countMul4 Length of data in bytes. Must be a multiple of 4.
+
+		void Put_swap4 (const void *data,
+						uint32 countMul4);
+		
+		/// Write data to stream, performing 8-byte aligned swapping if
+		/// needed. If byte-swapping is not needed, this routine is equivalent
+		/// to Put.
+		/// \param data Buffer of data to write to stream.
+		/// \param countMul8 Length of data in bytes. Must be a multiple of 8.
+
+		void Put_swap8 (const void *data,
+						uint32 countMul8);
 
 		/// Get an unsigned 8-bit integer from stream and advance read position.
 		/// \retval One unsigned 8-bit integer.
@@ -350,7 +391,7 @@ class dng_stream: private dng_uncopyable
 		/// \exception dng_exception with fErrorCode equal to dng_error_end_of_file
 		/// if not enough data in stream.
 		
-		uint32 Get_uint32();
+		uint32 Get_uint32 ();
 
 #if !qDNGBigEndian
 		inline // ep, enable compiler inlining
@@ -406,6 +447,21 @@ class dng_stream: private dng_uncopyable
 			Put_uint8 ((uint8) x);
 			}
 
+		/// Put a Boolean as a single byte.
+
+		void Put_bool (bool x)
+			{
+			Put_uint8 (x ? 1 : 0);
+			}
+
+		/// Put a size_t as 8 bytes.
+
+		void Put_size (size_t x)
+			{
+			static_assert (sizeof (size_t) <= 8, "size_t > 8 bytes");
+			Put_uint64 (uint64 (x));
+			}
+
 		/// Get one 16-bit integer from stream and advance read position. 
 		/// Byte swap if byte swapping is turned on.
 		/// \retval One 16-bit integer.
@@ -445,7 +501,31 @@ class dng_stream: private dng_uncopyable
 			{
 			Put_uint32 ((uint32) x);
 			}
+
+		/// Put one dng_rect (as four sequential calls to Put_int32) and advance write position.
+		/// Byte swap if byte swapping is turned on.
+		/// \param x One dng_rect.
 			
+		void Put (const dng_rect &r);
+
+		void Put (const dng_rect_real64 &r);
+
+		/// Put one dng_fingerprint and advance write position.
+		/// No byte swapping.
+		/// \param x One dng_fingerprint.
+			
+		void Put (const dng_fingerprint &digest);
+
+		void Put (const dng_point &pt);
+
+		void Put (const dng_point_real64 &pt);
+
+		void Put (const dng_srational &value);
+
+		void Put (const dng_urational &value);
+
+		void Put (const dng_string &value);
+
 		/// Get one 64-bit integer from stream and advance read position. 
 		/// Byte swap if byte swapping is turned on.
 		/// \retval One 64-bit integer.

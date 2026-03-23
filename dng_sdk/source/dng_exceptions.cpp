@@ -206,13 +206,19 @@ void Throw_dng_error (dng_error_code err,
 		
 	#else
 	
+	#if !qDNGVerboseExceptions
 	(void) message;
 	(void) sub_message;
+	#endif
 	(void) silent;
 	
 	#endif
 	
+	#if qDNGVerboseExceptions
+	throw dng_exception (err, message, sub_message);
+	#else
 	throw dng_exception (err);
+	#endif
 	
 	}
 

@@ -32,6 +32,66 @@ const char * kAdobeCalibrationSignature = "com.adobe";
 
 /*****************************************************************************/
 
+const char * kProfileName_GroupPrefix = "Group: ";
+
+/*****************************************************************************/
+
+bool HasProfileGroupPrefix (const dng_string &name)
+	{
+	
+	return name.StartsWith (kProfileName_GroupPrefix, true) &&
+		   name.Length () > strlen (kProfileName_GroupPrefix);
+	
+	}
+
+/*****************************************************************************/
+
+dng_string StripProfileGroupPrefix (const dng_string &name)
+	{
+	
+	if (HasProfileGroupPrefix (name))
+		{
+		
+		dng_string result (name.Get () + strlen (kProfileName_GroupPrefix));
+		
+		return result;
+		
+		}
+	
+	return name;
+	
+	}
+
+/*****************************************************************************/
+/*****************************************************************************/
+/*****************************************************************************/
+
+void dng_camera_profile_id::AddDigest (dng_md5_printer &printer) const
+	{
+	
+	printer.ProcessPtr ("DCPI", 4);
+
+	if (Name ().NotEmpty ())
+		{
+		
+		printer.ProcessPtr (Name ().Get (),
+							Name ().Length ());
+		
+		}
+
+	if (Fingerprint ().IsValid ())
+		{
+		
+		printer.Process (fFingerprint);
+		
+		}
+	
+	}
+
+/*****************************************************************************/
+/*****************************************************************************/
+/*****************************************************************************/
+
 dng_camera_profile::dng_camera_profile ()
 
 	:	fName ()
@@ -455,6 +515,8 @@ static void FingerprintMatrix (dng_md5_printer_stream &printer,
 	
 	// Tag's Put routine doesn't write the header, only the data
 
+	// The Put routine handles endian byte swapping if needed.
+
 	tag.Put (printer);
 
 	}
@@ -502,12 +564,10 @@ dng_fingerprint dng_camera_profile::CalculateFingerprint (bool renderDataOnly) c
 	
 	DNG_ASSERT (!fWasStubbed, "CalculateFingerprint on stubbed profile");
 
-	dng_md5_printer_stream printer;
-
 	// MD5 hash is always calculated on little endian data.
 
-	printer.SetLittleEndian ();
-	
+	dng_md5_printer_le_stream printer;
+
 	// The data that we fingerprint closely matches that saved
 	// by the profile_tag_set class in dng_image_writer.cpp, with
 	// the exception of the fingerprint itself.
@@ -723,8 +783,7 @@ dng_fingerprint dng_camera_profile::CalculateFingerprint (bool renderDataOnly) c
 			
 			dng_fingerprint digest = pgtm->GetFingerprint ();
 
-			printer.Put (digest.data,
-						 uint32 (sizeof (digest.data)));
+			printer.Put (digest);
 			
 			}
 
@@ -742,8 +801,7 @@ dng_fingerprint dng_camera_profile::CalculateFingerprint (bool renderDataOnly) c
 			printer.Put ("hdr", 3);
 
 			if (range.fHintMaxOutputValue != 1.0f)
-				printer.Put (&range.fHintMaxOutputValue,
-							 uint32 (sizeof (range.fHintMaxOutputValue)));
+				printer.Put_real32 (range.fHintMaxOutputValue);
 			
 			}
 			
@@ -754,14 +812,13 @@ dng_fingerprint dng_camera_profile::CalculateFingerprint (bool renderDataOnly) c
 	if (HasMaskedRGBTables ())
 		{
 		
-		dng_md5_printer rgbTablesPrinter;
+		dng_md5_printer_le_stream rgbTablesPrinter;
 		
 		MaskedRGBTables ().AddDigest (rgbTablesPrinter);
 		
 		auto rgbTableDigest = rgbTablesPrinter.Result ();
 		
-		printer.Put (rgbTableDigest.data,
-					 uint32 (sizeof (rgbTableDigest.data)));
+		printer.Put (rgbTableDigest);
 		
 		}
 
@@ -774,18 +831,15 @@ dng_fingerprint dng_camera_profile::CalculateFingerprint (bool renderDataOnly) c
 dng_fingerprint dng_camera_profile::UniqueID () const
 	{
 
-	dng_md5_printer_stream printer;
-
 	// MD5 hash is always calculated on little endian data.
 
-	printer.SetLittleEndian ();
+	dng_md5_printer_le_stream printer;
 
 	// Start with the existing fingerprint.
  
 	dng_fingerprint fingerprint = Fingerprint ();
 	
-	printer.Put (fingerprint.data,
-				 (uint32) sizeof (fingerprint.data));
+	printer.Put (fingerprint);
 
 	// Also include the UniqueCameraModelRestriction tag.
 
@@ -1796,6 +1850,8 @@ void dng_camera_profile::SetFourColorBayer ()
 	fForwardMatrix1.Clear ();
 	fForwardMatrix2.Clear ();
 	fForwardMatrix3.Clear ();
+
+	ClearFingerprint ();
 	
 	}
 
@@ -1985,6 +2041,8 @@ void dng_camera_profile::SetProfileGainTableMap
 	{
 	
 	fProfileGainTableMap = gainTableMap;
+
+	ClearFingerprint ();
 	
 	}
 
@@ -2058,6 +2116,8 @@ void dng_camera_profile::SetMaskedRGBTables
 	{
 	
 	fMaskedRGBTables = maskedRGBTables;
+
+	ClearFingerprint ();
 	
 	}
 
@@ -2068,6 +2128,8 @@ void dng_camera_profile::SetMaskedRGBTables
 	{
 	
 	fMaskedRGBTables.reset (maskedRGBTables.Release ());
+
+	ClearFingerprint ();
 	
 	}
 
@@ -2154,6 +2216,10 @@ dng_camera_profile_metadata::dng_camera_profile_metadata
 							  int32 index)
 
 	:	fProfileID (profile.ProfileID ())
+	
+	,	fGroupName (profile.GroupName ())
+	
+	,	fHDR (profile.DynamicRangeInfo ().IsHDR ())
 
 	,	fRenderDataFingerprint (profile.RenderDataFingerprint ())
 	
@@ -2187,6 +2253,8 @@ bool dng_camera_profile_metadata::operator==
 	{
 	
 	return fProfileID			  == metadata.fProfileID			 &&
+		   fGroupName			  == metadata.fGroupName			 &&
+		   fHDR					  == metadata.fHDR					 &&
 		   fRenderDataFingerprint == metadata.fRenderDataFingerprint &&
 		   fIsLegalToEmbed		  == metadata.fIsLegalToEmbed		 &&
 		   fWasReadFromDNG		  == metadata.fWasReadFromDNG		 &&

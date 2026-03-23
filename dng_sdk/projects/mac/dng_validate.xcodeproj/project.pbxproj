@@ -899,8 +899,6 @@
 				C78B948A157AE50600A4675C /* libjpeg */,
 				C7F6234708DCAA7F004E2E0C /* Frameworks */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
-				34D48C8528E7363D000B5261 /* XMPCore64.xcodeproj */,
-				3410853D28E73A4900571DDE /* XMPFiles64.xcodeproj */,
 			);
 			name = dng_validate;
 			sourceTree = "<group>";

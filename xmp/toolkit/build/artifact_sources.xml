@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering to obtain information about what public header/sources files for the libraries of your projects need to be posted on to artifactory.
+-->
+
+<artifactory_sources>
+	<artifact artifactname="include.zip" artifactlocation = "/xmp/toolkit/public">
+		<file location="/xmp/toolkit/public/include"/>
+	</artifact>
+</artifactory_sources>

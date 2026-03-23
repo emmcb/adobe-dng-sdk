@@ -52,6 +52,10 @@ enum
 
 	sfGainMap					= 32,
 		
+	// Preview (reduced resolution) Gain Map.
+
+	sfPreviewGainMap			= sfPreviewImage + sfGainMap,
+		
 	// Preview image for non-primary settings.
 	
 	sfAltPreviewImage			= 0x10001,
@@ -170,9 +174,7 @@ enum
 	
 	ccLossyJPEG					= 34892,
 
-	#if qDNGSupportJXL
 	ccJXL						= 52546,
-	#endif
 	
 	};
 
@@ -567,10 +569,11 @@ enum
 	dngVersion_1_5_0_0			= 0x01050000,
 	dngVersion_1_6_0_0			= 0x01060000,
 	dngVersion_1_7_0_0			= 0x01070000,
+	dngVersion_1_7_1_0			= 0x01070100,
 
-	dngVersion_Current			= dngVersion_1_7_0_0,
+	dngVersion_Current			= dngVersion_1_7_1_0,
 
-	dngVersion_SaveDefault		= dngVersion_1_7_0_0,
+	dngVersion_SaveDefault		= dngVersion_1_7_1_0
 	
 	};
 

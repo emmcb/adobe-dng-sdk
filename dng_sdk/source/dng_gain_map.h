@@ -335,7 +335,7 @@ class dng_gain_table_map: private dng_uncopyable
 
 		/// Add the gain table map to the given digest printer.
 
-		void AddDigest (dng_md5_printer &printer) const;
+		void AddDigest (dng_md5_printer_stream &printer) const;
 
 		/// Fingerprint for the gain table map. Computed lazily.
 

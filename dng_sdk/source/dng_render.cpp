@@ -1505,16 +1505,24 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 								   dng_pixel_buffer &srcBuffer,
 								   dng_pixel_buffer &dstBuffer)
 	{
-	
+
+	// This method expects and requires srcBuffer and dstBuffer areas
+	// to be the same SIZE. The work for each row will be done in buffers
+	// mapping srcArea and the resulting data for each row will be
+	// translated and copied to dstArea in dstBuffer at the final step.
+
 	dng_rect srcArea = srcBuffer.fArea;
 	dng_rect dstArea = dstBuffer.fArea;
-	
-	uint32 srcCols = srcArea.W ();
+
+	DNG_REQUIRE (srcArea.Size () == dstArea.Size (), "area size mismatch");
+
+	const uint32 cols = srcArea.W ();
+	const int32 colsSigned = ConvertUint32ToInt32 (cols);
 	
 	real32 *tPtrR = fTempBuffer [threadIndex]->Buffer_real32 ();
 	
-	real32 *tPtrG = tPtrR + srcCols;
-	real32 *tPtrB = tPtrG + srcCols;
+	real32 *tPtrG = tPtrR + cols;
+	real32 *tPtrB = tPtrG + cols;
 	
 	dng_pixel_buffer maskBuffer;
 		
@@ -1552,7 +1560,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 		buffer.fPlanes	  = fNumTableTransformPlanes;
 
 		buffer.fColStep	  = 1;
-		buffer.fPlaneStep = int32 (buffer.fArea.W ());
+		buffer.fPlaneStep = ConvertUint32ToInt32 (buffer.fArea.W ());
 		buffer.fRowStep	  = SafeInt32Mult (buffer.fPlaneStep,
 										   int32 (buffer.fPlanes));
 
@@ -1595,8 +1603,8 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 
 				dng_pixel_buffer tempMaskBuffer = buffer;
 
-				tempMaskBuffer.fData = tempMaskBuffer.DirtyPixel (dstArea.t,
-																  dstArea.l,
+				tempMaskBuffer.fData = tempMaskBuffer.DirtyPixel (srcArea.t,
+																  srcArea.l,
 																  dstMaskPlane);
 
 				tempMaskBuffer.fPlanes = 1;
@@ -1624,26 +1632,24 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 			if (backgroundIndex >= 0)
 				{
 
-				const int32 cols = (int32) dstArea.W ();
-
 				const int32 mPlaneStep = buffer.PlaneStep ();
 
-				for (int32 row = dstArea.t; row < dstArea.b; row++)
+				for (int32 row = srcArea.t; row < srcArea.b; row++)
 					{
 
 					// Initialize mask pointer to first plane for this row.
 
 					const real32 *mPtr = buffer.ConstPixel_real32 (row,
-																   dstArea.l,
+																   srcArea.l,
 																   0);
 
 					// We will write the result into the background mask plane.
 
 					real32 *dPtr = buffer.DirtyPixel_real32 (row,
-															 dstArea.l,
+															 srcArea.l,
 															 backgroundIndex);
 
-					for (int32 j = 0; j < cols; j++)
+					for (int32 j = 0; j < colsSigned; j++)
 						{
 
 						real32 mSum = 0.0f;
@@ -1711,8 +1717,8 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 
 				dng_pixel_buffer tempMaskBuffer = tempRGBTablesBuffer;
 
-				tempMaskBuffer.fData = tempMaskBuffer.DirtyPixel (dstArea.t,
-																  dstArea.l,
+				tempMaskBuffer.fData = tempMaskBuffer.DirtyPixel (srcArea.t,
+																  srcArea.l,
 																  dstMaskPlane);
 
 				tempMaskBuffer.fPlanes = 1;
@@ -1725,6 +1731,39 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 			} // weighted sum method
 		
 		} // RGBTables
+
+	// Select which ProfileGainTableMap to use in row loop below.
+
+	std::shared_ptr<const dng_gain_table_map> pgtm;
+
+	// If the profile has a ProfileGainTableMap, then just use that.
+
+	const dng_camera_profile_id &profileID = fParams.CameraProfileID ();
+
+	dng_camera_profile profile;
+
+	if (fNegative.GetProfileByID (profileID, profile) &&
+		profile.HasProfileGainTableMap ())
+		{
+
+		pgtm = profile.ShareProfileGainTableMap ();
+
+		}
+
+	// Otherwise fall back to the PGTM attached to the negative itself,
+	// which corresponds to either ProfileGainTableMap2 in IFD 0 or
+	// ProfileGainTableMap in Raw IFD.
+
+	else if (fNegative.HasProfileGainTableMap ())
+		{
+
+		pgtm = fNegative.ShareProfileGainTableMap ();
+
+		}
+
+	// Compute exposureWeightGain for use inside row loop below.
+
+	const real32 exposureWeightGain = (real32) pow (2.0, fBaselineExposure);
 
 	// Process each row of the image.
 	
@@ -1744,7 +1783,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 
 				DoBaseline1DTable (sPtr,
 								   sPtr,
-								   srcCols,
+								   cols,
 								   fZeroOffsetRamp);
 					
 				}
@@ -1767,9 +1806,9 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 				// For monochrome cameras, this just requires copying
 				// the data into all three color channels.
 				
-				DoCopyBytes (sPtrA, tPtrR, srcCols * (uint32) sizeof (real32));
-				DoCopyBytes (sPtrA, tPtrG, srcCols * (uint32) sizeof (real32));
-				DoCopyBytes (sPtrA, tPtrB, srcCols * (uint32) sizeof (real32));
+				DoCopyBytes (sPtrA, tPtrR, cols * (uint32) sizeof (real32));
+				DoCopyBytes (sPtrA, tPtrG, cols * (uint32) sizeof (real32));
+				DoCopyBytes (sPtrA, tPtrB, cols * (uint32) sizeof (real32));
 				
 				}
 				
@@ -1788,7 +1827,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 										tPtrR,
 										tPtrG,
 										tPtrB,
-										srcCols,
+										cols,
 										fCameraWhite,
 										fCameraToRGB);
 					
@@ -1796,7 +1835,12 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 					
 				else
 					{
-					
+
+					// Expect 4 src planes here. This method expects and only
+					// supports fSrcPlanes being 1,3 or 4.
+
+					DNG_REQUIRE (fSrcPlanes == 4, "fSrcPlanes");
+
 					const real32 *sPtrD = sPtrC + srcBuffer.fPlaneStep;
 				
 					DoBaselineABCDtoRGB (sPtrA,
@@ -1806,7 +1850,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 										 tPtrR,
 										 tPtrG,
 										 tPtrB,
-										 srcCols,
+										 cols,
 										 fCameraWhite,
 										 fCameraToRGB);
 					
@@ -1823,7 +1867,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 										 tPtrR,
 										 tPtrG,
 										 tPtrB,
-										 srcCols,
+										 cols,
 										 *fHueSatMap.Get (),
 										 fHueSatMapEncode.Get (),
 										 fHueSatMapDecode.Get (),
@@ -1845,41 +1889,10 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 		// the correct result by effectively scaling the MapInputWeights
 		// parameter by the baseline exposure.
 
-		// Select which ProfileGainTableMap to use.
-
-		std::shared_ptr<const dng_gain_table_map> pgtm;
-
-		// If the profile has a ProfileGainTableMap, then just use that.
-
-		const dng_camera_profile_id &profileID = fParams.CameraProfileID ();
-		
-		dng_camera_profile profile;
-
-		if (fNegative.GetProfileByID (profileID, profile) &&
-			profile.HasProfileGainTableMap ())
-			{
-			
-			pgtm = profile.ShareProfileGainTableMap ();
-			
-			}
-
-		// Otherwise fall back to the PGTM attached to the negative itself,
-		// which corresponds to either ProfileGainTableMap2 in IFD 0 or
-		// ProfileGainTableMap in Raw IFD.
-
-		else if (fNegative.HasProfileGainTableMap ())
-			{
-			
-			pgtm = fNegative.ShareProfileGainTableMap ();
-			
-			}
-
 		if (pgtm)
 			{
 
 			const dng_rect activeArea = fNegative.Stage3Image ()->Bounds ();
-
-			const real32 exposureWeightGain = (real32) pow (2.0, fBaselineExposure);
 
 			DoBaselineProfileGainTableMap (tPtrR, // src
 										   tPtrG,
@@ -1887,7 +1900,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 										   tPtrR, // dst
 										   tPtrG,
 										   tPtrB,
-										   srcCols,	  // columns
+										   cols,	  // columns
 										   srcRow,	  // top of tile
 										   srcArea.l, // left of tile
 										   activeArea,
@@ -1904,19 +1917,19 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 
 			DoBaseline1DFunction (tPtrR,
 								  tPtrR,
-								  srcCols,
+								  cols,
 								  *fExposureRamp,
 								  fSupportOverrange);
 								
 			DoBaseline1DFunction (tPtrG,
 								  tPtrG,
-								  srcCols,
+								  cols,
 								  *fExposureRamp,
 								  fSupportOverrange);
 
 			DoBaseline1DFunction (tPtrB,
 								  tPtrB,
-								  srcCols,
+								  cols,
 								  *fExposureRamp,
 								  fSupportOverrange);
 
@@ -1933,7 +1946,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 								 tPtrR,
 								 tPtrG,
 								 tPtrB,
-								 srcCols,
+								 cols,
 								 *fLookTable.Get (),
 								 fLookTableEncode.Get (),
 								 fLookTableDecode.Get (),
@@ -1950,7 +1963,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 										tPtrR,
 										tPtrG,
 										tPtrB,
-										srcCols,
+										cols,
 										fToneCurve,
 										*fToneCurveSlopeExtension);
 
@@ -1961,7 +1974,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 							   tPtrR,
 							   tPtrG,
 							   tPtrB,
-							   srcCols,
+							   cols,
 							   fToneCurve);
 
 		// Apply RGBTables, if any.
@@ -1969,14 +1982,14 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 		if (fRGBTablesData)
 			{
 
-			dng_rect dstRowArea (srcRow,
+			dng_rect srcRowArea (srcRow,
 								 srcArea.l,
 								 srcRow + 1,
 								 srcArea.r);
 
 			dng_pixel_buffer buffer;
 
-			buffer.fArea	  = dstRowArea;
+			buffer.fArea	  = srcRowArea;
 
 			buffer.fPlanes	  = 3;
 
@@ -2010,14 +2023,14 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 								 tPtrG,
 								 tPtrB,
 								 dPtrG,
-								 srcCols,
+								 cols,
 								 fRGBtoFinal,
 								 fSupportOverrange);
 
 			if (fEncodeGamma.Get ())
 				DoBaseline1DTable (dPtrG,
 								   dPtrG,
-								   srcCols,
+								   cols,
 								   *fEncodeGamma);
 								
 			}
@@ -2038,7 +2051,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 								dPtrR,
 								dPtrG,
 								dPtrB,
-								srcCols,
+								cols,
 								fRGBtoFinal,
 								fSupportOverrange);
 
@@ -2047,17 +2060,17 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 			
 				DoBaseline1DTable (dPtrR,
 								   dPtrR,
-								   srcCols,
+								   cols,
 								   *fEncodeGamma);
 
 				DoBaseline1DTable (dPtrG,
 								   dPtrG,
-								   srcCols,
+								   cols,
 								   *fEncodeGamma);
 
 				DoBaseline1DTable (dPtrB,
 								   dPtrB,
-								   srcCols,
+								   cols,
 								   *fEncodeGamma);
 
 				}
@@ -2078,7 +2091,7 @@ void dng_render_task::ProcessArea (uint32 threadIndex,
 															dstArea.l,
 															dstPlane);
 					
-				for (uint32 col = 0; col < srcCols; col++)
+				for (uint32 col = 0; col < cols; col++)
 					{
 					
 					// White Matte
@@ -2184,7 +2197,7 @@ dng_image * dng_render::Render ()
 		if (Max_uint32 (dstSize.h, dstSize.v) > MaximumSize ())
 			{
 			
-			real64 ratio = fNegative.AspectRatio ();
+			real64 ratio = fNegative.BaseAspectRatio ();
 			
 			if (ratio >= 1.0)
 				{

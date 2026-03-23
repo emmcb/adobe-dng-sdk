@@ -3,14 +3,31 @@
 // All Rights Reserved.
 // NOTICE: Adobe permits you to use, modify, and distribute this file in
 // accordance with the terms of the Adobe license agreement accompanying
-// it.  
+// it. If you have received this file from a source other than Adobe,
+// then your use, modification, or distribution of it requires the prior
+// written permission of Adobe.
 // =================================================================================================
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//	SKP Sunil Kishor Pathak
+//
+// mm-dd-yy who Description of changes, most recent on top
+//
+// 07-01-13 SKP First draft.
+//
+// =================================================================================================
+#endif // AdobePrivate
 
 //SuppressSAL.h Version 1.0
 
-/* 
- * This file defines the Standard Annotation Language(SAL) symbols as empty, for non-windows platform. 
- * This file should be included in multi-platform code which uses SAL, to avoid build breaks 
+/*
+ * This file defines the Standard Annotation Language(SAL) symbols as empty, for non-windows platform.
+ * This file should be included in multi-platform code which uses SAL, to avoid build breaks
  * on non-windows platform.
  */
 
@@ -495,12 +512,12 @@
 #define _Deref_post_opt_valid_cap_(size)
 #define _Deref_post_valid_bytecap_(size)
 #define _Deref_post_opt_valid_bytecap_(size)
-                                                
+
 #define _Deref_post_valid_cap_c_(size)
 #define _Deref_post_opt_valid_cap_c_(size)
 #define _Deref_post_valid_bytecap_c_(size)
 #define _Deref_post_opt_valid_bytecap_c_(size)
-                                                
+
 #define _Deref_post_valid_cap_x_(size)
 #define _Deref_post_opt_valid_cap_x_(size)
 #define _Deref_post_valid_bytecap_x_(size)
@@ -598,13 +615,6 @@
 #define _Deref_out_z_bytecap_c_(size)
 #define _Deref_inout_z_bytecap_c_(size)
 #define _Deref_inout_z_
-
-#elif !defined(_MSC_VER) /* Not defined for mingw platform */
-
-#define _Check_return_opt_
-#define _Check_return_wat_
-
-#define _Deref_prepost_opt_z_
 
 #endif
 

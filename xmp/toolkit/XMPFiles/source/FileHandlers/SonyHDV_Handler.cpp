@@ -4,10 +4,66 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
-#define BUFFER_SIZE 255
-#define TIMECODE_SIZE 256
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//  AWL Alan Lillich
+//  SKP Sunil Kishor Pathak
+//  ADC Amandeep Chawla
+//  IJS Inder Jeet Singh
+//
+// mm-dd-yy who Description of changes, most recent on top
+//
+// 04-26-13 ADC 5.6-f054 [3526891] Read-only checks in IsMetadataWritable() API try creating temporary files if no metadata exists, instead of checking for file permissions.
+//						 [3525961] IsMetaDataWritable checks for Plugins and embedded handlers are different.
+// 04-04-13 IJS 5.6-f051 Move common I/O methods to IOUtils.
+//						 [3534631] Optimize GetAssociated Resources for RED_Handler
+// 02-13-13 ADC 5.6-f035 [3498686, 3497304] XMP GetFileModDate() is extremely slow.
+// 02-08-13 HK  5.6-f032 Rework for SonyHDV and XDCAM-EX spanning support in GetAssociatedResources() API.
+// 01-29-13 HK  5.6-f026 [3491777] Support spanning for SonyHDV GetAssociatedResources() API.
+// 01-17-13 HK  5.6-f023 Implemented GetAssociatedResources and IsMetadataWritable APIs for Sony-HDV format.
+// 10-10-12 ADC 5.5-f045 Implement the internal infrastructure for XMPFiles error notifications.
+// 10-09-12 SKP 5.5-f044 Refactored LocateMetadataFiles API.
+// 09-19-12 AWL 5.5-f033 [3211021] Fix the folder handlers complain about read-only XMP files when opening for update.
+// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
+//
+// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
+// 09-30-11 AWL 5.4-f016 Add P2 and SonyHDV support for GetFileModDate.
+//
+// 08-27-10 AWL 5.3-f007 Add comments to Host_IO.hpp, fix semantic irregularities in the code.
+// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
+// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
+// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
+//
+// 01-15-09 AWL 5.0-f020 Split handlerTemp into tempPtr and tempUI32.
+//
+// 10-13-08 AWL 4.4-f013 Remove internals of GetThumbnail.
+//
+// 04-23-08 AWL 4.2.2-f110 Integrate Sony HDV handler update from Jim Mork.
+// 04-14-08 AWL 4.2.2-f106 [1741260] Integrate updates to AVCHD, AVI, MOV, Sony HDV, and WAV.
+//
+// 03-06-08 AWL 4.2-f094 Integrate changes to the Sony HDV handler.
+// 02-22-08 AWL 4.2-f082 Fix XDCAM_CheckFormat to be case insensitive for PROAV. Remove the CUEUP.XML
+//				check from XDCAMEX_CheckFormat. Fix handerTemp leaks for all folder-oriented handlers.
+// 02-15-08 AWL 4.2-f075 Integrate more folder-oriented handler updates. Initial changes to create
+//				generic UNIX builds for XMPFiles.
+// 02-07-08 AWL 4.2-f070 Test, fix bugs, and move the advanced video handlers out of NewHandlers.
+// 02-05-08 AWL 4.2-f069 Integrate latest advanced video handlers.
+// 01-16-08 AWL 4.2-f057 Remove private parent pointer from MPEG-4, P2, SonyHDV, and XDCAM. Like all
+//				handlers they must use the parent pointer in the XMPFileHandler base class.
+// 12-31-07 AWL 4.2-f051 Add initial Sony HDV handler under NewHandlers.
+//
+// =================================================================================================
+#endif // AdobePrivate
+
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
 #include "public/include/XMP_Const.h"
@@ -291,13 +347,27 @@ static bool ReadIDXFile ( const std::string& idxPath,
 			idxFile.ReadAll ( &hdvFileBlock.mTotalFrame, 4 );
 
 			// Compose file name we expect from file contents and break out on match.
-			snprintf ( filenameBuffer, sizeof(filenameBuffer), "%02d-%02d-%02d_%02d%02d%02d",
+
+			////////////////////////////////////////////////////////////////
+			// ACR: replaced sprintf with sprintf_safe
+			#if 0
+			sprintf ( filenameBuffer, "%02d-%02d-%02d_%02d%02d%02d",
 					  hdvFileBlock.mFileNameYear + 2000,
 					  hdvFileBlock.mFileNameMonth,
 					  hdvFileBlock.mFileNameDay,
 					  hdvFileBlock.mFileNameHour,
 					  hdvFileBlock.mFileNameMinute,
 					  hdvFileBlock.mFileNameSecond );
+			#else
+			sprintf_safe ( filenameBuffer, sizeof (filenameBuffer), "%02d-%02d-%02d_%02d%02d%02d",
+					  hdvFileBlock.mFileNameYear + 2000,
+					  hdvFileBlock.mFileNameMonth,
+					  hdvFileBlock.mFileNameDay,
+					  hdvFileBlock.mFileNameHour,
+					  hdvFileBlock.mFileNameMinute,
+					  hdvFileBlock.mFileNameSecond );
+			#endif
+			////////////////////////////////////////////////////////////////
 
 			foundFileBlock = (fileDateAndTime==filenameBuffer);
 
@@ -378,16 +448,30 @@ static bool ReadIDXFile ( const std::string& idxPath,
 		// Sample size and scale.
 		if ( clipSampleScale != 0 ) {
 
-			char buffer[BUFFER_SIZE];
+			char buffer[255];
 
 			if ( digestFound || (! xmpObj->DoesPropertyExist ( kXMP_NS_DM, "startTimeScale" )) ) {
-				snprintf(buffer,BUFFER_SIZE, "%d", clipSampleScale);
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf(buffer, "%d", clipSampleScale);
+				#else
+				sprintf_safe(buffer, sizeof (buffer), "%d", clipSampleScale);
+				#endif
+				////////////////////////////////////////////////////////////////
 				xmpValue = buffer;
 				xmpObj->SetProperty ( kXMP_NS_DM, "startTimeScale", xmpValue, kXMP_DeleteExisting );
 			}
 
 			if ( digestFound || (! xmpObj->DoesPropertyExist ( kXMP_NS_DM, "startTimeSampleSize" )) ) {
-				snprintf(buffer,BUFFER_SIZE, "%d", clipSampleSize);
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf(buffer, "%d", clipSampleSize);
+				#else
+				sprintf_safe(buffer, sizeof (buffer), "%d", clipSampleSize);
+				#endif
+				////////////////////////////////////////////////////////////////
 				xmpValue = buffer;
 				xmpObj->SetProperty ( kXMP_NS_DM, "startTimeSampleSize", xmpValue, kXMP_DeleteExisting );
 			}
@@ -397,11 +481,25 @@ static bool ReadIDXFile ( const std::string& idxPath,
 				const int frameCount = (hdvFileBlock.mTotalFrame[0] << 24) + (hdvFileBlock.mTotalFrame[1] << 16) +
 									   (hdvFileBlock.mTotalFrame[2] << 8) + hdvFileBlock.mTotalFrame[3];
 
-				snprintf ( buffer,BUFFER_SIZE, "%d", frameCount );
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf ( buffer, "%d", frameCount );
+				#else
+				sprintf_safe ( buffer, sizeof (buffer), "%d", frameCount );
+				#endif
+				////////////////////////////////////////////////////////////////
 				xmpValue = buffer;
 				xmpObj->SetStructField ( kXMP_NS_DM, "duration", kXMP_NS_DM, "value", xmpValue, 0 );
 
-				snprintf ( buffer,BUFFER_SIZE, "%d/%d", clipSampleSize, clipSampleScale );
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf ( buffer, "%d/%d", clipSampleSize, clipSampleScale );
+				#else
+				sprintf_safe ( buffer, sizeof (buffer), "%d/%d", clipSampleSize, clipSampleScale );
+				#endif
+				////////////////////////////////////////////////////////////////
 				xmpValue = buffer;
 				xmpObj->SetStructField ( kXMP_NS_DM, "duration", kXMP_NS_DM, "scale", xmpValue, 0 );
 
@@ -422,8 +520,15 @@ static bool ReadIDXFile ( const std::string& idxPath,
 				const int tcHours   = ExtractTimeCodeByte ( hdvFileBlock.mStartTimeCode[3], 0x30 );
 
 				// HH:MM:SS:FF or HH;MM;SS;FF
-				char timecode[TIMECODE_SIZE];
-				snprintf ( timecode,TIMECODE_SIZE, "%02d%c%02d%c%02d%c%02d", tcHours, chDF, tcMinutes, chDF, tcSeconds, chDF, tcFrames );
+				char timecode[256];
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf ( timecode, "%02d%c%02d%c%02d%c%02d", tcHours, chDF, tcMinutes, chDF, tcSeconds, chDF, tcFrames );
+				#else
+				sprintf_safe ( timecode, sizeof (timecode), "%02d%c%02d%c%02d%c%02d", tcHours, chDF, tcMinutes, chDF, tcSeconds, chDF, tcFrames );
+				#endif
+				////////////////////////////////////////////////////////////////
 				std::string sonyTimeString = timecode;
 
 				xmpObj->GetStructField ( kXMP_NS_DM, "startTimecode", kXMP_NS_DM, "timeValue", &xmpString, 0 );
@@ -477,13 +582,26 @@ static bool ReadIDXFile ( const std::string& idxPath,
 
 				// YYYY-MM-DDThh:mm:ssZ
 				char date[256];
-				snprintf ( date,sizeof(date), "%4d-%02d-%02dT%02d:%02d:%02dZ",
+				////////////////////////////////////////////////////////////////
+				// ACR: replaced sprintf with sprintf_safe
+				#if 0
+				sprintf ( date, "%4d-%02d-%02dT%02d:%02d:%02dZ",
 						  hdvFileBlock.mFileNameYear + 2000,
 						  hdvFileBlock.mFileNameMonth,
 						  hdvFileBlock.mFileNameDay,
 						  hdvFileBlock.mFileNameHour,
 						  hdvFileBlock.mFileNameMinute,
 						  hdvFileBlock.mFileNameSecond );
+				#else
+				sprintf_safe ( date, sizeof(date), "%4d-%02d-%02dT%02d:%02d:%02dZ",
+						  hdvFileBlock.mFileNameYear + 2000,
+						  hdvFileBlock.mFileNameMonth,
+						  hdvFileBlock.mFileNameDay,
+						  hdvFileBlock.mFileNameHour,
+						  hdvFileBlock.mFileNameMinute,
+						  hdvFileBlock.mFileNameSecond );
+				#endif
+				////////////////////////////////////////////////////////////////
 
 				XMP_StringPtr xmpDate = date;
 				xmpObj->SetProperty ( kXMP_NS_XMP, "CreateDate", xmpDate, kXMP_DeleteExisting );

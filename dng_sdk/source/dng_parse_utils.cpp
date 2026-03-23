@@ -405,9 +405,7 @@ const char * LookupTagCode (uint32 parentCode,
 		{	tcOriginalRawFileDigest,			"OriginalRawFileDigest"			},
 		{	tcSubTileBlockSize,					"SubTileBlockSize"				},
 		{	tcRowInterleaveFactor,				"RowInterleaveFactor"			},
-		#if qDNGSupportColumnInterleaveFactor
 		{	tcColumnInterleaveFactor,			"ColumnInterleaveFactor"		},
-		#endif
 		{	tcProfileLookTableDims,				"ProfileLookTableDims"			},
 		{	tcProfileLookTableData,				"ProfileLookTableData"			},
 		{	tcProfileLookTableEncoding,			"ProfileLookTableEncoding"		},
@@ -437,6 +435,7 @@ const char * LookupTagCode (uint32 parentCode,
 		{	tcEnhanceParams,					"EnhanceParams"					},
 		{	tcProfileGainTableMap,				"ProfileGainTableMap"			},
 		{	tcProfileGainTableMap2,				"ProfileGainTableMap2"			},
+		{	tcC2PAManifest,						"C2PAManifest"					},
 		{	tcRGBTablesDraft,					"RGBTablesDraft"				},
 		{	tcRGBTables,						"RGBTables"						},
 		{	tcBigTableDigests,					"BigTableDigests"				},
@@ -447,6 +446,10 @@ const char * LookupTagCode (uint32 parentCode,
 		{	tcImageStats,						"ImageStats"					},
 		{	tcProfileDynamicRange,				"ProfileDynamiceRange"			},
 		{	tcProfileGroupName,					"ProfileGroupName"				},
+		{	tcJXLDistance,						"JXLDistance"					},
+		{	tcJXLEffort,						"JXLEffort"						},
+		{	tcJXLDecodeSpeed,					"JXLDecodeSpeed"				},
+		{	tcBigTableGroupIndex,				"BigTableGroupIndex"			},
 		{	tcKodakKDCPrivateIFD,				"KodakKDCPrivateIFD"			}
 		};
 
@@ -708,9 +711,7 @@ const char * LookupCompression (uint32 key)
 		{	ccPackBits,			"PackBits"		},
 		{	ccOldDeflate,		"OldDeflate"	},
 		{	ccLossyJPEG,		"Lossy JPEG"	},
-		#if qDNGSupportJXL
 		{	ccJXL,				"JXL"			}
-		#endif
 		};
 
 	const char *name = LookupName (key,
@@ -809,6 +810,8 @@ const char * LookupPhotometricInterpretation (uint32 key)
 		{	piRGBPalette,			"RGBPalette"		},
 		{	piTransparencyMask,		"TransparencyMask"	},
 		{	piDepth,				"Depth"				},
+		{	piPhotometricMask,		"PhotometricMask"	},
+		{	piGainMap,				"GainMap"			},
 		{	piCMYK,					"CMYK"				},
 		{	piYCbCr,				"YCbCr"				},
 		{	piCIELab,				"CIELab"			},
@@ -2453,7 +2456,7 @@ void DumpFingerprint (const dng_fingerprint &p)
 	
 	for (uint32 j = 0; j < 16; j++)
 		{
-		printf ("%02x", p.data [j]);
+		printf ("%02x", p.Data () [j]);
 		}
 
 	printf (">");

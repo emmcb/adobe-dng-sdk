@@ -4,8 +4,28 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//	IJS Inder Jeet Singh
+//
+// mm-dd-yy who Description of changes, most recent on top
+//
+// 10-09-12 IJS 5.5-f043 Reverting IOBuffer Changes because of perf issues in large PS files.
+// 10-03-12 IJS 5.5-f041 [3170225] No reconciliation for Date fields if the native date is invalid in PS.
+// 10-03-12 IJS 5.5-f040 Remove IOBuffer from PostScript Handler.
+// 08-28-12 IJS 5.5-f023 Added Support methods used by Post Script handler when parsing PS files.
+//
+// =================================================================================================
+#endif // AdobePrivate
 
 #include "XMPFiles/source/FormatSupport/PostScript_Support.hpp"
 #include "XMP.hpp"
@@ -265,6 +285,13 @@ bool PostScript_Support::IsValidPSFile(XMP_IO*    fileRef,XMP_FileFormat &format
 			format=kXMP_PostScriptFile;
 			//return true if no "EPSF-" is found as it is a valid PS atleast
 			if ( ! CheckBytes ( ioBuf.ptr, Uns8Ptr("EPSF-"), 5 ) ) return true;
+
+			/////////////////////////////////////////////////////////////////////////////////////
+			// Added by ACR team.
+			#if __cplusplus >= 201703L // if C++17 or later
+			[[fallthrough]]; // Use new C++ attribute to tell compiler fallthrough is intended.
+			#endif
+			/////////////////////////////////////////////////////////////////////////////////////
 
 		}//intentional fall through for further checking of unknown files
 		case kXMP_EPSFile:
@@ -1026,6 +1053,7 @@ std::string PostScript_Support::ConvertToDate(const char* inString)
 						{
 							break;
 						}
+						
 					}
 				}
 			}
@@ -1071,13 +1099,29 @@ std::string PostScript_Support::ConvertToDate(const char* inString)
 			{
 				if ( date.containsOffset )
 				{
-					snprintf(dtstr,sizeof(dtstr),"%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",date.year,date.month,date.day,
+					////////////////////////////////////////////////////////////////
+					// ACR: replaced sprintf with sprintf_safe
+					#if 0
+					sprintf(dtstr,"%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",date.year,date.month,date.day,
 							date.hours,date.minutes,date.seconds,date.offsetSign,date.offsetHour,date.offsetMin);
+					#else
+					sprintf_safe(dtstr,sizeof(dtstr),"%04d-%02d-%02dT%02d:%02d:%02d%c%02d:%02d",date.year,date.month,date.day,
+							date.hours,date.minutes,date.seconds,date.offsetSign,date.offsetHour,date.offsetMin);
+					#endif
+					////////////////////////////////////////////////////////////////
 				}
 				else
 				{
-					snprintf(dtstr,sizeof(dtstr),"%04d-%02d-%02dT%02d:%02d:%02dZ",date.year,date.month,date.day,
+					////////////////////////////////////////////////////////////////
+					// ACR: replaced sprintf with sprintf_safe
+					#if 0
+					sprintf(dtstr,"%04d-%02d-%02dT%02d:%02d:%02dZ",date.year,date.month,date.day,
 							date.hours,date.minutes,date.seconds);
+					#else
+					sprintf_safe(dtstr,sizeof(dtstr),"%04d-%02d-%02dT%02d:%02d:%02dZ",date.year,date.month,date.day,
+							date.hours,date.minutes,date.seconds);
+					#endif
+					////////////////////////////////////////////////////////////////
 				}
 				try
 				{

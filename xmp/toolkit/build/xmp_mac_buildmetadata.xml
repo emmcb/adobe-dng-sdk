@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and
+targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="mac">
+		<buildgroup name="xmp" title="XMP">
+            <dependencies>
+                <dependency name="zuid" type="external" version="zuid"/>
+                <dependency name="zlib" type="external" version="1.2.11"/>
+                <dependency name="expat" type="external" version="2.2.9"/>
+                <dependency name="REDSDK" type="external" version="7.0.3"/>
+                <dependency name="AMBSDK" type="external" version="1.2"/>
+            </dependencies>
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+			<target name="xmpcmake64_libcpp" title="xmpcmake64 using libcpp" buildtags="debug,release,asan,64,pr">
+				<compiler name="xcode 11.3" projectfilelocation="/XMP/toolkit/build/xcode11/XMPCmake.xcodeproj" env=" " options="-target XMPCMake64_libcpp -configuration Release" />
+					<files>
+						<file location="/XMP/toolkit/build/CMake64_libcpp/XMPToolkit64.xcodeproj" verify="1"/>
+					</files>
+			</target>
+			<target name="xmpcmake64_libcpp_static" title="xmpcmake64 static using libcpp" buildtags="debug,release,64, static,pr">
+				<compiler name="xcode 11.3" projectfilelocation="/XMP/toolkit/build/xcode11/XMPCmake.xcodeproj" env=" " options="-target XMPCMake64_Static_libcpp -configuration Release" />
+					<files>
+						<file location="/XMP/toolkit/build/CMake64_libcpp_Static/XMPToolkit64.xcodeproj" verify="1"/>
+					</files>
+			</target>
+			<target name="xmpdb64-mac_libcpp" title="XMPDbg64 using libcpp" buildtags="debug">
+				<compiler name="xcode 11.3" projectfilelocation="/xmp/toolkit/build/CMake64_libcpp/XMPToolkit64.xcodeproj" env=" " options="-target ALL_BUILD -configuration Debug"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework/Versions/A/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMP.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework/Versions/A/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPFiles.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework.dSYM/Contents/Resources/DWARF/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework/Versions/A/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPScript.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework/Versions/A/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/AdobeXMPCompareAndMerge.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi.dSYM/Contents/Resources/DWARF/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/Versions/A/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/MXF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi.dSYM/Contents/Resources/DWARF/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/A/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/PDF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi.dSYM/Contents/Resources/DWARF/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/Versions/A/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/RED_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/REDR3D.dylib" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/Versions/A/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MOVOEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/Versions/A/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/debug/MP4OEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="ARRI_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi.dSYM/Contents/Resources/DWARF/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Versions/A/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/ARRI_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/libArriMetadataContainer.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/libArriMetadataExrIo.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/debug/libArriMetadataXmpIo.dylib" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel64-mac_libcpp" title="XMPRel64 using libcpp" buildtags="release,pr">
+				<compiler name="xcode 11.3" projectfilelocation="/xmp/toolkit/build/CMake64_libcpp/XMPToolkit64.xcodeproj" env=" " options="-target ALL_BUILD -configuration Release"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/Versions/A/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMP.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/Versions/A/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPFiles.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework.dSYM/Contents/Resources/DWARF/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/Versions/A/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPScript.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/Versions/A/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/AdobeXMPCompareAndMerge.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi.dSYM/Contents/Resources/DWARF/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Versions/A/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/MXF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi.dSYM/Contents/Resources/DWARF/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A" verify="1" />
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/A" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/A/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/PDF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi.dSYM/Contents/Resources/DWARF/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Versions/A" verify="1" />
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Versions/A/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/RED_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/REDR3D.dylib" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/Versions/A/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MOVOEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/Versions/A/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp/release/MP4OEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="ARRI_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release">		
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi.dSYM/Contents/Resources/DWARF/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Versions/A/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/ARRI_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/libArriMetadataContainer.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/libArriMetadataExrIo.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp/release/libArriMetadataXmpIo.dylib" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel64-mac_libcpp_asan" title="XMPRel64 using libcpp asan" buildtags="asan">
+				<compiler name="xcode 11.3" projectfilelocation="/xmp/toolkit/build/CMake64_libcpp/XMPToolkit64.xcodeproj" env=" " options="-target ALL_BUILD -configuration Release"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/Versions/A/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMP.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/Versions/A/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPFiles.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework.dSYM/Contents/Resources/DWARF/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/Versions/A/AdobeXMPScript" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPScript.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/Versions/A" verify="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/Versions/A/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp_asan/release/AdobeXMPCompareAndMerge.framework/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi.dSYM/Contents/Resources/DWARF/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Versions/A/MXF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/MXF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi.dSYM/Contents/Resources/DWARF/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A" verify="1" />
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/PDF_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/A" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/A/Resources/MiniPDFL.framework/Versions/A/MiniPDFL" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/PDF_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi.dSYM/Contents/Resources/DWARF/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Versions/A" verify="1" />
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Versions/A/RED_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/RED_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/REDR3D.dylib" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/Versions/A/MOVOEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MOVOEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi.dSYM/Contents/Resources/DWARF/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/Versions/A/MP4OEM_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/macintosh/intel_64_libcpp_asan/release/MP4OEM_Handler.xpi/Versions/Current" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="ARRI_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi.dSYM/Contents/Resources/DWARF/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi" verify="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Resources" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Versions/A/ARRI_Handler" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Versions/A/Resources/MODULE_IDENTIFIER.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Versions/A/Resources/XMPPLUGINUIDS.txt" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Versions/A/Resources/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/ARRI_Handler.xpi/Versions/Current" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/libArriMetadataContainer.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/libArriMetadataExrIo.dylib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/macintosh/intel_64_libcpp_asan/release/libArriMetadataXmpIo.dylib" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb64-mac_libcpp_static" title="XMPDbg64 static using libcpp" buildtags="debug, static">
+				<compiler name="xcode 11.3" projectfilelocation="/xmp/toolkit/build/CMake64_libcpp_Static/XMPToolkit64.xcodeproj" env=" " options="-target ALL_BUILD -configuration Debug"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/libXMPCoreStaticDebug.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/debug/libXMPFilesStaticDebug.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel64-mac_libcpp_static" title="XMPRel64 static using libcpp" buildtags="release, static,pr">
+				<compiler name="xcode 11.3" projectfilelocation="/xmp/toolkit/build/CMake64_libcpp_Static/XMPToolkit64.xcodeproj" env=" " options="-target ALL_BUILD -configuration Release"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release">
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/libXMPCoreStaticRelease.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/macintosh/intel_64_libcpp/release/libXMPFilesStaticRelease.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+		</buildgroup>
+	</platform>
+</buildmetadata>

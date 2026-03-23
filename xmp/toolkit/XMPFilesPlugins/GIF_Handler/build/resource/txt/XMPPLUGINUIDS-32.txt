@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PluginResource Architecture="x86">
+	<Handler
+		Name="adobe.coretech.xmp.gif"
+		Version="1.0.0"
+		HandlerType="NormalHandler"
+		>
+			<!-- only GIF89a supports embedding of XMP -->
+			<CheckFormat Offset="0" Length="6" ByteSeq="GIF89a"/>
+			<Extensions>
+				<Extension Name="gif" />
+			</Extensions>
+			<FormatIDs>
+				<FormatID Name="GIF " />
+			</FormatIDs>
+			<HandlerFlags>
+				<HandlerFlag Name="kXMPFiles_CanInjectXMP" />
+				<HandlerFlag Name="kXMPFiles_CanExpand" />
+				<HandlerFlag Name="kXMPFiles_CanRewrite" />
+				<HandlerFlag Name="kXMPFiles_PrefersInPlace" />
+				<HandlerFlag Name="kXMPFiles_AllowsOnlyXMP" />
+				<HandlerFlag Name="kXMPFiles_ReturnsRawPacket" />
+				<HandlerFlag Name="kXMPFiles_AllowsSafeUpdate" />
+			</HandlerFlags>
+			<SerializeOptions>
+				<SerializeOption Name="kXMP_UseCompactFormat" />
+				<SerializeOption Name="kXMP_OmitPacketWrapper"/>
+			</SerializeOptions>
+	</Handler>
+</PluginResource>

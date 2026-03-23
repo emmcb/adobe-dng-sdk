@@ -588,18 +588,18 @@ uint32 dng_gain_table_map::PutStreamSize () const
 
 /*****************************************************************************/
 
-void dng_gain_table_map::AddDigest (dng_md5_printer &printer) const
+void dng_gain_table_map::AddDigest (dng_md5_printer_stream &printer) const
 	{
 
 	if (SupportsVersion1 ())
-		printer.Process ("ProfileGainTableMap", 19);
+		printer.ProcessPtr ("ProfileGainTableMap", 19);
 
 	else
-		printer.Process ("ProfileGainTableMap2", 20);
+		printer.ProcessPtr ("ProfileGainTableMap2", 20);
 		
 	EnsureFingerprint ();
 
-	printer.Process (fFingerprint.data, dng_fingerprint::kDNGFingerprintSize);
+	printer.Process (fFingerprint);
 
 	}
 
@@ -611,7 +611,7 @@ void dng_gain_table_map::EnsureFingerprint () const
 	if (fFingerprint.IsNull ())
 		{
 
-		dng_md5_printer_stream stream;
+		dng_md5_printer_le_stream stream;
 
 		PutStream (stream);
 
@@ -1306,7 +1306,7 @@ void dng_opcode_GainMap::ProcessArea (dng_negative &negative,
 									  const dng_rect &imageBounds)
 	{
 
-	dng_rect overlap = fAreaSpec.ScaledOverlap (dstArea);
+	const dng_rect overlap = fAreaSpec.ScaledOverlap (dstArea);
 	
 	if (overlap.NotEmpty ())
 		{
@@ -1323,17 +1323,17 @@ void dng_opcode_GainMap::ProcessArea (dng_negative &negative,
 			
 			blackOffset2 = ((real32) blackLevel) / 65535.0f;
 			blackScale2	 = 1.0f - blackOffset2;
-			blackScale1	 = 1.0f / blackScale2;
+			blackScale1	 = (blackScale2 != 0.0) ? 1.0f / blackScale2 : 0.0;
 			blackOffset1 = 1.0f - blackScale1;
 			
 			}
 		
-		uint32 cols = overlap.W ();
-		
-		uint32 colPitch = fAreaSpec.ColPitch ();
-		
-		colPitch = Min_uint32 (colPitch, cols);
-		
+		const uint32 rowPitch = Min_uint32 (fAreaSpec.RowPitch (), overlap.H ());
+		const uint32 colPitch = Min_uint32 (fAreaSpec.ColPitch (), overlap.W ());
+
+		const uint32 rows = (overlap.H () + rowPitch - 1) / rowPitch;
+		const uint32 cols = (overlap.W () + colPitch - 1) / colPitch;
+
 		for (uint32 plane = fAreaSpec.Plane ();
 			 plane < fAreaSpec.Plane () + fAreaSpec.Planes () &&
 			 plane < buffer.Planes ();
@@ -1341,8 +1341,10 @@ void dng_opcode_GainMap::ProcessArea (dng_negative &negative,
 			{
 			
 			uint32 mapPlane = Min_uint32 (plane, fGainMap->Planes () - 1);
-			
-			for (int32 row = overlap.t; row < overlap.b; row += fAreaSpec.RowPitch ())
+
+			int32 row = overlap.t;
+
+			for (uint32 rowIdx = 0; rowIdx < rows; rowIdx++)
 				{
 				
 				real32 *dPtr = buffer.DirtyPixel_real32 (row, overlap.l, plane);
@@ -1355,17 +1357,19 @@ void dng_opcode_GainMap::ProcessArea (dng_negative &negative,
 			  
 				if (blackLevel != 0)
 					{
-					
-					for (uint32 col = 0; col < cols; col += colPitch)
+
+					for (uint32 colIdx = 0, col = 0; colIdx < cols; colIdx++)
 						{
 
 						dPtr [col] = dPtr [col] * blackScale1 + blackOffset1;
 								
+						col += colPitch;
+
 						}
 						
 					}
 					
-				for (uint32 col = 0; col < cols; col += colPitch)
+				for (uint32 colIdx = 0, col = 0; colIdx < cols; colIdx++)
 					{
 					
 					real32 gain = interp.Interpolate ();
@@ -1377,25 +1381,31 @@ void dng_opcode_GainMap::ProcessArea (dng_negative &negative,
 						interp.Increment ();
 						}
 					
+					col += colPitch;
+
 					}
 				
 				if (blackLevel != 0)
 					{
 					
-					for (uint32 col = 0; col < cols; col += colPitch)
+					for (uint32 colIdx = 0, col = 0; colIdx < cols; colIdx++)
 						{
 
 						dPtr [col] = dPtr [col] * blackScale2 + blackOffset2;
 							
+						col += colPitch;
+
 						}
 						
 					}
-					
-				}
+
+				row += rowPitch;
+
+				} // rows
 			
-			}
+			} // planes
 		
-		}
+		} // overlap not empty
 
 	}
 	

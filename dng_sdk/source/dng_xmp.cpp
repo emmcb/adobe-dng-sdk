@@ -5133,6 +5133,54 @@ void dng_xmp::DocOpsUpdateMetadata (const char *srcMIME)
 
 /*****************************************************************************/
 
+dng_string dng_xmp::GetProvenance () const
+	{
+
+	dng_string s;
+
+	if (GetString (XMP_NS_DC_TERMS, "provenance", s))
+		{
+
+		return s;
+
+		}
+
+	return dng_string ();
+
+	}
+
+/*****************************************************************************/
+
+void dng_xmp::SetProvenance (const char *s)
+	{
+
+	if (s && s [0])
+		{
+
+		dng_string ss;
+
+		ss.Set (s);
+
+		SetString (XMP_NS_DC_TERMS, "provenance", ss);
+
+		}
+
+	else
+		{
+
+		if (Exists (XMP_NS_DC_TERMS, "provenance"))
+			{
+
+			Remove (XMP_NS_DC_TERMS, "provenance");
+
+			}
+
+		}
+
+	}
+
+/*****************************************************************************/
+
 #endif	// qDNGUseXMP
 
 /*****************************************************************************/

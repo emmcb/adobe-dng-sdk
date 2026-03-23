@@ -4,8 +4,35 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//  AWL Alan Lillich
+//	JEH	Joerg Ehrlich
+//
+// mm-dd-yy who Description of changes, most recent first.
+//
+// 03-13-14 IJS 5.6-f097 Fix the break after 5.6-f096.
+// 01-16-12	AWL	5.5-f006 [2980767] Improve sidecar file update for disk full situations.
+// 01-16-12	JEH	5.5-f004 [3081444] Fix SplitLeafName to also accept paths that have a trailing slash.
+//
+// 10-27-11 AWL 5.4-f030 [3007461] Improve performance of GetFileModDate.
+//
+// 08-26-10 AWL 5.3-f006 Move the folder info functions into the Host_IO namespace.
+// 08-19-10 AWL 5.3-f004 Move the seek mode constants to XMP_Const.
+// 08-19-10 AWL 5.3-f003 Remove all use of the LFA_* names.
+// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
+//
+// =================================================================================================
+#endif	// AdobePrivate
 
 #include "public/include/XMP_Environment.h"	// ! XMP_Environment.h must be the first included header.
 
@@ -38,13 +65,17 @@ void XIO::SplitLeafName ( std::string * path, std::string * leafName )
 {
 	size_t dirPos = path->size();
 	// Return if path is empty or just the slash
-	if ( dirPos == 0 || (dirPos == 1 && (*path)[dirPos-1] == kDirChar) ) 
+	if ( dirPos == 0 || (dirPos == 1 && (*path)[dirPos-1] == kDirChar) )
 	{
 		leafName->erase();
 		path->erase();
 		return;
 	}
-
+	else if ( dirPos == 1  )
+	{
+		leafName->erase();
+		return;
+	}
 	// Remove trailing slashes
 	--dirPos;
 #if XMP_WinBuild
@@ -54,7 +85,6 @@ void XIO::SplitLeafName ( std::string * path, std::string * leafName )
 	{
 		path->erase(dirPos);
 	}
-
 	// Search next slash
 	for ( --dirPos; dirPos > 0; --dirPos ) {
 		#if XMP_WinBuild
@@ -62,7 +92,6 @@ void XIO::SplitLeafName ( std::string * path, std::string * leafName )
 		#endif
 		if ( (*path)[dirPos] == kDirChar ) break;
 	}
-
 	if ( (*path)[dirPos] == kDirChar ) {
 		leafName->assign ( &(*path)[dirPos+1] );
 		path->erase ( dirPos );
@@ -70,7 +99,6 @@ void XIO::SplitLeafName ( std::string * path, std::string * leafName )
 		leafName->erase();
 		leafName->swap ( *path );
 	}
-
 }	// XIO::SplitLeafName
 
 // =================================================================================================

@@ -1,0 +1,4 @@
+
+// Release.xcconfig for XMPFiles
+
+#include "Common.xcconfig"

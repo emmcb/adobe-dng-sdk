@@ -1,0 +1,49 @@
+<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about=""
+            xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+         <xmp:Array1>
+            <rdf:Bag>
+               <rdf:li>one</rdf:li>
+               <rdf:li>two</rdf:li>
+               <rdf:li>3, four</rdf:li>
+               <rdf:li>five; 6</rdf:li>
+            </rdf:Bag>
+         </xmp:Array1>
+         <xmp:Array2-1>
+            <rdf:Bag>
+               <rdf:li>one</rdf:li>
+               <rdf:li>two</rdf:li>
+               <rdf:li>3, four</rdf:li>
+               <rdf:li>five; 6</rdf:li>
+            </rdf:Bag>
+         </xmp:Array2-1>
+         <xmp:Array2-2>
+            <rdf:Bag>
+               <rdf:li>one</rdf:li>
+               <rdf:li>two</rdf:li>
+               <rdf:li>3, four</rdf:li>
+               <rdf:li>five; 6</rdf:li>
+            </rdf:Bag>
+         </xmp:Array2-2>
+         <xmp:Array3-1>
+            <rdf:Seq>
+               <rdf:li>one</rdf:li>
+               <rdf:li>two</rdf:li>
+               <rdf:li>3, four</rdf:li>
+               <rdf:li>five; 6</rdf:li>
+            </rdf:Seq>
+         </xmp:Array3-1>
+         <xmp:Array3-2>
+            <rdf:Seq>
+               <rdf:li>one</rdf:li>
+               <rdf:li>two</rdf:li>
+               <rdf:li>3, four</rdf:li>
+               <rdf:li>five; 6</rdf:li>
+            </rdf:Seq>
+         </xmp:Array3-2>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end="w"?>

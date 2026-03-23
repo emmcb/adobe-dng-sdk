@@ -459,6 +459,12 @@ void dng_linearize_plane::Process (const dng_rect &srcTile)
 	// Process tile.
 	
 	dng_rect dstTile = srcTile - fActiveArea.TL ();
+
+	DNG_REQUIRE ((fSrcImage.Bounds () & srcTile) == srcTile,
+				 "Invalid srcTile in dng_linearize_plane::Process");
+		
+	DNG_REQUIRE ((fDstImage.Bounds () & dstTile) == dstTile,
+				 "Invalid dstTile in dng_linearize_plane::Process");
 		
 	dng_const_tile_buffer srcBuffer (fSrcImage, srcTile);
 	dng_dirty_tile_buffer dstBuffer (fDstImage, dstTile);
@@ -1452,7 +1458,49 @@ real64 dng_linearization_info::MaxBlackLevel (uint32 plane) const
 	return maxBlack;
 		
 	}
-				
+
+/*****************************************************************************/
+
+uint16 dng_linearization_info::Stage3BlackLevel (dng_negative &negative,
+												 uint32 numPlanes) const
+	{
+
+	real64 zeroFract = 0.0;
+
+	for (uint32 plane = 0; plane < numPlanes; plane++)
+		{
+
+		real64 maxBlackLevel = MaxBlackLevel (plane);
+		real64	  whiteLevel = fWhiteLevel [plane];
+
+		if (maxBlackLevel > 0.0 && maxBlackLevel < whiteLevel)
+			{
+
+			zeroFract = Max_real64 (zeroFract, maxBlackLevel / whiteLevel);
+
+			}
+
+		}
+
+	zeroFract = Min_real64 (zeroFract, kMaxStage3BlackLevelNormalized);
+
+	uint16 dstBlackLevel = (uint16) Round_uint32 (65535.0 * zeroFract);
+
+	if (negative.GetMosaicInfo ())
+		{
+
+		// If we have a mosaic image that supports non-zero black levels,
+		// enforce a minimum black level to give the demosaic algorithms
+		// some "footroom".
+
+		dstBlackLevel = (uint16) Max_uint32 (dstBlackLevel, 0x0404);
+
+		}
+	
+	return dstBlackLevel;
+
+	}
+
 /*****************************************************************************/
 
 void dng_linearization_info::Linearize (dng_host &host,
@@ -1468,37 +1516,8 @@ void dng_linearization_info::Linearize (dng_host &host,
 		dstImage.PixelType () == ttShort)
 		{
 		
-		real64 zeroFract = 0.0;
-		
-		for (uint32 plane = 0; plane < srcImage.Planes (); plane++)
-			{
-			
-			real64 maxBlackLevel = MaxBlackLevel (plane);
-			real64	  whiteLevel = fWhiteLevel	 [plane];
-			
-			if (maxBlackLevel > 0.0 && maxBlackLevel < whiteLevel)
-				{
-				
-				zeroFract = Max_real64 (zeroFract, maxBlackLevel / whiteLevel);
-				
-				}
-			
-			}
-
-		zeroFract = Min_real64 (zeroFract, kMaxStage3BlackLevelNormalized);
-		
-		uint16 dstBlackLevel = (uint16) Round_uint32 (65535.0 * zeroFract);
-		
-		if (negative.GetMosaicInfo ())
-			{
-			
-			// If we have a mosaic image that supports non-zero black levels,
-			// enforce a minimum black level to give the demosaic algorithms
-			// some "footroom".
-			
-			dstBlackLevel = (uint16) Max_uint32 (dstBlackLevel, 0x0404);
-			
-			}
+		uint16 dstBlackLevel = Stage3BlackLevel (negative,
+												 srcImage.Planes ());
 			
 		negative.SetStage3BlackLevel (dstBlackLevel);
 		
@@ -1512,9 +1531,11 @@ void dng_linearization_info::Linearize (dng_host &host,
 								   forceClipBlackLevel,
 								   srcImage,
 								   dstImage);
-								   
+
+	dng_rect overlap = fActiveArea & srcImage.Bounds ();
+
 	host.PerformAreaTask (processor,
-						  fActiveArea);
+						  overlap);
 						
 	}
 				

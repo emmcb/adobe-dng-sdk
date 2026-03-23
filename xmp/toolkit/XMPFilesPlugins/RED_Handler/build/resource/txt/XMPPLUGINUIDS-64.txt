@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PluginResource Architecture="x64">
+	<Handler
+		Name="com.adobe.xmp.plugins.RED.handler"
+		Version="1.0.0"
+		HandlerType="OwningHandler"
+		>
+		<Extensions>
+			<Extension Name="R3D" />
+		</Extensions>
+		<FormatIDs>
+			<FormatID Name="RED " />
+		</FormatIDs>
+		<HandlerFlags>
+			<HandlerFlag Name="kXMPFiles_CanInjectXMP" />
+			<HandlerFlag Name="kXMPFiles_CanExpand" />
+			<HandlerFlag Name="kXMPFiles_HandlerOwnsFile" />
+			<HandlerFlag Name="kXMPFiles_AllowsOnlyXMP" />
+			<HandlerFlag Name="kXMPFiles_ReturnsRawPacket" />
+			<HandlerFlag Name="kXMPFiles_UsesSidecarXMP" />
+		</HandlerFlags>
+		<SerializeOptions>
+			<SerializeOption Name="kXMP_UseCompactFormat" />
+			<SerializeOption Name="kXMP_OmitPacketWrapper"/>
+		</SerializeOptions>
+	</Handler>
+</PluginResource>

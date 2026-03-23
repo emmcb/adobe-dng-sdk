@@ -1,0 +1,11 @@
+; Declares the entry points for the DLL.
+; Highest index: 4 - XMPAM_GetObjectFactoryInstance
+
+LIBRARY   AdobeXMPExtensions
+
+EXPORTS
+
+	XMPAM_GetVersionInfo					@1
+	XMPAM_Initialize						@2
+	XMPAM_Terminate							@3
+	XMPAM_GetObjectFactoryInstance			@4

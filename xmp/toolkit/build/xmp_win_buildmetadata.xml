@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and
+targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="win">
+		<buildgroup name="xmp" title="XMP">
+			<dependencies>
+				<dependency name="zuid" type="external" version="zuid"/>
+				<dependency name="zlib" type="external" version="1.2.11"/>
+				<dependency name="expat" type="external" version="2.2.9"/>
+				<dependency name="REDSDK" type="external" version="7.0.3"/>
+				<dependency name="AMBSDK" type="external" version="1.2"/>
+			</dependencies>
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+			<target name="xmpcmake32" title="xmpcmake32" buildtags="debug,release,32,pr">
+				<compiler name="msvc16" target="Release|Win32"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMake_VC16/XMPToolkit.sln"/>
+					</files>
+			</target>
+			<target name="xmpcmake64" title="xmpcmake64" buildtags="debug,release,64,pr">
+				<compiler name="msvc16" target="Release|x64"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMake64_VC16/XMPToolkit64.sln"/>
+					</files>
+			</target>
+			<target name="xmpcmakearm64" title="xmpcmakearm64" buildtags="debug,release,arm64,pr">
+				<compiler name="msvc16" target="Release|ARM64"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMake64_ARM64_VC16/XMPToolkit64.sln"/>
+					</files>
+			</target>
+			<target name="xmpcmakestatic32" title="xmpcmakestatic32" buildtags="debug,release,static,32,pr">
+				<compiler name="msvc16" target="StaticRelease|Win32"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMakeStatic_VC16/XMPToolkit.sln"/>
+					</files>
+			</target>
+			<target name="xmpcmakestatic64" title="xmpcmakestatic64" buildtags="debug,release,static,64,pr">
+				<compiler name="msvc16" target="StaticRelease|x64"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMake64Static_VC16/XMPToolkit64.sln"/>
+					</files>
+			</target>
+		    <target name="xmpcmakestaticarm64" title="xmpcmakestaticarm64" buildtags="debug,release,static,arm64,pr">
+				<compiler name="msvc16" target="StaticRelease|ARM64"  projectfilelocation="/XMP/toolkit/build/vc16/XMPCMake.sln" env="" options=""/>
+					<files>
+						<file verify="1" location="/XMP/toolkit/build/CMake64Static_ARM64_VC16/XMPToolkit64.sln"/>
+					</files>
+			</target>
+			<target name="xmpdb-win" title="XMP_Debug" buildtags="debug,32">
+				<compiler name="msvc16" target="Debug|Win32" projectfilelocation="/xmp/toolkit/build/CMake_VC16/XMPToolkit.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/debug">
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMP.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/debug">
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPFiles.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<!--
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/debug">	
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPScript.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						-->
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/debug">	
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/PDF_Handler/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/PDF_Handler/PDF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/PDF_Handler/PDF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/PDF_Handler/PDF_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/PDF_Handler/MiniPDFL.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/debug">	
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPCompareAndMerge.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows/debug">							
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/debug/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<!--
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/debug">							
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/RED_Handler/RED_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/RED_Handler/RED_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/RED_Handler/RED_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/RED_Handler/RED_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/debug/RED_Handler/REDR3D-x86.dll" verify="1" post="1"/>
+						</artifact>
+						-->
+					</files>
+			</target>
+			<target name="xmprel-win" title="XMP_Release" buildtags="release,32">
+				<compiler name="msvc16" target="Release|Win32" projectfilelocation="/xmp/toolkit/build/CMake_VC16/XMPToolkit.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/release">
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMP.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/release">
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPFiles.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<!--
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/release">
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPScript.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						-->
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/PDF_Handler/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/PDF_Handler/PDF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/PDF_Handler/PDF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/PDF_Handler/PDF_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/PDF_Handler/MiniPDFL.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/release">
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPCompareAndMerge.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows/release/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<!--
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/RED_Handler/RED_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/RED_Handler/RED_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/RED_Handler/RED_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/RED_Handler/RED_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows/release/RED_Handler/REDR3D-x86.dll" verify="1" post="1"/>
+						</artifact>
+						-->
+					</files>
+			</target>
+			<target name="xmpdbx64-win" title="XMP_Debug_x64" buildtags="debug,64">
+				<compiler name="msvc16" target="Debug|x64" projectfilelocation="/xmp/toolkit/build/CMake64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMP.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPFiles.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPScript.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/PDF_Handler/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/PDF_Handler/PDF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/PDF_Handler/PDF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/PDF_Handler/PDF_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/PDF_Handler/MiniPDFL.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPCompareAndMerge.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/debug/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/RED_Handler/RED_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/RED_Handler/RED_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/RED_Handler/RED_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/RED_Handler/RED_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/RED_Handler/REDR3D-x64.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="ARRI_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ARRI_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ARRI_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ARRI_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ARRI_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ArriMetadataContainer.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ArriMetadataExrIo.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/debug/ARRI_Handler/ArriMetadataXmpIo.dll" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprelx64-win" title="XMP_Release_x64" buildtags="release,64,pr">
+				<compiler name="msvc16" target="Release|x64" projectfilelocation="/xmp/toolkit/build/CMake64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMP.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPFiles.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPScript.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="PDF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/PDF_Handler/PDF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/PDF_Handler/PDF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/PDF_Handler/PDF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/PDF_Handler/PDF_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/PDF_Handler/MiniPDFL.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPCompareAndMerge.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_x64/release/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="RED_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/RED_Handler/RED_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/RED_Handler/RED_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/RED_Handler/RED_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/RED_Handler/RED_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/RED_Handler/REDR3D-x64.dll" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="ARRI_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ARRI_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ARRI_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ARRI_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ARRI_Handler.exp" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ArriMetadataContainer.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ArriMetadataExrIo.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_x64/release/ARRI_Handler/ArriMetadataXmpIo.dll" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdbarm64-win" title="XMP_Debug_arm64" buildtags="debug,arm64">
+				<compiler name="msvc16" target="Debug|ARM64" projectfilelocation="/xmp/toolkit/build/CMake64_ARM64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMP.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPFiles.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPScript.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/debug/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/debug/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/debug/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/debug/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPCompareAndMerge.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/debug/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprelarm64-win" title="XMP_Release_arm64" buildtags="release,arm64,pr">
+				<compiler name="msvc16" target="Release|ARM64" projectfilelocation="/xmp/toolkit/build/CMake64_ARM64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMP.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMP.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMP.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMP.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPFiles.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPFiles.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPFiles.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPFiles.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPScript.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPScript.dll" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPScript.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPScript.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPScript.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MXF_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/release/MXF_Handler/MXF_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/release/MXF_Handler/MXF_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/release/MXF_Handler/MXF_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/public/windows_arm64/release/MXF_Handler/MXF_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPCompareAndMerge.dll" verify="1" post="1" sign="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPCompareAndMerge.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPCompareAndMerge.map" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/AdobeXMPCompareAndMerge.pdb" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MP4OEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MP4OEM_Handler/MP4OEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MP4OEM_Handler/MP4OEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MP4OEM_Handler/MP4OEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MP4OEM_Handler/MP4OEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+						<artifact artifactname="MOVOEM_Handler.zip" artifactlocation = "/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release">
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MOVOEM_Handler/MOVOEM_Handler.xpi" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MOVOEM_Handler/MOVOEM_Handler.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MOVOEM_Handler/MOVOEM_Handler.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/XMPFilesPlugins/optional/windows_arm64/release/MOVOEM_Handler/MOVOEM_Handler.exp" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-win-static" title="XMP_Debug_Static" buildtags="debug,static,32">
+				<compiler name="msvc16" target="Debug|Win32" projectfilelocation="/xmp/toolkit/build/CMakeStatic_VC16/XMPToolkit.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/debug">
+							<file location="/xmp/toolkit/public/libraries/windows/debug/XMPCoreStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/XMPFilesStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/XMPCoreStaticDebug.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/debug/XMPFilesStaticDebug.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-win-static" title="XMP_Release_Static" buildtags="release,static,32">
+				<compiler name="msvc16" target="Release|Win32" projectfilelocation="/xmp/toolkit/build/CMakeStatic_VC16/XMPToolkit.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows/release">
+							<file location="/xmp/toolkit/public/libraries/windows/release/XMPCoreStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/XMPFilesStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/XMPCoreStaticRelease.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows/release/XMPFilesStaticRelease.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdbx64-win-static" title="XMP_Debug_x64_Static" buildtags="debug,static,64">
+				<compiler name="msvc16" target="Debug|x64" projectfilelocation="/xmp/toolkit/build/CMake64Static_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/XMPCoreStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/XMPFilesStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/XMPCoreStaticDebug.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/debug/XMPFilesStaticDebug.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprelx64-win-static" title="XMP_Release_x64_Static" buildtags="release,static,64,pr">
+				<compiler name="msvc16" target="Release|x64" projectfilelocation="/xmp/toolkit/build/CMake64Static_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_x64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/XMPCoreStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/XMPFilesStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/XMPCoreStaticRelease.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_x64/release/XMPFilesStaticRelease.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdbarm64-win-static" title="XMP_Debug_arm64_Static" buildtags="debug,static,arm64">
+				<compiler name="msvc16" target="Debug|arm64" projectfilelocation="/xmp/toolkit/build/CMake64Static_ARM64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/XMPCoreStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/XMPFilesStaticDebug.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/XMPCoreStaticDebug.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/debug/XMPFilesStaticDebug.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprelarm64-win-static" title="XMP_Release_arm64_Static" buildtags="release,static,arm64,pr">
+				<compiler name="msvc16" target="Release|arm64" projectfilelocation="/xmp/toolkit/build/CMake64Static_ARM64_VC16/XMPToolkit64.sln" env="" options=""/>
+					<files>
+						<artifact artifactname="XMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/windows_arm64/release">
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/XMPCoreStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/XMPFilesStaticRelease.lib" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/XMPCoreStaticRelease.pdb" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/windows_arm64/release/XMPFilesStaticRelease.pdb" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+		</buildgroup>
+	</platform>
+</buildmetadata>

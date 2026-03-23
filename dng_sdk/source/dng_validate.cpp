@@ -54,7 +54,7 @@
 		
 /*****************************************************************************/
 
-#define kDNGValidateVersion "1.6"
+#define kDNGValidateVersion (kDNGSDK_GetInfoVersion)
 		
 /*****************************************************************************/
 
@@ -70,6 +70,9 @@ static uint32 gMaximumSize	 = 0;
 
 static uint32 gProxyDNGSize = 0;
 
+static bool gLossyMosaicJXL = false;
+static bool gLosslessJXL    = false;
+
 static const dng_color_space *gFinalSpace = &dng_space_sRGB::Get ();
 
 static uint32 gFinalPixelType = ttByte;
@@ -83,10 +86,6 @@ static dng_string gDumpTIF;
 static dng_string gDumpDNG;
 
 static dng_string gCameraProfileName;
-
-#if qDNGSupportJXL
-static bool gPreferJXL = false;
-#endif
 
 /*****************************************************************************/
 
@@ -125,6 +124,9 @@ static dng_error_code dng_validate (const char *filename)
 			host.SetSaveLinearDNG (false);
 			
 			host.SetKeepOriginalFile (false);
+			
+			host.SetLossyMosaicJXL (gLossyMosaicJXL);
+			host.SetLosslessJXL    (gLosslessJXL   );
 			
 			}
 			
@@ -303,15 +305,6 @@ static dng_error_code dng_validate (const char *filename)
 
 		negative->ResizeSemanticMasksToMatchStage3 (host);
 
-		// Set JPEG XL compression preference.
-		
-		#if qDNGSupportJXL
-			
-		if (gPreferJXL)
-			host.SetPreferCompressJXL (true);
-
-		#endif	// qDNGSupportJXL
-			
 		// Convert to proxy, if requested.
 		
 		if (gProxyDNGSize)
@@ -325,6 +318,30 @@ static dng_error_code dng_validate (const char *filename)
 									  writer,
 									  gProxyDNGSize);
 		
+			}
+			
+		else if (host.LossyMosaicJXL ())
+			{
+			
+			dng_timer timer ("Lossy JXL compress mosaic time");
+			
+			dng_image_writer writer;
+
+			negative->LossyCompressMosaicJXL (host,
+											  writer);
+			
+			}
+			
+		if (host.LosslessJXL ())
+			{
+			
+			dng_timer timer ("Lossless JXL compress time");
+			
+			dng_image_writer writer;
+
+			negative->LosslessCompressJXL (host,
+										   writer);
+			
 			}
 			
 		// Flatten transparency, if required.
@@ -422,7 +439,7 @@ static dng_error_code dng_validate (const char *filename)
 				// Skip preview if writing a compresssed main image to save space
 				// in this example code.
 				
-				if (negative->RawJPEGImage () != NULL && previewIndex > 0)
+				if (negative->RawLossyCompressedImage () != NULL && previewIndex > 0)
 					{
 					break;
 					}
@@ -463,7 +480,7 @@ static dng_error_code dng_validate (const char *filename)
 				// If we have compressed JPEG data, create a compressed thumbnail.	Otherwise
 				// save a uncompressed thumbnail.
 				
-				bool useCompressedPreview = (negative->RawJPEGImage () != NULL) ||
+				bool useCompressedPreview = (negative->RawLossyCompressedImage () != NULL) ||
 											(previewIndex > 0);
 				
 				AutoPtr<dng_preview> preview (useCompressedPreview ?
@@ -488,7 +505,8 @@ static dng_error_code dng_validate (const char *filename)
 					
 					dng_image_preview *imagePreview = dynamic_cast<dng_image_preview *> (preview.Get ());
 				
-					imagePreview->SetImage (previewImage.Release ());
+					imagePreview->SetImage (host,
+											previewImage.Release ());
 					
 					}
 					
@@ -670,14 +688,14 @@ int main (int argc, char *argv [])
 
 			fprintf (stderr,
 					 "\n"
-					 "dng_validate, version " kDNGValidateVersion " "
+					 "dng_validate, version %s "
 					 #if qDNG64Bit
 					 "(64-bit)"
 					 #else
 					 "(32-bit)"
 					 #endif
 					 "\n"
-					 "Copyright 2005-2020 Adobe Systems, Inc.\n"
+					 "Copyright 2005-2026 Adobe Systems, Inc.\n"
 					 "\n"
 					 "Usage:  %s [options] file1 file2 ...\n"
 					 "\n"
@@ -691,9 +709,8 @@ int main (int argc, char *argv [])
 					 "-min <num>            Minimum preview image size\n"
 					 "-max <num>            Maximum preview image size\n"
 					 "-proxy <num>          Target size for proxy DNG\n"
-					 #if qDNGSupportJXL
-					 "-preferJXL            Prefer JPEG XL for lossy compressed DNG\n"
-					 #endif
+					 "-lossyMosaicJXL       Writes DNG with lossy mosaic JXL\n"
+					 "-losslessJXL          Writes DNG with lossless JXL\n"
 					 "-cs1                  Color space: \"sRGB\" (default)\n"
 					 "-cs2                  Color space: \"Adobe RGB\"\n"
 					 "-cs3                  Color space: \"ProPhoto RGB\"\n"
@@ -713,6 +730,7 @@ int main (int argc, char *argv [])
 					 "-tif <file>           Write TIF image to \"<file>.tif\"\n"
 					 "-dng <file>           Write DNG image to \"<file>.dng\"\n"
 					 "\n",
+					 kDNGValidateVersion,
 					 argv [0]);
 					 
 			return 1;
@@ -843,14 +861,19 @@ int main (int argc, char *argv [])
 
 				}
 					
-			#if qDNGSupportJXL
-			
-			else if (option.Matches ("preferJXL", true))
+			else if (option.Matches ("lossyMosaicJXL", true))
 				{
-				gPreferJXL = true;
+				
+				gLossyMosaicJXL = true;
+				
 				}
-			
-			#endif	// qDNGSu,
+					
+			else if (option.Matches ("losslessJXL", true))
+				{
+				
+				gLosslessJXL = true;
+				
+				}
 					
 			else if (option.Matches ("cs1", true))
 				{

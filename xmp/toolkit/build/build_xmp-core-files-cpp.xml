@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<project name="xmp-core-files-cpp" basedir="." default="win">
+	<!-- root of the branch -->
+	<property name="root" value="${basedir}/../../.."/>
+	<!-- includes branch specific properties -->
+	<property file="${root}/autobuild/branchbuild.properties"/>
+	<!-- includes agent specific properties -->
+	<property file="build.properties"/>
+	<property file="${root}/../../conf/cruisecontrol/agent/agentbuild.properties"/>
+	<property name="label" value="${ant.project.label}" />
+	<property name="p4.view" value="//metadata/${branchName}/...@${label}"/>
+	
+	<!-- ***** Properties ***** -->
+	<condition 
+		property="platform" 
+		value="windows">
+		<os family="windows"/>
+	</condition>
+	
+	<condition 
+		property="platform" 
+		value="mac">
+		<os family="mac"/>
+	</condition>
+	
+	<!--decide what CPP compiler to use-->
+	<condition 
+		property="CPPCOMPILER" 
+		value="${CPPCOMPILER_V8}"
+		else="${CPPCOMPILER_V9}">
+		<equals arg1="${winCompilerDir}" arg2="vsnet8"/>
+	</condition>
+	
+	<property name="label" value="${ant.project.label}" />
+	<property name="buildversion" value="${label}" />
+	<property name="outputDir" value="${root}/${generalOutputDir}" />
+	
+ <!-- cruiser targets -->  
+	<target name="win" depends="init,p4sync,build-win,testSuite-win" description="complete build with running the testsuite for win">
+		<antcall target="-CPPUNIT2JUNIT">
+			<param name="os" value="windows"/>
+			<param name="stage" value="debug"/>
+		</antcall>
+	</target>
+	
+	<target name="mac" depends="init,p4sync,build-mac,testSuite-mac" description="complete build with running the testsuite for mac">
+		<!--<antcall target="-CPPUNIT2JUNIT">
+			<param name="os" value="macintosh"/>
+			<param name="stage" value="debug"/>
+		</antcall>-->
+		<fail message="Testrunner (C++) failed!">
+			<condition>
+				<not>
+					<equals arg1="${testsFailed}" arg2="0" />				
+				</not>
+			</condition>
+	   </fail>
+	</target>
+	
+	<target name="linux32" depends="init,p4sync,build-linux32, test-linux32" description="complete build with running the testsuite for linux32">
+		<antcall target="-CPPUNIT2JUNIT">
+			<param name="os" value="i80386linux"/>
+			<param name="stage" value="debug"/>
+		</antcall>
+	</target>
+
+<!-- TEMP targets w/o sync, otherwise identical (works on a standard ant install, i.e. local testing-->  
+	<target name="linux32woSync" depends="init,build-linux32, test-linux32" description="complete build with running the testsuite for linux32"/>
+
+	
+ <!--,testSuite-win,postcheck
+	INIT does: deletes (if applicable) and re-creates output directories.
+     -->
+    <target name="init" description="Init process">
+		<delete quiet="true" includeemptydirs="true">
+			<fileset dir="${outputDir}" includes="**/*"/>
+            <!--<fileset dir="${root}/xmp/toolkit/target/${platform}" includes="**/*"/>-->
+        </delete>
+		<mkdir dir="${outputDir}"/>
+    </target>
+	
+	<!-- P4 sync 
+	     syncs to head revision
+	  -->
+    <taskdef name="p4sync" classname="org.apache.tools.ant.taskdefs.optional.perforce.P4Sync" />
+    <target name="p4sync">        
+        <p4sync globalopts="-u ${p4.user} -P ${p4.passwd}" view="${p4.view}"/>
+    </target>	
+	
+	<!-- 
+	     WINDOWS
+	  -->
+	<target name="build-win" depends="init" description="Building Windows ...">
+		<exec dir="." executable="cmd" output="${outputDir}/2_cc_build_corefiles.log" failonerror="true">
+			<arg value="/c"/>
+			<arg value="build_corefiles.bat"/>
+			<arg value="${CPPCOMPILER}"/>
+			<arg value="${winCompilerDir}"/>
+			<arg value="${outputDir}"/>
+			<arg value="false"/> <!-- coverage -->
+		</exec>
+	</target>
+	
+	<target name="testSuite-win" depends="init, build-win, build-test-win, run-test-win" description="Testing Windows ..." />
+	<target name="build-test-win" > 
+		<exec dir="${root}/xmp/toolkit/test/build" executable="cmd" output="${outputDir}/5_cc_buildTestrunner.log" failonerror="true">
+			<arg value="/c"/>
+			<arg value="build_testrunner.bat"/>
+			<arg value="${CPPCOMPILER}"/>
+			<arg value="${winCompilerDir}"/>
+			<arg value="${outputDir}"/>
+		</exec>
+	</target>
+	<target name="run-test-win" >
+		<exec dir="${root}/xmp/toolkit/test/build" executable="cmd" output="${outputDir}/6_cc_RunTestrunner.log" resultproperty="testsFailed">
+			<arg value="/c"/>
+			<arg value="testrunner.bat"/>
+			<arg value="${outputDir}"/>
+			<arg value="false"/> <!-- coverage -->
+		</exec>
+	</target>
+	
+	<!-- 
+	     MAC
+	  -->
+	<target name="build-mac" depends="init" description="Building Mac ...">
+		<exec executable="${basedir}/build_corefiles.sh" output="${outputDir}/2_cc_build_corefiles.log" failonerror="true">			
+			<arg value="${macCompilerDir}"/>
+			<arg value="${outputDir}"/>
+		</exec>
+	</target>
+	
+	<target name="testSuite-mac" depends="init, build-mac, build-test-mac, run-test-mac" description="Testing Macintosh ..."/>
+	<target name="build-test-mac" > 
+		<exec dir="${root}/xmp/toolkit/test/build" executable="${root}/xmp/toolkit/test/build/build_testrunner.sh" output="${outputDir}/5_cc_buildTestrunner.log" failonerror="true">			
+			<arg value="${macCompilerDir}"/>
+			<arg value="${outputDir}"/>
+		</exec>
+	</target>
+	<target name="run-test-mac" >
+		<exec dir="${root}/xmp/toolkit/test/build" executable="${root}/xmp/toolkit/test/build/testrunner.sh" output="${outputDir}/6_cc_RunTestrunner.log" resultproperty="testsFailed">			
+			<arg value="${outputDir}"/>
+		</exec> 
+	</target>
+	<!-- 
+	     LINUX
+	  -->
+	<target name="build-linux32" description="Building Linux32 ...">
+		<antcall target="-build-linux">
+			<param name="logName" value="1_build_corefiles"/>
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="debug"/>
+			<param name="mode" value="dll"/>
+			<param name="target" value="rebuild"/>
+		</antcall>
+		<!--<antcall target="-build-linux">
+			<param name="logName" value="2_build_corefiles"/>
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="release"/>
+			<param name="mode" value="dll"/>
+			<param name="target" value="rebuild"/>
+		</antcall>
+		<antcall target="-build-linux">
+			<param name="logName" value="3_build_corefiles"/>
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="debug"/>
+			<param name="mode" value="static"/>
+			<param name="target" value="rebuild"/>
+		</antcall>-->
+		<antcall target="-build-linux">
+			<param name="logName" value="2_build_corefiles"/>
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="release"/>
+			<param name="mode" value="static"/>
+			<param name="target" value="rebuild"/>
+		</antcall>
+	</target>
+	
+	<target name="test-linux32" depends="buildingTest-linux, runningTest-linux" description="Testing Linux32 ..." />
+	<target name="buildingTest-linux">
+		<!-- now build testrunner and run the tests -->
+		<!--<antcall target="-build-linux">
+			<param name="logName" value="3_build_Testrunner"/>			
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="release"/>
+			<param name="mode" value="dll"/>
+			<param name="target" value="buildTestrunner"/>
+		</antcall>-->
+		<antcall target="-build-linux">
+			<param name="logName" value="3_build_Testrunner"/>
+			<param name="failonerror" value="true"/>
+			<param name="arch" value="x86"/>
+			<param name="stage" value="debug"/>
+			<param name="mode" value="dll"/>
+			<param name="target" value="buildTestrunner"/>
+		</antcall>
+	</target>
+	<target name="runningTest-linux">
+		<!-- caling the makefile here directly to set the result property-->
+		<exec dir="gcc4" executable="make" output="${outputDir}/4_testresults-x86-release-dll.log" error="${outputDir}/4_testresults-x86-release-dll_err.log" resultproperty="testsFailed">
+			<arg value="-f"/>
+			<arg value="XMPToolkit.mak"/>
+			<arg value="os=i80386linux"/>
+			<arg value="stage=debug"/>
+			<arg value="mode=dll"/>
+			<arg value="arch=x86"/>
+			<!-- DONE: fully enabled: <arg value="testcase=version"/>  ############################### -->
+			<arg value="runTestrunner"/>
+		</exec>
+	</target>
+	
+	<target name="-build-linux" description="Building Linux...">
+		<echo message="Building Linux ${arch}-${stage}-${mode}" level="info" />
+		
+		<exec dir="gcc4" executable="make" output="${outputDir}/${logName}-${arch}-${stage}-${mode}.log" error="${outputDir}/${logName}-${arch}-${stage}-${mode}_err.log" failonerror="${failonerror}">
+			<arg value="-f"/>
+			<arg value="XMPToolkit.mak"/>
+			<arg value="os=i80386linux"/>
+			<arg value="stage=${stage}"/>
+			<arg value="mode=${mode}"/>
+			<arg value="arch=${arch}"/>			
+			<arg value="${target}"/>
+		</exec>
+	</target>
+
+   <!-- Utils -->
+   <target name="-CPPUNIT2JUNIT" description="Transforming testresults CPPUNIT2JUNIT ...">
+		<xslt in="${root}/xmp/toolkit/target/${os}/${stage}/bin/testrun/logs/testResults_CPPUNIT.xml" out="${root}/xmp/toolkit/target/${os}/${stage}/bin/testrun/logs/testResults_JUNIT.xml" style="${root}/../../conf/cruisecontrol/agent/bin/cppunit2junit.xsl">
+			<outputproperty name="method" value="xml"/>
+			<outputproperty name="standalone" value="yes"/>
+			<outputproperty name="encoding" value="iso8859_1"/>
+			<outputproperty name="indent" value="yes"/>
+		</xslt>
+		<fail message="Testrunner (C++) failed!">
+			<condition>
+				<not>
+					<equals arg1="${testsFailed}" arg2="0" />				
+				</not>
+			</condition>
+	   </fail>
+
+   </target>
+</project>

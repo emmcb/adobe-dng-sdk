@@ -1239,7 +1239,7 @@ bool dng_string::TrimTrailingBlanks ()
 	
 	bool didTrim = false;
 	
-	if (fData.get () && fData->back () == ' ')
+	if (fData.get () && !fData->empty () && fData->back () == ' ')
 		{
 		
 		const char *s = fData->c_str ();
@@ -2173,8 +2173,8 @@ int32 dng_string::Compare (const dng_string &s,
 				
 				dng_lock_std_mutex lockMutex (gProtectUCCalls);
 
-				UCCollateOptions aOptions = kUCCollateStandardOptions |
-											kUCCollatePunctuationSignificantMask;
+				UCCollateOptions aOptions = static_cast<UCCollateOptions>(kUCCollateStandardOptions) |
+											static_cast<UCCollateOptions>(kUCCollatePunctuationSignificantMask);
 		   
 				if (digitsAsNumber)
 					{
@@ -2459,10 +2459,10 @@ int32 dng_string::Compare (const dng_string &s,
 
 size_t dng_string_hash::operator () (const dng_string &s) const
 	{
-	
-	dng_md5_printer printer;
 
-	printer.Process (s.Get ());
+	dng_md5_direct_printer printer;
+
+	printer.ProcessString (s.Get ());
 
 	auto digest = printer.Result ();
 

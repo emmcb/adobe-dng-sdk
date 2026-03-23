@@ -5,7 +5,9 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
 
 // =================================================================================================
@@ -21,7 +23,7 @@
 // ===========================
 #include "XMP_Environment.h"
 #if !XMP_WinBuild
-    #include <version>
+    #include <ciso646>
 #endif
 	// =================================================================================================
 	// Macintosh Specific Settings
@@ -87,7 +89,7 @@
 	// =========================
 	#if XMP_WinBuild
 		#define SUPPORT_SHARED_POINTERS_WITH_ALLOCATORS 1
-		#if defined(_MSC_VER) && _MSC_VER <= 1600
+		#if _MSC_VER <= 1600
 			#define SUPPORT_STD_ATOMIC_IMPLEMENTATION 0
 			#define SUPPORT_SHARED_POINTERS_IN_TR1 1
 			#define SUPPORT_SHARED_POINTERS_IN_STD 0

@@ -45,10 +45,6 @@
 
 #define XMP_StaticBuild 1
 
-#if qiPhone
-#undef UNIX_ENV
-#endif
-
 #include "XMP.incl_cpp"
 
 /*****************************************************************************/
@@ -60,6 +56,7 @@ const char *XMP_NS_PHOTOSHOP  = "http://ns.adobe.com/photoshop/1.0/";
 const char *XMP_NS_XAP		  = "http://ns.adobe.com/xap/1.0/";
 const char *XMP_NS_XAP_RIGHTS = "http://ns.adobe.com/xap/1.0/rights/";
 const char *XMP_NS_DC		  = "http://purl.org/dc/elements/1.1/";
+const char *XMP_NS_DC_TERMS	  = "http://purl.org/dc/terms/";
 const char *XMP_NS_XMP_NOTE	  = "http://ns.adobe.com/xmp/note/";
 const char *XMP_NS_MM		  = "http://ns.adobe.com/xap/1.0/mm/";
 
@@ -67,6 +64,8 @@ const char *XMP_NS_CRS		  = "http://ns.adobe.com/camera-raw-settings/1.0/";
 const char *XMP_NS_CRSS		  = "http://ns.adobe.com/camera-raw-saved-settings/1.0/";
 const char *XMP_NS_CRD		  = "http://ns.adobe.com/camera-raw-defaults/1.0/";
 const char *XMP_NS_CRLCP	  = "http://ns.adobe.com/camera-raw-embedded-lens-profile/1.0/";
+
+const char *XMP_NS_VFS        = "http://ns.adobe.com/video-foundation-settings/1.0/";
 
 const char *XMP_NS_LR		  = "http://ns.adobe.com/lightroom/1.0/";
 
@@ -76,6 +75,8 @@ const char *XMP_NS_AUX		  = "http://ns.adobe.com/exif/1.0/aux/";
 
 const char *XMP_NS_IPTC		  = "http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/";
 const char *XMP_NS_IPTC_EXT	  = "http://iptc.org/std/Iptc4xmpExt/2008-02-29/";
+
+const char *XMP_NS_PLUS 	  = "http://ns.useplus.org/ldf/xmp/1.0/";
 
 const char *XMP_NS_CRX		  = "http://ns.adobe.com/lightroom-settings-experimental/1.0/";
 
@@ -88,7 +89,9 @@ const char *XMP_NS_REGIONS	  = "http://www.metadataworkinggroup.com/schemas/regi
 
 const char *XMP_NS_HDRGM	  = "http://ns.adobe.com/hdr-gain-map/1.0/";
 const char *XMP_NS_HDR_META	  = "http://ns.adobe.com/hdr-metadata/1.0/";
-const char *XMP_NS_APPLE_HDRGM = "http://ns.apple.com/HDRGainMap/1.0/";
+
+const char *XMP_NS_APPLE_HDRGM	   = "http://ns.apple.com/HDRGainMap/1.0/";
+const char *XMP_NS_APPLE_PIXELDATA = "http://ns.apple.com/pixeldatainfo/1.0/";
 
 /******************************************************************************/
 
@@ -298,6 +301,18 @@ void dng_xmp_sdk::InitializeSDK (dng_xmp_namespace * extraNamespaces,
 											 &ss);
 				
 				}
+				
+			// Register VideoFoundation namespace
+			
+				{
+				
+				TXMP_STRING_TYPE ss ("");
+				
+				SXMPMeta::RegisterNamespace (XMP_NS_VFS,
+											 "vfs",
+											 &ss);
+				
+				}
 			
 			// Register LR namespace
 			
@@ -395,6 +410,18 @@ void dng_xmp_sdk::InitializeSDK (dng_xmp_namespace * extraNamespaces,
 				
 				}
 			
+			// Register Apple Pixel Data namespace
+			
+				{
+				
+				TXMP_STRING_TYPE ss ("");
+				
+				SXMPMeta::RegisterNamespace (XMP_NS_APPLE_PIXELDATA,
+											 "apdi",
+											 &ss);
+				
+				}
+			
 			// Register HDR Metadata namespace
 			
 				{
@@ -406,7 +433,23 @@ void dng_xmp_sdk::InitializeSDK (dng_xmp_namespace * extraNamespaces,
 											 &ss);
 				
 				}
+
+			// Note: IPTC EXT and plus namespaces already registered by the
+			// XMP SDK.
 			
+			// Register DC_TERMS namespace
+			// NOTE: Someday this may appear in a new XMP library drop and obviate the need to do it here?
+
+				{
+
+				TXMP_STRING_TYPE ss ("");
+
+				SXMPMeta::RegisterNamespace (XMP_NS_DC_TERMS,
+											 "dcterms",
+											 &ss);
+
+				}
+
 			// Register extra namespaces.
 			
 			if (extraNamespaces != NULL)

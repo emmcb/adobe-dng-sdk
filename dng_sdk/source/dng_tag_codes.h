@@ -215,6 +215,7 @@ enum
 	tcWaterDepth					= 37891,
 	tcAcceleration					= 37892,
 	tcCameraElevationAngle			= 37893,
+	tcDJIPrivateEXIFKeywords		= 40094,
 	tcFlashPixVersion				= 40960,
 	tcColorSpace					= 40961,
 	tcPixelXDimension				= 40962,
@@ -369,14 +370,18 @@ enum
 	tcBigTableOffsets				= 52541,
 	tcBigTableByteCounts			= 52542,
 	tcProfileGainTableMap2			= 52544,
-	#if qDNGSupportColumnInterleaveFactor
+	tcC2PAManifest					= 52545,
 	tcColumnInterleaveFactor		= 52547,
-	#endif
 	tcImageSequenceInfo				= 52548,
 	tcProfileToneMethod				= 52549,
 	tcImageStats					= 52550,
 	tcProfileDynamicRange			= 52551,
 	tcProfileGroupName				= 52552,
+	tcJXLDistance					= 52553,
+	tcJXLEffort						= 52554,
+	tcJXLDecodeSpeed				= 52555,
+	tcBigTableGroupIndex			= 52556,
+	tcGainMapMetadata_ISO_21496_1	= 52557,
 	tcKodakKDCPrivateIFD			= 65024
 	};
 
@@ -448,6 +453,7 @@ enum
 	tcCanonCR3,
 	tcJXL,
 	tcAVIF,
+	tcWebP,
 	
 	};
 

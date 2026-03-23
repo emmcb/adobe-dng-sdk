@@ -161,9 +161,7 @@ dng_ifd::dng_ifd ()
 	,	fMaskedAreaCount (0)
 	
 	,	fRowInterleaveFactor (1)
-	#if qDNGSupportColumnInterleaveFactor
 	,	fColumnInterleaveFactor (1)
-	#endif
 	
 	,	fSubTileBlockRows (1)
 	,	fSubTileBlockCols (1)
@@ -386,7 +384,8 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			CheckTagType (parentCode, tagCode, tagType, ttShort);
 			
-			CheckTagCount (parentCode, tagCode, tagCount, 1, 0x0FFFF);
+			if (!CheckTagCount (parentCode, tagCode, tagCount, 1, 0x0FFFF))
+				return false;
 			
 			#if qDNGValidate
 			
@@ -1035,7 +1034,8 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			CheckTagType (parentCode, tagCode, tagType, ttShort);
 			
-			CheckTagCount (parentCode, tagCode, tagCount, 1, fSamplesPerPixel);
+			if (!CheckTagCount (parentCode, tagCode, tagCount, 1, fSamplesPerPixel))
+				return false;
 			
 			#if qDNGValidate
 			
@@ -1087,8 +1087,9 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			CheckTagType (parentCode, tagCode, tagType, ttShort);
 			
-			CheckTagCount (parentCode, tagCode, tagCount, fSamplesPerPixel);
-			
+			if (!CheckTagCount (parentCode, tagCode, tagCount, fSamplesPerPixel))
+				return false;
+				
 			#if qDNGValidate
 			
 			if (gVerbose)
@@ -2217,7 +2218,7 @@ bool dng_ifd::ParseTag (dng_host &host,
 			if (!CheckTagCount (parentCode, tagCode, tagCount, 16))
 				return false;
 				
-			stream.Get (fPreviewInfo.fSettingsDigest.data, 16);
+			stream.Get (fPreviewInfo.fSettingsDigest);
 				
 			#if qDNGValidate
 
@@ -2321,8 +2322,6 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			}
 
-		#if qDNGSupportColumnInterleaveFactor
-			
 		case tcColumnInterleaveFactor:
 			{
 			
@@ -2349,8 +2348,6 @@ bool dng_ifd::ParseTag (dng_host &host,
 			
 			}
 
-		#endif	// qDNGSupportColumnInterleaveFactor
-			
 		case tcSubTileBlockSize:
 			{
 			
@@ -2793,7 +2790,7 @@ bool dng_ifd::ParseTag (dng_host &host,
 			if (pgtm && gVerbose)
 				{
 
-				dng_md5_printer printer;
+				dng_md5_printer_le_stream printer;
 				
 				pgtm->AddDigest (printer);
 
@@ -3050,6 +3047,131 @@ bool dng_ifd::ParseTag (dng_host &host,
 				
 			#endif	// qDNGValidate
 			
+			break;
+			
+			}
+			
+		case tcJXLDistance:
+			{
+			
+			if (!CheckTagType (parentCode, tagCode, tagType, ttFloat))
+				return false;
+			
+			fJXLDistance = (real32) stream.TagValue_real64 (tagType);
+			
+			#if qDNGValidate
+
+			if (fCompression != ccJXL)
+				{
+				ReportWarning ("JXL compression expected");
+				}
+				
+			if (fJXLDistance < 0.0f)
+				{
+				ReportWarning ("Invalid JXL distance");
+				}
+				
+			if (gVerbose)
+				{
+				printf ("JXLDistance: %.2f\n", fJXLDistance);
+				}
+				
+			#endif
+
+			break;
+			
+			}
+			
+		case tcJXLEffort:
+			{
+			
+			if (!CheckTagType (parentCode, tagCode, tagType, ttLong))
+				return false;
+			
+			fJXLEffort = stream.TagValue_int32 (tagType);
+			
+			#if qDNGValidate
+
+			if (fCompression != ccJXL)
+				{
+				ReportWarning ("JXL compression expected");
+				}
+				
+			if (fJXLEffort < 1 || fJXLEffort > 9)
+				{
+				ReportWarning ("Invalid JXL effort");
+				}
+				
+			if (gVerbose)
+				{
+				printf ("JXLEffort: %d\n", fJXLEffort);
+				}
+				
+			#endif
+
+			break;
+			
+			}
+
+		case tcJXLDecodeSpeed:
+			{
+			
+			if (!CheckTagType (parentCode, tagCode, tagType, ttLong))
+				return false;
+			
+			fJXLDecodeSpeed = stream.TagValue_int32 (tagType);
+			
+			#if qDNGValidate
+
+			if (fCompression != ccJXL)
+				{
+				ReportWarning ("JXL compression expected");
+				}
+				
+			if (fJXLDecodeSpeed < 1 || fJXLDecodeSpeed > 4)
+				{
+				ReportWarning ("Invalid JXL decode speed");
+				}
+				
+			if (gVerbose)
+				{
+				printf ("JXLDecodeSpeed: %d\n", fJXLDecodeSpeed);
+				}
+				
+			#endif
+
+			break;
+			
+			}
+
+		case tcGainMapMetadata_ISO_21496_1:
+			{
+			
+			if (!CheckTagType (parentCode, tagCode, tagType, ttUndefined))
+				return false;
+
+			constexpr uint32 kMaxTagCount = 4 * 1024 * 1024;
+
+			if (tagCount > kMaxTagCount)
+				ThrowBadFormat ("Gain map metadata block too large");
+
+			AutoPtr<dng_memory_block> block (host.Allocate (tagCount));
+			
+			stream.Get (block->Buffer (),
+						tagCount);
+
+			fGainMapMetadata.reset (block.Release ());
+			
+			#if qDNGValidate
+
+			if (gVerbose)
+				{
+				printf ("GainMapMetadata: %u bytes\n",
+						tagCount);
+				}
+				
+			#endif
+
 			break;
 			
 			}
@@ -3366,7 +3488,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 
 	bool isMainOrEnhancedIFD = isMainIFD || isEnhancedIFD;
 
-	bool isGainMapIFD = (fNewSubFileType == sfGainMap);
+	bool isGainMapIFD = (fNewSubFileType == sfGainMap ||
+						 fNewSubFileType == sfPreviewGainMap);
 	
 	// Check NewSubFileType.
 	
@@ -3393,6 +3516,7 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		fNewSubFileType != sfEnhancedImage	  &&
 		fNewSubFileType != sfAltPreviewImage  &&
 		fNewSubFileType != sfGainMap		  &&
+		fNewSubFileType != sfPreviewGainMap	  &&
 		fNewSubFileType != sfSemanticMask)
 		{
 		
@@ -3540,7 +3664,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		
 		}
 
-	else if (fNewSubFileType == sfGainMap)
+	else if (fNewSubFileType == sfGainMap ||
+			 fNewSubFileType == sfPreviewGainMap)
 		{
 		
 		if (fPhotometricInterpretation != piGainMap)
@@ -3710,7 +3835,8 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 	// Check ColorimetricReference.
 
 	if (isGainMapIFD &&
-		(shared.fColorimetricReference == crSceneReferred))
+		(shared.fColorimetricReference == crSceneReferred) &&
+		(fNewSubFileType != sfPreviewGainMap))
 		{
 		
 		#if qDNGValidate
@@ -4010,13 +4136,12 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			
 			}
 			
-		#if qDNGSupportJXL
-
 		case ccJXL:
 			{
 			
 			if (fPhotometricInterpretation != piCFA &&
 				fPhotometricInterpretation != piRGB &&
+				fPhotometricInterpretation != piBlackIsZero &&
 				fPhotometricInterpretation != piDepth &&
 				fPhotometricInterpretation != piLinearRaw &&
 				fPhotometricInterpretation != piGainMap &&
@@ -4027,7 +4152,7 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 				#if qDNGValidate
 
 				ReportError ("JXL compression code requires "
-							 "PhotometricInterpretation = CFA, RGB, "
+							 "PhotometricInterpretation = CFA, RGB, BlackIsZero, "
 							 "Depth, LinearRaw, PhotometricMask, or "
 							 "Transparency",
 							 LookupParentCode (parentCode));
@@ -4057,8 +4182,6 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			
 			}
 
-		#endif	// qDNGSupportJXL
-			
 		case ccDeflate:
 			{
 			
@@ -4786,8 +4909,6 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 		
 		}
 
-	#if qDNGSupportColumnInterleaveFactor
-		
 	// Check ColumnInterleaveFactor
 		
 	if (fColumnInterleaveFactor != 1)
@@ -4822,10 +4943,23 @@ bool dng_ifd::IsValidDNG (dng_shared &shared,
 			
 			}
 		
+		#if qDNGValidate
+		
+		// Only warn if column interleave factor is used before DNG 1.7.1 since the
+		// original published 1.7 spec allowed it.
+
+		if (shared.fDNGBackwardVersion < dngVersion_1_7_1_0)
+			{
+			
+			ReportWarning ("Non-default ColumnInterleaveFactor tag not allowed in this DNG version",
+						   LookupParentCode (parentCode));
+						 
+			}
+		
+		#endif
+						 
 		}
 
-	#endif	// qDNGSupportColumnInterleaveFactor
-		
 	// Check SubTileBlockSize
 	
 	if (fSubTileBlockRows != 1 || fSubTileBlockCols != 1)
@@ -5206,6 +5340,17 @@ bool dng_ifd::IsBaselineJPEG () const
 		default:
 			break;
 			
+		}
+
+	// Some scanned TIFF files have JPEG + alpha channel. Treat these as
+	// baseline for purposes of reading. See CR-4205789.
+
+	if ((fCompression == ccJPEG) &&
+		(fPhotometricInterpretation == piRGB) &&
+		(fSamplesPerPixel == 3 ||
+		 fSamplesPerPixel == 4))
+		{
+		return true;
 		}
 		
 	return false;

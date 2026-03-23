@@ -245,6 +245,10 @@ int64 SafeInt64MultSlow(int64 arg1, int64 arg2) {
 
 }  // namespace dng_internal
 
+int64 SafeInt64Mult(int64 arg1, int64 arg2, int64 arg3) {
+	return SafeInt64Mult (SafeInt64Mult (arg1, arg2), arg3);
+}
+
 uint32 SafeUint32DivideUp(uint32 arg1, uint32 arg2) {
 	// It might seem more intuitive to implement this function simply as
 	//

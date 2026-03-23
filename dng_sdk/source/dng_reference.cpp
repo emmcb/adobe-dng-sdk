@@ -2593,7 +2593,7 @@ void RefVignette32 (real32 *sPtr,
 		
 		blackOffset2 = ((real32) blackLevel) / 65535.0f;
 		blackScale2	 = 1.0f - blackOffset2;
-		blackScale1	 = 1.0f / blackScale2;
+		blackScale1	 = (blackScale2 != 0.0) ? 1.0f / blackScale2 : 0.0;
 		blackOffset1 = 1.0f - blackScale1;
  
 		for (uint32 plane = 0; plane < planes; plane++)
@@ -3009,7 +3009,7 @@ void RefBaselineMapPoly32 (real32 *dPtr,
 		
 		blackOffset2 = ((real32) blackLevel) / 65535.0f;
 		blackScale2	 = 1.0f - blackOffset2;
-		blackScale1	 = 1.0f / blackScale2;
+		blackScale1	 = (blackScale2 != 0.0) ? 1.0f / blackScale2 : 0.0;
 		blackOffset1 = 1.0f - blackScale1;
 		
 		}

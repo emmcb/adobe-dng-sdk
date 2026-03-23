@@ -3,11 +3,39 @@
 // All Rights Reserved.
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 //
 // Adobe patent application tracking #P435, entitled 'Unique markers to simplify embedding data of
 // one format in a file with a different format', inventors: Sean Parent, Greg Gilley.
 // =================================================================================================
+
+#if AdobePrivate
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//  AWL Alan Lillich
+//  FNO Frank Nocke
+//
+// mm/dd/yy who Description of changes, most recent on top.
+//
+// 08-17-10 AWL 5.3-f001 Integrate I/O revamp to main.
+//
+// 11-28-07 FNO 4.2-f038 Made MOV-handler and other exclusions/changes needed for x64 windows.
+//
+// 03-24-06 AWL 4.0-f001 Adapt for move to ham-perforce, integrate XMPFiles, bump version to 4.
+//
+// 01-25-06 AWL 1.3-014 Don't try to decrement iter.begin, even if result is unused, VC8 debug checks complain.
+//
+// 05-26-04 AWL 3.1-043 Use Bravo numeric types.
+// 05-25-04 AWL [1018426] Hide all use of cin/cout streams in #if DEBUG or equivalent.
+// 03-01-04 AWL Adapt from old XMLPacketScanner. Simplify and add large file support.
+//
+// =================================================================================================
+#endif /* AdobePrivate */
 
 #if WIN32
 	#pragma warning ( disable : 4127 )	// conditional expression is constant
@@ -27,6 +55,7 @@
 #include <cassert>
 #include <string>
 #include <cstdlib>
+#include <memory>
 
 #if DEBUG
 	#include <iostream>
@@ -374,12 +403,26 @@ XMPScanner::PacketMachine::CaptureAttrValue ( PacketMachine * ths, const char * 
 			ths->fPosition = 1;
 			// fall through OK because MatchOpenQuote will check the buffer limit and nulls ...
 
+			/////////////////////////////////////////////////////////////////////////////////////
+			// Added by ACR team.
+			#if __cplusplus >= 201703L // if C++17 or later
+			[[fallthrough]]; // Use new C++ attribute to tell compiler fallthrough is intended.
+			#endif
+			/////////////////////////////////////////////////////////////////////////////////////
+
 		case 1 :	// Look for the open quote.
 
 			result = MatchOpenQuote ( ths, NULL );
 			if ( result != eTriYes ) return result;
 			ths->fPosition = 2;
 			// fall through OK because the buffer limit and nulls are checked below ...
+
+			/////////////////////////////////////////////////////////////////////////////////////
+			// Added by ACR team.
+			#if __cplusplus >= 201703L // if C++17 or later
+			[[fallthrough]]; // Use new C++ attribute to tell compiler fallthrough is intended.
+			#endif
+			/////////////////////////////////////////////////////////////////////////////////////
 
 		default :	// Look for the close quote, capturing the value along the way.
 
@@ -433,6 +476,13 @@ XMPScanner::PacketMachine::RecordStart ( PacketMachine * ths, const char * /* un
 				ths->fPacketLength = 0;
 				ths->fPosition = 1;
 				// ! OK to fall through here, we didn't consume a byte in this step.
+
+				/////////////////////////////////////////////////////////////////////////////////////
+				// Added by ACR team.
+				#if __cplusplus >= 201703L // if C++17 or later
+				[[fallthrough]]; // Use new C++ attribute to tell compiler fallthrough is intended.
+				#endif
+				/////////////////////////////////////////////////////////////////////////////////////
 
 			case 1 :	// Look for the first null byte.
 				if ( currByte != 0 ) return eTriYes;	// No nulls found.
@@ -989,7 +1039,7 @@ XMPScanner::InternalSnip::InternalSnip ( XMP_Int64 offset, XMP_Int64 length )
 
 XMPScanner::InternalSnip::InternalSnip ( const InternalSnip & rhs ) :
 	fInfo ( rhs.fInfo ),
-	fMachine ( nullptr )
+	fMachine (nullptr )
 {
 
 	assert ( rhs.fMachine.get() == NULL );	// Don't copy a snip with a machine.
@@ -1261,9 +1311,10 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 		#else
 			{
 				// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-				PacketMachine *	pm	= new PacketMachine ( bufferOffset, bufferOrigin, bufferLength );
-				std::unique_ptr<PacketMachine> ap ( pm );
-				snipPos->fMachine = std::move(ap);
+				//PacketMachine *	pm	= new PacketMachine ( bufferOffset, bufferOrigin, bufferLength );
+				//unique_ptr<PacketMachine>	ap ( pm );
+				//snipPos->fMachine = std::make_unique<PacketMachine>(bufferOffset, bufferOrigin, bufferLength);
+				snipPos->fMachine.reset (new PacketMachine (bufferOffset, bufferOrigin, bufferLength));
 			}
 		#endif
 		thisMachine = snipPos->fMachine.get();
@@ -1286,7 +1337,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 			#else
 				{
 					// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-					std::unique_ptr<PacketMachine> ap;
+					unique_ptr<PacketMachine>	ap (nullptr );
 					snipPos->fMachine = std::move(ap);
 				}
 			#endif
@@ -1379,7 +1430,7 @@ XMPScanner::Scan ( const void * bufferOrigin, XMP_Int64 bufferOffset, XMP_Int64 
 					#else
 						{
 							// Some versions of gcc complain about the assignment operator above.  This avoids the gcc bug.
-							std::unique_ptr<PacketMachine> ap;
+							unique_ptr<PacketMachine>	ap (nullptr );
 							snipPos->fMachine = std::move(ap);
 						}
 					#endif

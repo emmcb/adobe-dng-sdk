@@ -290,6 +290,11 @@ class dng_metadata
 		
 		dng_big_table_index fBigTableIndex;
 
+		// Big table group index for storing association between group digests
+		// and instance digests.
+
+		dng_big_table_group_index fBigTableGroupIndex;
+
 		// Image sequence info.
 
 		dng_image_sequence_info fImageSequenceInfo;
@@ -530,6 +535,18 @@ class dng_metadata
 		const dng_big_table_index & BigTableIndex () const
 			{
 			return fBigTableIndex;
+			}
+			
+		// Routines to access the big table group index.
+		
+		void SetBigTableGroupIndex (const dng_big_table_group_index &index)
+			{
+			fBigTableGroupIndex = index;
+			}
+			
+		const dng_big_table_group_index & BigTableGroupIndex () const
+			{
+			return fBigTableGroupIndex;
 			}
 			
 		// Routines to access image sequence info.
@@ -948,27 +965,23 @@ class dng_negative
 		
 		uint32 fRawFloatBitDepth;
 		
-		// The raw image JPEG data that we grabbed, if any.
-		
-		AutoPtr<dng_jpeg_image> fRawJPEGImage;
-		
-		// Keep a separate digest for the compressed JPEG data, if any.
-		
-		mutable dng_fingerprint fRawJPEGImageDigest;
-		
 		// The raw lossy compressed image that we grabbed, if any.
 		
 		AutoPtr<dng_lossy_compressed_image> fRawLossyCompressedImage;
 		
 		// Keep a separate digest for the (lossy) compressed general image
-		// data, if any. This is used for JPEG XL and possibly for other lossy
-		// codecs in future.
+		// data, if any. This is used for JPEG and JPEG XL and possibly
+		// for other lossy codecs in future.
 		
 		mutable dng_fingerprint fRawLossyCompressedImageDigest;
 		
 		// Transparency mask image, if any.
 		
 		AutoPtr<dng_image> fTransparencyMask;
+		
+		// Was the transparency mask lossy compressed?
+		
+		bool fTransparencyMaskWasLossyCompressed = false;
 		
 		// Grabbed transparency mask, if we are not saving the current mask.
 		
@@ -1025,11 +1038,6 @@ class dng_negative
 
 		std::shared_ptr<const dng_gain_table_map> fProfileGainTableMap;
 
-		// Preferred method for lossy compression. Default value of 0
-		// indicates no preference.
-
-		uint32 fPreferredLossyCodec = 0;
-
 	public:
 	
 		virtual ~dng_negative ();
@@ -1083,6 +1091,13 @@ class dng_negative
 		const dng_big_table_index & BigTableIndex () const
 			{
 			return fMetadata.BigTableIndex ();
+			}
+			
+		/// Getter for embedded big table group index.
+		
+		const dng_big_table_group_index & BigTableGroupIndex () const
+			{
+			return fMetadata.BigTableGroupIndex ();
 			}
 			
 		/// Getter for embedded big table dictionary.
@@ -1525,7 +1540,7 @@ class dng_negative
 		
 		/// Default cropped image aspect ratio.
 		
-		real64 AspectRatio () const
+		real64 BaseAspectRatio () const
 			{
 			return SquareWidth	() /
 				   SquareHeight ();
@@ -2107,12 +2122,14 @@ class dng_negative
   
 		bool GetProfileByID (const dng_camera_profile_id &id,
 							 dng_camera_profile &foundProfile,
-							 bool useDefaultIfNoMatch = true) const;
+							 bool useDefaultIfNoMatch = true,
+							 const dng_camera_profile_group_selector *groupSelector = nullptr) const;
 		
 		// Returns the camera profile to embed when saving to DNG.
 		
 		bool GetProfileToEmbed (const dng_metadata &metadata,
-								dng_camera_profile &foundProfile) const;
+								dng_camera_profile &foundProfile,
+								bool skipAdobeStandard = false) const;
 		
 		// API for AsShotProfileName.
 			
@@ -2682,6 +2699,13 @@ class dng_negative
 		// Returns the raw image data.
 		
 		const dng_image & RawImage () const;
+		
+		// Clears any saved raw image.
+		
+		void ClearRawImage ()
+			{
+			fRawImage.Reset ();
+			}
   
 		// Returns the raw image black level in 16-bit space.
 		
@@ -2698,33 +2722,6 @@ class dng_negative
 			{
 			fRawFloatBitDepth = bitDepth;
 			}
-		
-		// API for raw jpeg image.
-		
-		const dng_jpeg_image * RawJPEGImage () const;
-
-		void SetRawJPEGImage (AutoPtr<dng_jpeg_image> &jpegImage);
-			
-		void ClearRawJPEGImage ();
-			
-		// API for RawJPEGImageDigest:
-		
-		void SetRawJPEGImageDigest (const dng_fingerprint &digest)
-			{
-			fRawJPEGImageDigest = digest;
-			}
-			
-		void ClearRawJPEGImageDigest () const
-			{
-			fRawJPEGImageDigest.Clear ();
-			}
-			
-		const dng_fingerprint & RawJPEGImageDigest () const
-			{
-			return fRawJPEGImageDigest;
-			}
-			
-		void FindRawJPEGImageDigest (dng_host &host) const;
 		
 		// API for raw lossy compressed image.
 		
@@ -2838,7 +2835,23 @@ class dng_negative
 
 		virtual bool SupportsPreservedBlackLevels (dng_host &host);
 			
-		// Adaptively encode a proxy image down to 8-bits/channel.
+		// Do we need to lossy compression the mosaic data?
+
+		bool NeedLossyCompressMosaicJXL (dng_host &host) const;
+		
+		// Lossy compress raw mosaic image using JXL, if possible.
+		
+		void LossyCompressMosaicJXL (dng_host &host,
+									 dng_image_writer &writer);
+
+		// Lossless compress images using JXL, if possible.
+		
+		virtual void LosslessCompressJXL (dng_host &host,
+										  dng_image_writer &writer,
+										  bool nearLosslessOK = false);
+			
+		// Adaptively encode a proxy image down to 8-bits or 16-bits
+		// per channel.
 
 		dng_image * EncodeRawProxy (dng_host &host,
 									const dng_image &srcImage,
@@ -3086,19 +3099,6 @@ class dng_negative
 		void SetProfileGainTableMap
 			(AutoPtr<dng_gain_table_map> &gainTableMap);
 
-		// Returns the preferred lossy compression method for this negative; 0
-		// indicates no preference.
-
-		uint32 PreferredLossyCodec () const
-			{
-			return fPreferredLossyCodec;
-			}
-
-		void SetPreferredLossyCodec (uint32 method)
-			{
-			fPreferredLossyCodec = method;
-			}
-
 	protected:
 	
 		dng_negative (dng_host &host);
@@ -3132,6 +3132,8 @@ class dng_negative
 									int32 srcPlane,
 									dng_matrix *scaleTransforms);
 									   
+		virtual void AdjustGainMapForStage3 (dng_host &host);
+									  
 		virtual void AdjustProfileForStage3 ();
 									  
 		virtual bool GetProfileByMetadata (const dng_camera_profile_metadata &metadata,
@@ -3140,15 +3142,28 @@ class dng_negative
 		virtual bool GetProfileByIDFromList (const dng_profile_metadata_list &list,
 											 const dng_camera_profile_id &id,
 											 dng_camera_profile &foundProfile,
-											 bool useDefaultIfNoMatch) const;
+											 bool useDefaultIfNoMatch,
+											 const dng_camera_profile_group_selector *groupSelector) const;
 		
 		virtual bool GetProfileToEmbedFromList (const dng_profile_metadata_list &list,
 												const dng_metadata &metadata,
-												dng_camera_profile &foundProfile) const;
+												dng_camera_profile &foundProfile,
+												bool skipAdobeStandard = false) const;
+
+		void CompressTransparencyMaskJXL (dng_host &host,
+										  dng_image_writer &writer,
+										  bool nearLosslessOK);
+								  
+		void CompressDepthMapJXL (dng_host &host,
+								  dng_image_writer &writer,
+								  bool nearLosslessOK);
+								  
+		void CompressSemanticMasksJXL (dng_host &host,
+									   dng_image_writer &writer,
+									   bool nearLosslessOK);
 
 		void AdjustSemanticMasksForProxy (dng_host &host,
 										  dng_image_writer &writer,
-										  bool nonFullSizeProxy,
 										  const dng_rect &originalStage3Bounds,
 										  const dng_rect &defaultCropArea);
 
@@ -3156,6 +3171,17 @@ class dng_negative
 
 /*****************************************************************************/
 
-#endif
+dng_image * EncodeImageForCompression (dng_host &host,
+									   const dng_image &srcImage,
+									   const dng_rect &activeArea,
+									   const bool isSceneReferred,
+									   const bool use16bit,
+									   const real64 srcBlackLevel,
+									   real64 *dstBlackLevel,
+									   dng_opcode_list &opcodeList);
+
+/*****************************************************************************/
+
+#endif	// __dng_negative__
 	
 /*****************************************************************************/

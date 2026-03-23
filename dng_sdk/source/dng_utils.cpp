@@ -208,6 +208,10 @@ void dng_show_message (const char *s)
 
 /*****************************************************************************/
 
+#if (qMacOS || qiPhone)
+__attribute__((__format__ (__printf__, 1, 2)))
+#endif
+
 void dng_show_message_f (const char *fmt, ... )
 	{
 	
@@ -974,10 +978,8 @@ uint32 MinBackwardVersionForCompression (uint32 compression)
 	if (compression == ccLossyJPEG)
 		return dngVersion_1_4_0_0;
 
-	#if qDNGSupportJXL
 	if (compression == ccJXL)
 		return dngVersion_1_7_0_0;
-	#endif
 
 	return dngVersion_1_1_0_0;
 	

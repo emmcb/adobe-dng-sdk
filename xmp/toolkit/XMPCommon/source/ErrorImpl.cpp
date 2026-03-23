@@ -4,8 +4,14 @@
 // All Rights Reserved
 //
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
+
+#include <sstream>
+#include <iomanip>
+#include <cstdarg>
 
 #define IMPLEMENTATION_HEADERS_CAN_BE_INCLUDED 1
 	#include "XMPCommon/ImplHeaders/ErrorImpl.h"
@@ -15,11 +21,8 @@
 #include "XMPCommon/Interfaces/IUTF8String_I.h"
 #include "XMPCommon/XMPCommonErrorCodes_I.h"
 #include "XMPCommon/Interfaces/IObjectFactory.h"
-#include <cstdarg>
-
 #include "XMPCommon/Utilities/TSmartPointers_I.h"
-#include <sstream>
-#include <iomanip>
+
 #define PRECISION_LIMIT 6
 
 namespace XMP_COMPONENT_INT_NAMESPACE {
@@ -113,9 +116,8 @@ namespace XMP_COMPONENT_INT_NAMESPACE {
 			UTF8StringStream stm1;
 			stm1.setf( std::ios::hex );
 			stm1 << "0x" << addressParameter;
-			std::string str1 = stm1.str().c_str();
 			if ( stm1.str().size() > 4 ) {
-				const char * charPtr = str1.c_str();
+				const char * charPtr = stm1.str().c_str();
 				if ( charPtr[ 2 ] == '0' && ( charPtr[ 3 ] == 'x' || charPtr[ 3 ] == 'X' ) ) {
 					appends0x = true;
 				}

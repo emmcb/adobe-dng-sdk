@@ -1555,7 +1555,7 @@ DNG_ALWAYS_INLINE void dng_lossless_decoder<simd>::FillBitBuffer (int32 nbits)
 				
 				if (except.ErrorCode () != dng_error_end_of_file)
 					{
-					throw except;
+					throw; // rethrow except
 					}
 					
 				// Some Hasselblad files now use the JPEG end of image marker.
@@ -1570,7 +1570,7 @@ DNG_ALWAYS_INLINE void dng_lossless_decoder<simd>::FillBitBuffer (int32 nbits)
 				if (!((c0 == 0xFF && c1 == 0xD9) ||
 					  (c1 == 0xFF && c2 == 0xD9)))
 					{
-					throw except;
+					throw; // rethrow except
 					}
 				
 				// Swallow the case where we hit EOF with the JPEG EOI marker.

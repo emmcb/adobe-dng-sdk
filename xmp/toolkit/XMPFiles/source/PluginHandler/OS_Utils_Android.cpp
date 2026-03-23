@@ -4,7 +4,9 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
 
 #include "ModuleUtils.h"
@@ -93,7 +95,7 @@ OS_ModuleRef LoadModule( const std::string & inModulePath, bool inOnlyResourceAc
 		}
 		else
 		{	// success !
-			result = (void*) fileHandle;
+			result = (void*) (intptr_t) fileHandle;
 			ResourceFileToPathMap::const_iterator iter = sMapResourceFileToPath.find(result);
 			if (iter == sMapResourceFileToPath.end())
 			{

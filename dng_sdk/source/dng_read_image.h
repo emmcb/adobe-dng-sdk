@@ -35,63 +35,12 @@ bool DecodePackBits (dng_stream &stream,
 
 /*****************************************************************************/
 
-class dng_row_interleaved_image: public dng_image
-	{
-	
-	private:
-	
-		dng_image &fImage;
-		
-		uint32 fFactor;
-		
-	public:
-	
-		dng_row_interleaved_image (dng_image &image,
-								   uint32 factor);
-					  
-		virtual void DoGet (dng_pixel_buffer &buffer) const;
-			
-		virtual void DoPut (const dng_pixel_buffer &buffer);
-		
-	private:
-	
-		int32 MapRow (int32 row) const;
-	
-	};
-
-/*****************************************************************************/
-
-#if qDNGSupportColumnInterleaveFactor
-
-/*****************************************************************************/
-
-class dng_column_interleaved_image: public dng_image
-	{
-	
-	private:
-	
-		dng_image &fImage;
-		
-		uint32 fFactor;
-		
-	public:
-	
-		dng_column_interleaved_image (dng_image &image,
-									  uint32 factor);
-					  
-		virtual void DoGet (dng_pixel_buffer &buffer) const;
-			
-		virtual void DoPut (const dng_pixel_buffer &buffer);
-		
-	private:
-	
-		int32 MapColumn (int32 column) const;
-	
-	};
-
-/*****************************************************************************/
-
-#endif	// qDNGSupportColumnInterleaveFactor
+void Interleave2D (dng_host &host,
+				   const dng_image &srcImage,
+				   dng_image &dstImage,
+				   const int32 rowFactor,
+				   const int32 colFactor,
+				   bool encode);
 
 /*****************************************************************************/
 
@@ -172,8 +121,6 @@ class dng_read_image
 									   AutoPtr<dng_memory_block> &uncompressedBuffer,
 									   AutoPtr<dng_memory_block> &subTileBlockBuffer);
 
-		#if qDNGSupportJXL
-		
 		virtual bool ReadJXL (dng_host &host,
 							  const dng_ifd &ifd,
 							  dng_stream &stream,
@@ -183,8 +130,6 @@ class dng_read_image
 							  uint8 *jxlCompressedRawBitStream,
 							  bool usingMultipleThreads);
 
-		#endif	// qDNGSupportJXL
-	
 		virtual bool CanReadTile (const dng_ifd &ifd);
 		
 		virtual bool NeedsCompressedBuffer (const dng_ifd &ifd);

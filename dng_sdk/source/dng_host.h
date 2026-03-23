@@ -98,6 +98,11 @@ class dng_host: private dng_uncopyable
 		
 		bool fSaveLinearDNG;
 		
+		// Do we want to create JXL compressed in saved DNGs?
+		
+		bool fLossyMosaicJXL = false;
+		bool fLosslessJXL    = false;
+		
 		// Keep the original raw file data block?
 		
 		bool fKeepOriginalFile;
@@ -115,10 +120,9 @@ class dng_host: private dng_uncopyable
 
 		bool fPreserveStage2;
 	
-		#if qDNGSupportJXL
-		bool fPreferCompressJXL = false;
 		std::shared_ptr<const dng_jxl_encode_settings> fJXLEncodeSettings;
-		#endif
+		
+		std::shared_ptr<const dng_jxl_color_space_info> fJXLColorSpaceInfo;
 		
 	public:
 	
@@ -337,6 +341,40 @@ class dng_host: private dng_uncopyable
 
 		virtual bool SaveLinearDNG (const dng_negative &negative) const;
 			
+		/// Getter for flag determining whether to save DNG with lossy
+		/// compressed mosaic if possible.
+
+		bool LossyMosaicJXL () const
+			{
+			return fLossyMosaicJXL;
+			}
+			
+		/// Setter for flag determining whether to save DNG with lossy
+		/// compressed mosaic if possible.
+		/// \param want If true, attempt to save lossy compressed mosaic.
+
+		bool SetLossyMosaicJXL (bool want)
+			{
+			return fLossyMosaicJXL = want;
+			}
+			
+		/// Getter for flag determining whether to save DNG with lossless
+		/// compression if possible.
+
+		bool LosslessJXL () const
+			{
+			return fLosslessJXL;
+			}
+			
+		/// Setter for flag determining whether to save DNG with lossless
+		/// compression if possible.
+		/// \param want If true, attempt to save using lossless JXL.
+
+		bool SetLosslessJXL (bool want)
+			{
+			return fLosslessJXL = want;
+			}
+			
 		/// Setter for flag determining whether to keep original raw file data.
 		/// \param keep If true, original raw data will be kept.
 
@@ -468,33 +506,55 @@ class dng_host: private dng_uncopyable
 
 		/// JXL compression API.
 
-		#if qDNGSupportJXL
-
-		virtual bool PreferCompressJXL () const
-			{
-			return fPreferCompressJXL;
-			}
-
-		void SetPreferCompressJXL (bool flag)
-			{
-			fPreferCompressJXL = flag;
-			}
-
 		void SetJXLEncodeSettings (const dng_jxl_encode_settings &settings);
 		
 		const dng_jxl_encode_settings * JXLEncodeSettings () const
 			{
 			return fJXLEncodeSettings.get ();
 			}
-
+			
+		void SetJXLColorSpaceInfo (std::shared_ptr<const dng_jxl_color_space_info> info)
+			{
+			fJXLColorSpaceInfo = info;
+			}
+		
+		const dng_jxl_color_space_info * JXLColorSpaceInfo () const
+			{
+			return fJXLColorSpaceInfo.get ();
+			}
+			
+		std::shared_ptr<const dng_jxl_color_space_info> ShareJXLColorSpaceInfo () const
+			{
+			return fJXLColorSpaceInfo;
+			}
+			
+		enum use_case_enum
+			{
+			use_case_LossyMosaic,
+			use_case_LosslessMosaic,
+			use_case_MainImage,
+			use_case_LosslessMainImage,
+			use_case_EncodedMainImage,
+			use_case_ProxyImage,
+			use_case_EnhancedImage,
+			use_case_LosslessEnhancedImage,
+			use_case_MergeResults,
+			use_case_Transparency,
+			use_case_LosslessTransparency,
+			use_case_Depth,
+			use_case_LosslessDepth,
+			use_case_SemanticMask,
+			use_case_LosslessSemanticMask,
+			use_case_RenderedPreview,
+			use_case_GainMap,
+			use_case_LosslessGainMap
+			};
+			
 		virtual dng_jxl_encode_settings *
-			MakeJXLEncodeSettings (const dng_negative &negative,
+			MakeJXLEncodeSettings (use_case_enum useCase,
 								   const dng_image &image,
-								   uint32 subFileType,
-								   bool isProxy) const;
-		
-		#endif	// qDNGSupportJXL
-		
+								   const dng_negative *negative = nullptr) const;
+
 	};
 	
 /*****************************************************************************/

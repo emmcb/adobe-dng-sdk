@@ -18,6 +18,7 @@
 /*****************************************************************************/
 
 #include <memory>
+#include <vector>
 
 /*****************************************************************************/
 
@@ -36,6 +37,7 @@ class dng_big_table_dictionary;
 class dng_big_table_storage;
 class dng_camera_profile;
 class dng_camera_profile_dynamic_range;
+class dng_camera_profile_group_selector;
 class dng_camera_profile_id;
 class dng_camera_profile_info;
 class dng_camera_profile_metadata;
@@ -52,11 +54,15 @@ class dng_hue_sat_map;
 class dng_ifd;
 class dng_image;
 class dng_image_preview;
+class dng_image_table;
+class dng_image_table_compression_info;
+class dng_image_table_jxl_compression_info;
 class dng_image_writer;
 class dng_info;
 class dng_iptc;
 class dng_jpeg_image;
 class dng_jpeg_preview;
+class dng_jxl_color_space_info;
 class dng_jxl_encode_settings;
 class dng_linearization_info;
 class dng_local_string;
@@ -70,6 +76,8 @@ class dng_matrix;
 class dng_matrix_3by3;
 class dng_matrix_4by3;
 class dng_md5_printer;
+class dng_md5_printer_le_stream;
+class dng_md5_printer_stream;
 class dng_memory_allocator;
 class dng_memory_block;
 class dng_memory_data;
@@ -123,13 +131,22 @@ class dng_xy_coord;
 
 class tiff_tag;
 
+class tag_string;
+class tag_uint32_ptr;
+
 /*****************************************************************************/
 
 typedef std::shared_ptr<dng_masked_rgb_table> dng_masked_rgb_table_sptr;
 typedef std::shared_ptr<dng_rgb_to_rgb_table_data> dng_rgb_to_rgb_table_data_sptr;
 typedef std::shared_ptr<dng_masked_rgb_table_render_data> dng_masked_rgb_table_render_data_sptr;
 
+typedef std::shared_ptr<dng_image> dng_image_sptr;
+typedef std::weak_ptr<dng_image>   dng_image_wptr;
+
 typedef std::shared_ptr<const dng_image> const_dng_image_sptr;
+
+typedef std::shared_ptr<dng_pixel_buffer> dng_pixel_buffer_sptr;
+typedef std::vector<dng_pixel_buffer_sptr> dng_pixel_buffer_vec;
 
 typedef std::shared_ptr<const dng_memory_block> const_dng_memory_block_sptr;
 

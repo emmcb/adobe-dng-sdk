@@ -249,8 +249,8 @@ void dng_hue_sat_map::AssignNewUniqueRuntimeFingerprint ()
 
 	const uint64 uid = ++sRuntimeFingerprintCounter;
 
-	dng_md5_printer printer;
-	printer.Process (&uid, sizeof (uid));
+	dng_md5_printer_stream printer;
+	printer.Put_uint64 (uid);
 	fRuntimeFingerprint = printer.Result ();
 
 	}
@@ -380,17 +380,15 @@ dng_hue_sat_map * dng_hue_sat_map::Interpolate (const dng_hue_sat_map &map1,
 
 		{
 
-		dng_md5_printer printer;
+		dng_md5_printer_le_stream printer;
 
-		printer.Process ("Interpolate", 11);
+		printer.ProcessPtr ("Interpolate", 11);
 
-		printer.Process (&weight1, sizeof(weight1));
+		printer.Put_real64 (weight1);
 
-		printer.Process (map1.RuntimeFingerprint ().data,
-						 dng_fingerprint::kDNGFingerprintSize);
+		printer.Process (map1.RuntimeFingerprint ());
 
-		printer.Process (map2.RuntimeFingerprint ().data,
-						 dng_fingerprint::kDNGFingerprintSize);
+		printer.Process (map2.RuntimeFingerprint ());
 
 		result->SetRuntimeFingerprint (printer.Result ());
 
@@ -513,21 +511,16 @@ dng_hue_sat_map * dng_hue_sat_map::Interpolate (const dng_hue_sat_map &map1,
 
 		{
 
-		dng_md5_printer printer;
+		dng_md5_printer_le_stream printer;
 
-		printer.Process ("Interpolate3", 12);
+		printer.ProcessPtr ("Interpolate3", 12);
 
-		printer.Process (&weight1, sizeof (weight1));
-		printer.Process (&weight2, sizeof (weight2));
+		printer.Put_real64 (weight1);
+		printer.Put_real64 (weight2);
 
-		printer.Process (map1.RuntimeFingerprint ().data,
-						 dng_fingerprint::kDNGFingerprintSize);
-
-		printer.Process (map2.RuntimeFingerprint ().data,
-						 dng_fingerprint::kDNGFingerprintSize);
-
-		printer.Process (map3.RuntimeFingerprint ().data,
-						 dng_fingerprint::kDNGFingerprintSize);
+		printer.Process (map1.RuntimeFingerprint ());
+		printer.Process (map2.RuntimeFingerprint ());
+		printer.Process (map3.RuntimeFingerprint ());
 
 		result->SetRuntimeFingerprint (printer.Result ());
 

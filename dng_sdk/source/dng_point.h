@@ -178,6 +178,29 @@ inline dng_point_real64 operator- (const dng_point_real64 &a,
 
 /*****************************************************************************/
 
+inline dng_point operator- (const dng_point &p)
+				  
+				  
+	{
+	
+	return dng_point (SafeInt32Sub (0, p.v),
+					  SafeInt32Sub (0, p.h));
+	
+	}
+
+/*****************************************************************************/
+
+inline dng_point_real64 operator- (const dng_point_real64 &p)
+				  
+				  
+	{
+	
+	return dng_point_real64 (-p.v, -p.h);
+	
+	}
+
+/*****************************************************************************/
+
 inline real64 Distance (const dng_point_real64 &a,
 						const dng_point_real64 &b)
 				  

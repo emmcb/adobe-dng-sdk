@@ -52,8 +52,17 @@ void dng_ref_counted_block::Allocate (uint32 size)
 	
 	if (size)
 		{
-		
-		fBuffer = malloc (size + sizeof (header));
+
+		size_t mallocSize = size + sizeof (header);
+
+		if (mallocSize <= size)
+			{
+
+			ThrowOverflow ();
+
+			}
+
+		fBuffer = malloc (mallocSize);
 		
 		if (!fBuffer)
 			{

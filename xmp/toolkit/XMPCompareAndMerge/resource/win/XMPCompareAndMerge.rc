@@ -1,0 +1,66 @@
+// =================================================================================================
+// Copyright 2014 Adobe Systems Incorporated
+// All Rights Reserved.
+//
+// NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
+// of the Adobe license agreement accompanying it.
+// =================================================================================================
+
+#include "winres.h"	// ! Needed to create the Version tab in the Properties panel.
+
+#include "../../../build/XMP_BuildInfo.h"
+#include "../../../public/include/XMP_Version.h"
+#include "../../source/XMPCompareAndMerge_ChangeLog.hpp"
+
+// Defines must be set in project settings: Resources/Preprocessor Definitions
+#if DEBUG
+	#define kConfig "Debug"	
+	#define kDebugSuffix "debug "
+#else
+	#define kConfig "Release"
+	#define kDebugSuffix ""
+#endif
+
+#if _WIN64
+	#define BINTYPE "64"
+#else
+	#define BINTYPE "32"
+#endif
+
+#define kEngVersion XMPCOMPAREANDMERGE_API_VERSION_STRING "-m" kXMPCompareAndMerge_EngString " ( "  BINTYPE " bit " kDebugSuffix ")"
+#define kBuildInfo  BUILDVERSIONSTR ", " BUILDDATESTR
+#define	kFileVersion MAKESTR(XMPCOMPAREANDMERGE_API_VERSION.kXMPCompareAndMerge_EngBuild.BUILDID)
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION XMPCOMPAREANDMERGE_API_VERSION_MAJOR,XMPCOMPAREANDMERGE_API_VERSION_MINOR,kXMPCompareAndMerge_EngBuild,BUILDID
+ PRODUCTVERSION XMPCOMPAREANDMERGE_API_VERSION_MAJOR,XMPCOMPAREANDMERGE_API_VERSION_MINOR,kXMPCompareAndMerge_EngBuild
+ FILEFLAGSMASK 0x3FL
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080004b0"
+        BEGIN
+            VALUE "Company", "Adobe Inc\0"
+            VALUE "CompanyName", "Adobe Inc\0"
+        	VALUE "Configuration", kConfig "\0"
+            VALUE "FileDescription", "Adobe XMP CompareAndMerge " kEngVersion "\0"
+            VALUE "FileVersion", kFileVersion "\0"
+            VALUE "InternalName", "AdobeXMPCompareAndMerge\0"
+            VALUE "LegalCopyright", kXMP_CopyrightStr "\0"
+            VALUE "OriginalFilename", "AdobeXMPCompareAndMerge.dll\0"
+            VALUE "ProductName", "Adobe XMP CompareAndMerge " BUILDDATESTR "\0"
+            VALUE "ProductVersion", BUILDVERSIONSTR "\0"
+			VALUE "BinType", BINTYPE "\0"
+			VALUE "BuildDate", BUILDDATESTR "\0"
+	        VALUE "BuildVersion", BUILDVERSIONSTR "\0"
+			VALUE "BuildID", BUILDIDSTR "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x800, 1200
+    END
+END

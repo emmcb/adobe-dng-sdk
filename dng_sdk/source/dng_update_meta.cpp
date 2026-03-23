@@ -255,6 +255,12 @@ class dng_ifd_updater
 		void WriteBigTableIndex (dng_file_updater &updater,
 								 dng_big_table_index &bigTableIndex);
 								 
+		void ParseBigTableGroupIndex (dng_file_updater &updater,
+									  dng_big_table_group_index &index) const;
+		
+		void WriteBigTableGroupIndex (dng_file_updater &updater,
+									  const dng_big_table_group_index &index);
+								 
 		bool MoveTagToIFD (dng_ifd_updater &dstIFD,
 						   uint32 tagCode);
 
@@ -556,7 +562,7 @@ bool dng_tag_updater::GetArray_Fingerprint (dng_file_updater &updater,
 			
 			dng_fingerprint fingerprint;
 		
-			updater.Stream ().Get (fingerprint.data, 16);
+			updater.Stream ().Get (fingerprint);
 			
 			values.push_back (fingerprint);
 			
@@ -1791,6 +1797,80 @@ void dng_ifd_updater::WriteBigTableIndex (dng_file_updater &updater,
 
 /*****************************************************************************/
 
+void dng_ifd_updater::ParseBigTableGroupIndex (dng_file_updater &updater,
+											   dng_big_table_group_index &index) const
+	{
+	
+	if (HasTag (tcBigTableGroupIndex))
+		{
+		
+		const dng_tag_updater &tag = ExistingTag (tcBigTableGroupIndex);
+		
+		std::vector<dng_fingerprint> digests;
+		
+		if (tag.GetArray_Fingerprint (updater, digests))
+			{
+			
+			const uint32 existingCount = uint32 (digests.size ());
+
+			// This value should always be even, because this tag holds pairs
+			// of digests.
+
+			if ((existingCount & uint64 (1)) != 0)
+				return;
+
+			const uint32 numGroups = existingCount >> 1;
+
+			for (uint32 i = 0; i < numGroups; i++)
+				{
+				
+				index.AddEntry (digests [2 * i    ],
+								digests [2 * i + 1]);
+				
+				}
+			
+			}
+			
+		}
+	
+	}
+
+/*****************************************************************************/
+
+void dng_ifd_updater::WriteBigTableGroupIndex (dng_file_updater &updater,
+											   const dng_big_table_group_index &index)
+	{
+	
+	const uint32 updatedCount = (uint32) index.Map ().size ();
+		
+	std::vector<dng_fingerprint> digests;
+
+	digests.reserve (updatedCount * 2);
+
+	for (const auto &group : index.Map ())
+		{
+		digests.push_back (group.first);
+		digests.push_back (group.second);
+		}
+
+	const uint64 tagCount = uint64 (digests.size () * 16);
+
+	const void *data = (!digests.empty ()) ? (&digests [0]) : nullptr;
+
+	const bool doRemove = (updatedCount == 0);
+	
+	UpdateTag (updater,
+			   tcBigTableGroupIndex,
+			   ttByte,
+			   tagCount,	   
+			   data,
+			   doRemove,
+			   false);
+			   
+	}
+
+/*****************************************************************************/
+
 bool dng_ifd_updater::MoveTagToIFD (dng_ifd_updater &dstIFD,
 									uint32 tagCode)
 	{
@@ -1896,7 +1976,7 @@ void dng_ifd_updater::UpdateAdobeData (dng_file_updater &updater,
 				
 				dng_fingerprint oldDigest;
 				
-				stream.Get (oldDigest.data, 16);
+				stream.Get (oldDigest);
 				
 				if (iptcDigest != oldDigest)
 					{
@@ -1910,7 +1990,7 @@ void dng_ifd_updater::UpdateAdobeData (dng_file_updater &updater,
 						
 					#endif
  
-					stream.Put (iptcDigest.data, 16);
+					stream.Put (iptcDigest);
 					
 					}
 				
@@ -2886,12 +2966,12 @@ void DNGUpdateMetadata (dng_host &host,
 									   tcRawDataUniqueID,
 									   ttByte,
 									   16,
-									   rawDataUniqueID.data);
+									   rawDataUniqueID.Data ());
 																					 
 			}
 		
 		}
-		
+
 	// Do we have big tables to embed?
 	
 	if (!metadata.BigTableDictionary ().IsEmpty ())
@@ -2945,7 +3025,7 @@ void DNGUpdateMetadata (dng_host &host,
 				}
 				
 			}
-			
+
 		// Write updated index back to ifd if dirty.
 		
 		if (indexDirty)
@@ -2955,7 +3035,54 @@ void DNGUpdateMetadata (dng_host &host,
 												bigTableIndex);
 										 
 			}
+
+		// Read in existing big table group index, if any.
 		
+		dng_big_table_group_index groupIndex;
+		
+		updater.IFD0 ().ParseBigTableGroupIndex (updater,
+												 groupIndex);
+
+		// Write any new groups to the group index.
+
+		bool groupIndexDirty = false;
+		
+		for (const auto &group : metadata.BigTableGroupIndex ().Map ())
+			{
+			
+			const auto &groupDigest = group.first;
+			
+			const auto &instanceDigest = group.second;
+			
+			if (!groupIndex.HasEntry (groupDigest))
+				{
+
+				// Also check that the group refers to an existing instance.
+
+				if (bigTableIndex.HasEntry (instanceDigest))
+					{
+
+					groupIndex.AddEntry (groupDigest,
+										 instanceDigest);
+
+					groupIndexDirty = true;
+
+					}
+
+				}
+
+			} // for all groups
+		
+		// Write updated group index back to ifd if dirty.
+		
+		if (groupIndexDirty)
+			{
+			
+			updater.IFD0 ().WriteBigTableGroupIndex (updater,
+													 groupIndex);
+										 
+			}
+
 		}
 		
 	// Update XMP.

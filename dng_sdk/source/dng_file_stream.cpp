@@ -100,8 +100,7 @@ dng_file_stream::dng_file_stream (int fd,
 
 		#if qDNGValidate
 
-		ReportError ("Unable to open file",
-					 filename);
+		ReportError ("Unable to open file");
 
 		ThrowSilentError ();
 
@@ -121,35 +120,11 @@ dng_file_stream::dng_file_stream (int fd,
 								  bool output,
 								  uint32 bufferSize)
 
-	:	dng_stream ((dng_abort_sniffer *) NULL,
-					bufferSize,
-					0)
-
-	,	fFile (NULL)
+	:	dng_file_stream (fd,
+						 output ? "wb" : "rb",
+						 bufferSize)
 
 	{
-
-	// Note: Use dup here as caller is responsible for separately managing fd.
-
-	fFile = fdopen (dup (fd), output ? "wb" : "rb");
-
-	if (!fFile)
-		{
-
-		#if qDNGValidate
-
-		ReportError ("Unable to open file",
-					 filename);
-
-		ThrowSilentError ();
-
-		#else
-
-		ThrowOpenFile ();
-
-		#endif
-
-		}
 
 	}
 

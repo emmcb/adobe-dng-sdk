@@ -1,5 +1,5 @@
 # ==============================================================================
-cmake_minimum_required(VERSION 2.8.6)
+cmake_minimum_required(VERSION 3.3)
 
 # Enable folder grouping of projects in IDEs
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -157,15 +157,19 @@ include_directories(${XMPROOT_DIR})
 include_directories(${XMPROOT_DIR}/public/include)
 include_directories(${XMPROOT_DIR}/third-party/expat/public/lib)
 include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
-if(UNIX AND NOT APPLE AND NOT ${XMP_BUILD_STATIC})
+if(UNIX AND NOT APPLE)
 include_directories(${XMPROOT_DIR}/XMPCore/third-party/boost)
 include_directories(${XMPROOT_DIR}/XMPCore/third-party/boost/boost)
+endif()
+if(XMPWASM)
+	include_directories(${XMPROOT_DIR}/XMPWasm/include)
 endif()
 if (WIN32)
 	include_directories(${RESOURCE_ROOT}/win)
 else ()
 	include_directories(${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT})
 endif ()
+
 
 #additional link directory
 link_directories(${OUTPUT_DIR})
@@ -228,6 +232,16 @@ endif()
 
 AddLibraryAndDependencies(${TARGET_NAME} ${XMP_BUILD_STATIC} YES "SHARED" SOURCE_FILES DEPENDENCY_LIST)
 
+if(XMPWASM)
+
+	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fwasm-exceptions" )
+
+	if (NOT USING_SINGLE_THREAD)
+		set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread" )
+	endif()
+
+endif()
+
 #set the output name
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME  ${XMPCORE_LIB})
 
@@ -239,6 +253,18 @@ if(WIN32)
 	SetWinLinkFlags(${TARGET_NAME} "rpcrt4.lib ole32.lib" "${XMPCORE_LIB}")
 else(WIN32)
 	if(UNIX AND NOT APPLE)
+		#Parse major and minor library versio from XMP_Version.h and set SOVERSION property CTECHXMP-4170461
+		file(READ "${XMPROOT_DIR}/public/include/XMP_Version.h" XMP_VERSION_DATA)
+    	string(REGEX MATCH "XMPCORE_API_VERSION_MAJOR  ([0-9]*)" _ ${XMP_VERSION_DATA})
+    	set(VERSION_MAJOR "${CMAKE_MATCH_1}")
+    
+    	string(REGEX MATCH "XMPCORE_API_VERSION_MINOR  ([0-9]*)" _ ${XMP_VERSION_DATA})
+   		set(VERSION_MINOR "${CMAKE_MATCH_1}")
+    
+    	set(SO_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
+    
+    	set_target_properties(${TARGET_NAME} PROPERTIES SOVERSION ${SO_VERSION})
+		
 		SetWinLinkFlags(${TARGET_NAME} "-Xlinker --version-script -Xlinker \"${RESOURCE_ROOT}/${XMP_PLATFORM_SHORT}/${TARGET_NAME}.exp\"" "")
 	else()
 		if(APPLE_IOS AND NOT XMP_BUILD_STATIC)
@@ -261,7 +287,7 @@ SetOutputPath(${OUTPUT_DIR} 0)
 # Post build
 # ==============================================================================
 if(UNIX)
-	if (NOT APPLE AND NOT ANDROID)
+	if (NOT APPLE AND NOT ANDROID AND NOT XMPWASM)
 		if (${XMP_BUILD_STATIC})
 			add_custom_command (TARGET ${TARGET_NAME}
 				POST_BUILD

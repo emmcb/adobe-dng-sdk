@@ -174,8 +174,35 @@ class dng_camera_profile_id
 			*this = dng_camera_profile_id ();
 			}
 
+		/// Adds this camera profile ID to a printer.
+
+		void AddDigest (dng_md5_printer &printer) const;
+
 	};
 	
+/*****************************************************************************/
+
+extern const char * kProfileName_GroupPrefix;
+
+bool HasProfileGroupPrefix (const dng_string &name);
+
+dng_string StripProfileGroupPrefix (const dng_string &name);
+
+/******************************************************************************/
+
+/// \brief Information for selecting a specific profile from a profile group.
+
+class dng_camera_profile_group_selector
+	{
+	
+	public:
+	
+		// Do we want the HDR version of the profile?
+	
+		bool fHDR = false;
+		
+	};
+
 /******************************************************************************/
 
 /// \brief Container for DNG camera color profile and calibration data.
@@ -1143,6 +1170,10 @@ class dng_camera_profile_metadata
 	public:
 	
 		dng_camera_profile_id fProfileID;
+		
+		dng_string fGroupName;
+		
+		bool fHDR;
 		
 		dng_fingerprint fRenderDataFingerprint;
 		

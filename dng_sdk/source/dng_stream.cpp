@@ -1,5 +1,5 @@
 /*****************************************************************************/
-// Copyright 2006-2019 Adobe Systems Incorporated
+// Copyright 2006-2025 Adobe Systems Incorporated
 // All Rights Reserved.
 //
 // NOTICE:	Adobe permits you to use, modify, and distribute this file in
@@ -12,9 +12,11 @@
 #include "dng_auto_ptr.h"
 #include "dng_bottlenecks.h"
 #include "dng_exceptions.h"
+#include "dng_fingerprint.h"
 #include "dng_globals.h"
 #include "dng_flags.h"
 #include "dng_memory.h"
+#include "dng_rect.h"
 #include "dng_tag_types.h"
 #include "dng_assertions.h"
 
@@ -74,7 +76,18 @@ dng_stream::dng_stream (const void *data,
 
 dng_stream::~dng_stream ()
 	{
-	
+
+	#if qDNGStreamCheckForUnflushedStreams
+
+	if (fBufferDirty)
+		{
+
+		fprintf (stderr, "*** Error: dng_stream not flushed ***\n");
+
+		}
+
+	#endif
+
 	}
 		
 /*****************************************************************************/
@@ -369,6 +382,16 @@ void dng_stream::Get (void *data, uint32 count, uint32 maxOverRead)
 		}
 
 	}
+
+/*****************************************************************************/
+
+void dng_stream::Get (dng_fingerprint &digest)
+	{
+	
+	Get (digest.MutableData (),
+		 uint32 (dng_fingerprint::kDNGFingerprintSize));
+	
+	}
 		
 /*****************************************************************************/
 
@@ -529,6 +552,168 @@ void dng_stream::Put (const void *data,
 	fPosition = endPosition;
 	
 	fLength = Max_uint64 (Length (), fPosition);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_rect &area)
+	{
+	
+	Put_int32 (area.t);
+	Put_int32 (area.l);
+	Put_int32 (area.b);
+	Put_int32 (area.r);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_rect_real64 &area)
+	{
+	
+	Put_real64 (area.t);
+	Put_real64 (area.l);
+	Put_real64 (area.b);
+	Put_real64 (area.r);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_point &pt)
+	{
+	
+	Put_int32 (pt.h);
+	Put_int32 (pt.v);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_point_real64 &pt)
+	{
+	
+	Put_real64 (pt.h);
+	Put_real64 (pt.v);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_srational &value)
+	{
+	
+	Put_int32 (value.n);
+	Put_int32 (value.d);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_urational &value)
+	{
+	
+	Put_uint32 (value.n);
+	Put_uint32 (value.d);
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_fingerprint &digest)
+	{
+
+	Put (digest.Data (),
+		 uint32 (dng_fingerprint::kDNGFingerprintSize));
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put (const dng_string &str)
+	{
+
+	Put (str.Get	(),
+		 str.Length ());
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put_swap4 (const void *data,
+							const uint32 countMul4)
+	{
+
+	if (countMul4 == 0)
+		return;
+	
+	DNG_REQUIRE (RoundUp4 (countMul4) == countMul4,
+				 "countMul4 must be a multiple 4");
+
+	if (SwapBytes ())
+		{
+		
+		const uint32 elems = countMul4 / 4;
+
+		const uint32 *ptr = (const uint32 *) data;
+
+		for (uint32 i = 0; i < elems; i++)
+			{
+			
+			Put_uint32 (ptr [i]);
+			
+			}
+		
+		}
+
+	else
+		{
+
+		// Byte-swapping not needed, so just put directly.
+		
+		Put (data, countMul4);
+		
+		}
+	
+	}
+
+/*****************************************************************************/
+
+void dng_stream::Put_swap8 (const void *data,
+							const uint32 countMul8)
+	{
+
+	if (countMul8 == 0)
+		return;
+	
+	DNG_REQUIRE (RoundUp8 (countMul8) == countMul8,
+				 "countMul8 must be a multiple 8");
+
+	if (SwapBytes ())
+		{
+		
+		const uint32 elems = countMul8 / 8;
+
+		const uint64 *ptr = (const uint64 *) data;
+
+		for (uint32 i = 0; i < elems; i++)
+			{
+			
+			Put_uint64 (ptr [i]);
+			
+			}
+		
+		}
+
+	else
+		{
+
+		// Byte-swapping not needed, so just put directly.
+		
+		Put (data, countMul8);
+		
+		}
 	
 	}
 		

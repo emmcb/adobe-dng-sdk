@@ -805,208 +805,6 @@ bool dng_lzw_expander::Expand (const uint8 *sPtr,
 
 /*****************************************************************************/
 
-dng_row_interleaved_image::dng_row_interleaved_image (dng_image &image,
-													  uint32 factor)
-													  
-	:	dng_image (image.Bounds	   (),
-				   image.Planes	   (),
-				   image.PixelType ())
-													  
-	,	fImage	(image )
-	,	fFactor (factor)
-	
-	{
-	
-	}
-	
-/*****************************************************************************/
-
-int32 dng_row_interleaved_image::MapRow (int32 row) const
-	{
-
-	uint32 rows = Height ();
-	
-	int32 top = Bounds ().t;
-	
-	uint32 fieldRow = row - top;
- 
-	uint32 field;
-	
-	for (field = 0; true; field++)
-		{
-		
-		uint32 fieldRows = (rows - field + fFactor - 1) / fFactor;
-		
-		if (fieldRow < fieldRows)
-			{
-			
-			break;
-			
-			}
-			
-		fieldRow -= fieldRows;
-		
-		}
-  
-	return fieldRow * fFactor + field + top;
-
-	}
-	
-/*****************************************************************************/
-
-void dng_row_interleaved_image::DoGet (dng_pixel_buffer &buffer) const
-	{
-	
-	dng_pixel_buffer tempBuffer (buffer);
-	
-	for (int32 row = buffer.fArea.t; row < buffer.fArea.b; row++)
-		{
-				
-		tempBuffer.fArea.t = MapRow (row);
-		
-		tempBuffer.fArea.b = tempBuffer.fArea.t + 1;
-		
-		tempBuffer.fData = (void *) buffer.DirtyPixel (row,
-													   buffer.fArea.l,
-													   buffer.fPlane);
-										 
-		fImage.Get (tempBuffer);
-		
-		}
-		
-	}
-	
-/*****************************************************************************/
-
-void dng_row_interleaved_image::DoPut (const dng_pixel_buffer &buffer)
-	{
-	
-	dng_pixel_buffer tempBuffer (buffer);
-	
-	for (int32 row = buffer.fArea.t; row < buffer.fArea.b; row++)
-		{
-				
-		tempBuffer.fArea.t = MapRow (row);
-		
-		tempBuffer.fArea.b = tempBuffer.fArea.t + 1;
-		
-		tempBuffer.fData = (void *) buffer.ConstPixel (row,
-													   buffer.fArea.l,
-													   buffer.fPlane);
-										 
-		fImage.Put (tempBuffer);
-		
-		}
-		
-	}
-
-/*****************************************************************************/
-
-#if qDNGSupportColumnInterleaveFactor
-
-/*****************************************************************************/
-
-dng_column_interleaved_image::dng_column_interleaved_image (dng_image &image,
-															uint32 factor)
-													  
-	:	dng_image (image.Bounds	   (),
-				   image.Planes	   (),
-				   image.PixelType ())
-													  
-	,	fImage	(image )
-	,	fFactor (factor)
-	
-	{
-	
-	}
-	
-/*****************************************************************************/
-
-int32 dng_column_interleaved_image::MapColumn (int32 column) const
-	{
-
-	const uint32 columns = Width ();
-	
-	const int32 left = Bounds ().t;
-	
-	uint32 fieldColumn = column - left;
- 
-	uint32 field = 0;
-	
-	for (; true; field++)
-		{
-		
-		uint32 fieldColumns = (columns - field + fFactor - 1) / fFactor;
-		
-		if (fieldColumn < fieldColumns)
-			{
-			
-			break;
-			
-			}
-			
-		fieldColumn -= fieldColumns;
-		
-		}
-  
-	return fieldColumn * fFactor + field + left;
-
-	}
-	
-/*****************************************************************************/
-
-void dng_column_interleaved_image::DoGet (dng_pixel_buffer &buffer) const
-	{
-	
-	dng_pixel_buffer tempBuffer (buffer);
-	
-	for (int32 column = buffer.fArea.l; column < buffer.fArea.r; column++)
-		{
-				
-		tempBuffer.fArea.l = MapColumn (column);
-		
-		tempBuffer.fArea.r = tempBuffer.fArea.l + 1;
-		
-		tempBuffer.fData = (void *) buffer.DirtyPixel (buffer.fArea.t,
-													   column,
-													   buffer.fPlane);
-										 
-		fImage.Get (tempBuffer);
-		
-		}
-		
-	}
-	
-/*****************************************************************************/
-
-void dng_column_interleaved_image::DoPut (const dng_pixel_buffer &buffer)
-	{
-	
-	dng_pixel_buffer tempBuffer (buffer);
-	
-	for (int32 column = buffer.fArea.l; column < buffer.fArea.r; column++)
-		{
-				
-		tempBuffer.fArea.l = MapColumn (column);
-		
-		tempBuffer.fArea.r = tempBuffer.fArea.l + 1;
-		
-		tempBuffer.fData = (void *) buffer.ConstPixel (buffer.fArea.t,
-													   column,
-													   buffer.fPlane);
-										 
-		fImage.Put (tempBuffer);
-		
-		}
-		
-	}
-
-/*****************************************************************************/
-
-#endif	// qDNGSupportColumnInterleaveFactor
-	
-/*****************************************************************************/
-
 static void ReorderSubTileBlocks (dng_host &host,
 								  const dng_ifd &ifd,
 								  dng_pixel_buffer &buffer,
@@ -2009,10 +1807,6 @@ bool dng_read_image::ReadLosslessJPEG (dng_host &host,
 
 /*****************************************************************************/
 
-#if qDNGSupportJXL
-
-/*****************************************************************************/
-
 bool dng_read_image::ReadJXL (dng_host &host,
 							  const dng_ifd &ifd,
 							  dng_stream &stream,
@@ -2085,10 +1879,6 @@ bool dng_read_image::ReadJXL (dng_host &host,
 
 /*****************************************************************************/
 
-#endif	// qDNGSupportJXL
-	
-/*****************************************************************************/
-
 bool dng_read_image::CanReadTile (const dng_ifd &ifd)
 	{
 	
@@ -2149,8 +1939,6 @@ bool dng_read_image::CanReadTile (const dng_ifd &ifd)
 			
 			}
 
-		#if qDNGSupportJXL
-
 		case ccJXL:
 			{
 
@@ -2179,8 +1967,6 @@ bool dng_read_image::CanReadTile (const dng_ifd &ifd)
 			break;
 			
 			}
-
-		#endif	// qDNGSupportJXL
 
 		case ccLZW:
 		case ccDeflate:
@@ -2829,8 +2615,6 @@ void dng_read_image::ReadTile (dng_host &host,
 			
 			}
 
-		#if qDNGSupportJXL
-			
 		case ccJXL:
 			{
 
@@ -2859,8 +2643,6 @@ void dng_read_image::ReadTile (dng_host &host,
 			
 			}
 
-		#endif	// qDNGSupportJXL
-			
 		default:
 			break;
 			
@@ -3117,10 +2899,10 @@ void dng_read_tiles_task::ProcessTask (uint32 tileIndex,
 	if (fLossyTileDigest)
 		{
 
-		dng_md5_printer printer;
+		dng_md5_direct_printer printer;
 
-		printer.Process (compressedBuffer->Buffer (),
-						 byteCount);
+		printer.ProcessPtr (compressedBuffer->Buffer (),
+							byteCount);
 
 		fLossyTileDigest [tileIndex] = printer.Result ();
 
@@ -3161,66 +2943,237 @@ void dng_read_tiles_task::ProcessTask (uint32 tileIndex,
 
 /*****************************************************************************/
 
-#if qDNGSupportColumnInterleaveFactor
-
-static void DeinterleaveRows (dng_host &host,
-							  const dng_image &src,
-							  dng_image &dst,
-							  const int32 interleaveFactor)
+class dng_interleave_task : public dng_area_task
+						  , private dng_uncopyable
 	{
-
-	DNG_REQUIRE (src.Bounds () == dst.Bounds () &&
-				 src.Planes () == dst.Planes () &&
-				 src.PixelType () == dst.PixelType (),
-				 "Mismatched src and dst in DeinterleaveRows");
 	
-	const dng_rect bounds = dst.Bounds ();
+	public:
+	
+		const dng_image &fSrcImage;
+			  dng_image &fDstImage;
+			  
+		int32 fRowFactor = 1;
+		int32 fColFactor = 1;
+		
+		bool fEncode = false;
+		
+	private:
+	
+		enum
+			{
+			kMaxThreads = 4
+			};
+		
+		AutoPtr<dng_memory_block> fSrcBuffer [kMaxThreads];
+		AutoPtr<dng_memory_block> fDstBuffer [kMaxThreads];
+		
+	public:
+	
+		dng_interleave_task (const dng_image &srcImage,
+							 dng_image &dstImage,
+							 const int32 rowFactor,
+							 const int32 colFactor,
+							 bool encode)
+								  
+			:	dng_area_task ("dng_interleave_task")
+								  
+			,	fSrcImage  (srcImage)
+			,	fDstImage  (dstImage)
+			,	fRowFactor (rowFactor)
+			,	fColFactor (colFactor)
+			,	fEncode    (encode)
+			
+			{
+			
+			if (fRowFactor >= (int32) fSrcImage.Bounds ().H ())
+				{
+				fRowFactor = 1;
+				}
+			
+			if (fColFactor >= (int32) fSrcImage.Bounds ().W ())
+				{
+				fColFactor = 1;
+				}
+			
+			fMaxThreads = kMaxThreads;
+			
+			fMaxTileSize = dng_point (512, 512);
+			
+			}
+	
+		dng_rect RepeatingTile1 () const override
+			{
+			return fDstImage.RepeatingTile ();
+			}
+			
+		void Start (uint32 threadCount,
+					const dng_rect &dstArea,
+					const dng_point &tileSize,
+					dng_memory_allocator *allocator,
+					dng_abort_sniffer *sniffer) override;
 
-	uint32 rowBytes = SafeUint32Mult (bounds.W (),
-									  dst.Planes (),
-									  dst.PixelSize ());
+		void Process (uint32 threadIndex,
+					  const dng_rect &tile,
+					  dng_abort_sniffer *sniffer) override;
+		
+	};
 
-	AutoPtr<dng_memory_block> block (host.Allocate (rowBytes));
+/*****************************************************************************/
 
-	dng_pixel_buffer buffer (bounds,
-							 0,
-							 dst.Planes (),
-							 dst.PixelType (),
-							 pcInterleaved,
-							 block->Buffer ());
-
-	for (int32 dstRow = bounds.t; dstRow < bounds.b; dstRow++)
+void dng_interleave_task::Start (uint32 threadCount,
+								 const dng_rect & /* dstArea */,
+								 const dng_point &tileSize,
+								 dng_memory_allocator *allocator,
+								 dng_abort_sniffer * /* sniffer */)
+	{
+	
+	uint32 srcBufferSize = ((tileSize.h + fColFactor - 1) / fColFactor) *
+						   ((tileSize.v + fRowFactor - 1) / fRowFactor) *
+						   fDstImage.PixelSize () *
+						   fDstImage.Planes ();
+						   
+	uint32 dstBufferSize = tileSize.h *
+						   tileSize.v *
+						   fDstImage.PixelSize () *
+						   fDstImage.Planes ();
+	
+	for (uint32 threadIndex = 0; threadIndex < threadCount; threadIndex++)
 		{
-
-		int32 offset = dstRow / interleaveFactor;
-
-		int32 srcRow =
-			((dstRow - offset * interleaveFactor) * bounds.H () /
-			 interleaveFactor) + offset;
-
-		dng_rect srcArea (srcRow,
-						  bounds.l,
-						  srcRow + 1,
-						  bounds.r);
-
-		dng_rect dstArea (dstRow,
-						  bounds.l,
-						  dstRow + 1,
-						  bounds.r);
-
-		buffer.fArea = srcArea;
-
-		src.Get (buffer);
-
-		buffer.fArea = dstArea;
-
-		dst.Put (buffer);
-
+		
+		fSrcBuffer [threadIndex].Reset (allocator->Allocate (srcBufferSize));
+		
+		fDstBuffer [threadIndex].Reset (allocator->Allocate (dstBufferSize));
+		
 		}
-
+	
 	}
 
-#endif	// qDNGSupportColumnInterleaveFactor
+/*****************************************************************************/
+
+void dng_interleave_task::Process (uint32 threadIndex,
+								   const dng_rect &tile,
+								   dng_abort_sniffer * /* sniffer */)
+	{
+	
+	dng_pixel_buffer dstBuffer;
+	
+	dstBuffer.fArea      = tile;
+	dstBuffer.fPlane     = 0;
+	dstBuffer.fPlanes    = fDstImage.Planes ();
+	dstBuffer.fPlaneStep = 1;
+	dstBuffer.fColStep   = dstBuffer.fPlaneStep * dstBuffer.fPlanes;
+	dstBuffer.fRowStep   = dstBuffer.fColStep * dstBuffer.fArea.W ();
+	dstBuffer.fPixelType = fDstImage.PixelType ();
+	dstBuffer.fPixelSize = fDstImage.PixelSize ();
+	dstBuffer.fData      = fDstBuffer [threadIndex]->Buffer ();
+	dstBuffer.fDirty     = true;
+	
+	dng_pixel_buffer srcBuffer = dstBuffer;
+	
+	srcBuffer.fData = fSrcBuffer [threadIndex]->Buffer ();
+	
+	if (fEncode)
+		{
+		fSrcImage.Get (dstBuffer);
+		}
+		
+	for (int32 rOffset = 0; rOffset < Min_int32 (fRowFactor, tile.H ()); rOffset++)
+		{
+		
+		for (int32 cOffset = 0; cOffset < Min_int32 (fColFactor, tile.W ()); cOffset++)
+			{
+			
+			int32 rField = (tile.t + rOffset) % fRowFactor;
+			int32 cField = (tile.l + cOffset) % fColFactor;
+			
+			int32 rFieldOffset = rField * (fDstImage.Height () / fRowFactor) +
+								 Min_int32 (rField, fDstImage.Height () % fRowFactor);
+			
+			int32 cFieldOffset = cField * (fDstImage.Width  () / fColFactor) +
+								 Min_int32 (cField, fDstImage.Width  () % fColFactor);
+								 
+			srcBuffer.fArea.t = rFieldOffset + (tile.t + rOffset) / fRowFactor;
+			srcBuffer.fArea.l = cFieldOffset + (tile.l + cOffset) / fColFactor;
+			
+			srcBuffer.fArea.b = srcBuffer.fArea.t + (tile.H () - rOffset + fRowFactor - 1) / fRowFactor;
+			srcBuffer.fArea.r = srcBuffer.fArea.l + (tile.W () - cOffset + fColFactor - 1) / fColFactor;
+			
+			srcBuffer.fRowStep = srcBuffer.fColStep * srcBuffer.fArea.W ();
+			
+			if (!fEncode)
+				{
+				fSrcImage.Get (srcBuffer);
+				}
+				
+			dng_pixel_buffer tmpBuffer = dstBuffer;
+			
+			tmpBuffer.fArea = srcBuffer.fArea;
+
+			tmpBuffer.fData = dstBuffer.DirtyPixel (tile.t + rOffset,
+													tile.l + cOffset);
+													
+			tmpBuffer.fRowStep *= fRowFactor;
+			tmpBuffer.fColStep *= fColFactor;
+			
+			if (fEncode)
+				{
+				srcBuffer.CopyArea (tmpBuffer,
+									tmpBuffer.fArea,
+									tmpBuffer.fPlane,
+									tmpBuffer.fPlanes);
+				}
+			else
+				{
+				tmpBuffer.CopyArea (srcBuffer,
+									srcBuffer.fArea,
+									srcBuffer.fPlane,
+									srcBuffer.fPlanes);
+				}
+			
+			if (fEncode)
+				{
+				fDstImage.Put (srcBuffer);
+				}
+			
+			}
+		
+		}
+		
+	if (!fEncode)
+		{
+		fDstImage.Put (dstBuffer);
+		}
+	
+	}
+	
+/*****************************************************************************/
+
+void Interleave2D (dng_host &host,
+				   const dng_image &srcImage,
+				   dng_image &dstImage,
+				   const int32 rowFactor,
+				   const int32 colFactor,
+				   bool encode)
+	{
+	
+	#if qDNGValidate
+	dng_timer timer ("Interleave2D");
+	#endif
+	
+	DNG_REQUIRE (srcImage.Bounds    () == dstImage.Bounds    () &&
+				 srcImage.Planes    () == dstImage.Planes    () &&
+				 srcImage.PixelType () == dstImage.PixelType (),
+				 "Mismatched src and dst in Interleave2D");
+				 
+	dng_interleave_task task (srcImage,
+							  dstImage,
+							  rowFactor,
+							  colFactor,
+							  encode);
+								   
+	host.PerformAreaTask (task, dstImage.Bounds ());
+	
+	}
 
 /*****************************************************************************/
 
@@ -3249,18 +3202,13 @@ void dng_read_image::Read (dng_host &host,
 	
 	uint32 tileIndex;
 
-	#if qDNGSupportColumnInterleaveFactor
+	// Deal with both images that have row or column interleaving.
 
-	// Deal with both images that have both row and column interleaving. Treat
-	// this case separately with a temporary image to improve performance.
-
-	if (ifd.fRowInterleaveFactor	> 1				   &&
-		ifd.fColumnInterleaveFactor > 1				   &&
-		ifd.fRowInterleaveFactor	< ifd.fImageLength &&
-		ifd.fColumnInterleaveFactor < ifd.fImageWidth)
+	if (ifd.fRowInterleaveFactor	> 1	||
+		ifd.fColumnInterleaveFactor > 1)
 		{
 
-		// First, apply column deinterleaving and store to a temporary image.
+		// First, read into a full interleaved temporary image.
 		
 		AutoPtr<dng_image> tempImage (host.Make_dng_image (image.Bounds (),
 														   image.Planes (),
@@ -3268,7 +3216,8 @@ void dng_read_image::Read (dng_host &host,
 		
 		dng_ifd tempIFD (ifd);
 		
-		tempIFD.fRowInterleaveFactor = 1;
+		tempIFD.fRowInterleaveFactor    = 1;
+		tempIFD.fColumnInterleaveFactor = 1;
 
 		Read (host,
 			  tempIFD,
@@ -3277,70 +3226,18 @@ void dng_read_image::Read (dng_host &host,
 			  lossyImage,
 			  lossyDigest);
 
-		// Next, apply row deinterleaving.
-
-		DeinterleaveRows (host,
-						 *tempImage,
-						  image,
-						  ifd.fRowInterleaveFactor);
-
+		// Interleave both rows and columns.
+		
+		Interleave2D (host,
+					  *tempImage,
+					  image,
+					  ifd.fRowInterleaveFactor,
+					  ifd.fColumnInterleaveFactor,
+					  false);
+						
 		return;
 		
 		}
-
-	#endif	// qDNGSupportColumnInterleaveFactor
-
-	// Deal with row interleaved images.
-
-	if (ifd.fRowInterleaveFactor > 1 &&
-		ifd.fRowInterleaveFactor < ifd.fImageLength)
-		{
-		
-		dng_ifd tempIFD (ifd);
-		
-		tempIFD.fRowInterleaveFactor = 1;
-		
-		dng_row_interleaved_image tempImage (image,
-											 ifd.fRowInterleaveFactor);
-		
-		Read (host,
-			  tempIFD,
-			  stream,
-			  tempImage,
-			  lossyImage,
-			  lossyDigest);
-			  
-		return;
-		
-		}
-
-	#if qDNGSupportColumnInterleaveFactor
-	
-	// Deal with column interleaved images.
-
-	if (ifd.fColumnInterleaveFactor > 1 &&
-		ifd.fColumnInterleaveFactor < ifd.fImageWidth)
-		{
-		
-		dng_ifd tempIFD (ifd);
-		
-		tempIFD.fColumnInterleaveFactor = 1;
-		
-		dng_column_interleaved_image tempImage (image,
-												ifd.fColumnInterleaveFactor);
-		
-		Read (host,
-			  tempIFD,
-			  stream,
-			  tempImage,
-			  lossyImage,
-			  lossyDigest);
-			  
-		return;
-		
-		}
-
-	#endif	// qDNGSupportColumnInterleaveFactor
 
 	// Figure out inner and outer samples.
 	
@@ -3557,11 +3454,8 @@ void dng_read_image::Read (dng_host &host,
 	if (lossyImage)
 		{
 		
-		if (ifd.IsBaselineJPEG ()
-			#if qDNGSupportJXL
-			|| (ifd.fCompression == ccJXL)
-			#endif
-			)
+		if (ifd.IsBaselineJPEG () ||
+			(ifd.fCompression == ccJXL))
 			{
 			
 			lossyImage->fImageSize.h = ifd.fImageWidth;
@@ -3821,10 +3715,10 @@ void dng_read_image::Read (dng_host &host,
 							if (lossyDigest)
 								{
 								
-								dng_md5_printer printer;
+								dng_md5_direct_printer printer;
 								
-								printer.Process (compressedBuffer->Buffer (),
-												 subByteCount);
+								printer.ProcessPtr (compressedBuffer->Buffer (),
+													subByteCount);
 												 
 								lossyTileDigests [tileIndex] = printer.Result ();
 								
@@ -3865,20 +3759,19 @@ void dng_read_image::Read (dng_host &host,
 		if (fJPEGTables.Get ())
 			{
 			
-			dng_md5_printer printer;
+			dng_md5_direct_printer printer;
 			
-			printer.Process (fJPEGTables->Buffer	  (),
-							 fJPEGTables->LogicalSize ());
+			printer.ProcessPtr (fJPEGTables->Buffer		 (),
+								fJPEGTables->LogicalSize ());
 							 
 			lossyTileDigests.push_back (printer.Result ());
 			
 			}
 			
-		dng_md5_printer printer2;
+		dng_md5_direct_printer printer2;
 
 		for (const auto &digest : lossyTileDigests)
-			printer2.Process (digest.data,
-							  uint32 (sizeof (digest.data)));
+			printer2.Process (digest);
 							  
 		*lossyDigest = printer2.Result ();
 		

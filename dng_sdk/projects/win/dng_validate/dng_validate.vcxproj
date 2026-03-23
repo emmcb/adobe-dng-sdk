@@ -406,6 +406,9 @@
     <ProjectReference Include="..\..\..\..\libjxl\client_projects\win\jxl.vcxproj">
       <Project>{9a2f1226-f015-4a4d-988c-acc96576a556}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\libwebp\client_projects\win\webp.vcxproj">
+      <Project>{2a6f82f9-e179-4d0d-b928-6f95ca6c2a1e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

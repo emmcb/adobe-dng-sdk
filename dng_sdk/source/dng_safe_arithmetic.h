@@ -120,13 +120,7 @@ int64 SafeInt64MultSlow(int64 arg1, int64 arg2);
 
 #if !qWinOS
 #ifdef __clang__
-#ifdef __ANDROID__
-// While clang says it supports __builtin_smull_overflow, the Android NDK
-// doesn't use the right runtime library per https://bugs.llvm.org/show_bug.cgi?id=28629
-#define __USE_BUILTIN_SMULL_OVERFLOW !defined(__NDK_MAJOR__) && __has_builtin(__builtin_smull_overflow)
-#else
 #define __USE_BUILTIN_SMULL_OVERFLOW __has_builtin(__builtin_smull_overflow)
-#endif // __ANDROID__
 #endif // __clang__
 #endif // !qWinOS
 
@@ -199,6 +193,11 @@ inline int64 SafeInt64Mult(int64 arg1, int64 arg2) {
 	return dng_internal::SafeInt64MultSlow(arg1, arg2);
 #endif
 }
+
+// Returns the result of multiplying arg1, ..., argn if it will fit in a
+// int64_t (without wraparound). Otherwise, throws a dng_exception with error
+// code dng_error_unknown.
+int64 SafeInt64Mult(int64 arg1, int64 arg2, int64 arg3);
 
 // Returns the result of dividing arg1 by arg2; if the result is not an integer,
 // rounds up to the next integer. If arg2 is zero, throws a dng_exception with

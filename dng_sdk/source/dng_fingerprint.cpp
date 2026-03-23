@@ -10,6 +10,9 @@
 
 #include "dng_assertions.h"
 #include "dng_flags.h"
+#include "dng_types.h"
+
+#include <cstdint>
 
 /*****************************************************************************/
 
@@ -39,6 +42,45 @@ dng_fingerprint::dng_fingerprint (const char *hex)
 		
 	}
 		
+/*****************************************************************************/
+
+dng_fingerprint::dng_fingerprint (const dng_fingerprint& print)
+
+	{
+
+	if (this != &print)
+		{
+
+		for (uint32 j = 0; j < kDNGFingerprintSize; j++)
+			{
+
+			data [j] = print.data [j];
+
+			}
+		}
+
+	}
+
+/*****************************************************************************/
+
+dng_fingerprint& dng_fingerprint::operator= (const dng_fingerprint& print)
+	{
+
+	if (this != &print)
+		{
+
+		for (uint32 j = 0; j < kDNGFingerprintSize; j++)
+			{
+
+			data [j] = print.data [j];
+
+			}
+		}
+
+	return *this;
+
+	}
+
 /*****************************************************************************/
 
 bool dng_fingerprint::IsNull () const
@@ -309,8 +351,8 @@ void dng_md5_printer::Reset ()
 
 /******************************************************************************/
 
-void dng_md5_printer::Process (const void *data,
-							   uint32 inputLen)
+void dng_md5_printer::ProcessPtr (const void *data,
+								  uint32 inputLen)
 	{
 	
 	DNG_ASSERT (!final, "Fingerprint already finalized!");
@@ -363,6 +405,42 @@ void dng_md5_printer::Process (const void *data,
 			inputLen - i);
 	
 	}
+
+/*****************************************************************************/
+
+void dng_md5_printer::Process_bool (bool x)
+	{
+
+	// sizeof(bool) is implemention-defined, which makes it non-portable.
+
+	// std::uint8_t exists in standard C++ since C++11 and is guaranteed to be
+	// exactly 8 bits (1 byte) by the standard.
+	
+	std::uint8_t value = x ? 1 : 0;
+
+	static_assert (sizeof (value) == 1, "uint8_t not 1 byte?");
+
+	ProcessPtr (&value, 1);
+
+	}
+
+/*****************************************************************************/
+
+void dng_md5_printer::Process_size (size_t x)
+	{
+
+	// sizeof(size_t) is implemention-defined, which makes it non-portable.
+
+	// std::uint64_t exists in standard C++ since C++11 and is guaranteed to
+	// be exactly 64 bits (8 bytes) by the standard.
+
+	std::uint64_t value = (std::uint64_t) x;
+
+	static_assert (sizeof (value) == 8, "uint64_t not 8 bytes?");
+
+	ProcessPtr (&value, 8);
+	
+	}
 		
 /******************************************************************************/
 
@@ -391,11 +469,11 @@ const dng_fingerprint & dng_md5_printer::Result ()
 		
 		uint32 padLen = (index < 56) ? (56 - index) : (120 - index);
 		
-		Process (PADDING, padLen);
+		ProcessPtr (PADDING, padLen);
 
 		// Append length (before padding)
 
-		Process (bits, 8);
+		ProcessPtr (bits, 8);
 
 		// Store state in digest
 		

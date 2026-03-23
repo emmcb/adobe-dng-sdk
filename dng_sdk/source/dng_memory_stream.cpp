@@ -56,9 +56,17 @@ dng_memory_stream::~dng_memory_stream ()
 		free (fPageList);
 		
 		}
-	
+
+	#if qDNGStreamCheckForUnflushedStreams
+
+	// Clear fBufferDirty. This class allows stream to be destructed UNFLUSHED.
+
+	DestructionOfUnflushedInstancesIsAllowed ();
+
+	#endif
+
 	}
-		
+
 /*****************************************************************************/
 		
 uint64 dng_memory_stream::DoGetLength ()

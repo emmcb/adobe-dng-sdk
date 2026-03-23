@@ -294,8 +294,7 @@ void dng_bmff_io::UpdateBigTables (dng_host &host,
 
 				dng_fingerprint digest;
 
-				tableStream.Get (digest.data,
-								 uint32 (sizeof (digest.data)));
+				tableStream.Get (digest);
 
 				if (digest.IsValid () &&
 					(digests.find (digest) == digests.end ()))
@@ -378,8 +377,7 @@ void dng_bmff_io::UpdateBigTables (dng_host &host,
 
 		// Write fingerprint.
 
-		memStream.Put (fingerprint.data,
-					   uint32 (sizeof (fingerprint.data)));
+		memStream.Put (fingerprint);
 
 		// Write table data.
 

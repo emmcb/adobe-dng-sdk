@@ -29,6 +29,8 @@
 
 #include <memory>
 
+#include "jxl/color_encoding.h"
+
 /*****************************************************************************/
 
 class dng_preview_info
@@ -207,9 +209,7 @@ class dng_ifd
 		dng_rect fMaskedArea [kMaxMaskedAreas];
 		
 		uint32 fRowInterleaveFactor;
-		#if qDNGSupportColumnInterleaveFactor
 		uint32 fColumnInterleaveFactor;
-		#endif
 		
 		uint32 fSubTileBlockRows;
 		uint32 fSubTileBlockCols;
@@ -247,6 +247,8 @@ class dng_ifd
 
 		std::shared_ptr<const dng_jxl_encode_settings> fJXLEncodeSettings;
 		
+		std::shared_ptr<const JxlColorEncoding> fJXLColorEncoding;
+		
 		bool fPatchFirstJPEGByte;
 
 		dng_string fSemanticName;
@@ -259,6 +261,14 @@ class dng_ifd
 		uint32 fProfileGainTableMap_TagVersion = 1;
 
 		dng_image_stats fImageStats;
+		
+		real32 fJXLDistance    = -1.0f;
+		int32  fJXLEffort      = -1;
+		int32  fJXLDecodeSpeed = -1;
+
+		// Metadata for ISO 21496-1.
+		
+		std::shared_ptr<const dng_memory_block> fGainMapMetadata;
 		
 	public:
 	

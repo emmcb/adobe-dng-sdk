@@ -24,6 +24,7 @@
 #include "dng_utils.h"
 #include "dng_xy_coord.h"
 
+#include <map>
 #include <vector>
 
 /*****************************************************************************/
@@ -276,7 +277,13 @@ class dng_shared
 		dng_std_vector<uint64>			fBigTableOffsets;
 		dng_std_vector<uint32>			fBigTableByteCounts;
 
+		std::map<dng_fingerprint,
+				 dng_fingerprint> fBigTableGroupIndex;
+
 		dng_image_sequence_info fImageSequenceInfo;
+		
+		uint32 fC2PAManifestCount  = 0;
+		uint64 fC2PAManifestOffset = 0;
 		
 	public:
 	

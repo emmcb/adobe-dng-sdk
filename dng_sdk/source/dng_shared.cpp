@@ -1411,7 +1411,7 @@ bool dng_camera_profile_info::ParseTag (dng_stream &stream,
 			if (pgtm && gVerbose)
 				{
 
-				dng_md5_printer printer;
+				dng_md5_printer_le_stream printer;
 				
 				pgtm->AddDigest (printer);
 
@@ -1525,7 +1525,7 @@ bool dng_camera_profile_info::ParseTag (dng_stream &stream,
 			if (gVerbose && fMaskedRGBTables)
 				{
 
-				dng_md5_printer printer;
+				dng_md5_printer_le_stream printer;
 				
 				fMaskedRGBTables->AddDigest (printer);
 
@@ -1932,9 +1932,9 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 				
 					{
 					
-					dng_md5_printer printer;
+					dng_md5_direct_printer printer;
 		
-					printer.Process (data, count);
+					printer.ProcessPtr (data, count);
 					
 					printf ("IPTCDigest: ");
 					
@@ -1959,9 +1959,9 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 					if (removed != 0)
 						{
 					
-						dng_md5_printer printer;
+						dng_md5_direct_printer printer;
 			
-						printer.Process (data, count);
+						printer.ProcessPtr (data, count);
 						
 						printf ("IPTCDigest (ignoring zero padding): ");
 						
@@ -2068,7 +2068,34 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 			break;
 			
 			}
+			
+		case tcC2PAManifest:
+			{
 		
+			CheckTagType (parentCode, tagCode, tagType, ttUndefined);
+			
+			fC2PAManifestOffset = stream.Position ();
+			fC2PAManifestCount  = tagCount;
+			
+			#if qDNGValidate
+			
+			if (gVerbose)
+				{
+				
+				printf ("C2PAManifest: offset = %llu, count = %u\n",
+						(unsigned long long) fC2PAManifestOffset,
+						(unsigned) 			 fC2PAManifestCount);
+						
+				DumpHexAscii (stream, fC2PAManifestCount);
+				
+				}
+				
+			#endif
+				
+			break;
+				
+			}
+
 		case tcDNGVersion:
 			{
 			
@@ -2682,7 +2709,7 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 			if (!CheckTagCount (parentCode, tagCode, tagCount, 16))
 				return false;
 				
-			stream.Get (fRawImageDigest.data, 16);
+			stream.Get (fRawImageDigest);
 				
 			#if qDNGValidate
 
@@ -2712,7 +2739,7 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 			if (!CheckTagCount (parentCode, tagCode, tagCount, 16))
 				return false;
 				
-			stream.Get (fNewRawImageDigest.data, 16);
+			stream.Get (fNewRawImageDigest);
 			
 			#if qDNGValidate
 
@@ -2742,7 +2769,7 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 			if (!CheckTagCount (parentCode, tagCode, tagCount, 16))
 				return false;
 				
-			stream.Get (fRawDataUniqueID.data, 16);
+			stream.Get (fRawDataUniqueID);
 				
 			#if qDNGValidate
 
@@ -2830,7 +2857,7 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 			if (!CheckTagCount (parentCode, tagCode, tagCount, 16))
 				return false;
 				
-			stream.Get (fOriginalRawFileDigest.data, 16);
+			stream.Get (fOriginalRawFileDigest);
 				
 			#if qDNGValidate
 
@@ -3386,7 +3413,7 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 				
 				dng_fingerprint fingerprint;
 				
-				stream.Get (fingerprint.data, 16);
+				stream.Get (fingerprint);
 				
 				fBigTableDigests.push_back (fingerprint);
 				
@@ -3531,6 +3558,72 @@ bool dng_shared::Parse_ifd0 (dng_stream &stream,
 				
 			}
 
+		case tcBigTableGroupIndex:
+			{
+			
+			if (!CheckTagType (parentCode, tagCode, tagType, ttByte))
+				return false;
+
+			if (!CheckTagCount (parentCode, tagCode, tagCount, 32, 0xFFFFFFF0))
+				return false;
+
+			// Pairs of digests:
+			// group_digest, dng_fingerprint, 16 bytes
+			// instance_digest, dng_fingerprint, 16 bytes
+			// Each pair is 32 bytes.
+			
+			const uint32 count = tagCount >> 5;
+
+			fBigTableGroupIndex.clear ();
+			
+			for (uint32 index = 0; index < count; index++)
+				{
+				
+				dng_fingerprint groupDigest;
+				dng_fingerprint instanceDigest;
+				
+				stream.Get (groupDigest);
+				stream.Get (instanceDigest);
+
+				fBigTableGroupIndex.insert (std::make_pair (groupDigest,
+															instanceDigest));
+								
+				}
+			
+			#if qDNGValidate
+
+			if (gVerbose)
+				{
+				
+				printf ("BigTableGroupIndex:\n");
+
+				uint32 index = 0;
+
+				for (const auto &entry : fBigTableGroupIndex)
+					{
+					
+					printf ("\t[%u] = ", index);
+					
+					DumpFingerprint (entry.first);
+
+					printf (" -> ");
+					
+					DumpFingerprint (entry.second);
+
+					printf ("\n");
+
+					index++;
+					
+					}
+				
+				}
+				
+			#endif	// qDNGValidate
+				
+			break;
+			
+			}
+			
 		case tcImageSequenceInfo:
 			{
 

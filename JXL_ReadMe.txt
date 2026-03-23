@@ -1,6 +1,5 @@
 DNG supports JPEG XL compression starting with version 1.7. Building
-the DNG SDK with JPEG XL support (see qDNGSupportJXL in dng_flags.h)
-requires libjxl.
+the DNG SDK with JPEG XL support requires libjxl.
 
 For your convenience, a copy of libjxl is included in this package.
 You may also obtain libjxl directly from:

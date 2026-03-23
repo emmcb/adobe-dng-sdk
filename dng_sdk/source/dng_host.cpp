@@ -620,10 +620,6 @@ void dng_host::ResampleImage (const dng_image &srcImage,
 
 /*****************************************************************************/
 
-#if qDNGSupportJXL
-
-/*****************************************************************************/
-
 void dng_host::SetJXLEncodeSettings (const dng_jxl_encode_settings &settings)
 	{
 	
@@ -634,139 +630,190 @@ void dng_host::SetJXLEncodeSettings (const dng_jxl_encode_settings &settings)
 /*****************************************************************************/
 
 dng_jxl_encode_settings *
-dng_host::MakeJXLEncodeSettings (const dng_negative &negative,
-								 const dng_image &image,
-								 const uint32 subFileType,
-								 const bool isProxy) const
+	dng_host::MakeJXLEncodeSettings (use_case_enum useCase,
+									 const dng_image &image,
+									 const dng_negative * /* negative */) const
 	{
 	
+	bool isFloat = (image.PixelType () == ttFloat);
+				
 	AutoPtr<dng_jxl_encode_settings> settings (new dng_jxl_encode_settings);
 
-	const bool isFloat = (image.PixelType () == ttFloat);
-
-	if (isProxy)
-		{
+	settings->SetEffort (7);
 	
-		settings->SetEffort (7);
-
-		if (subFileType == sfGainMap)
-			{
-			
-			settings->SetDistance (isFloat ? 3.0f : 1.0f);
-			
-			}
-
-		else if (isFloat)
-			{
-
-			settings->SetDistance (3.0f);
-
-			}
-
-		else
-			{
-
-			// Need a higher quality for raw proxies than non-raw proxies,
-			// since users often perform much greater color changes. Also, if
-			// we are targeting a "large" size proxy (larger than 5 MP), or
-			// this is a full size proxy, then use a higher quality.
-
-			bool useHigherQuality =
-				((uint64) image.Width  () *
-				 (uint64) image.Height () > 5000000 ||
-				 image.Bounds ().Size () == negative.OriginalDefaultFinalSize ());
-
-			settings->SetDistance (useHigherQuality ? 0.5f : 1.0f);
-
-			}
-
-		}
-
-	else
+	switch (useCase)
 		{
-
-		// Not proxy.
 		
-		if (subFileType == sfTransparencyMask)
+		case use_case_LossyMosaic:
 			{
+			settings->SetDistance (0.2f);
+			break;
+			}
 
+		case use_case_LosslessMosaic:
+		case use_case_LosslessMainImage:
+		case use_case_LosslessEnhancedImage:
+		case use_case_LosslessGainMap:
+			{
+			
+			// If we have special settings attached to the host, just use them.
+			
+			if (JXLEncodeSettings ())
+				{
+				
+				*settings = *JXLEncodeSettings ();
+				
+				}
+
+			else
+				{
+				
+				settings->SetDistance (0.0f);
+				settings->SetUseOriginalColorEncoding (true);
+
+				}
+
+			break;
+			
+			}
+			
+		case use_case_MainImage:
+		case use_case_EncodedMainImage:
+		case use_case_ProxyImage:
+			{
+			
+			// If we have special settings attached to the host, just use them.
+			
+			if (JXLEncodeSettings ())
+				{
+				
+				*settings = *JXLEncodeSettings ();
+				
+				}
+				
+			else
+				{
+				
+				bool useHigherQuality = (useCase != use_case_ProxyImage) ||
+										((uint64) image.Width  () *
+										 (uint64) image.Height () >= 5000000);
+										 
+				if (isFloat)
+					{
+					
+					settings->SetDistance (useHigherQuality ? 1.0f : 2.0f);
+					
+					}
+					
+				else if (useCase == use_case_MainImage)
+					{
+
+					// For non-encoded integer main images, we need to use very conservative
+					// compression settings.
+
+					settings->SetDistance (0.01f);
+				
+					}
+					
+				else
+					{
+					
+					settings->SetDistance (useHigherQuality ? 0.5f : 1.0f);
+					
+					}
+
+				}
+			
+			break;
+			
+			}
+			
+		case use_case_EnhancedImage:
+			{
+			settings->SetDistance (isFloat ? 0.5f : 0.01f);
+			break;
+			}
+
+		case use_case_MergeResults:
+			{
+			settings->SetDistance (isFloat ? 0.5f : 0.1f);
+			break;
+			}
+			
+		case use_case_Transparency:
+			{
+			
+			if (isFloat)
+				{
+				settings->SetDistance (1.0f);
+				break;
+				}
+				
+			// Fall through
+
+			DNG_FALLTHROUGH
+
+			}
+			
+		case use_case_LosslessTransparency:
+			{
+			
 			// Fast lossless.
 
 			settings->SetDistance (0.0f);
 			settings->SetEffort (1);
-
+			settings->SetUseOriginalColorEncoding (true);
+			
+			break;
+			
 			}
 
-		else if (subFileType == sfDepthMap ||
-				 subFileType == sfSemanticMask)
+		case use_case_Depth:
+		case use_case_SemanticMask:
 			{
 			
-			// Smaller lossless.
+			if (isFloat)
+				{
+				settings->SetDistance (1.0f);
+				break;
+				}
+				
+			// Fall through
+
+			DNG_FALLTHROUGH
+
+			}
+			
+		case use_case_LosslessDepth:
+		case use_case_LosslessSemanticMask:
+			{
+			
+			// Medium lossless.
 
 			settings->SetDistance (0.0f);
 			settings->SetEffort (3);
-
-			}
-
-		else if (subFileType == sfMainImage ||
-				 subFileType == sfEnhancedImage)
-			{
+			settings->SetUseOriginalColorEncoding (true);
 			
-			// High-quality lossy.
-
-			// Note that Enhanced images currently are computed and stored in
-			// linear space (do not take advantage of gamma encodings such as
-			// MapPolynomial) and therefore we need to be conservative with
-			// lossy compression settings. See CR-4203530.
-
-			settings->SetDistance (0.01f);
-			settings->SetEffort (7);
-
-			}
-
-		else if (subFileType == sfGainMap)
-			{
+			break;
 			
-			settings->SetDistance (1.0f);
-			settings->SetEffort (7);
-
 			}
-
-		else if (subFileType == sfPreviewMask ||
-				 subFileType == sfPreviewImage ||
-				 subFileType == sfPreviewDepthMap ||
-				 subFileType == sfPreviewSemanticMask ||
-				 subFileType == sfAltPreviewImage)
-			{
 			
-			// Smaller lossy.
-
+		case use_case_RenderedPreview:
+			{
 			settings->SetDistance (2.0f);
-			settings->SetEffort (7);
-
+			break;
 			}
 
-		#if qDNGValidate
-		
-		if (gVerbose)
+		case use_case_GainMap:
 			{
-			
-			printf ("Using JXL distance=%.2f, effort=%u for IFD type %u\n",
-					float (settings->Distance ()),
-					unsigned (settings->Effort ()),
-					unsigned (subFileType));
+			settings->SetDistance (1.0);
+			break;
 			}
-		
-		#endif	// qDNGValidate
-		
+			
 		}
-
+		
 	return settings.Release ();
 	
 	}
-
-/*****************************************************************************/
-
-#endif	// qDNGSupportJXL
 
 /*****************************************************************************/

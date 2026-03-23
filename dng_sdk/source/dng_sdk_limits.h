@@ -33,7 +33,7 @@ const uint32 kMaxSemanticMasks = 100;
 
 /// The maximum number of SubIFDs that will be parsed.
 
-const uint32 kMaxSubIFDs = kMaxDNGPreviews + kMaxSemanticMasks + 1;
+const uint32 kMaxSubIFDs = kMaxDNGPreviews + kMaxSemanticMasks + 5;
 
 /// The maximum number of chained IFDs that will be parsed.
 

@@ -160,18 +160,50 @@ void dng_resample_weights::Initialize (real64 scale,
 	
 	uint32 j;
 	
+	// Ensure scale is positive and finite.
+
+	if (!isfinite (scale))
+		{
+
+		ThrowProgramError ("scale not finite");
+
+		}
+
+	if (scale <= 0.0)
+		{
+
+		ThrowProgramError ("scale not positive");
+
+		}
+
 	// We only adjust the kernel size for scale factors less than 1.0.
 	
 	scale = Min_real64 (scale, 1.0);
-	
+
 	// Find radius of this kernel.
+
+	fRadius = ConvertDoubleToUint32 (std::ceil (kernel.Extent () / scale));
+
+	// Ensure fRadius > 0.
+
+	if (fRadius == 0)
+		{
+
+		ThrowProgramError ("fRadius zero");
+
+		}
 	
-	fRadius = (uint32) (kernel.Extent () / scale + 0.9999);
-	
-	// Width is twice the radius.
-	
-	uint32 width = fRadius * 2;
-	
+	// Width is twice the radius. Check for overflow.
+
+	uint32 width = 0;
+
+	if (!SafeUint32Mult (fRadius, 2, &width))
+		{
+
+		ThrowOverflow ("Arithmetic overflow computing width");
+
+		}
+
 	// Round to each set to weights to a multiple of 8 entries.
 	
 	if (!RoundUpUint32ToMultiple (width, 8, &fWeightStep))

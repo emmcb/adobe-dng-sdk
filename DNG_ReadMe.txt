@@ -10,12 +10,14 @@ command-line utility named "dng_validate" on macOS and Windows (see
 dng_sdk/projects). These project files have been tested using the
 following compilers:
 
-  macOS: Xcode 12.4 thru Xcode 14.2
+  macOS: Xcode 12.4 thru Xcode 26
 
   Windows: Visual Studio 2022 (17.3.5) + clang
 
     The clang tools are available as an optional component in the
     Visual Studio installer.
+
+----------------------------------------------------------------------
 
 Instructions to build dng_validate:
 
@@ -37,6 +39,8 @@ Instructions to build dng_validate:
 
     - Build
 
+----------------------------------------------------------------------
+
 Dependencies:
 
 This distribution of the SDK includes the following libraries and
@@ -52,3 +56,29 @@ additional dependencies:
   XMP SDK for XMP support
     - see XMP_ReadMe.txt for details
     - includes boost, expat, and zlib dependencies
+
+----------------------------------------------------------------------
+
+Release Notes / Changelog:
+
+1.7.1 2502 March 3, 2026
+
+    - Vulnerability issue fixes.
+
+    - JXL library updates.
+
+    - Minor fixes and cleanups.
+
+1.7.1 2471 January 29, 2026
+
+    - Vulnerability issue fixes.
+
+1.7.1 2410 November 17, 2025
+
+    - Vulnerability issue fixes.
+
+    - Other minor bug fixes.
+
+    - Add version and build numbers to dng_flags.h.
+
+----------------------------------------------------------------------

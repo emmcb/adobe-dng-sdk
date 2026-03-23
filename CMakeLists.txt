@@ -29,6 +29,11 @@ if(DNG_WITH_XMP)
     find_package(EXPAT REQUIRED)
 endif()
 
+# JPEG-XL is required and the libjxl-dev typically doesn't provide a CMake config file.
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JXL REQUIRED libjxl)
+pkg_check_modules(JXL_THREADS REQUIRED libjxl_threads)
+
 #
 # XMP SDK
 #
@@ -115,6 +120,11 @@ if(DNG_WITH_XMP)
         ${SRC_DIR}/XMPCore/source/XMPUtils.cpp
         ${SRC_DIR}/XMPCore/source/XMPUtils2.cpp
         ${SRC_DIR}/XMPCore/source/XMPUtils-FileInfo.cpp
+        ${SRC_DIR}/XMPCore/source/WXMPDocOps.cpp
+        ${SRC_DIR}/XMPCore/source/XMPDocOps-Utils.cpp
+        ${SRC_DIR}/XMPCore/source/XMPDocOps-Utils2.cpp
+        ${SRC_DIR}/XMPCore/source/XMPDocOps.cpp
+        ${SRC_DIR}/XMPCore/source/XMPDocOps2.cpp
     )
 
     add_library(${TARGET} STATIC ${SRCS})
@@ -215,6 +225,7 @@ foreach(TARGET IN ITEMS ${TARGETS})
         ${SRC_DIR}/dng_tone_curve.cpp
         ${SRC_DIR}/dng_utils.cpp
         ${SRC_DIR}/dng_xy_coord.cpp
+        ${SRC_DIR}/dng_jxl.cpp
     )
 
     if("${TARGET}" STREQUAL "dng-validate")
@@ -257,11 +268,16 @@ foreach(TARGET IN ITEMS ${TARGETS})
         target_compile_definitions(${TARGET} PUBLIC qDNGUseXMP=0)
     endif()
 
-    # TODO: detect JXL support
-    target_compile_definitions(${TARGET} PUBLIC qDNGSupportJXL=0)
+    target_include_directories(${TARGET} PRIVATE ${JXL_INCLUDE_DIRS})
+    target_link_libraries(${TARGET} PRIVATE ${JXL_LIBRARIES})
+    target_link_libraries(${TARGET} PRIVATE ${JXL_THREADS_LIBRARIES})
 
     target_compile_options(${TARGET} PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wno-stringop-overflow>)
     if(ANDROID)
         target_compile_options(${TARGET} PRIVATE $<$<CXX_COMPILER_ID:Clang>:-Wno-expansion-to-defined>)
+    endif()
+
+    if(APPLE)
+        target_link_libraries(${TARGET} PRIVATE "-framework CoreFoundation -framework Carbon")
     endif()
 endforeach()

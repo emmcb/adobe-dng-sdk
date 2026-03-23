@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<!-- This file is used by Release Engineering and Project Know to obtain information about which of your projects and
+targets to build, what build settings and options to use and what output files to verify to ensure the build succeeded.
+1) DO NOT CHANGE THIS FILE'S NAME OR LOCATION AS THIS WOULD BREAK PK/RELENG BUILDS.
+2) DO NOT CHANGE ANY <buildgroup> OR <target> 'name' ATTRIBUTE VALUES SINCE THIS CAN BREAK CODEX SUPPORT.
+3) IT IS STRONGLY RECOMMENDED THAT 'name' ATTRIBUTE VALUES CONTAIN ONLY LOWER CASE LETTERS AND NUMBERS (NO SPACES OR PUNCTUATION CHARACTERS).
+4) IT IS OK TO ADD NEW <target> ELEMENTS (but see #5 below), REMOVE UNNEEDED <target> ELEMENTS OR CHANGE OTHER ASPECTS OF A CURRENT <target>.
+5) IF NEWLY ADDED <target> ELEMENTS REQUIRE CODEX SUPPORT, AN ASSOCIATED RELENG BATON MUST BE CREATED.
+6) CONSULT WITH THE CORETECH RELEASE ENGINEERING AND PROJECT KNOW GROUPS IF YOU HAVE QUESTIONS ABOUT THIS FILE.
+-->
+<buildmetadata>
+	<platform name="ios">
+		<buildgroup name="xmp" title="XMP">
+            <dependencies>
+                <dependency name="zuid" type="external" version="zuid"/>
+                <dependency name="zlib" type="external" version="1.2.11"/>
+                <dependency name="expat" type="external" version="2.2.9"/>
+            </dependencies>
+			<audit_sources>
+				<audit_source location="-/.settings/..." />
+				<audit_source location="-/test/..." />
+				<audit_source location="-/documents/..." />
+				<audit_source location="-/testtools/..." />
+				<audit_source location="-/XMPforPHP/..." />
+			</audit_sources>
+			<target name="xmpcmakeios" title="xmpcmakeios" buildtags="debug,release,pr">
+				<compiler name="xcode 12.4" projectfilelocation="/XMP/toolkit/build/xcode12-ios/XMPCmake.xcodeproj" env=" " options="-target XMPCMakeiOS -configuration Release" />
+					<files>
+						<file location="/XMP/toolkit/build/CMake_libcpp_ios/XMPToolkit.xcodeproj" verify="1"/>
+					</files>
+			</target>
+			<target name="xmpcmakeios-framework" title="xmpcmakeios-framework" buildtags="debug,release,pr">
+				<compiler name="xcode 12.4" projectfilelocation="/XMP/toolkit/build/xcode12-ios/XMPCmake.xcodeproj" env=" " options="-target XMPCMakeiOSDynamic -configuration Release" />
+					<files>
+						<file location="/XMP/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" verify="1"/>
+					</files>
+			</target>
+            <target name="xmpcmakeios-sim" title="xmpcmakeios-sim" buildtags="debug,release,pr">
+                <compiler name="xcode 12.4" projectfilelocation="/XMP/toolkit/build/xcode12-ios/XMPCmake.xcodeproj" env=" " options="-target XMPCMakeiOSSimulator -configuration Release" />
+                    <files>
+                        <file location="/XMP/toolkit/build/CMake_libcpp_ios_sim/XMPToolkit.xcodeproj" verify="1"/>
+                    </files>
+            </target>
+            <target name="xmpcmakeios-framework-sim" title="xmpcmakeios-framework-sim" buildtags="debug,release,pr">
+                <compiler name="xcode 12.4" projectfilelocation="/XMP/toolkit/build/xcode12-ios/XMPCmake.xcodeproj" env=" " options="-target XMPCMakeiOSDynamicSimulator -configuration Release" />
+                    <files>
+                        <file location="/XMP/toolkit/build/CMake_libcpp_iosDynamic_sim/XMPToolkit.xcodeproj" verify="1"/>
+                    </files>
+            </target>
+			<target name="xmprel-ios-sim-64" title="XMPRel IOS SIM 64" buildtags="pr,release">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_ios_sim/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Release -destination 'platform=iOS Simulator,name=iPhone 11'"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/libXMPCoreStaticRelease.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/libXMPFilesStaticRelease.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-device" title="XMPRel IOS Device" buildtags="pr,release,pr">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_ios/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Release -destination 'generic/platform=iOS'"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticRelease.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64/release">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/libXMPCoreStaticRelease.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/libXMPFilesStaticRelease.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-sim-64" title="XMPDbg IOS SIM 64" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_ios_sim/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 11'"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/libXMPCoreStaticDebug.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/libXMPFilesStaticDebug.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-device" title="XMPDbg IOS Device" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_ios/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Debug -destination 'generic/platform=iOS'"/>
+					<files>
+						<artifact artifactname="libXMPCoreStaticDebug.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/libXMPCoreStaticDebug.a" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/libXMPFilesStaticDebug.a" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-sim-64-framework" title="XMPRel IOS SIM 64 Framework" buildtags="pr,release">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic_sim/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Release -destination 'platform=iOS Simulator,name=iPhone 11'"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-device-framework" title="XMPRel IOS Device Framework" buildtags="pr,release,pr">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Release -destination 'generic/platform=iOS'"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64/release">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-sim-64-framework" title="XMPDbg IOS SIM 64 Framework" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic_sim/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 11'"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-device-framework" title="XMPDbg IOS Device Framework" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env=" " options="-scheme ALL_BUILD -configuration Debug -destination 'generic/platform=iOS'"/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/arm64/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework.dSYM/Contents/Resources/DWARF/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework.dSYM/Contents/Resources/DWARF/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework.dSYM" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework.dSYM/Contents/Resources/DWARF/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework" verify="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-aggregate-framework-adobexmp" title="XMPDbg IOS Aggregate Framework AdobeXMP" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMP.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMP.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-aggregate-framework-adobexmpfiles" title="XMPDbg IOS Aggregate Framework AdobeXMPFiles" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPFiles.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPFiles.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmpdb-ios-aggregate-framework-adobexmpcompareandmerge" title="XMPDbg IOS Aggregate Framework AdobeXMPCompareAndMerge" buildtags="debug">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/debug/AdobeXMPCompareAndMerge.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/debug/AdobeXMPCompareAndMerge.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/debug">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/debug/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-aggregate-framework-adobexmp" title="XMPRel IOS Aggregate Framework AdobeXMP" buildtags="pr,release">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMP.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMP.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMP.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/release">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64_x86_64-simulator/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMP.xcframework/ios-arm64/AdobeXMP.framework/AdobeXMP" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-aggregate-framework-adobexmpfiles" title="XMPRel IOS Aggregate Framework AdobeXMPFiles" buildtags="pr,release">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPFiles.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPFiles.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMPFiles.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/release">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64_x86_64-simulator/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPFiles.xcframework/ios-arm64/AdobeXMPFiles.framework/AdobeXMPFiles" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+			<target name="xmprel-ios-aggregate-framework-adobexmpcompareandmerge" title="XMPRel IOS Aggregate Framework AdobeXMPCompareAndMerge" buildtags="pr,release">
+				<compiler name="xcode 12.4" projectfilelocation="/xmp/toolkit/build/CMake_libcpp_iosDynamic/XMPToolkit.xcodeproj" env="aggregate" options="-framework 'xmp/toolkit/public/libraries/ios/arm64/release/AdobeXMPCompareAndMerge.framework' -framework 'xmp/toolkit/public/libraries/ios/arm64_x86_64-simulator/release/AdobeXMPCompareAndMerge.framework' -output 'xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework' "/>
+					<files>
+						<artifact artifactname="AdobeXMPCompareAndMerge.zip" artifactlocation = "/xmp/toolkit/public/libraries/ios/aggregate/release">
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64_x86_64-simulator/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/Info.plist" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework" verify="1" />
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework/AdobeXMPCompareAndMerge" verify="1" post="1"/>
+							<file location="/xmp/toolkit/public/libraries/ios/aggregate/release/AdobeXMPCompareAndMerge.xcframework/ios-arm64/AdobeXMPCompareAndMerge.framework/Info.plist" verify="1" post="1"/>
+						</artifact>
+					</files>
+			</target>
+		</buildgroup>
+	</platform>
+</buildmetadata>

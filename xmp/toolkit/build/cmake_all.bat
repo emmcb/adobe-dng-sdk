@@ -1,35 +1,26 @@
-:: =================================================================================================
-:: Copyright 2013 Adobe Systems Incorporated
-:: All Rights Reserved.
-::
-:: NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
-:: of the Adobe license agreement accompanying it.
-:: =================================================================================================
-
-echo  ON
+echo  off
 cls
 
 REM list of all projects to build
 
 echo "Update path environment that cmake can be found"
-REM set PATH=%PATH%;%CD%\..\..\resources\tools\CMakeApp\win\bin
-set PATH=%PATH%;%CD%\..\tools\cmake\bin
+REM set PATH=%CD%\..\..\resources\tools\CMakeApp\win\bin;%PATH%
+set PATH=%CD%\..\testtools\third-party\cmake\bin;%PATH%
 
 
 echo "================= Generate project for XMP build ================="
 call cmake.bat %1 %2 %3 %4 %5
 if errorlevel 1 goto error
-
+popd
 
 goto ok
 
 
 :error
+cd ..
 echo Failed.
-echo "Exiting cmake_all.bat"
-exit /B 1
+exit 1
 
 :ok
 echo Success.
-echo "Exiting cmake_all.bat"
-exit /B 0
+exit 0

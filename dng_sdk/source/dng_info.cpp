@@ -25,7 +25,7 @@
 dng_info::dng_info ()
 
 	:	fTIFFBlockOffset		 (0)
-	,	fTIFFBlockOriginalOffset (kDNGStreamInvalidOffset)
+	,	fTIFFBlockOriginalOffset (0)
 	,	fBigEndian				 (false)
 	,	fMagic					 (0)
 	,	fExif					 ()
@@ -1798,6 +1798,35 @@ void dng_info::ParseDNGPrivateData (dng_host &host,
 		return;
 		
 		}
+	
+	else if (privateName.StartsWith ("RICOH"))
+		  {
+		  
+		  #if qDNGValidate
+		  
+		  if (gVerbose)
+			  {
+			  printf ("Parsing RICOH-PENTAX DNGPrivateData\n\n");
+			  }
+			  
+		  #endif
+
+		  stream.SetReadPosition (fShared->fDNGPrivateDataOffset + 8);
+			  
+		  TempBigEndian temp_endian (stream, false);
+		  
+		  ParseMakerNoteIFD (host,
+							 stream,
+							 fShared->fDNGPrivateDataCount - 8,
+							 fShared->fDNGPrivateDataOffset + 8,
+							 fShared->fDNGPrivateDataOffset,
+							 fShared->fDNGPrivateDataOffset,
+							 fShared->fDNGPrivateDataOffset + fShared->fDNGPrivateDataCount,
+							 tcPentaxMakerNote);
+							 
+		  return;
+		  
+		  }
 				
 	// Stop parsing if this is not an Adobe format block.
 	

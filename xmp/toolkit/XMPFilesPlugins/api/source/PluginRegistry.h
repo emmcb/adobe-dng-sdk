@@ -4,8 +4,37 @@
 // All Rights Reserved
 //
 // NOTICE: Adobe permits you to use, modify, and distribute this file in accordance with the terms
-// of the Adobe license agreement accompanying it. 
+// of the Adobe license agreement accompanying it. If you have received this file from a source other 
+// than Adobe, then your use, modification, or distribution of it requires the prior written permission
+// of Adobe.
 // =================================================================================================
+
+#if AdobePrivate
+/**************************************************************************
+* @file PluginRegistry.h
+* @brief Classes to register multiple file hanlder in one plugin
+*
+* It contains classes to give easy way to register multiple file handler in one plugin.
+* 
+* @author Praveen Kumar Goyal (pkgoyal)
+* @bug No known bugs.
+***************************************************************************/
+
+// =================================================================================================
+// Change history
+// ==============
+//
+// Writers:
+//	AB  Amit Bhatti
+//
+// mm-dd-yy who Description of changes, most recent on top
+//
+// 01-05-15	AB	5.6-f122 Provide more functionalities to Plugin( Existing XMP packet, PacketInfo, OpenFlags, Error Callback and progress notification),
+//						 more standard handler access API getFileModDate,IsMetadataWritable,putXMP,getAssociatedResources.
+//						 New plugin handler for MPEG4 with Exif support.
+//
+// =================================================================================================
+#endif // AdobePrivate
 
 #ifndef PLUGINREGISTRY_H
 #define PLUGINREGISTRY_H
@@ -68,7 +97,14 @@ public:
 	
 private:
 
-	typedef std::map<std::string, const PluginCreatorBase*> RegistryEntryMap;
+	struct StringCompare : std::binary_function< const std::string &, const std::string &, bool >
+	{
+		bool operator()( const std::string & a, const std::string & b ) const
+		{
+			return ( a.compare(b) < 0 );
+		}
+	};
+	typedef std::map<std::string, const PluginCreatorBase*,	StringCompare>		RegistryEntryMap;
 	
 	PluginRegistry(){}
 	~PluginRegistry();
